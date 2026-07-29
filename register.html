@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran Pelatihan - Miranaya Academy</title>
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ==========================================================================
+           1. CSS VARIABLES & RESET
+           ========================================================================== */
+        :root {
+            --navy-deep: #071C4D;
+            --navy-dark: #0A192F;
+            --blue-royal: #0F62FE;
+            --blue-electric: #00AEEF;
+            --blue-glow: rgba(0, 174, 239, 0.4);
+            --white: #FFFFFF;
+            --gray-light: #F4F7FB;
+            --gray-border: #E2E8F0;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+            --error-color: #EF4444;
+            --success-color: #10B981;
+            
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --glass-shadow: 0 20px 40px rgba(7, 28, 77, 0.08);
+            --card-radius: 18px;
+            --transition-fast: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--gray-light);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient Background Elements */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100vw;
+            height: 600px;
+            background: radial-gradient(circle at 50% 20%, rgba(15, 98, 254, 0.15) 0%, rgba(0, 174, 239, 0.05) 50%, transparent 80%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* ==========================================================================
+           2. LAYOUT & CONTAINERS
+           ========================================================================== */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            flex: 1;
+        }
+
+        /* Hero Card Section */
+        .hero-card {
+            background: var(--white);
+            border-radius: var(--card-radius);
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: var(--glass-shadow);
+            border: 1px solid var(--gray-border);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--navy-deep), var(--blue-royal), var(--blue-electric));
+        }
+
+        .logo-container {
+            max-width: 280px;
+            margin: 0 auto 15px auto;
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .slogan {
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: var(--blue-royal);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .hero-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--navy-deep);
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Form Card */
+        .form-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: var(--card-radius);
+            padding: 40px;
+            box-shadow: var(--glass-shadow);
+            border: 1px solid var(--glass-border);
+            animation: slideUp 0.8s ease-out 0.2s backwards;
+        }
+
+        /* Progress Indicator */
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background-color: var(--gray-border);
+            border-radius: 3px;
+            margin-bottom: 35px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--blue-royal), var(--blue-electric));
+            transition: width 0.4s ease;
+            border-radius: 3px;
+        }
+
+        /* Grid Layout for Form */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        /* ==========================================================================
+           3. FORM CONTROLS & STYLES
+           ========================================================================== */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .form-group label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--navy-deep);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .form-group label i {
+            color: var(--blue-royal);
+            font-size: 0.9rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-control {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            background: #FFFFFF;
+            border: 1.5px solid var(--gray-border);
+            border-radius: 10px;
+            outline: none;
+            transition: var(--transition-fast);
+        }
+
+        .input-control:focus {
+            border-color: var(--blue-royal);
+            box-shadow: 0 0 0 4px var(--blue-glow);
+            background: #FFFFFF;
+        }
+
+        textarea.input-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        select.input-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%200F62FE'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 18px;
+            padding-right: 40px;
+            cursor: pointer;
+        }
+
+        /* Input Validation States */
+        .form-group.error .input-control {
+            border-color: var(--error-color);
+            background-color: rgba(239, 68, 68, 0.02);
+        }
+
+        .form-group.success .input-control {
+            border-color: var(--success-color);
+        }
+
+        .error-message {
+            font-size: 0.78rem;
+            color: var(--error-color);
+            margin-top: 6px;
+            display: none;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .form-group.error .error-message {
+            display: flex;
+        }
+
+        /* Dynamic Course Description Card */
+        .course-card {
+            background: linear-gradient(135deg, rgba(7, 28, 77, 0.03) 0%, rgba(15, 98, 254, 0.05) 100%);
+            border: 1px solid rgba(15, 98, 254, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: -10px;
+            display: none;
+            align-items: flex-start;
+            gap: 15px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .course-card.active {
+            display: flex;
+        }
+
+        .course-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--blue-royal), var(--blue-electric));
+            color: var(--white);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(0, 174, 239, 0.3);
+        }
+
+        .course-info h4 {
+            font-size: 0.95rem;
+            color: var(--navy-deep);
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .course-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 16px 24px;
+            background: linear-gradient(135deg, var(--navy-deep) 0%, var(--blue-royal) 50%, var(--blue-electric) 100%);
+            background-size: 200% auto;
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 8px 20px rgba(15, 98, 254, 0.25);
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            background-position: right center;
+            box-shadow: 0 10px 25px rgba(0, 174, 239, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Spinner */
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--white);
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+
+        /* ==========================================================================
+           4. MODAL & TOAST NOTIFICATIONS
+           ========================================================================== */
+        /* Modal Backdrop */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(7, 28, 77, 0.6);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-fast);
+        }
+
+        .modal-backdrop.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 480px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            transform: scale(0.8);
+            transition: var(--transition-fast);
+            border: 1px solid var(--glass-border);
+        }
+
+        .modal-backdrop.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(0, 174, 239, 0.1);
+            color: var(--blue-royal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 20px auto;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--navy-deep);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .modal-text {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .modal-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-wa-admin {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: var(--transition-fast);
+        }
+
+        .btn-wa-admin:hover {
+            background: #20ba5a;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-close-modal {
+            background: transparent;
+            border: 1.5px solid var(--gray-border);
+            color: var(--text-muted);
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .btn-close-modal:hover {
+            background: var(--gray-light);
+            color: var(--navy-deep);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: var(--navy-deep);
+            color: var(--white);
+            padding: 14px 24px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9rem;
+            z-index: 999;
+            transform: translateY(150%);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-left: 4px solid var(--blue-electric);
+        }
+
+        .toast.active {
+            transform: translateY(0);
+        }
+
+        /* Floating WhatsApp Button */
+        .floating-wa {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+            z-index: 99;
+            transition: var(--transition-fast);
+            text-decoration: none;
+        }
+
+        .floating-wa:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 12px 25px rgba(37, 211, 102, 0.6);
+        }
+
+        /* ==========================================================================
+           5. FOOTER
+           ========================================================================== */
+        footer {
+            background: var(--navy-deep);
+            color: var(--white);
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-brand {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .footer-slogan {
+            font-size: 0.85rem;
+            color: var(--blue-electric);
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .footer-contact {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-contact a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+
+        .footer-contact a:hover {
+            color: var(--blue-electric);
+        }
+
+        .footer-copy {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ==========================================================================
+           6. ANIMATIONS & RESPONSIVE DESIGN
+           ========================================================================== */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .full-width {
+                grid-column: span 1;
+            }
+            .hero-card {
+                padding: 30px 20px;
+            }
+            .hero-title {
+                font-size: 1.75rem;
+            }
+            .form-card {
+                padding: 25px 20px;
+            }
+            .floating-wa {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Hero Header Section -->
+        <header class="hero-card">
+            <div class="logo-container">
+                <!-- Fallback image display using explicit SVG logo branding concept -->
+                <svg viewBox="0 0 500 200" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="gradNavy" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#071C4D;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#0F62FE;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="gradElectric" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#0F62FE;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#00AEEF;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <!-- M Symbol Icon -->
+                    <path d="M40 150 L100 40 L130 110 L160 40 L220 150 L185 150 L160 85 L130 145 L100 85 L75 150 Z" fill="url(#gradNavy)"/>
+                    <path d="M45 140 L45 80 A5 5 0 0 1 55 80 L55 140" stroke="#00AEEF" stroke-width="3" fill="none" opacity="0.6"/>
+                    <circle cx="45" cy="75" r="3" fill="#00AEEF"/>
+                    <circle cx="55" cy="75" r="3" fill="#00AEEF"/>
+                    <!-- Graduation Cap over M -->
+                    <polygon points="130,25 95,42 130,55 165,42" fill="url(#gradNavy)"/>
+                    <polygon points="105,48 105,62 130,72 155,62 155,48" fill="url(#gradElectric)"/>
+                    <!-- Text: demy -->
+                    <text x="225" y="130" font-family="'Poppins', sans-serif" font-weight="700" font-size="78" fill="#071C4D">demy</text>
+                    <!-- Text: MIRANAYA ACADEMY -->
+                    <text x="50" y="175" font-family="'Poppins', sans-serif" font-weight="600" font-size="20" fill="#0F62FE" letter-spacing="4">MIRANAYA ACADEMY</text>
+                </svg>
+            </div>
+            <div class="slogan">Learn. Innovate. Apply. Impact.</div>
+            <h1 class="hero-title">Pendaftaran Pelatihan</h1>
+            <p class="hero-subtitle">Tingkatkan kompetensi Anda bersama Miranaya Academy melalui pelatihan berbasis Artificial Intelligence yang aplikatif dan relevan dengan kebutuhan industri.</p>
+        </header>
+
+        <!-- Form Registration Section -->
+        <main class="form-card">
+            <!-- Form Progress Bar -->
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+            <form id="registrationForm" novalidate>
+                <div class="form-grid">
+                    
+                    <!-- Field: Nama Lengkap -->
+                    <div class="form-group">
+                        <label for="fullName"><i class="fa-solid fa-user"></i> Nama Lengkap</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="fullName" name="fullName" class="input-control" placeholder="Contoh: Budi Santoso, S.T." required>
+                        </div>
+                        <span class="error-message"><i class="fa-solid fa-circle-exclamation"></i> Nama lengkap wajib diisi.</span>
+                    </div>
+
+                    <!-- Field: Email -->
+                    <div class="form-group">
+                        <label for="email"><i class="fa-solid fa-envelope"></i> Email Perusahaan / Pribadi</label>
+                        <div class="input-wrapper">
+                            <input type="email" id="email" name="email" class="input-control" placeholder="budi@perusahaan.com" required>
+                        </div>
+                        <span class="error-message"><i class="fa-solid fa-circle-exclamation"></i> Format email tidak valid.</span>
+                    </div>
+
+                    <!-- Field: Nomor WhatsApp -->
+                    <div class="form-group">
+                        <label for="whatsapp"><i class="fa-brands fa-whatsapp"></i> Nomor WhatsApp</label>
+                        <div class="input-wrapper">
+                            <input type="tel" id="whatsapp" name="whatsapp" class="input-control" placeholder="081234567890" required>
+                        </div>
+                        <span class="error-message"><i class="fa-solid fa-circle-exclamation"></i> Gunakan format WhatsApp valid (min. 10 digit).</span>
+                    </div>
+
+                    <!-- Field: Instansi / Perusahaan -->
+                    <div class="form-group">
+                        <label for="organization"><i class="fa-solid fa-building"></i> Instansi / Perusahaan</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="organization" name="organization" class="input-control" placeholder="PT Digital Indonesia" required>
+                        </div>
+                        <span class="error-message"><i class="fa-solid fa-circle-exclamation"></i> Nama instansi/perusahaan wajib diisi.</span>
+                    </div>
+
+                    <!-- Field: Jabatan -->
+                    <div class="form-group">
+                        <label for="position"><i class="fa-solid fa-briefcase"></i> Jabatan / Posisi</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="position" name="position" class="input-control" placeholder="Manager / Analyst / Staff" required>
+                        </div>
+                        <span class="error-message"><i class="fa-solid fa-circle-exclamation"></i> Jabatan wajib diisi.</span>
+                    </div>
+
+                    <!-- Field: Kota -->
+                    <div class="form-group">
+                        <label for="city"><i class="fa-solid fa-location-dot"></i> Kota Domisili</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="city" name="city" class="input-control" placeholder="Jakarta Selatan" required>
+                        </div>
+                        <span class="error-message"><i class="fa-solid fa-circle-exclamation"></i> Kota wajib diisi.</span>
+                    </div>
+
+                    <!-- Field: Pilih Pelatihan -->
+                    <div class="form-group full-width">
+                        <label for="course"><i class="fa-solid fa-graduation-cap"></i> Pilih Program Pelatihan</label>
+                        <div class="input-wrapper">
+                            <select id="course" name="course" class="input-control" required>
+                                <option value="" disabled selected>-- Pilih Program Pelatihan AI --</option>
+                                <option value="AI Fundamentals for Professionals">AI Fundamentals for Professionals</option>
+                                <option value="AI for Data Corporate Analyst">AI for Data Corporate Analyst</option>
+                                <option value="Masterclass Bikin Website Tanpa Coding dengan AI Gratis">Masterclass Bikin Website Tanpa Coding dengan AI Gratis</option>
+                                <option value="AI for Business Leader & Professionals">AI for Business Leader & Professionals</option>
+                                <option value="Creating Business Presentation with AI">Creating Business Presentation with AI</option>
+                            </select>
+                        </div>
+                        <span class="error-message"><i class="fa-solid fa-circle-exclamation"></i> Silakan pilih salah satu program pelatihan.</span>
+                    </div>
+
+                    <!-- Dynamic Course Description Card -->
+                    <div class="full-width">
+                        <div id="courseCard" class="course-card">
+                            <div class="course-icon">
+                                <i class="fa-solid fa-brain" id="courseCardIcon"></i>
+                            </div>
+                            <div class="course-info">
+                                <h4 id="courseCardTitle">Detail Pelatihan</h4>
+                                <p id="courseCardDesc">Pilih program pelatihan di atas untuk melihat deskripsi ringkas modul dan tujuan instruksional.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Field: Tanggal Pelatihan -->
+                    <div class="form-group">
+                        <label for="trainingDate"><i class="fa-solid fa-calendar-days"></i> Tanggal Pelatihan</label>
+                        <div class="input-wrapper">
+                            <input type="date" id="trainingDate" name="trainingDate" class="input-control" required>
+                        </div>
+                        <span class="error-message"><i class="fa-solid fa-circle-exclamation"></i> Tanggal pelatihan wajib dipilih.</span>
+                    </div>
+
+                    <!-- Field: Sumber Informasi -->
+                    <div class="form-group">
+                        <label for="source"><i class="fa-solid fa-bullhorn"></i> Bagaimana mengetahui pelatihan ini?</label>
+                        <div class="input-wrapper">
+                            <select id="source" name="source" class="input-control" required>
+                                <option value="" disabled selected>-- Pilih Sumber Informasi --</option>
+                                <option value="Instagram">Instagram</option>
+                                <option value="LinkedIn">LinkedIn</option>
+                                <option value="WhatsApp Group">WhatsApp Group</option>
+                                <option value="Rekomendasi Teman / Rekan kerja">Rekomendasi Teman / Rekan Kerja</option>
+                                <option value="Website Miranaya">Website Miranaya</option>
+                                <option value="Lainnya">Lainnya</option>
+                            </select>
+                        </div>
+                        <span class="error-message"><i class="fa-solid fa-circle-exclamation"></i> Sumber informasi wajib dipilih.</span>
+                    </div>
+
+                    <!-- Field: Catatan (Opsional) -->
+                    <div class="form-group full-width">
+                        <label for="notes"><i class="fa-solid fa-note-sticky"></i> Catatan Khusus (Opsional)</label>
+                        <div class="input-wrapper">
+                            <textarea id="notes" name="notes" class="input-control" placeholder="Tuliskan ekspektasi Anda atau kebutuhan khusus pelatihan di sini..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button Container -->
+                    <div class="full-width">
+                        <button type="submit" id="submitBtn" class="submit-btn">
+                            <span>Daftar Sekarang</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                            <div class="spinner" id="btnSpinner"></div>
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/6282290007890?text=Halo%20Miranaya%20Academy,%20saya%20ingin%20bertanya%20mengenai%20pelatihan." class="floating-wa" target="_blank" aria-label="Hubungi WhatsApp Admin">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fa-solid fa-circle-info" style="color: var(--blue-electric);"></i>
+        <span id="toastMsg">Notifikasi</span>
+    </div>
+
+    <!-- Modal Success -->
+    <div class="modal-backdrop" id="successModal">
+        <div class="modal-content">
+            <div class="modal-icon">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h3 class="modal-title">Pendaftaran Berhasil</h3>
+            <p class="modal-text">Terima kasih telah mendaftar di Miranaya Academy.<br>Tim kami akan segera menghubungi Anda melalui WhatsApp.</p>
+            <div class="modal-actions">
+                <a href="https://wa.me/6282290007890?text=Halo%20Miranaya%20Academy,%20saya%20sudah%20melakukan%20pendaftaran%20pelatihan." target="_blank" class="btn-wa-admin">
+                    <i class="fa-brands fa-whatsapp"></i> Hubungi Admin
+                </a>
+                <button type="button" class="btn-close-modal" id="closeModalBtn">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-brand">Miranaya Academy</div>
+        <div class="footer-slogan">Learn. Innovate. Apply. Impact.</div>
+        <div class="footer-contact">
+            <a href="https://wa.me/6282290007890" target="_blank"><i class="fa-brands fa-whatsapp"></i> 082290007890</a>
+            <a href="https://miranaya.online" target="_blank"><i class="fa-solid fa-globe"></i> miranaya.online</a>
+        </div>
+        <div class="footer-copy">
+            &copy; 2026 Miranaya Academy. Empowering Professionals Through Artificial Intelligence.
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Configuration
+            const SCRIPT_URL = "GANTI_DENGAN_URL_GOOGLE_APPS_SCRIPT";
+
+            // DOM Elements
+            const form = document.getElementById('registrationForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnSpinner = document.getElementById('btnSpinner');
+            const progressBar = document.getElementById('progressBar');
+            const courseSelect = document.getElementById('course');
+            const courseCard = document.getElementById('courseCard');
+            const courseCardTitle = document.getElementById('courseCardTitle');
+            const courseCardDesc = document.getElementById('courseCardDesc');
+            const courseCardIcon = document.getElementById('courseCardIcon');
+            const successModal = document.getElementById('successModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+
+            // Course Descriptions Database
+            const courseDetails = {
+                "AI Fundamentals for Professionals": {
+                    icon: "fa-robot",
+                    desc: "Memahami fondasi Prompt Engineering, prinsip Generative AI, serta otomatisasi workflow harian untuk meningkatkan produktivitas profesional di era digital."
+                },
+                "AI for Data Corporate Analyst": {
+                    icon: "fa-chart-pie",
+                    desc: "Aplikasi AI dalam pembersihan data, pembuatan dashboard interaktif, analitik prediktif, dan otomatisasi laporan eksekutif dengan akurasi tinggi."
+                },
+                "Masterclass Bikin Website Tanpa Coding dengan AI Gratis": {
+                    icon: "fa-code",
+                    desc: "Panduan praktis membangun website profesional dan modern dari nol memanfaatkan tools AI tanpa biaya coding sama sekali."
+                },
+                "AI for Business Leader & Professionals": {
+                    icon: "fa-briefcase",
+                    desc: "Strategi adopsi AI enterprise, efisiensi operasional bisnis, tata kelola AI, serta identifikasi peluang inovasi bagi para pimpinan eksekutif."
+                },
+                "Creating Business Presentation with AI": {
+                    icon: "fa-display",
+                    desc: "Teknik menyusun deck presentasi bisnis yang persuasif, visual memukau, dan berbasis riset mendalam secara kilat dengan bantuan AI."
+                }
+            };
+
+            // Form Fields Realtime Tracking
+            const requiredInputs = form.querySelectorAll('input[required], select[required]');
+
+            // Dynamic Progress Indicator & Field Real-Time Validation
+            function updateProgress() {
+                let validCount = 0;
+                requiredInputs.forEach(input => {
+                    if (validateInput(input, false)) {
+                        validCount++;
+                    }
+                });
+                const percentage = (validCount / requiredInputs.length) * 100;
+                progressBar.style.width = `${percentage}%`;
+            }
+
+            // Input Validation Helper
+            function validateInput(input, showUI = true) {
+                const group = input.closest('.form-group');
+                if (!group) return true;
+
+                let isValid = true;
+                const value = input.value.trim();
+
+                if (input.hasAttribute('required') && !value) {
+                    isValid = false;
+                } else if (input.type === 'email' && value) {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    isValid = emailRegex.test(value);
+                } else if (input.id === 'whatsapp' && value) {
+                    const cleanPhone = value.replace(/[^0-9]/g, '');
+                    isValid = cleanPhone.length >= 10;
+                }
+
+                if (showUI) {
+                    if (!isValid) {
+                        group.classList.add('error');
+                        group.classList.remove('success');
+                    } else {
+                        group.classList.remove('error');
+                        group.classList.add('success');
+                    }
+                }
+
+                return isValid;
+            }
+
+            // Attach Realtime Event Listeners to Inputs
+            requiredInputs.forEach(input => {
+                input.addEventListener('input', () => {
+                    validateInput(input, true);
+                    updateProgress();
+                });
+                input.addEventListener('blur', () => {
+                    validateInput(input, true);
+                    updateProgress();
+                });
+            });
+
+            // Dynamic Course Selection Handling
+            courseSelect.addEventListener('change', (e) => {
+                const selected = e.target.value;
+                if (courseDetails[selected]) {
+                    courseCardTitle.textContent = selected;
+                    courseCardDesc.textContent = courseDetails[selected].desc;
+                    courseCardIcon.className = `fa-solid ${courseDetails[selected].icon}`;
+                    courseCard.classList.add('active');
+                } else {
+                    courseCard.classList.remove('active');
+                }
+            });
+
+            // Show Toast Function
+            function showToast(message) {
+                toastMsg.textContent = message;
+                toast.classList.add('active');
+                setTimeout(() => {
+                    toast.classList.remove('active');
+                }, 3500);
+            }
+
+            // Form Submission Handler
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                // Validate all fields on submit
+                let isFormValid = true;
+                requiredInputs.forEach(input => {
+                    if (!validateInput(input, true)) {
+                        isFormValid = false;
+                    }
+                });
+
+                if (!isFormValid) {
+                    showToast('Mohon lengkapi semua field yang wajib diisi dengan benar.');
+                    return;
+                }
+
+                // UI Loading State
+                submitBtn.disabled = true;
+                btnSpinner.style.display = 'block';
+                const originalBtnText = submitBtn.querySelector('span').textContent;
+                submitBtn.querySelector('span').textContent = 'Memproses Pendaftaran...';
+
+                // Collect Form Data
+                const formData = new FormData(form);
+                const dataPayload = {
+                    timestamp: new Date().toISOString(),
+                    fullName: formData.get('fullName'),
+                    email: formData.get('email'),
+                    whatsapp: formData.get('whatsapp'),
+                    organization: formData.get('organization'),
+                    position: formData.get('position'),
+                    city: formData.get('city'),
+                    course: formData.get('course'),
+                    trainingDate: formData.get('trainingDate'),
+                    source: formData.get('source'),
+                    notes: formData.get('notes') || ''
+                };
+
+                try {
+                    // Send Fetch Request to Google Apps Script
+                    if (SCRIPT_URL !== "GANTI_DENGAN_URL_GOOGLE_APPS_SCRIPT") {
+                        await fetch(SCRIPT_URL, {
+                            method: 'POST',
+                            mode: 'no-cors',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(dataPayload)
+                        });
+                    } else {
+                        // Demo fallback simulation if SCRIPT_URL hasn't been set
+                        await new Promise(resolve => setTimeout(resolve, 1500));
+                    }
+
+                    // Open Modal
+                    successModal.classList.add('active');
+
+                } catch (error) {
+                    console.error('Submission Error:', error);
+                    showToast('Terjadi kesalahan saat mengirim data. Silakan coba lagi.');
+                } finally {
+                    // Reset Button State
+                    submitBtn.disabled = false;
+                    btnSpinner.style.display = 'none';
+                    submitBtn.querySelector('span').textContent = originalBtnText;
+                }
+            });
+
+            // Close Modal & Reset Form
+            closeModalBtn.addEventListener('click', () => {
+                successModal.classList.remove('active');
+                form.reset();
+                courseCard.classList.remove('active');
+                
+                // Clear validation visual styles
+                document.querySelectorAll('.form-group').forEach(group => {
+                    group.classList.remove('success', 'error');
+                });
+                progressBar.style.width = '0%';
+            });
+
+            // Close Modal on backdrop click
+            successModal.addEventListener('click', (e) => {
+                if (e.target === successModal) {
+                    closeModalBtn.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
