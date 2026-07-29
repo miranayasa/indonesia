@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zoom Invitation Generator | Miranaya Academy</title>
+  
+  <style>
+    /* ==========================================================================
+       1. VARIABLES & BASE STYLES
+       ========================================================================== */
+    :root {
+      --primary-color: #1565C0;
+      --primary-hover: #0D47A1;
+      --primary-light: #E3F2FD;
+      --accent-color: #00E676;
+      --bg-color: #F4F7FB;
+      --card-bg: #FFFFFF;
+      --text-main: #2C3E50;
+      --text-muted: #6C7A89;
+      --border-color: #E2E8F0;
+      --border-radius: 15px;
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 10px 25px -5px rgba(21, 101, 192, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+      --transition-fast: all 0.25s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    /* ==========================================================================
+       2. LAYOUT & CONTAINERS
+       ========================================================================== */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 10px 0;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      background: var(--primary-light);
+      padding: 6px 16px;
+      border-radius: 30px;
+      margin-bottom: 12px;
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      color: var(--text-main);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-top: 6px;
+    }
+
+    .app-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 28px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-color);
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary-color);
+      border-bottom: 2px solid var(--primary-light);
+      padding-bottom: 10px;
+    }
+
+    /* ==========================================================================
+       3. FORM & INPUTS
+       ========================================================================== */
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--text-main);
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="time"],
+    textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      background-color: #FAFBFD;
+      transition: var(--transition-fast);
+      outline: none;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--primary-color);
+      background-color: #FFFFFF;
+      box-shadow: 0 0 0 4px rgba(21, 101, 192, 0.1);
+    }
+
+    textarea {
+      resize: none;
+      min-height: 100px;
+      overflow-y: hidden;
+      font-family: inherit;
+    }
+
+    .textarea-wrapper {
+      position: relative;
+    }
+
+    .char-counter {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-align: right;
+      margin-top: 4px;
+    }
+
+    /* ==========================================================================
+       4. BUTTONS & ACTIONS
+       ========================================================================== */
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 20px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      text-decoration: none;
+      flex: 1;
+      min-width: 140px;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: #FFFFFF;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(21, 101, 192, 0.25);
+    }
+
+    .btn-secondary {
+      background-color: var(--primary-light);
+      color: var(--primary-color);
+    }
+
+    .btn-secondary:hover {
+      background-color: #BBDEFB;
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 1.5px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    .btn-outline:hover {
+      background-color: #F1F5F9;
+      border-color: var(--text-muted);
+    }
+
+    .btn-danger {
+      background-color: #FFEBEE;
+      color: #C62828;
+    }
+
+    .btn-danger:hover {
+      background-color: #FFCDD2;
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    /* ==========================================================================
+       5. PREVIEW BOX
+       ========================================================================== */
+    .preview-box {
+      background: #F8FAFC;
+      border: 1.5px dashed #CBD5E1;
+      border-radius: 12px;
+      padding: 20px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.92rem;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: #1E293B;
+      min-height: 320px;
+      position: relative;
+    }
+
+    /* ==========================================================================
+       6. SPINNER & TOAST NOTIFICATION
+       ========================================================================== */
+    .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: #FFFFFF;
+      animation: spin 0.8s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .toast-container {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 9999;
+    }
+
+    .toast {
+      background-color: #1E293B;
+      color: #FFFFFF;
+      padding: 14px 22px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==========================================================================
+       7. FOOTER
+       ========================================================================== */
+    footer {
+      text-align: center;
+      padding: 30px 0 10px;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      margin-top: auto;
+    }
+
+    /* ==========================================================================
+       8. RESPONSIVE BREAKPOINTS
+       ========================================================================== */
+    @media (max-width: 900px) {
+      .app-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 12px;
+      }
+
+      .card {
+        padding: 20px;
+      }
+
+      header h1 {
+        font-size: 1.7rem;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .btn {
+        width: 100%;
+        flex: none;
+      }
+
+      .toast-container {
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+      }
+      
+      .toast {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="brand">🎓 Miranaya Academy</div>
+      <h1>Zoom Invitation Generator</h1>
+      <p>Generate undangan Zoom yang profesional hanya dalam beberapa detik.</p>
+    </header>
+
+    <!-- Main Grid -->
+    <div class="app-grid">
+      
+      <!-- Left Column: Input Form -->
+      <div class="card">
+        <div class="card-title">📝 Input Detail Training</div>
+        
+        <form id="inviteForm" onsubmit="event.preventDefault();">
+          
+          <!-- Paste Zoom Raw Text -->
+          <div class="form-group">
+            <label for="rawInvite">Paste Invitation Zoom</label>
+            <div class="textarea-wrapper">
+              <textarea id="rawInvite" placeholder="Paste seluruh teks undangan dari Zoom di sini..." oninput="autoResize(this); updateCharCount(this, 'rawCharCount');"></textarea>
+            </div>
+            <div id="rawCharCount" class="char-counter">0 karakter</div>
+            
+            <button type="button" id="btnParse" class="btn btn-secondary" style="width: 100%; margin-top: 8px;">
+              ⚡ Parse Invitation
+            </button>
+          </div>
+
+          <hr style="border: 0; border-top: 1px dashed var(--border-color); margin: 20px 0;">
+
+          <!-- Training Name -->
+          <div class="form-group">
+            <label for="trainingName">Nama Training</label>
+            <input type="text" id="trainingName" placeholder="Contoh: AI Fundamentals for Professionals">
+          </div>
+
+          <!-- Date Selector -->
+          <div class="form-group">
+            <label for="trainingDate">Tanggal</label>
+            <input type="date" id="trainingDate">
+          </div>
+
+          <!-- Time Selectors -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="startTime">Jam Mulai</label>
+              <input type="time" id="startTime" value="09:00">
+            </div>
+            <div class="form-group">
+              <label for="endTime">Jam Selesai</label>
+              <input type="time" id="endTime" value="12:00">
+            </div>
+          </div>
+
+          <!-- Zoom Link -->
+          <div class="form-group">
+            <label for="zoomLink">Link Zoom</label>
+            <input type="text" id="zoomLink" placeholder="https://us05web.zoom.us/j/...">
+          </div>
+
+          <!-- Meeting ID & Passcode -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="meetingId">Meeting ID</label>
+              <input type="text" id="meetingId" placeholder="612 924 9622">
+            </div>
+            <div class="form-group">
+              <label for="passcode">Passcode</label>
+              <input type="text" id="passcode" placeholder="mdemy">
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Right Column: Live Preview & Actions -->
+      <div class="card">
+        <div class="card-title">👁️ Live Preview Card</div>
+        
+        <div id="previewContent" class="preview-box"></div>
+        <div id="previewCharCount" class="char-counter">0 karakter</div>
+
+        <!-- Action Buttons -->
+        <div class="btn-group">
+          <button type="button" id="btnCopy" class="btn btn-primary">
+            📋 Copy Invitation
+          </button>
+          <button type="button" id="btnTestLink" class="btn btn-outline">
+            🚀 Test Zoom Link
+          </button>
+          <button type="button" id="btnClear" class="btn btn-danger">
+            🗑️ Clear Form
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2026 Miranaya Academy. All rights reserved.
+  </footer>
+
+  <!-- Toast Notification -->
+  <div class="toast-container">
+    <div id="toast" class="toast"></div>
+  </div>
+
+  <!-- JavaScript Logic -->
+  <script>
+    // ==========================================================================
+    // 1. INITIALIZATION & DOM ELEMENTS
+    // ==========================================================================
+    const rawInvite = document.getElementById('rawInvite');
+    const btnParse = document.getElementById('btnParse');
+    const trainingName = document.getElementById('trainingName');
+    const trainingDate = document.getElementById('trainingDate');
+    const startTime = document.getElementById('startTime');
+    const endTime = document.getElementById('endTime');
+    const zoomLink = document.getElementById('zoomLink');
+    const meetingId = document.getElementById('meetingId');
+    const passcode = document.getElementById('passcode');
+
+    const previewContent = document.getElementById('previewContent');
+    const previewCharCount = document.getElementById('previewCharCount');
+
+    const btnCopy = document.getElementById('btnCopy');
+    const btnTestLink = document.getElementById('btnTestLink');
+    const btnClear = document.getElementById('btnClear');
+    const toast = document.getElementById('toast');
+
+    // Set Default Date to Today
+    document.addEventListener('DOMContentLoaded', () => {
+      const today = new Date().toISOString().split('T')[0];
+      trainingDate.value = today;
+      updatePreview();
+    });
+
+    // Event Listeners for Realtime Preview
+    const formInputs = [trainingName, trainingDate, startTime, endTime, zoomLink, meetingId, passcode];
+    formInputs.forEach(input => {
+      input.addEventListener('input', updatePreview);
+    });
+
+    // ==========================================================================
+    // 2. PARSER FUNCTION (REGEX)
+    // ==========================================================================
+    btnParse.addEventListener('click', () => {
+      const text = rawInvite.value.trim();
+      
+      if (!text) {
+        showToast('❌ Silakan paste teks undangan Zoom terlebih dahulu');
+        return;
+      }
+
+      // UI Loading Animation
+      const originalText = btnParse.innerHTML;
+      btnParse.innerHTML = `<span class="spinner"></span> Parsing...`;
+      btnParse.disabled = true;
+
+      setTimeout(() => {
+        try {
+          // Regex Patterns
+          const topicMatch = text.match(/Topic:\s*(.+)/i);
+          const linkMatch = text.match(/(https?:\/\/[^\s]+zoom[^\s]+)/i);
+          const idMatch = text.match(/Meeting ID:\s*([\d\s]+)/i);
+          const passcodeMatch = text.match(/Passcode:\s*([^\s]+)/i);
+
+          let updated = false;
+
+          if (topicMatch && topicMatch[1]) {
+            trainingName.value = topicMatch[1].trim();
+            updated = true;
+          }
+
+          if (linkMatch && linkMatch[1]) {
+            zoomLink.value = linkMatch[1].trim();
+            updated = true;
+          }
+
+          if (idMatch && idMatch[1]) {
+            meetingId.value = idMatch[1].trim();
+            updated = true;
+          }
+
+          if (passcodeMatch && passcodeMatch[1]) {
+            passcode.value = passcodeMatch[1].trim();
+            updated = true;
+          }
+
+          if (updated) {
+            updatePreview();
+            showToast('✅ Berhasil mengekstrak data Zoom!');
+          } else {
+            showToast('⚠️ Format undangan tidak dikenali secara penuh');
+          }
+        } catch (e) {
+          showToast('❌ Gagal melakukan parsing');
+        } finally {
+          btnParse.innerHTML = originalText;
+          btnParse.disabled = false;
+        }
+      }, 400); // Visual delay for smooth UX
+    });
+
+    // ==========================================================================
+    // 3. FORMATTERS & PREVIEW GENERATOR
+    // ==========================================================================
+    function formatIndonesianDate(dateString) {
+      if (!dateString) return 'Sabtu, 8 Agustus 2026';
+      
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return 'Sabtu, 8 Agustus 2026';
+
+      const options = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      };
+      
+      return date.toLocaleDateString('id-ID', options);
+    }
+
+    function formatTime(timeStr) {
+      if (!timeStr) return '00.00';
+      return timeStr.replace(':', '.');
+    }
+
+    function generateTemplate() {
+      const nameVal = trainingName.value.trim() || 'Nama Training';
+      const dateVal = formatIndonesianDate(trainingDate.value);
+      const startVal = formatTime(startTime.value);
+      const endVal = formatTime(endTime.value);
+      const linkVal = zoomLink.value.trim() || 'https://us05web.zoom.us/j/xxxx';
+      const idVal = meetingId.value.trim() || 'xxxx';
+      const passVal = passcode.value.trim() || 'xxxx';
+
+      return `🎓 *MIRANAYA ACADEMY*
+
+📚 *${nameVal}*
+
+📅 ${dateVal}
+🕘 ${startVal}–${endVal} WIB
+
+🔗 *Join Zoom Meeting*
+${linkVal}
+
+Meeting ID : ${idVal}
+Passcode : ${passVal}
+
+Mohon bergabung *5 menit sebelum kelas dimulai* agar sesi dapat dimulai tepat waktu.
+
+🌐 https://miranaya.online`;
+    }
+
+    function updatePreview() {
+      const template = generateTemplate();
+      previewContent.textContent = template;
+      previewCharCount.textContent = `${template.length} karakter`;
+    }
+
+    // ==========================================================================
+    // 4. ACTION BUTTONS (COPY, TEST LINK, CLEAR)
+    // ==========================================================================
+    btnCopy.addEventListener('click', async () => {
+      const textToCopy = previewContent.textContent;
+      
+      try {
+        await navigator.clipboard.writeText(textToCopy);
+        showToast('✅ Invitation berhasil disalin');
+      } catch (err) {
+        // Fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = textToCopy;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast('✅ Invitation berhasil disalin');
+      }
+    });
+
+    btnTestLink.addEventListener('click', () => {
+      const url = zoomLink.value.trim();
+      if (!url) {
+        showToast('⚠️ Masukkan atau parse Link Zoom terlebih dahulu');
+        return;
+      }
+
+      if (/^https?:\/\//i.test(url)) {
+        window.open(url, '_blank');
+      } else {
+        window.open(`https://${url}`, '_blank');
+      }
+    });
+
+    btnClear.addEventListener('click', () => {
+      rawInvite.value = '';
+      trainingName.value = '';
+      zoomLink.value = '';
+      meetingId.value = '';
+      passcode.value = '';
+      
+      // Reset to defaults
+      const today = new Date().toISOString().split('T')[0];
+      trainingDate.value = today;
+      startTime.value = '09:00';
+      endTime.value = '12:00';
+
+      autoResize(rawInvite);
+      updateCharCount(rawInvite, 'rawCharCount');
+      updatePreview();
+      showToast('🧹 Seluruh field telah dibersihkan');
+    });
+
+    // ==========================================================================
+    // 5. HELPER FUNCTIONS
+    // ==========================================================================
+    function autoResize(element) {
+      element.style.height = 'auto';
+      element.style.height = (element.scrollHeight) + 'px';
+    }
+
+    function updateCharCount(element, targetId) {
+      const count = element.value.length;
+      document.getElementById(targetId).textContent = `${count} karakter`;
+    }
+
+    let toastTimer;
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
