@@ -235,7 +235,7 @@
 
         select.input-control {
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%200F62FE'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%230F62FE'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 16px center;
             background-size: 18px;
@@ -361,8 +361,60 @@
         }
 
         /* ==========================================================================
-           4. MODAL & TOAST NOTIFICATIONS
+           4. MODAL, LOADING OVERLAY & TOAST NOTIFICATIONS
            ========================================================================== */
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(7, 28, 77, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-fast);
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loading-box {
+            background: var(--white);
+            padding: 30px 40px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .large-spinner {
+            width: 45px;
+            height: 45px;
+            border: 4px solid rgba(15, 98, 254, 0.2);
+            border-top-color: var(--blue-royal);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .loading-text {
+            font-weight: 600;
+            color: var(--navy-deep);
+            font-size: 1rem;
+        }
+
         /* Modal Backdrop */
         .modal-backdrop {
             position: fixed;
@@ -414,6 +466,18 @@
             justify-content: center;
             font-size: 2.5rem;
             margin: 0 auto 20px auto;
+            position: relative;
+        }
+
+        /* Success Icon Animation */
+        .modal-icon.animated i {
+            animation: popCheck 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popCheck {
+            0% { transform: scale(0); }
+            80% { transform: scale(1.2); }
+            100% { transform: scale(1); }
         }
 
         .modal-title {
@@ -493,6 +557,10 @@
 
         .toast.active {
             transform: translateY(0);
+        }
+
+        .toast.error-toast {
+            border-left-color: var(--error-color);
         }
 
         /* Floating WhatsApp Button */
@@ -622,7 +690,6 @@
         <!-- Hero Header Section -->
         <header class="hero-card">
             <div class="logo-container">
-                <!-- Fallback image display using explicit SVG logo branding concept -->
                 <svg viewBox="0 0 500 200" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <linearGradient id="gradNavy" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -634,17 +701,13 @@
                             <stop offset="100%" style="stop-color:#00AEEF;stop-opacity:1" />
                         </linearGradient>
                     </defs>
-                    <!-- M Symbol Icon -->
                     <path d="M40 150 L100 40 L130 110 L160 40 L220 150 L185 150 L160 85 L130 145 L100 85 L75 150 Z" fill="url(#gradNavy)"/>
                     <path d="M45 140 L45 80 A5 5 0 0 1 55 80 L55 140" stroke="#00AEEF" stroke-width="3" fill="none" opacity="0.6"/>
                     <circle cx="45" cy="75" r="3" fill="#00AEEF"/>
                     <circle cx="55" cy="75" r="3" fill="#00AEEF"/>
-                    <!-- Graduation Cap over M -->
                     <polygon points="130,25 95,42 130,55 165,42" fill="url(#gradNavy)"/>
                     <polygon points="105,48 105,62 130,72 155,62 155,48" fill="url(#gradElectric)"/>
-                    <!-- Text: demy -->
                     <text x="225" y="130" font-family="'Poppins', sans-serif" font-weight="700" font-size="78" fill="#071C4D">demy</text>
-                    <!-- Text: MIRANAYA ACADEMY -->
                     <text x="50" y="175" font-family="'Poppins', sans-serif" font-weight="600" font-size="20" fill="#0F62FE" letter-spacing="4">MIRANAYA ACADEMY</text>
                 </svg>
             </div>
@@ -655,7 +718,6 @@
 
         <!-- Form Registration Section -->
         <main class="form-card">
-            <!-- Form Progress Bar -->
             <div class="progress-bar-container">
                 <div class="progress-bar" id="progressBar"></div>
             </div>
@@ -764,7 +826,7 @@
                                 <option value="Instagram">Instagram</option>
                                 <option value="LinkedIn">LinkedIn</option>
                                 <option value="WhatsApp Group">WhatsApp Group</option>
-                                <option value="Rekomendasi Teman / Rekan kerja">Rekomendasi Teman / Rekan Kerja</option>
+                                <option value="Rekomendasi Teman / Rekan kerja">Rekomendasi Teman / Rekan kerja</option>
                                 <option value="Website Miranaya">Website Miranaya</option>
                                 <option value="Lainnya">Lainnya</option>
                             </select>
@@ -783,8 +845,8 @@
                     <!-- Submit Button Container -->
                     <div class="full-width">
                         <button type="submit" id="submitBtn" class="submit-btn">
-                            <span>Daftar Sekarang</span>
-                            <i class="fa-solid fa-arrow-right"></i>
+                            <span id="btnText">Daftar Sekarang</span>
+                            <i class="fa-solid fa-arrow-right" id="btnIcon"></i>
                             <div class="spinner" id="btnSpinner"></div>
                         </button>
                     </div>
@@ -794,6 +856,14 @@
         </main>
     </div>
 
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-box">
+            <div class="large-spinner"></div>
+            <div class="loading-text">Memproses Pendaftaran...</div>
+        </div>
+    </div>
+
     <!-- Floating WhatsApp Button -->
     <a href="https://wa.me/6282290007890?text=Halo%20Miranaya%20Academy,%20saya%20ingin%20bertanya%20mengenai%20pelatihan." class="floating-wa" target="_blank" aria-label="Hubungi WhatsApp Admin">
         <i class="fa-brands fa-whatsapp"></i>
@@ -801,14 +871,14 @@
 
     <!-- Toast Notification -->
     <div class="toast" id="toast">
-        <i class="fa-solid fa-circle-info" style="color: var(--blue-electric);"></i>
+        <i class="fa-solid fa-circle-info" id="toastIcon" style="color: var(--blue-electric);"></i>
         <span id="toastMsg">Notifikasi</span>
     </div>
 
     <!-- Modal Success -->
     <div class="modal-backdrop" id="successModal">
         <div class="modal-content">
-            <div class="modal-icon">
+            <div class="modal-icon animated">
                 <i class="fa-solid fa-circle-check"></i>
             </div>
             <h3 class="modal-title">Pendaftaran Berhasil</h3>
@@ -835,224 +905,397 @@
         </div>
     </footer>
 
-    <!-- JavaScript Logic -->
+    <!-- JavaScript Engine -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Configuration
-            const SCRIPT_URL = "const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwRyfqj0_bYD5ocp3En9BomvGZDVaN9gbAO-r514MnLl_4bmPwhCPp-jFyx4C6M-9Hl/exec";";
+        /**
+         * Miranaya Academy - Client-Side Form Engine
+         * Architecture: Clean Code Functional Pattern
+         */
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwRyfqj0_bYD5ocp3En9BomvGZDVaN9gbAO-r514MnLl_4bmPwhCPp-jFyx4C6M-9Hl/exec";
 
-            // DOM Elements
-            const form = document.getElementById('registrationForm');
-            const submitBtn = document.getElementById('submitBtn');
-            const btnSpinner = document.getElementById('btnSpinner');
-            const progressBar = document.getElementById('progressBar');
-            const courseSelect = document.getElementById('course');
-            const courseCard = document.getElementById('courseCard');
-            const courseCardTitle = document.getElementById('courseCardTitle');
-            const courseCardDesc = document.getElementById('courseCardDesc');
-            const courseCardIcon = document.getElementById('courseCardIcon');
-            const successModal = document.getElementById('successModal');
-            const closeModalBtn = document.getElementById('closeModalBtn');
-            const toast = document.getElementById('toast');
-            const toastMsg = document.getElementById('toastMsg');
+        // Global State
+        let isSubmitting = false;
 
-            // Course Descriptions Database
-            const courseDetails = {
-                "AI Fundamentals for Professionals": {
-                    icon: "fa-robot",
-                    desc: "Memahami fondasi Prompt Engineering, prinsip Generative AI, serta otomatisasi workflow harian untuk meningkatkan produktivitas profesional di era digital."
-                },
-                "AI for Data Corporate Analyst": {
-                    icon: "fa-chart-pie",
-                    desc: "Aplikasi AI dalam pembersihan data, pembuatan dashboard interaktif, analitik prediktif, dan otomatisasi laporan eksekutif dengan akurasi tinggi."
-                },
-                "Masterclass Bikin Website Tanpa Coding dengan AI Gratis": {
-                    icon: "fa-code",
-                    desc: "Panduan praktis membangun website profesional dan modern dari nol memanfaatkan tools AI tanpa biaya coding sama sekali."
-                },
-                "AI for Business Leader & Professionals": {
-                    icon: "fa-briefcase",
-                    desc: "Strategi adopsi AI enterprise, efisiensi operasional bisnis, tata kelola AI, serta identifikasi peluang inovasi bagi para pimpinan eksekutif."
-                },
-                "Creating Business Presentation with AI": {
-                    icon: "fa-display",
-                    desc: "Teknik menyusun deck presentasi bisnis yang persuasif, visual memukau, dan berbasis riset mendalam secara kilat dengan bantuan AI."
+        // Course Catalog Data
+        const COURSE_DETAILS = {
+            "AI Fundamentals for Professionals": {
+                icon: "fa-brain",
+                title: "AI Fundamentals for Professionals",
+                desc: "Memahami konsep dasar AI, Generative AI, Prompt Engineering, dan cara mengintegrasikan AI untuk efisiensi kerja harian."
+            },
+            "AI for Data Corporate Analyst": {
+                icon: "fa-chart-line",
+                title: "AI for Data Corporate Analyst",
+                desc: "Menggunakan AI untuk otomasi analisis data bisnis, pembersihan data, pembuatan dashboard interaktif, serta interpretasi data cepat."
+            },
+            "Masterclass Bikin Website Tanpa Coding dengan AI Gratis": {
+                icon: "fa-laptop-code",
+                title: "Masterclass Website Tanpa Coding",
+                desc: "Panduan praktis membangun website profesional, landing page, dan sistem pendaftaran menggunakan tool AI gratis tanpa perlu coding."
+            },
+            "AI for Business Leader & Professionals": {
+                icon: "fa-user-tie",
+                title: "AI for Business Leader & Professionals",
+                desc: "Strategi penerapan AI dalam pengambilan keputusan bisnis, efisiensi operasional perusahaan, serta transformasi digital tim."
+            },
+            "Creating Business Presentation with AI": {
+                icon: "fa-file-powerpoint",
+                title: "Creating Business Presentation with AI",
+                desc: "Trik cepat menyusun slide presentasi bisnis profesional, menarik, dan berstandar eksekutif hanya dalam hitungan menit memanfaatkan AI."
+            }
+        };
+
+        // DOM Elements Collection
+        const elements = {
+            form: document.getElementById('registrationForm'),
+            submitBtn: document.getElementById('submitBtn'),
+            btnText: document.getElementById('btnText'),
+            btnIcon: document.getElementById('btnIcon'),
+            btnSpinner: document.getElementById('btnSpinner'),
+            progressBar: document.getElementById('progressBar'),
+            courseSelect: document.getElementById('course'),
+            courseCard: document.getElementById('courseCard'),
+            courseCardIcon: document.getElementById('courseCardIcon'),
+            courseCardTitle: document.getElementById('courseCardTitle'),
+            courseCardDesc: document.getElementById('courseCardDesc'),
+            loadingOverlay: document.getElementById('loadingOverlay'),
+            toast: document.getElementById('toast'),
+            toastMsg: document.getElementById('toastMsg'),
+            toastIcon: document.getElementById('toastIcon'),
+            successModal: document.getElementById('successModal'),
+            closeModalBtn: document.getElementById('closeModalBtn'),
+            requiredInputs: document.querySelectorAll('#registrationForm [required]')
+        };
+
+        /**
+         * Initialization Procedure
+         */
+        function init() {
+            console.log("[App Init] Miranaya Academy Form Engine initialized.");
+            
+            // Set min date for trainingDate picker (today)
+            const today = new Date().toISOString().split('T')[0];
+            const dateInput = document.getElementById('trainingDate');
+            if (dateInput) dateInput.setAttribute('min', today);
+
+            // Register Event Listeners
+            bindEvents();
+            
+            // Initial Progress Calculation
+            updateProgress();
+        }
+
+        /**
+         * Event Listeners Registration
+         */
+        function bindEvents() {
+            // Live Validation & Progress Listener
+            elements.requiredInputs.forEach(input => {
+                input.addEventListener('input', () => {
+                    validateInput(input);
+                    updateProgress();
+                });
+
+                input.addEventListener('blur', () => {
+                    validateInput(input);
+                    updateProgress();
+                });
+
+                if (input.tagName === 'SELECT') {
+                    input.addEventListener('change', () => {
+                        validateInput(input);
+                        updateProgress();
+                    });
                 }
-            };
+            });
 
-            // Form Fields Realtime Tracking
-            const requiredInputs = form.querySelectorAll('input[required], select[required]');
+            // Dynamic Course Card Change
+            elements.courseSelect.addEventListener('change', handleCourseChange);
 
-            // Dynamic Progress Indicator & Field Real-Time Validation
-            function updateProgress() {
-                let validCount = 0;
-                requiredInputs.forEach(input => {
-                    if (validateInput(input, false)) {
+            // Form Submit Listener
+            elements.form.addEventListener('submit', handleFormSubmit);
+
+            // Modal Close Listener
+            elements.closeModalBtn.addEventListener('click', closeSuccessModal);
+
+            // Network Monitoring
+            window.addEventListener('online', () => showToast("Koneksi internet kembali terhubung.", "info"));
+            window.addEventListener('offline', () => showToast("Koneksi internet terputus. Harap periksa jaringan Anda.", "error"));
+        }
+
+        /**
+         * Validation Rules
+         */
+        function validateEmail(email) {
+            const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return re.test(String(email).toLowerCase());
+        }
+
+        function validateWhatsApp(phone) {
+            const cleaned = String(phone).replace(/\D/g, '');
+            const isValFormat = cleaned.startsWith('08') || cleaned.startsWith('628');
+            return isValFormat && cleaned.length >= 10 && cleaned.length <= 15;
+        }
+
+        /**
+         * Input Validation Logic
+         */
+        function validateInput(input) {
+            const formGroup = input.closest('.form-group');
+            if (!formGroup) return false;
+
+            const value = input.value.trim();
+            let isValid = true;
+
+            if (input.hasAttribute('required') && !value) {
+                isValid = false;
+            } else if (input.id === 'email' && value) {
+                isValid = validateEmail(value);
+            } else if (input.id === 'whatsapp' && value) {
+                isValid = validateWhatsApp(value);
+            }
+
+            if (isValid) {
+                formGroup.classList.remove('error');
+                if (value !== "") formGroup.classList.add('success');
+                else formGroup.classList.remove('success');
+            } else {
+                formGroup.classList.remove('success');
+                formGroup.classList.add('error');
+            }
+
+            return isValid;
+        }
+
+        /**
+         * Full Form Validation State Check
+         */
+        function validateForm() {
+            let isAllValid = true;
+            let firstErrorElement = null;
+
+            elements.requiredInputs.forEach(input => {
+                const isInputValid = validateInput(input);
+                if (!isInputValid) {
+                    isAllValid = false;
+                    if (!firstErrorElement) {
+                        firstErrorElement = input;
+                    }
+                }
+            });
+
+            if (!isAllValid && firstErrorElement) {
+                scrollToFirstError(firstErrorElement);
+            }
+
+            return isAllValid;
+        }
+
+        /**
+         * Smooth Scroll to First Error Input
+         */
+        function scrollToFirstError(element) {
+            console.warn("[Validation] Form incomplete. Scrolling to field:", element.id);
+            element.focus();
+            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            showToast("Harap lengkapi seluruh field dengan benar.", "error");
+        }
+
+        /**
+         * Dynamic Course Selection Handling
+         */
+        function handleCourseChange(e) {
+            const selectedCourse = e.target.value;
+            const details = COURSE_DETAILS[selectedCourse];
+
+            if (details) {
+                elements.courseCardIcon.className = `fa-solid ${details.icon}`;
+                elements.courseCardTitle.textContent = details.title;
+                elements.courseCardDesc.textContent = details.desc;
+                elements.courseCard.classList.add('active');
+            } else {
+                elements.courseCard.classList.remove('active');
+            }
+        }
+
+        /**
+         * Dynamic Progress Bar Updater
+         */
+        function updateProgress() {
+            let validCount = 0;
+            const totalRequired = elements.requiredInputs.length;
+
+            elements.requiredInputs.forEach(input => {
+                const value = input.value.trim();
+                if (value) {
+                    if (input.id === 'email') {
+                        if (validateEmail(value)) validCount++;
+                    } else if (input.id === 'whatsapp') {
+                        if (validateWhatsApp(value)) validCount++;
+                    } else {
                         validCount++;
                     }
-                });
-                const percentage = (validCount / requiredInputs.length) * 100;
-                progressBar.style.width = `${percentage}%`;
-            }
-
-            // Input Validation Helper
-            function validateInput(input, showUI = true) {
-                const group = input.closest('.form-group');
-                if (!group) return true;
-
-                let isValid = true;
-                const value = input.value.trim();
-
-                if (input.hasAttribute('required') && !value) {
-                    isValid = false;
-                } else if (input.type === 'email' && value) {
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    isValid = emailRegex.test(value);
-                } else if (input.id === 'whatsapp' && value) {
-                    const cleanPhone = value.replace(/[^0-9]/g, '');
-                    isValid = cleanPhone.length >= 10;
                 }
-
-                if (showUI) {
-                    if (!isValid) {
-                        group.classList.add('error');
-                        group.classList.remove('success');
-                    } else {
-                        group.classList.remove('error');
-                        group.classList.add('success');
-                    }
-                }
-
-                return isValid;
-            }
-
-            // Attach Realtime Event Listeners to Inputs
-            requiredInputs.forEach(input => {
-                input.addEventListener('input', () => {
-                    validateInput(input, true);
-                    updateProgress();
-                });
-                input.addEventListener('blur', () => {
-                    validateInput(input, true);
-                    updateProgress();
-                });
             });
 
-            // Dynamic Course Selection Handling
-            courseSelect.addEventListener('change', (e) => {
-                const selected = e.target.value;
-                if (courseDetails[selected]) {
-                    courseCardTitle.textContent = selected;
-                    courseCardDesc.textContent = courseDetails[selected].desc;
-                    courseCardIcon.className = `fa-solid ${courseDetails[selected].icon}`;
-                    courseCard.classList.add('active');
+            const percentage = Math.round((validCount / totalRequired) * 100);
+            elements.progressBar.style.width = `${percentage}%`;
+        }
+
+        /**
+         * Form Data Extraction
+         */
+        function collectFormData() {
+            return {
+                fullName: document.getElementById('fullName').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                whatsapp: document.getElementById('whatsapp').value.trim(),
+                organization: document.getElementById('organization').value.trim(),
+                position: document.getElementById('position').value.trim(),
+                city: document.getElementById('city').value.trim(),
+                course: document.getElementById('course').value,
+                trainingDate: document.getElementById('trainingDate').value,
+                source: document.getElementById('source').value,
+                notes: document.getElementById('notes').value.trim()
+            };
+        }
+
+        /**
+         * Submit Handler Logic
+         */
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+
+            if (isSubmitting) {
+                console.warn("[Submit Protected] Request already in progress.");
+                return;
+            }
+
+            if (!navigator.onLine) {
+                showToast("Tidak ada koneksi internet. Periksa jaringan Anda.", "error");
+                return;
+            }
+
+            if (!validateForm()) {
+                return;
+            }
+
+            const formData = collectFormData();
+            console.log("[Form Submission] Payload prepared:", formData);
+
+            await submitRegistration(formData);
+        }
+
+        /**
+         * Fetch API Request Execution (Google Apps Script Web App Integration)
+         */
+        async function submitRegistration(payload) {
+            toggleLoading(true);
+            isSubmitting = true;
+
+            try {
+                // Sending POST request to Google Apps Script
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'text/plain;charset=utf-8'
+                    },
+                    body: JSON.stringify(payload),
+                    redirect: 'follow'
+                });
+
+                if (response.ok || response.type === 'opaque') {
+                    console.log("[Fetch Success] Data submitted successfully.");
+                    showSuccessModal();
+                    resetForm();
                 } else {
-                    courseCard.classList.remove('active');
+                    throw new Error(`HTTP Error Status: ${response.status}`);
                 }
-            });
+            } catch (error) {
+                console.error("[Submission Error]", error);
+                showToast("Gagal mengirim pendaftaran. Silakan coba beberapa saat lagi.", "error");
+            } finally {
+                toggleLoading(false);
+                isSubmitting = false;
+            }
+        }
 
-            // Show Toast Function
-            function showToast(message) {
-                toastMsg.textContent = message;
-                toast.classList.add('active');
-                setTimeout(() => {
-                    toast.classList.remove('active');
-                }, 3500);
+        /**
+         * UI Loading State Handler
+         */
+        function toggleLoading(isLoading) {
+            if (isLoading) {
+                elements.submitBtn.disabled = true;
+                elements.btnText.textContent = "Memproses Pendaftaran...";
+                elements.btnIcon.style.display = "none";
+                elements.btnSpinner.style.display = "block";
+                elements.loadingOverlay.classList.add('active');
+            } else {
+                elements.submitBtn.disabled = false;
+                elements.btnText.textContent = "Daftar Sekarang";
+                elements.btnIcon.style.display = "inline-block";
+                elements.btnSpinner.style.display = "none";
+                elements.loadingOverlay.classList.remove('active');
+            }
+        }
+
+        /**
+         * Toast Notification Display
+         */
+        function showToast(message, type = "info") {
+            elements.toastMsg.textContent = message;
+            
+            if (type === "error") {
+                elements.toast.classList.add('error-toast');
+                elements.toastIcon.className = "fa-solid fa-circle-exclamation";
+                elements.toastIcon.style.color = "var(--error-color)";
+            } else {
+                elements.toast.classList.remove('error-toast');
+                elements.toastIcon.className = "fa-solid fa-circle-info";
+                elements.toastIcon.style.color = "var(--blue-electric)";
             }
 
-            // Form Submission Handler
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
+            elements.toast.classList.add('active');
 
-                // Validate all fields on submit
-                let isFormValid = true;
-                requiredInputs.forEach(input => {
-                    if (!validateInput(input, true)) {
-                        isFormValid = false;
-                    }
-                });
+            setTimeout(() => {
+                elements.toast.classList.remove('active');
+            }, 4000);
+        }
 
-                if (!isFormValid) {
-                    showToast('Mohon lengkapi semua field yang wajib diisi dengan benar.');
-                    return;
-                }
+        /**
+         * Success Modal Controls
+         */
+        function showSuccessModal() {
+            elements.successModal.classList.add('active');
+        }
 
-                // UI Loading State
-                submitBtn.disabled = true;
-                btnSpinner.style.display = 'block';
-                const originalBtnText = submitBtn.querySelector('span').textContent;
-                submitBtn.querySelector('span').textContent = 'Memproses Pendaftaran...';
+        function closeSuccessModal() {
+            elements.successModal.classList.remove('active');
+        }
 
-                // Collect Form Data
-                const formData = new FormData(form);
-                const dataPayload = {
-                    timestamp: new Date().toISOString(),
-                    fullName: formData.get('fullName'),
-                    email: formData.get('email'),
-                    whatsapp: formData.get('whatsapp'),
-                    organization: formData.get('organization'),
-                    position: formData.get('position'),
-                    city: formData.get('city'),
-                    course: formData.get('course'),
-                    trainingDate: formData.get('trainingDate'),
-                    source: formData.get('source'),
-                    notes: formData.get('notes') || ''
-                };
-
-                try {
-                    // Send Fetch Request to Google Apps Script
-                    if (SCRIPT_URL !== "const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwRyfqj0_bYD5ocp3En9BomvGZDVaN9gbAO-r514MnLl_4bmPwhCPp-jFyx4C6M-9Hl/exec";") {
-                        const response = await fetch(SCRIPT_URL, {
-    method: "POST",
-    redirect: "follow",
-    headers: {
-        "Content-Type": "text/plain;charset=utf-8"
-    },
-    body: JSON.stringify(dataPayload)
-});
-
-const result = await response.json();
-
-console.log(result);
-                    } else {
-                        // Demo fallback simulation if SCRIPT_URL hasn't been set
-                        await new Promise(resolve => setTimeout(resolve, 1500));
-                    }
-
-                    // Open Modal
-                    successModal.classList.add('active');
-
-                } catch (error) {
-                    console.error('Submission Error:', error);
-                    showToast('Terjadi kesalahan saat mengirim data. Silakan coba lagi.');
-                } finally {
-                    // Reset Button State
-                    submitBtn.disabled = false;
-                    btnSpinner.style.display = 'none';
-                    submitBtn.querySelector('span').textContent = originalBtnText;
-                }
+        /**
+         * Form Reset Procedure
+         */
+        function resetForm() {
+            elements.form.reset();
+            
+            // Clear Validation Classes
+            const groups = elements.form.querySelectorAll('.form-group');
+            groups.forEach(group => {
+                group.classList.remove('error', 'success');
             });
 
-            // Close Modal & Reset Form
-            closeModalBtn.addEventListener('click', () => {
-                successModal.classList.remove('active');
-                form.reset();
-                courseCard.classList.remove('active');
-                
-                // Clear validation visual styles
-                document.querySelectorAll('.form-group').forEach(group => {
-                    group.classList.remove('success', 'error');
-                });
-                progressBar.style.width = '0%';
-            });
+            // Hide Dynamic Course Card
+            elements.courseCard.classList.remove('active');
 
-            // Close Modal on backdrop click
-            successModal.addEventListener('click', (e) => {
-                if (e.target === successModal) {
-                    closeModalBtn.click();
-                }
-            });
-        });
+            // Reset Progress Bar
+            updateProgress();
+            console.log("[Reset] Form has been completely reset.");
+        }
+
+        // Initialize Engine on DOM Ready
+        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
