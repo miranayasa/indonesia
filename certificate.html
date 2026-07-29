@@ -8,7 +8,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- External Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -25,14 +25,15 @@
             --primary: #071C4D;
             --secondary: #0F62FE;
             --accent: #00AEEF;
+            --gold: #D4AF37;
             --bg-card: #FFFFFF;
             --text-body: #334155;
             --text-muted: #64748B;
-            --border-light: #E2E8F0;
+            --border-light: #CBD5E1;
         }
 
         body {
-            background-color: #1E293B;
+            background-color: #0F172A;
             font-family: 'Poppins', sans-serif;
             color: var(--text-body);
             display: flex;
@@ -49,7 +50,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(15, 23, 42, 0.95);
+            background: rgba(15, 23, 42, 0.96);
             backdrop-filter: blur(8px);
             display: flex;
             justify-content: center;
@@ -83,19 +84,16 @@
         .login-input {
             width: 100%;
             padding: 12px 15px;
-            border: 2px solid var(--border-light);
+            border: 2px solid #E2E8F0;
             border-radius: 8px;
             font-size: 1rem;
             text-align: center;
             letter-spacing: 2px;
             margin-bottom: 12px;
             outline: none;
-            transition: border-color 0.2s;
         }
 
-        .login-input:focus {
-            border-color: var(--secondary);
-        }
+        .login-input:focus { border-color: var(--secondary); }
 
         .login-btn {
             width: 100%;
@@ -117,11 +115,11 @@
             font-weight: 600;
         }
 
-        /* PROTECTED CONTENT CONTAINER */
+        /* PROTECTED CONTENT */
         .protected-content {
             display: none;
             width: 100%;
-            max-width: 1000px;
+            max-width: 1050px;
             flex-direction: column;
             align-items: center;
         }
@@ -205,18 +203,18 @@
 
         /* KANVAS SERTIFIKAT A4 LANDSCAPE EXACT (297mm x 210mm) */
         .certificate-wrapper {
-            background: #1E293B; /* Samakan dengan BG luar supaya tidak membayang putih */
+            background: #0F172A;
             padding: 0;
             margin: 0;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
         }
 
         .certificate-canvas {
             width: 297mm;
             height: 210mm;
-            background: radial-gradient(circle at 50% 50%, #FFFFFF 0%, #EEF4FB 70%, #E2EDF8 100%);
+            background: radial-gradient(circle at 50% 50%, #FFFFFF 0%, #F4F8FC 65%, #E6EFF8 100%);
             box-sizing: border-box;
-            padding: 18mm 20mm; /* Margin dalam ditambah agar tidak mepet */
+            padding: 16mm 18mm;
             position: relative;
             display: flex;
             flex-direction: column;
@@ -224,13 +222,13 @@
             overflow: hidden;
         }
 
-        /* BORDER SAFE-ZONE (DITARIK AGAK KE DALAM SUPAYA TIDAK TERPOTONG) */
+        /* 6. BORDER MULTI-LAYER ELEGAND (2px & 0.5px, Jarak 14px) */
         .border-outer {
             position: absolute;
-            top: 10mm;
-            left: 10mm;
-            right: 10mm;
-            bottom: 10mm;
+            top: 8mm;
+            left: 8mm;
+            right: 8mm;
+            bottom: 8mm;
             border: 2px solid var(--primary);
             pointer-events: none;
             z-index: 2;
@@ -242,22 +240,37 @@
             left: 12mm;
             right: 12mm;
             bottom: 12mm;
-            border: 1px dashed rgba(15, 98, 254, 0.4);
+            border: 0.5px dashed rgba(15, 98, 254, 0.45);
             pointer-events: none;
             z-index: 2;
         }
 
         .top-stripe {
             position: absolute;
-            top: 10mm;
-            left: 10mm;
-            right: 10mm;
-            height: 4px;
+            top: 8mm;
+            left: 8mm;
+            right: 8mm;
+            height: 5px;
             background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
             z-index: 3;
         }
 
-        /* Top Badges Row */
+        /* 7. WATERMARK BACKGROUND TENGAH (4% Opacity) */
+        .watermark-bg {
+            position: absolute;
+            top: 52%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 420px;
+            opacity: 0.04;
+            pointer-events: none;
+            z-index: 1;
+            filter: grayscale(100%);
+        }
+
+        .watermark-bg img { width: 100%; height: auto; }
+
+        /* Badges Top Row */
         .badges-row {
             display: flex;
             justify-content: space-between;
@@ -266,8 +279,8 @@
         }
 
         .badge-item {
-            background: rgba(255, 255, 255, 0.95);
-            border: 1px solid rgba(15, 98, 254, 0.25);
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(15, 98, 254, 0.2);
             padding: 4px 12px;
             border-radius: 20px;
             font-family: 'Montserrat', sans-serif;
@@ -276,28 +289,10 @@
             color: var(--primary);
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
         }
 
-        /* WATERMARK / EMBOSS LOGO (DITINGKATKAN KEJELASANNYA) */
-        .watermark {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 380px; /* Ukuran diperbesar */
-            opacity: 0.09; /* Opacity dinaikkan dari 0.035 ke 0.09 agar emboss kelihatan jelas */
-            pointer-events: none;
-            z-index: 1;
-            filter: grayscale(30%);
-        }
-
-        .watermark img {
-            width: 100%;
-            height: auto;
-        }
-
-        /* Main Content Container */
+        /* Main Content Layer */
         .content-container {
             position: relative;
             z-index: 3;
@@ -308,7 +303,7 @@
             text-align: center;
         }
 
-        /* Header */
+        /* Header Logo */
         .brand-header {
             display: flex;
             flex-direction: column;
@@ -317,7 +312,7 @@
         }
 
         .brand-logo {
-            height: 42px;
+            height: 40px;
             width: auto;
             object-fit: contain;
             margin-bottom: 4px;
@@ -341,47 +336,48 @@
             text-transform: uppercase;
         }
 
-        /* Main Section */
+        /* Body Section */
         .main-body {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 1mm 0;
+            margin: 0.5mm 0;
         }
 
         .cert-title {
             font-family: 'Cinzel', serif;
-            font-size: 28pt;
-            font-weight: 700;
-            letter-spacing: 0.12em;
+            font-size: 26pt;
+            font-weight: 800;
+            letter-spacing: 0.15em;
             color: var(--primary);
             line-height: 1;
         }
 
         .cert-subtitle {
             font-family: 'Montserrat', sans-serif;
-            font-size: 8.5pt;
-            font-weight: 600;
+            font-size: 8pt;
+            font-weight: 700;
             letter-spacing: 0.35em;
             color: var(--secondary);
-            margin-top: 2px;
+            margin-top: 3px;
             text-transform: uppercase;
         }
 
         .award-to {
             font-family: 'Montserrat', sans-serif;
             font-size: 7.5pt;
-            font-weight: 500;
-            letter-spacing: 0.08em;
+            font-weight: 600;
+            letter-spacing: 0.1em;
             color: var(--text-muted);
             text-transform: uppercase;
-            margin: 4mm 0 2mm 0;
+            margin: 3.5mm 0 1.5mm 0;
         }
 
+        /* 1. NAMA PESERTA MENONJOL (Font Cinzel Serif + Letter Spacing) */
         .participant-box {
-            width: 70%;
-            border-bottom: 1px solid var(--border-light);
-            padding-bottom: 4px;
+            width: 75%;
+            border-bottom: 1.5px solid rgba(15, 98, 254, 0.25);
+            padding-bottom: 3px;
             margin-bottom: 3mm;
             position: relative;
         }
@@ -389,20 +385,22 @@
         .participant-box::after {
             content: '';
             position: absolute;
-            bottom: -1px;
+            bottom: -1.5px;
             left: 50%;
             transform: translateX(-50%);
-            width: 120px;
-            height: 2px;
+            width: 140px;
+            height: 2.5px;
             background-color: var(--secondary);
         }
 
         .participant-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 26pt;
+            font-family: 'Cinzel', serif;
+            font-size: 30pt; /* Perbesar nama */
             font-weight: 700;
             color: var(--primary);
             text-transform: uppercase;
+            letter-spacing: 0.06em; /* Spacing mewah */
+            line-height: 1.1;
         }
 
         .recognition-text {
@@ -413,42 +411,52 @@
             margin-bottom: 2mm;
         }
 
+        /* 8. PROGRAM TRAINING PERBESAR 15% */
         .course-title {
             font-family: 'Montserrat', sans-serif;
-            font-size: 14pt;
-            font-weight: 700;
+            font-size: 16pt; /* Perbesar 15% */
+            font-weight: 800;
             color: var(--secondary);
             margin-bottom: 2mm;
+            letter-spacing: 0.02em;
         }
 
         .course-desc {
             font-family: 'Poppins', sans-serif;
             font-size: 7.5pt;
             color: var(--text-muted);
-            max-width: 65%;
+            max-width: 68%;
             line-height: 1.35;
         }
 
-        /* Footer Section */
+        /* Footer Grid */
         .footer-body {
             width: 100%;
         }
 
         .footer-grid {
             display: grid;
-            grid-template-columns: 1fr 1.2fr 1fr;
+            grid-template-columns: 1fr 1.3fr 1fr;
             align-items: flex-end;
             width: 100%;
         }
 
         .footer-left {
             text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .date-container {
+            display: flex;
+            flex-direction: column;
         }
 
         .date-label {
             font-family: 'Montserrat', sans-serif;
             font-size: 6.5pt;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-muted);
             text-transform: uppercase;
         }
@@ -460,64 +468,141 @@
             color: var(--primary);
         }
 
+        /* 4. DIGITAL EMBOSS/SEAL EMBLEM (KIRI BAWAH) */
+        .gold-seal {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0.85;
+        }
+
+        .seal-circle {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 2px dashed var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            background: rgba(212, 175, 55, 0.08);
+            color: var(--gold);
+        }
+
+        .seal-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 6pt;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1.2;
+            letter-spacing: 0.05em;
+        }
+
+        /* 2 & 3. TANDA TANGAN BERSALE HIERARKI RAPI */
         .footer-center {
             display: flex;
             flex-direction: column;
             align-items: center;
+            position: relative;
         }
 
+        /* Watermark Emboss Lingkaran Belakang Tanda Tangan (Opacity 10%) */
+        .sig-emboss-bg {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px double rgba(7, 28, 77, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            z-index: 1;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 6.5pt;
+            font-weight: 800;
+            color: rgba(7, 28, 77, 0.12);
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        /* Tanda tangan diperbesar ~170% */
         .signature-img {
-            height: 48px;
+            height: 80px; /* Ukuran diperbesar pesat */
             width: auto;
             object-fit: contain;
-            margin-bottom: 2px;
+            margin-bottom: -6px;
+            position: relative;
+            z-index: 2;
+            filter: contract(120%);
         }
 
         .sig-line {
-            width: 200px;
-            height: 1px;
-            background-color: #CBD5E1;
-            margin-bottom: 4px;
+            width: 220px;
+            height: 1.5px;
+            background-color: var(--primary);
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 2;
         }
 
+        /* Hierarki Nama Penandatangan */
         .sig-name {
             font-family: 'Poppins', sans-serif;
-            font-size: 8.5pt;
+            font-size: 9pt;
             font-weight: 700;
             color: var(--primary);
+            line-height: 1.2;
         }
 
         .sig-title {
             font-family: 'Poppins', sans-serif;
             font-size: 7.5pt;
+            font-weight: 600;
             color: var(--text-body);
+            line-height: 1.2;
         }
 
         .sig-org {
             font-family: 'Montserrat', sans-serif;
             font-size: 7pt;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--secondary);
+            letter-spacing: 0.05em;
+            line-height: 1.2;
         }
 
+        /* 5. QR CODE + LABEL VERIFY CREDENTIAL */
         .footer-right {
             display: flex;
-            justify-content: flex-end;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .qr-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 5.5pt;
+            font-weight: 800;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 3px;
         }
 
         .qr-wrapper {
-            width: 58px;
-            height: 58px;
+            width: 56px;
+            height: 56px;
             padding: 3px;
             border: 1px solid var(--border-light);
             border-radius: 4px;
             background: #FFF;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
-        .qr-wrapper img {
-            width: 100% !important;
-            height: 100% !important;
-        }
+        .qr-wrapper img { width: 100% !important; height: 100% !important; }
 
         .bottom-bar {
             margin-top: 3mm;
@@ -535,30 +620,18 @@
 
         .cert-num-value {
             font-family: 'Poppins', sans-serif;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--primary);
             margin-left: 4px;
         }
 
-        /* PRINT SETTINGS */
+        /* PRINT CONFIG */
         @media print {
-            @page {
-                size: A4 landscape;
-                margin: 0;
-            }
-            body {
-                background: none !important;
-                padding: 0 !important;
-            }
-            .admin-card, .login-overlay {
-                display: none !important;
-            }
-            .protected-content {
-                display: flex !important;
-            }
-            .certificate-wrapper {
-                box-shadow: none !important;
-            }
+            @page { size: A4 landscape; margin: 0; }
+            body { background: none !important; padding: 0 !important; }
+            .admin-card, .login-overlay { display: none !important; }
+            .protected-content { display: flex !important; }
+            .certificate-wrapper { box-shadow: none !important; }
         }
     </style>
 </head>
@@ -577,10 +650,10 @@
         </div>
     </div>
 
-    <!-- MAIN PROTECTED CONTENT -->
+    <!-- MAIN CONTENT -->
     <div class="protected-content" id="protectedContent">
         
-        <!-- Admin Form -->
+        <!-- Admin Form Panel -->
         <div class="admin-card">
             <div class="admin-title">⚙️ Miranaya Academy Certificate Generator</div>
             
@@ -624,19 +697,19 @@
         <div class="certificate-wrapper">
             <div class="certificate-canvas" id="certificate">
                 
-                <!-- CSS Frame Elements -->
+                <!-- 6. Border Multi-Layer Premium -->
                 <div class="border-outer"></div>
                 <div class="border-inner"></div>
                 <div class="top-stripe"></div>
 
-                <!-- Watermark Logo -->
-                <div class="watermark">
-                    <img src="mdemy.png" alt="Watermark Logo">
+                <!-- 7. Background Watermark Transparan -->
+                <div class="watermark-bg">
+                    <img src="mdemy.png" alt="Watermark Background">
                 </div>
 
                 <div class="content-container">
                     
-                    <!-- Top Badges -->
+                    <!-- Badges -->
                     <div class="badges-row">
                         <div class="badge-item">🛡️ AI Verified Credential</div>
                         <div class="badge-item">⭐ AI Excellence Standard Certified</div>
@@ -649,13 +722,14 @@
                         <div class="brand-tagline">Learn • Innovate • Apply • Impact</div>
                     </header>
 
-                    <!-- Body Text -->
+                    <!-- Body Content -->
                     <main class="main-body">
                         <h1 class="cert-title">CERTIFICATE</h1>
                         <div class="cert-subtitle">OF COMPLETION</div>
 
                         <div class="award-to">This certificate is awarded to</div>
 
+                        <!-- 1. Nama Peserta Menonjol -->
                         <div class="participant-box">
                             <div class="participant-name" id="displayParticipantName">JOHN DOE</div>
                         </div>
@@ -664,6 +738,7 @@
                             In recognition of the successful completion of<br>the professional training program
                         </div>
 
+                        <!-- 8. Program Training Lebih Besar -->
                         <div class="course-title" id="displayCourseName">AI Fundamentals for Professionals</div>
 
                         <div class="course-desc">
@@ -675,20 +750,41 @@
                     <footer class="footer-body">
                         <div class="footer-grid">
                             
+                            <!-- Left Area + Gold Seal -->
                             <div class="footer-left">
-                                <div class="date-label">ISSUED ON</div>
-                                <div class="date-value" id="displayDate">-</div>
+                                <div class="date-container">
+                                    <div class="date-label">ISSUED ON</div>
+                                    <div class="date-value" id="displayDate">-</div>
+                                </div>
+
+                                <!-- 4. Digital Emboss/Seal Emblem -->
+                                <div class="gold-seal">
+                                    <div class="seal-circle">🎖️</div>
+                                    <div class="seal-text">
+                                        MIRANAYA ACADEMY<br>
+                                        OFFICIAL SEAL<br>
+                                        VERIFIED
+                                    </div>
+                                </div>
                             </div>
 
+                            <!-- 2 & 3. Signature & Penandatangan Hierarki -->
                             <div class="footer-center">
+                                <!-- Watermark Emboss Stamp Belakang TTD -->
+                                <div class="sig-emboss-bg">
+                                    MIRANAYA<br>ACADEMY<br>★ AI VERIFIED ★
+                                </div>
+
                                 <img src="signature.png" alt="Signature" class="signature-img">
                                 <div class="sig-line"></div>
                                 <div class="sig-name">Muhamad Fatoni, S.T., CBMP, CAIP</div>
-                                <div class="sig-title">Director</div>
+                                <div class="sig-title">Founder & Lead Trainer</div>
                                 <div class="sig-org">Miranaya Academy</div>
                             </div>
 
+                            <!-- 5. QR Code + Label Verify -->
                             <div class="footer-right">
+                                <div class="qr-label">Verify Credential</div>
                                 <div class="qr-wrapper">
                                     <div id="qrcode"></div>
                                 </div>
@@ -696,6 +792,7 @@
 
                         </div>
 
+                        <!-- Bottom Bar Number -->
                         <div class="bottom-bar">
                             <span class="cert-num-label">Certificate Number:</span>
                             <span class="cert-num-value" id="displayCertNum">MRA-AIF-2026-000001</span>
@@ -729,9 +826,7 @@
         }
 
         function checkEnter(event) {
-            if (event.key === "Enter") {
-                verifyPassword();
-            }
+            if (event.key === "Enter") verifyPassword();
         }
 
         const COURSE_CODES = {
@@ -786,8 +881,8 @@
             qrContainer.innerHTML = '';
             new QRCode(qrContainer, {
                 text: certNumber,
-                width: 52,
-                height: 52,
+                width: 50,
+                height: 50,
                 colorDark: "#071C4D",
                 colorLight: "#FFFFFF",
                 correctLevel: QRCode.CorrectLevel.H
@@ -826,7 +921,6 @@
             alert("Nomor sertifikat berhasil di-generate!");
         }
 
-        /* OPERASI DOWNLOAD PDF DENGAN PERBAIKAN BORDER & MARGIN FIT 100% */
         function downloadPDF() {
             const element = document.getElementById('certificate');
             const participantName = document.getElementById('displayParticipantName').textContent || "Participant";
