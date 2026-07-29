@@ -132,51 +132,76 @@
         .btn-secondary { background-color: var(--primary); color: #FFFFFF; }
         .btn-danger { background-color: #DC2626; color: #FFFFFF; margin-right: auto; }
 
-        /* Certificate Container Presisi */
+        /* Container Certificate Presisi A4 */
         .certificate-wrapper {
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
             background: #FFFFFF;
         }
 
+        /* DENGAN PURE CSS BORDER (ANTI GELOMBANG/MELENCENG) */
         .certificate-canvas {
             width: 1000px;
-            height: 707px; /* Skala Presisi 1:1.414 (A4 Landscape) */
+            height: 707px;
             background-color: #F8FAFC;
             background-image: radial-gradient(circle at 50% 50%, #FFFFFF 0%, #EEF4FB 70%, #E2EDF8 100%);
             position: relative;
-            overflow: hidden;
             box-sizing: border-box;
-            padding: 35px 50px;
+            padding: 40px 50px 30px 50px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            overflow: hidden;
+            
+            /* Frame CSS Presisi Kunci */
+            border: 12px solid #FFFFFF;
+            outline: 3px solid var(--primary);
+            outline-offset: -15px;
         }
 
-        /* SVG Frame Aman Safe-Zone (Bebas Terpotong) */
-        .tech-border-svg {
+        /* Inner Dashed Frame via Pseudo Element */
+        .certificate-canvas::before {
+            content: '';
+            position: absolute;
+            top: 22px;
+            left: 22px;
+            right: 22px;
+            bottom: 22px;
+            border: 1px dashed rgba(15, 98, 254, 0.35);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Garis Top Akses Bawah Frame */
+        .top-accent-bar {
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            pointer-events: none;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+            z-index: 3;
         }
 
-        /* Badges Top */
-        .ai-security-badge {
-            position: absolute;
-            top: 28px;
-            left: 45px;
+        /* Badges Inset Safe-Zone */
+        .top-badges-row {
+            position: relative;
             z-index: 5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 5px;
+        }
+
+        .ai-security-badge {
             display: flex;
             align-items: center;
             gap: 6px;
             background: rgba(255, 255, 255, 0.95);
             border: 1px solid rgba(15, 98, 254, 0.3);
-            padding: 4px 10px;
+            padding: 4px 12px;
             border-radius: 20px;
-            box-shadow: 0 2px 6px rgba(7, 28, 77, 0.05);
+            box-shadow: 0 2px 5px rgba(7, 28, 77, 0.05);
         }
 
         .badge-icon { width: 12px; height: 12px; fill: var(--secondary); }
@@ -190,23 +215,19 @@
         }
 
         .achievement-seal {
-            position: absolute;
-            top: 26px;
-            right: 45px;
-            z-index: 5;
             display: flex;
             align-items: center;
             gap: 8px;
             background: rgba(255, 255, 255, 0.95);
             border: 1px solid rgba(7, 28, 77, 0.18);
-            padding: 4px 10px;
+            padding: 4px 12px;
             border-radius: 6px;
-            box-shadow: 0 2px 6px rgba(7, 28, 77, 0.05);
+            box-shadow: 0 2px 5px rgba(7, 28, 77, 0.05);
         }
 
         .seal-icon-wrapper {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             border-radius: 50%;
             display: flex;
@@ -214,7 +235,7 @@
             justify-content: center;
         }
 
-        .seal-icon-wrapper svg { width: 10px; height: 10px; fill: #FFFFFF; }
+        .seal-icon-wrapper svg { width: 9px; height: 9px; fill: #FFFFFF; }
         .seal-title {
             font-family: 'Montserrat', sans-serif;
             font-size: 7.5pt;
@@ -238,7 +259,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 380px;
+            width: 360px;
             opacity: 0.035;
             pointer-events: none;
             z-index: 1;
@@ -260,14 +281,13 @@
 
         /* Header */
         .header-section {
-            margin-top: 5px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
         .logo {
-            height: 48px;
+            height: 46px;
             width: auto;
             object-fit: contain;
             margin-bottom: 4px;
@@ -298,10 +318,11 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            margin: 5px 0;
         }
 
         .certificate-title-group {
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .certificate-title-main {
@@ -335,7 +356,7 @@
 
         .participant-name-container {
             width: 75%;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             padding-bottom: 6px;
             border-bottom: 1px solid var(--border-light);
             display: flex;
@@ -371,7 +392,7 @@
             font-size: 9.5pt;
             font-weight: 400;
             color: var(--text-body);
-            line-height: 1.45;
+            line-height: 1.4;
             margin-bottom: 6px;
         }
 
@@ -394,7 +415,7 @@
             font-size: 8.5pt;
             font-weight: 400;
             color: var(--text-muted);
-            max-width: 65%;
+            max-width: 68%;
             line-height: 1.4;
         }
 
@@ -408,12 +429,11 @@
             grid-template-columns: 1fr 1.4fr 1fr;
             align-items: flex-end;
             width: 100%;
-            padding: 0 10px;
         }
 
         .footer-left {
             text-align: left;
-            padding-bottom: 2px;
+            padding-bottom: 4px;
         }
 
         .field-label {
@@ -428,7 +448,7 @@
 
         .field-value {
             font-family: 'Poppins', sans-serif;
-            font-size: 10pt;
+            font-size: 9.5pt;
             font-weight: 600;
             color: var(--primary);
         }
@@ -440,25 +460,24 @@
             justify-content: flex-end;
         }
 
-        /* WADAH TTD DENGAN JARAK BERSIH DARI TEKS */
+        /* POSISI TTD TIDAK MENIMPA TEKS */
         .signature-container {
-            height: 75px; /* Tinggi wadah ttd */
+            height: 65px;
             width: 100%;
             display: flex;
             align-items: flex-end;
             justify-content: center;
-            margin-bottom: 4px; /* Posisi aman di ATAS garis */
-            z-index: 6;
+            margin-bottom: 5px;
         }
 
         .signature {
-            max-height: 75px;
-            max-width: 200px;
+            max-height: 65px;
+            max-width: 190px;
             object-fit: contain;
         }
 
         .signature-line {
-            width: 240px;
+            width: 230px;
             height: 1px;
             background-color: var(--line-color);
             margin-bottom: 6px;
@@ -466,7 +485,7 @@
 
         .signatory-name {
             font-family: 'Poppins', sans-serif;
-            font-size: 10pt;
+            font-size: 9.5pt;
             font-weight: 700;
             color: var(--primary);
             line-height: 1.2;
@@ -497,8 +516,8 @@
         }
 
         .qr-box {
-            width: 75px;
-            height: 75px;
+            width: 70px;
+            height: 70px;
             padding: 4px;
             border: 1px solid var(--border-light);
             border-radius: 6px;
@@ -506,7 +525,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 2px 6px rgba(7, 28, 77, 0.04);
+            box-shadow: 0 2px 5px rgba(7, 28, 77, 0.04);
         }
 
         .qr-box img {
@@ -544,7 +563,7 @@
             letter-spacing: 0.05em;
         }
 
-        /* PRINT ATURAN A4 MANDIRI */
+        /* PRINT MEDIA */
         @media print {
             @page {
                 size: A4 landscape;
@@ -566,7 +585,6 @@
             .certificate-canvas {
                 width: 100vw !important;
                 height: 100vh !important;
-                padding: 35px 50px !important;
             }
         }
     </style>
@@ -619,50 +637,7 @@
     <div class="certificate-wrapper">
         <div class="certificate-canvas" id="certificate">
             
-            <!-- SVG FRAME SAFE ZONE (TIDAK BISA KEPOTONG) -->
-            <svg class="tech-border-svg" viewBox="0 0 1000 707" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Frame Utama -->
-                <rect x="15" y="15" width="970" height="677" rx="4" stroke="#CBD5E1" stroke-width="1.5"/>
-                <rect x="22" y="22" width="956" height="663" rx="2" stroke="#071C4D" stroke-width="2.5" stroke-opacity="0.9"/>
-                <rect x="28" y="28" width="944" height="651" stroke="#0F62FE" stroke-width="0.75" stroke-dasharray="6 4" stroke-opacity="0.35"/>
-
-                <!-- Top Gradient Line -->
-                <path d="M15 15 H985 V20 H15 Z" fill="url(#topGrad)"/>
-
-                <!-- Corner Tech Elements -->
-                <path d="M15 65 V 15 H 65" stroke="#071C4D" stroke-width="3.5"/>
-                <path d="M985 65 V 15 H 935" stroke="#071C4D" stroke-width="3.5"/>
-                <path d="M15 642 V 692 H 65" stroke="#071C4D" stroke-width="3.5"/>
-                <path d="M985 642 V 692 H 935" stroke="#071C4D" stroke-width="3.5"/>
-
-                <defs>
-                    <linearGradient id="topGrad" x1="15" y1="15" x2="985" y2="15" gradientUnits="userSpaceOnUse">
-                        <stop stop-color="#071C4D"/>
-                        <stop offset="0.5" stop-color="#0F62FE"/>
-                        <stop offset="1" stop-color="#00AEEF"/>
-                    </linearGradient>
-                </defs>
-            </svg>
-
-            <!-- Badges -->
-            <div class="ai-security-badge">
-                <svg class="badge-icon" viewBox="0 0 24 24">
-                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
-                </svg>
-                <span class="badge-text">AI Verified Credential</span>
-            </div>
-
-            <div class="achievement-seal">
-                <div class="seal-icon-wrapper">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                    </svg>
-                </div>
-                <div class="seal-text-group">
-                    <span class="seal-title">AI Excellence</span>
-                    <span class="seal-subtitle">Standard Certified</span>
-                </div>
-            </div>
+            <div class="top-accent-bar"></div>
 
             <!-- Watermark -->
             <div class="watermark-container">
@@ -671,12 +646,36 @@
 
             <div class="certificate-content">
                 
+                <!-- Row Badges Atas -->
+                <div class="top-badges-row">
+                    <div class="ai-security-badge">
+                        <svg class="badge-icon" viewBox="0 0 24 24">
+                            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+                        </svg>
+                        <span class="badge-text">AI Verified Credential</span>
+                    </div>
+
+                    <div class="achievement-seal">
+                        <div class="seal-icon-wrapper">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                            </svg>
+                        </div>
+                        <div class="seal-text-group">
+                            <span class="seal-title">AI Excellence</span>
+                            <span class="seal-subtitle">Standard Certified</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Header Brand -->
                 <header class="header-section">
                     <img src="mdemy.png" alt="Miranaya Academy Logo" class="logo">
                     <div class="brand-title">MIRANAYA ACADEMY</div>
                     <div class="brand-tagline">Learn • Innovate • Apply • Impact</div>
                 </header>
 
+                <!-- Isi Utama -->
                 <main class="main-section">
                     <div class="certificate-title-group">
                         <h1 class="certificate-title-main">CERTIFICATE</h1>
@@ -703,6 +702,7 @@
                     </div>
                 </main>
 
+                <!-- Footer Section -->
                 <footer class="footer-section">
                     <div class="footer-grid">
                         
@@ -814,8 +814,8 @@
             
             qrcodeObj = new QRCode(qrContainer, {
                 text: certNumber,
-                width: 65,
-                height: 65,
+                width: 62,
+                height: 62,
                 colorDark: "#071C4D",
                 colorLight: "#FFFFFF",
                 correctLevel: QRCode.CorrectLevel.H
