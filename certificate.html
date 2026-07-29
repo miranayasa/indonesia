@@ -15,7 +15,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <style>
-        /* CSS Reset & Global Variables */
         *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
@@ -133,32 +132,27 @@
         .btn-secondary { background-color: var(--primary); color: #FFFFFF; }
         .btn-danger { background-color: #DC2626; color: #FFFFFF; margin-right: auto; }
 
-        /* Certificate Container & Canvas Presisi A4 Landscape */
+        /* Certificate Container Presisi */
         .certificate-wrapper {
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
             background: #FFFFFF;
         }
 
         .certificate-canvas {
-            width: 297mm;
-            height: 210mm;
-            max-width: 297mm;
-            max-height: 210mm;
-            background-color: #F4F7FC;
-            background-image: 
-                radial-gradient(circle at 50% 45%, #FFFFFF 0%, #EEF4FB 60%, #E2EDF8 100%),
-                radial-gradient(circle, rgba(15, 98, 254, 0.08) 1px, transparent 1px);
-            background-size: 100% 100%, 16px 16px;
+            width: 1000px;
+            height: 707px; /* Skala Presisi 1:1.414 (A4 Landscape) */
+            background-color: #F8FAFC;
+            background-image: radial-gradient(circle at 50% 50%, #FFFFFF 0%, #EEF4FB 70%, #E2EDF8 100%);
             position: relative;
             overflow: hidden;
             box-sizing: border-box;
-            padding: 12mm 18mm;
+            padding: 35px 50px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
-        /* Frame SVG Pas Tanpa Offscreen / Terpotong */
+        /* SVG Frame Aman Safe-Zone (Bebas Terpotong) */
         .tech-border-svg {
             position: absolute;
             top: 0;
@@ -169,11 +163,11 @@
             pointer-events: none;
         }
 
-        /* Top Badges */
+        /* Badges Top */
         .ai-security-badge {
             position: absolute;
-            top: 10mm;
-            left: 15mm;
+            top: 28px;
+            left: 45px;
             z-index: 5;
             display: flex;
             align-items: center;
@@ -182,23 +176,23 @@
             border: 1px solid rgba(15, 98, 254, 0.3);
             padding: 4px 10px;
             border-radius: 20px;
-            box-shadow: 0 2px 8px rgba(7, 28, 77, 0.05);
+            box-shadow: 0 2px 6px rgba(7, 28, 77, 0.05);
         }
 
         .badge-icon { width: 12px; height: 12px; fill: var(--secondary); }
         .badge-text {
             font-family: 'Montserrat', sans-serif;
-            font-size: 5.8pt;
+            font-size: 7.5pt;
             font-weight: 700;
             color: var(--primary);
-            letter-spacing: 0.1em;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
         }
 
         .achievement-seal {
             position: absolute;
-            top: 9mm;
-            right: 15mm;
+            top: 26px;
+            right: 45px;
             z-index: 5;
             display: flex;
             align-items: center;
@@ -207,7 +201,7 @@
             border: 1px solid rgba(7, 28, 77, 0.18);
             padding: 4px 10px;
             border-radius: 6px;
-            box-shadow: 0 2px 8px rgba(7, 28, 77, 0.05);
+            box-shadow: 0 2px 6px rgba(7, 28, 77, 0.05);
         }
 
         .seal-icon-wrapper {
@@ -223,7 +217,7 @@
         .seal-icon-wrapper svg { width: 10px; height: 10px; fill: #FFFFFF; }
         .seal-title {
             font-family: 'Montserrat', sans-serif;
-            font-size: 6pt;
+            font-size: 7.5pt;
             font-weight: 800;
             color: var(--primary);
             letter-spacing: 0.08em;
@@ -232,19 +226,19 @@
         }
         .seal-subtitle {
             font-family: 'Poppins', sans-serif;
-            font-size: 5pt;
+            font-size: 6pt;
             font-weight: 600;
             color: var(--accent);
             text-transform: uppercase;
         }
 
-        /* Watermark Transparan di Tengah */
+        /* Watermark Background */
         .watermark-container {
             position: absolute;
-            top: 48%;
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 110mm;
+            width: 380px;
             opacity: 0.035;
             pointer-events: none;
             z-index: 1;
@@ -253,7 +247,7 @@
         }
         .watermark-img { width: 100%; height: auto; }
 
-        /* Layering Konten Sertifikat */
+        /* Content Layer */
         .certificate-content {
             position: relative;
             z-index: 4;
@@ -264,56 +258,55 @@
             text-align: center;
         }
 
-        /* Header Section */
+        /* Header */
         .header-section {
-            margin-top: 1mm;
+            margin-top: 5px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
         .logo {
-            height: 13mm;
+            height: 48px;
             width: auto;
             object-fit: contain;
-            margin-bottom: 1.5mm;
+            margin-bottom: 4px;
         }
 
         .brand-title {
             font-family: 'Montserrat', sans-serif;
-            font-size: 10.5pt;
+            font-size: 13pt;
             font-weight: 800;
-            letter-spacing: 0.3em;
+            letter-spacing: 0.35em;
             color: var(--primary);
             text-transform: uppercase;
         }
 
         .brand-tagline {
             font-family: 'Montserrat', sans-serif;
-            font-size: 6.5pt;
+            font-size: 7.5pt;
             font-weight: 600;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.22em;
             color: var(--accent);
             text-transform: uppercase;
-            margin-top: 0.5mm;
+            margin-top: 2px;
         }
 
-        /* Main Body Section */
+        /* Main Section */
         .main-section {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin-top: -2mm;
         }
 
         .certificate-title-group {
-            margin-bottom: 2mm;
+            margin-bottom: 8px;
         }
 
         .certificate-title-main {
             font-family: 'Cinzel', serif;
-            font-size: 26pt;
+            font-size: 32pt;
             font-weight: 700;
             letter-spacing: 0.15em;
             color: var(--primary);
@@ -322,28 +315,28 @@
 
         .certificate-title-sub {
             font-family: 'Montserrat', sans-serif;
-            font-size: 8pt;
+            font-size: 9.5pt;
             font-weight: 600;
-            letter-spacing: 0.35em;
+            letter-spacing: 0.38em;
             color: var(--secondary);
-            margin-top: 1mm;
+            margin-top: 4px;
             text-transform: uppercase;
         }
 
         .award-statement {
             font-family: 'Montserrat', sans-serif;
-            font-size: 7.5pt;
+            font-size: 8.5pt;
             font-weight: 500;
             letter-spacing: 0.08em;
             color: var(--text-muted);
             text-transform: uppercase;
-            margin-bottom: 2mm;
+            margin-bottom: 8px;
         }
 
         .participant-name-container {
-            width: 78%;
-            margin-bottom: 2.5mm;
-            padding-bottom: 1.5mm;
+            width: 75%;
+            margin-bottom: 10px;
+            padding-bottom: 6px;
             border-bottom: 1px solid var(--border-light);
             display: flex;
             justify-content: center;
@@ -357,7 +350,7 @@
             bottom: -2px;
             left: 50%;
             transform: translateX(-50%);
-            width: 35mm;
+            width: 140px;
             height: 3px;
             background-color: var(--secondary);
             border-radius: 2px;
@@ -365,7 +358,7 @@
 
         .participant-name {
             font-family: 'Playfair Display', serif;
-            font-size: 26pt;
+            font-size: 30pt;
             font-weight: 700;
             color: var(--primary);
             letter-spacing: 0.02em;
@@ -375,21 +368,21 @@
 
         .recognition-statement {
             font-family: 'Poppins', sans-serif;
-            font-size: 8pt;
+            font-size: 9.5pt;
             font-weight: 400;
             color: var(--text-body);
-            line-height: 1.4;
-            margin-bottom: 1.5mm;
+            line-height: 1.45;
+            margin-bottom: 6px;
         }
 
         .course-name-container {
-            margin-bottom: 1.5mm;
+            margin-bottom: 6px;
             max-width: 85%;
         }
 
         .course-name {
             font-family: 'Montserrat', sans-serif;
-            font-size: 14pt;
+            font-size: 16pt;
             font-weight: 700;
             color: var(--secondary);
             letter-spacing: 0.01em;
@@ -398,14 +391,14 @@
 
         .description-statement {
             font-family: 'Poppins', sans-serif;
-            font-size: 7.5pt;
+            font-size: 8.5pt;
             font-weight: 400;
             color: var(--text-muted);
             max-width: 65%;
-            line-height: 1.35;
+            line-height: 1.4;
         }
 
-        /* Footer Grid Layout & Fixed Signature Size */
+        /* Footer Grid & TTD FIX */
         .footer-section {
             width: 100%;
         }
@@ -415,27 +408,27 @@
             grid-template-columns: 1fr 1.4fr 1fr;
             align-items: flex-end;
             width: 100%;
-            padding: 0 2mm;
+            padding: 0 10px;
         }
 
         .footer-left {
             text-align: left;
-            padding-bottom: 1mm;
+            padding-bottom: 2px;
         }
 
         .field-label {
             font-family: 'Montserrat', sans-serif;
-            font-size: 6.5pt;
+            font-size: 7.5pt;
             font-weight: 600;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            margin-bottom: 1mm;
+            margin-bottom: 3px;
         }
 
         .field-value {
             font-family: 'Poppins', sans-serif;
-            font-size: 8.5pt;
+            font-size: 10pt;
             font-weight: 600;
             color: var(--primary);
         }
@@ -447,52 +440,52 @@
             justify-content: flex-end;
         }
 
-        /* TANDA TANGAN DIBESARKAN SECARA SIGNIFIKAN & PROPORSIONAL */
+        /* WADAH TTD DENGAN JARAK BERSIH DARI TEKS */
         .signature-container {
-            height: 28mm; /* Wadah diperbesar */
+            height: 75px; /* Tinggi wadah ttd */
             width: 100%;
             display: flex;
             align-items: flex-end;
             justify-content: center;
-            margin-bottom: -4mm; /* Sentuhkan ttd ke garis secara profesional */
+            margin-bottom: 4px; /* Posisi aman di ATAS garis */
             z-index: 6;
         }
 
         .signature {
-            height: 28mm !important; /* Diperbesar tegak lurus */
-            max-width: 65mm;
+            max-height: 75px;
+            max-width: 200px;
             object-fit: contain;
         }
 
         .signature-line {
-            width: 68mm;
+            width: 240px;
             height: 1px;
             background-color: var(--line-color);
-            margin-bottom: 1.5mm;
+            margin-bottom: 6px;
         }
 
         .signatory-name {
             font-family: 'Poppins', sans-serif;
-            font-size: 8.8pt;
+            font-size: 10pt;
             font-weight: 700;
             color: var(--primary);
-            line-height: 1.1;
+            line-height: 1.2;
         }
 
         .signatory-title {
             font-family: 'Poppins', sans-serif;
-            font-size: 7.2pt;
+            font-size: 8.5pt;
             font-weight: 400;
             color: var(--text-body);
-            line-height: 1.1;
+            line-height: 1.2;
         }
 
         .signatory-organization {
             font-family: 'Montserrat', sans-serif;
-            font-size: 6.8pt;
+            font-size: 8pt;
             font-weight: 600;
             color: var(--secondary);
-            line-height: 1.1;
+            line-height: 1.2;
             letter-spacing: 0.04em;
         }
 
@@ -504,11 +497,11 @@
         }
 
         .qr-box {
-            width: 20mm;
-            height: 20mm;
-            padding: 1mm;
+            width: 75px;
+            height: 75px;
+            padding: 4px;
             border: 1px solid var(--border-light);
-            border-radius: 5px;
+            border-radius: 6px;
             background-color: var(--bg-card);
             display: flex;
             justify-content: center;
@@ -524,16 +517,16 @@
         .bottom-bar {
             width: 100%;
             text-align: center;
-            padding-top: 2mm;
+            padding-top: 8px;
             border-top: 1px dashed var(--border-light);
-            margin-top: 1.5mm;
+            margin-top: 8px;
         }
 
         .certificate-number-container {
             display: inline-flex;
             gap: 0.5em;
             align-items: center;
-            font-size: 7pt;
+            font-size: 8pt;
         }
 
         .cert-num-label {
@@ -551,31 +544,29 @@
             letter-spacing: 0.05em;
         }
 
-        /* CETAK & EKSPOR PDF PRESISI TANPA KEPOTONG */
+        /* PRINT ATURAN A4 MANDIRI */
         @media print {
             @page {
                 size: A4 landscape;
-                margin: 0 !important;
+                margin: 0;
             }
 
-            html, body {
-                width: 297mm !important;
-                height: 210mm !important;
+            body {
                 background: #FFFFFF !important;
                 padding: 0 !important;
                 margin: 0 !important;
-                overflow: hidden !important;
             }
 
             .admin-card { display: none !important; }
-            .certificate-wrapper { box-shadow: none !important; border: none !important; }
+
+            .certificate-wrapper {
+                box-shadow: none !important;
+            }
 
             .certificate-canvas {
-                width: 297mm !important;
-                height: 210mm !important;
-                padding: 12mm 18mm !important;
-                page-break-inside: avoid !important;
-                page-break-after: avoid !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                padding: 35px 50px !important;
             }
         }
     </style>
@@ -628,24 +619,24 @@
     <div class="certificate-wrapper">
         <div class="certificate-canvas" id="certificate">
             
-            <!-- SVG FRAME TERPRESISI (ViewBox Pas A4) -->
-            <svg class="tech-border-svg" viewBox="0 0 1122 793" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Outer Frame Elements -->
-                <rect x="20" y="20" width="1082" height="753" rx="4" stroke="#CBD5E1" stroke-width="1.5"/>
-                <rect x="28" y="28" width="1066" height="737" rx="2" stroke="#071C4D" stroke-width="2.5" stroke-opacity="0.9"/>
-                <rect x="35" y="35" width="1052" height="723" stroke="#0F62FE" stroke-width="0.75" stroke-dasharray="6 4" stroke-opacity="0.35"/>
+            <!-- SVG FRAME SAFE ZONE (TIDAK BISA KEPOTONG) -->
+            <svg class="tech-border-svg" viewBox="0 0 1000 707" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Frame Utama -->
+                <rect x="15" y="15" width="970" height="677" rx="4" stroke="#CBD5E1" stroke-width="1.5"/>
+                <rect x="22" y="22" width="956" height="663" rx="2" stroke="#071C4D" stroke-width="2.5" stroke-opacity="0.9"/>
+                <rect x="28" y="28" width="944" height="651" stroke="#0F62FE" stroke-width="0.75" stroke-dasharray="6 4" stroke-opacity="0.35"/>
 
-                <!-- Top Accent Line -->
-                <path d="M20 20 H1102 V25 H20 Z" fill="url(#topGrad)"/>
+                <!-- Top Gradient Line -->
+                <path d="M15 15 H985 V20 H15 Z" fill="url(#topGrad)"/>
 
-                <!-- Corner AI Nodes -->
-                <path d="M20 80 V 20 H 80" stroke="#071C4D" stroke-width="4"/>
-                <path d="M1102 80 V 20 H 1042" stroke="#071C4D" stroke-width="4"/>
-                <path d="M20 713 V 773 H 80" stroke="#071C4D" stroke-width="4"/>
-                <path d="M1102 713 V 773 H 1042" stroke="#071C4D" stroke-width="4"/>
+                <!-- Corner Tech Elements -->
+                <path d="M15 65 V 15 H 65" stroke="#071C4D" stroke-width="3.5"/>
+                <path d="M985 65 V 15 H 935" stroke="#071C4D" stroke-width="3.5"/>
+                <path d="M15 642 V 692 H 65" stroke="#071C4D" stroke-width="3.5"/>
+                <path d="M985 642 V 692 H 935" stroke="#071C4D" stroke-width="3.5"/>
 
                 <defs>
-                    <linearGradient id="topGrad" x1="20" y1="20" x2="1102" y2="20" gradientUnits="userSpaceOnUse">
+                    <linearGradient id="topGrad" x1="15" y1="15" x2="985" y2="15" gradientUnits="userSpaceOnUse">
                         <stop stop-color="#071C4D"/>
                         <stop offset="0.5" stop-color="#0F62FE"/>
                         <stop offset="1" stop-color="#00AEEF"/>
@@ -653,7 +644,7 @@
                 </defs>
             </svg>
 
-            <!-- Badges Top -->
+            <!-- Badges -->
             <div class="ai-security-badge">
                 <svg class="badge-icon" viewBox="0 0 24 24">
                     <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
@@ -673,7 +664,7 @@
                 </div>
             </div>
 
-            <!-- Watermark Transparan -->
+            <!-- Watermark -->
             <div class="watermark-container">
                 <img src="mdemy.png" alt="" class="watermark-img">
             </div>
@@ -823,8 +814,8 @@
             
             qrcodeObj = new QRCode(qrContainer, {
                 text: certNumber,
-                width: 68,
-                height: 68,
+                width: 65,
+                height: 65,
                 colorDark: "#071C4D",
                 colorLight: "#FFFFFF",
                 correctLevel: QRCode.CorrectLevel.H
@@ -867,7 +858,14 @@
                 margin: 0,
                 filename: `Certificate - ${participantName}.pdf`,
                 image: { type: 'jpeg', quality: 1.0 },
-                html2canvas: { scale: 2, useCORS: true, scrollX: 0, scrollY: 0 },
+                html2canvas: { 
+                    scale: 3, 
+                    useCORS: true, 
+                    width: 1000,
+                    height: 707,
+                    windowWidth: 1000,
+                    windowHeight: 707
+                },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
             };
 
