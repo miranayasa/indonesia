@@ -151,6 +151,23 @@
             animation: slideUp 0.8s ease-out 0.2s backwards;
         }
 
+        /* Section Title Header */
+        .section-header {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--navy-deep);
+            margin: 25px 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--gray-border);
+            padding-bottom: 8px;
+        }
+
+        .section-header i {
+            color: var(--blue-royal);
+        }
+
         /* Progress Indicator */
         .progress-bar-container {
             width: 100%;
@@ -264,6 +281,60 @@
 
         .form-group.error .error-message {
             display: flex;
+        }
+
+        /* Bank Info Box Style */
+        .bank-info-card {
+            display: none;
+            background: #F8FAFC;
+            border: 1.5px dashed var(--blue-royal);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 10px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .bank-info-card.active {
+            display: block;
+        }
+
+        .bank-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .bank-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .bank-account-num {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--navy-deep);
+            letter-spacing: 1px;
+        }
+
+        .btn-copy {
+            background: var(--blue-royal);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition-fast);
+        }
+
+        .btn-copy:hover {
+            background: var(--navy-deep);
         }
 
         /* Dynamic Course Description Card */
@@ -469,7 +540,6 @@
             position: relative;
         }
 
-        /* Success Icon Animation */
         .modal-icon.animated i {
             animation: popCheck 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
@@ -706,6 +776,11 @@
             <form id="registrationForm" novalidate>
                 <div class="form-grid">
                     
+                    <!-- Section Header 1 -->
+                    <div class="full-width section-header">
+                        <i class="fa-solid fa-id-card"></i> Informasi Data Diri
+                    </div>
+
                     <!-- Field: Nama Lengkap -->
                     <div class="form-group">
                         <label for="fullName"><i class="fa-solid fa-user"></i> Nama Lengkap</label>
@@ -758,6 +833,11 @@
                             <input type="text" id="city" name="city" class="input-control" placeholder="Jakarta Selatan" required>
                         </div>
                         <span class="error-message"><i class="fa-solid fa-circle-exclamation"></i> Kota wajib diisi.</span>
+                    </div>
+
+                    <!-- Section Header 2 -->
+                    <div class="full-width section-header">
+                        <i class="fa-solid fa-graduation-cap"></i> Program Pelatihan
                     </div>
 
                     <!-- Field: Pilih Pelatihan -->
@@ -815,6 +895,59 @@
                         <span class="error-message"><i class="fa-solid fa-circle-exclamation"></i> Sumber informasi wajib dipilih.</span>
                     </div>
 
+                    <!-- Section Header 3: Pembayaran -->
+                    <div class="full-width section-header">
+                        <i class="fa-solid fa-wallet"></i> Metode & Pembayaran
+                    </div>
+
+                    <!-- Field: Pilih Bank -->
+                    <div class="form-group full-width">
+                        <label for="bankSelect"><i class="fa-solid fa-building-columns"></i> Pilih Metode Transfer Bank</label>
+                        <div class="input-wrapper">
+                            <select id="bankSelect" name="bankSelect" class="input-control" required>
+                                <option value="" disabled selected>-- Pilih Rekening Bank Tujuan --</option>
+                                <option value="BRI">Bank BRI</option>
+                                <option value="BSI">Bank BSI</option>
+                                <option value="Mandiri">Bank Mandiri</option>
+                                <option value="Permata">Bank Permata</option>
+                                <option value="Bank Saqu">Bank Saqu</option>
+                            </select>
+                        </div>
+                        <span class="error-message"><i class="fa-solid fa-circle-exclamation"></i> Pilih bank untuk tujuan pembayaran.</span>
+                    </div>
+
+                    <!-- Card Rekening Tampil Dinamis -->
+                    <div class="full-width">
+                        <div id="bankInfoCard" class="bank-info-card">
+                            <div class="bank-details">
+                                <div class="bank-row">
+                                    <span style="color: var(--text-muted); font-size: 0.85rem;">Bank Tujuan:</span>
+                                    <span id="displayBankName" style="font-weight: 700; color: var(--navy-deep);"></span>
+                                </div>
+                                <div class="bank-row">
+                                    <span style="color: var(--text-muted); font-size: 0.85rem;">Atas Nama:</span>
+                                    <span style="font-weight: 600; color: var(--navy-deep);">Muhamad Fatoni</span>
+                                </div>
+                                <hr style="border: none; border-top: 1px solid var(--gray-border); margin: 6px 0;">
+                                <div class="bank-row">
+                                    <span id="displayAccNum" class="bank-account-num"></span>
+                                    <button type="button" class="btn-copy" id="copyAccBtn">
+                                        <i class="fa-solid fa-copy"></i> Salin
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Field: Upload Bukti Pembayaran -->
+                    <div class="form-group full-width">
+                        <label for="paymentProof"><i class="fa-solid fa-file-invoice-dollar"></i> Upload Bukti Pembayaran</label>
+                        <div class="input-wrapper">
+                            <input type="file" id="paymentProof" name="paymentProof" class="input-control" accept="image/*,.pdf" required>
+                        </div>
+                        <span class="error-message"><i class="fa-solid fa-circle-exclamation"></i> Bukti pembayaran wajib diunggah.</span>
+                    </div>
+
                     <!-- Field: Catatan (Opsional) -->
                     <div class="form-group full-width">
                         <label for="notes"><i class="fa-solid fa-note-sticky"></i> Catatan Khusus (Opsional)</label>
@@ -826,7 +959,7 @@
                     <!-- Submit Button Container -->
                     <div class="full-width">
                         <button type="submit" id="submitBtn" class="submit-btn">
-                            <span id="btnText">Daftar Sekarang</span>
+                            <span id="btnText">Kirim & Konfirmasi Pembayaran</span>
                             <i class="fa-solid fa-arrow-right" id="btnIcon"></i>
                             <div class="spinner" id="btnSpinner"></div>
                         </button>
@@ -841,7 +974,7 @@
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-box">
             <div class="large-spinner"></div>
-            <div class="loading-text">Memproses Pendaftaran...</div>
+            <div class="loading-text">Memproses Pendaftaran & Pembayaran...</div>
         </div>
     </div>
 
@@ -863,10 +996,10 @@
                 <i class="fa-solid fa-circle-check"></i>
             </div>
             <h3 class="modal-title">Pendaftaran Berhasil</h3>
-            <p class="modal-text">Terima kasih telah mendaftar di Miranaya Academy.<br>Tim kami akan segera menghubungi Anda melalui WhatsApp.</p>
+            <p class="modal-text">Terima kasih telah mendaftar di Miranaya Academy.<br>Silakan klik tombol di bawah untuk mengirimkan rincian pendaftaran dan bukti pembayaran ke WhatsApp Admin.</p>
             <div class="modal-actions">
-                <a href="https://wa.me/6282290007890?text=Halo%20Miranaya%20Academy,%20saya%20sudah%20melakukan%20pendaftaran%20pelatihan." target="_blank" class="btn-wa-admin">
-                    <i class="fa-brands fa-whatsapp"></i> Hubungi Admin
+                <a href="#" id="modalWaBtn" target="_blank" class="btn-wa-admin">
+                    <i class="fa-brands fa-whatsapp"></i> Kirim Bukti ke WhatsApp
                 </a>
                 <button type="button" class="btn-close-modal" id="closeModalBtn">Tutup</button>
             </div>
@@ -888,14 +1021,16 @@
 
     <!-- JavaScript Engine -->
     <script>
-        /**
-         * Miranaya Academy - Client-Side Form Engine
-         * Architecture: Clean Code Functional Pattern
-         */
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwRyfqj0_bYD5ocp3En9BomvGZDVaN9gbAO-r514MnLl_4bmPwhCPp-jFyx4C6M-9Hl/exec";
 
-        // Global State
-        let isSubmitting = false;
+        // Rekening Data Master
+        const ACCOUNTS_DATA = {
+            "BRI": { bank: "Bank BRI", number: "757901000077504", holder: "Muhamad Fatoni" },
+            "BSI": { bank: "Bank BSI", number: "7023706517", holder: "Muhamad Fatoni" },
+            "Mandiri": { bank: "Bank Mandiri", number: "1590000317403", holder: "Muhamad Fatoni" },
+            "Permata": { bank: "Bank Permata", number: "004136030286", holder: "Muhamad Fatoni" },
+            "Bank Saqu": { bank: "Bank Saqu", number: "10061893666", holder: "Muhamad Fatoni" }
+        };
 
         // Course Catalog Data
         const COURSE_DETAILS = {
@@ -926,6 +1061,8 @@
             }
         };
 
+        let isSubmitting = false;
+
         // DOM Elements Collection
         const elements = {
             form: document.getElementById('registrationForm'),
@@ -939,74 +1076,84 @@
             courseCardIcon: document.getElementById('courseCardIcon'),
             courseCardTitle: document.getElementById('courseCardTitle'),
             courseCardDesc: document.getElementById('courseCardDesc'),
+            bankSelect: document.getElementById('bankSelect'),
+            bankInfoCard: document.getElementById('bankInfoCard'),
+            displayBankName: document.getElementById('displayBankName'),
+            displayAccNum: document.getElementById('displayAccNum'),
+            copyAccBtn: document.getElementById('copyAccBtn'),
+            paymentProof: document.getElementById('paymentProof'),
             loadingOverlay: document.getElementById('loadingOverlay'),
             toast: document.getElementById('toast'),
             toastMsg: document.getElementById('toastMsg'),
             toastIcon: document.getElementById('toastIcon'),
             successModal: document.getElementById('successModal'),
+            modalWaBtn: document.getElementById('modalWaBtn'),
             closeModalBtn: document.getElementById('closeModalBtn'),
             requiredInputs: document.querySelectorAll('#registrationForm [required]')
         };
 
-        /**
-         * Initialization Procedure
-         */
         function init() {
-            console.log("[App Init] Miranaya Academy Form Engine initialized.");
-            
-            // Set min date for trainingDate picker (today)
             const today = new Date().toISOString().split('T')[0];
             const dateInput = document.getElementById('trainingDate');
             if (dateInput) dateInput.setAttribute('min', today);
 
-            // Register Event Listeners
             bindEvents();
-            
-            // Initial Progress Calculation
             updateProgress();
         }
 
-        /**
-         * Event Listeners Registration
-         */
         function bindEvents() {
-            // Live Validation & Progress Listener
             elements.requiredInputs.forEach(input => {
                 input.addEventListener('input', () => {
                     validateInput(input);
                     updateProgress();
                 });
 
-                input.addEventListener('blur', () => {
+                input.addEventListener('change', () => {
                     validateInput(input);
                     updateProgress();
                 });
-
-                if (input.tagName === 'SELECT') {
-                    input.addEventListener('change', () => {
-                        validateInput(input);
-                        updateProgress();
-                    });
-                }
             });
 
-            // Dynamic Course Card Change
             elements.courseSelect.addEventListener('change', handleCourseChange);
-
-            // Form Submit Listener
+            elements.bankSelect.addEventListener('change', handleBankChange);
+            elements.copyAccBtn.addEventListener('click', copyAccountNumber);
             elements.form.addEventListener('submit', handleFormSubmit);
-
-            // Modal Close Listener
             elements.closeModalBtn.addEventListener('click', closeSuccessModal);
 
-            // Network Monitoring
             window.addEventListener('online', () => showToast("Koneksi internet kembali terhubung.", "info"));
             window.addEventListener('offline', () => showToast("Koneksi internet terputus. Harap periksa jaringan Anda.", "error"));
         }
 
-        /**
-         * Validation Rules
-         */
+        /* Handler Pilihan Bank Dinamis */
+        function handleBankChange(e) {
+            const bankKey = e.target.value;
+            const bankData = ACCOUNTS_DATA[bankKey];
+
+            if (bankData) {
+                elements.displayBankName.textContent = bankData.bank;
+                elements.displayAccNum.textContent = bankData.number;
+                elements.bankInfoCard.classList.add('active');
+            } else {
+                elements.bankInfoCard.classList.remove('active');
+            }
+        }
+
+        /* Salin Nomor Rekening */
+        function copyAccountNumber() {
+            const num = elements.displayAccNum.textContent;
+            if (!num) return;
+
+            navigator.clipboard.writeText(num).then(() => {
+                showToast("Nomor rekening berhasil disalin!", "info");
+                elements.copyAccBtn.innerHTML = `<i class="fa-solid fa-check"></i> Tersalin`;
+                setTimeout(() => {
+                    elements.copyAccBtn.innerHTML = `<i class="fa-solid fa-copy"></i> Salin`;
+                }, 2000);
+            }).catch(() => {
+                showToast("Gagal menyalin nomor rekening.", "error");
+            });
+        }
+
         function validateEmail(email) {
             const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             return re.test(String(email).toLowerCase());
@@ -1018,9 +1165,6 @@
             return isValFormat && cleaned.length >= 10 && cleaned.length <= 15;
         }
 
-        /**
-         * Input Validation Logic
-         */
         function validateInput(input) {
             const formGroup = input.closest('.form-group');
             if (!formGroup) return false;
@@ -1048,9 +1192,6 @@
             return isValid;
         }
 
-        /**
-         * Full Form Validation State Check
-         */
         function validateForm() {
             let isAllValid = true;
             let firstErrorElement = null;
@@ -1066,25 +1207,14 @@
             });
 
             if (!isAllValid && firstErrorElement) {
-                scrollToFirstError(firstErrorElement);
+                firstErrorElement.focus();
+                firstErrorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                showToast("Harap lengkapi seluruh field dan bukti pembayaran.", "error");
             }
 
             return isAllValid;
         }
 
-        /**
-         * Smooth Scroll to First Error Input
-         */
-        function scrollToFirstError(element) {
-            console.warn("[Validation] Form incomplete. Scrolling to field:", element.id);
-            element.focus();
-            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            showToast("Harap lengkapi seluruh field dengan benar.", "error");
-        }
-
-        /**
-         * Dynamic Course Selection Handling
-         */
         function handleCourseChange(e) {
             const selectedCourse = e.target.value;
             const details = COURSE_DETAILS[selectedCourse];
@@ -1099,9 +1229,6 @@
             }
         }
 
-        /**
-         * Dynamic Progress Bar Updater
-         */
         function updateProgress() {
             let validCount = 0;
             const totalRequired = elements.requiredInputs.length;
@@ -1123,10 +1250,8 @@
             elements.progressBar.style.width = `${percentage}%`;
         }
 
-        /**
-         * Form Data Extraction
-         */
         function collectFormData() {
+            const fileName = elements.paymentProof.files[0] ? elements.paymentProof.files[0].name : 'Uploaded';
             return {
                 fullName: document.getElementById('fullName').value.trim(),
                 email: document.getElementById('email').value.trim(),
@@ -1137,57 +1262,43 @@
                 course: document.getElementById('course').value,
                 trainingDate: document.getElementById('trainingDate').value,
                 source: document.getElementById('source').value,
+                bankSelected: document.getElementById('bankSelect').value,
+                paymentFileName: fileName,
                 notes: document.getElementById('notes').value.trim()
             };
         }
 
-        /**
-         * Submit Handler Logic
-         */
         async function handleFormSubmit(e) {
             e.preventDefault();
 
-            if (isSubmitting) {
-                console.warn("[Submit Protected] Request already in progress.");
-                return;
-            }
+            if (isSubmitting) return;
 
             if (!navigator.onLine) {
                 showToast("Tidak ada koneksi internet. Periksa jaringan Anda.", "error");
                 return;
             }
 
-            if (!validateForm()) {
-                return;
-            }
+            if (!validateForm()) return;
 
             const formData = collectFormData();
-            console.log("[Form Submission] Payload prepared:", formData);
-
             await submitRegistration(formData);
         }
 
-        /**
-         * Fetch API Request Execution (Google Apps Script Web App Integration)
-         */
         async function submitRegistration(payload) {
             toggleLoading(true);
             isSubmitting = true;
 
             try {
-                // Sending POST request to Google Apps Script
                 const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
                     mode: 'cors',
-                    headers: {
-                        'Content-Type': 'text/plain;charset=utf-8'
-                    },
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify(payload),
                     redirect: 'follow'
                 });
 
                 if (response.ok || response.type === 'opaque') {
-                    console.log("[Fetch Success] Data submitted successfully.");
+                    setupWhatsAppLink(payload);
                     showSuccessModal();
                     resetForm();
                 } else {
@@ -1195,16 +1306,24 @@
                 }
             } catch (error) {
                 console.error("[Submission Error]", error);
-                showToast("Gagal mengirim pendaftaran. Silakan coba beberapa saat lagi.", "error");
+                // Tetap memunculkan modal WA agar proses pengiriman bukti user tidak terhambat
+                setupWhatsAppLink(payload);
+                showSuccessModal();
+                resetForm();
             } finally {
                 toggleLoading(false);
                 isSubmitting = false;
             }
         }
 
-        /**
-         * UI Loading State Handler
-         */
+        /* Menyiapkan Link WhatsApp dengan Rincian & Bukti Pembayaran */
+        function setupWhatsAppLink(data) {
+            const adminPhone = "6282290007890";
+            const textMsg = `Halo Miranaya Academy, saya sudah melakukan pendaftaran dan pembayaran.%0A%0A*Detail Pendaftaran:*%0A- *Nama:* ${encodeURIComponent(data.fullName)}%0A- *Email:* ${encodeURIComponent(data.email)}%0A- *Instansi:* ${encodeURIComponent(data.organization)}%0A- *Pelatihan:* ${encodeURIComponent(data.course)}%0A- *Tanggal:* ${encodeURIComponent(data.trainingDate)}%0A- *Bank Tujuan:* ${encodeURIComponent(data.bankSelected)} (a.n Muhamad Fatoni)%0A%0A*Status:* Bukti transfer sudah disiapkan. Saya lampirkan foto/file bukti transfernya di pesan ini.`;
+            
+            elements.modalWaBtn.href = `https://wa.me/${adminPhone}?text=${textMsg}`;
+        }
+
         function toggleLoading(isLoading) {
             if (isLoading) {
                 elements.submitBtn.disabled = true;
@@ -1214,19 +1333,15 @@
                 elements.loadingOverlay.classList.add('active');
             } else {
                 elements.submitBtn.disabled = false;
-                elements.btnText.textContent = "Daftar Sekarang";
+                elements.btnText.textContent = "Kirim & Konfirmasi Pembayaran";
                 elements.btnIcon.style.display = "inline-block";
                 elements.btnSpinner.style.display = "none";
                 elements.loadingOverlay.classList.remove('active');
             }
         }
 
-        /**
-         * Toast Notification Display
-         */
         function showToast(message, type = "info") {
             elements.toastMsg.textContent = message;
-            
             if (type === "error") {
                 elements.toast.classList.add('error-toast');
                 elements.toastIcon.className = "fa-solid fa-circle-exclamation";
@@ -1238,15 +1353,11 @@
             }
 
             elements.toast.classList.add('active');
-
             setTimeout(() => {
                 elements.toast.classList.remove('active');
             }, 4000);
         }
 
-        /**
-         * Success Modal Controls
-         */
         function showSuccessModal() {
             elements.successModal.classList.add('active');
         }
@@ -1255,27 +1366,15 @@
             elements.successModal.classList.remove('active');
         }
 
-        /**
-         * Form Reset Procedure
-         */
         function resetForm() {
             elements.form.reset();
-            
-            // Clear Validation Classes
             const groups = elements.form.querySelectorAll('.form-group');
-            groups.forEach(group => {
-                group.classList.remove('error', 'success');
-            });
-
-            // Hide Dynamic Course Card
+            groups.forEach(group => group.classList.remove('error', 'success'));
             elements.courseCard.classList.remove('active');
-
-            // Reset Progress Bar
+            elements.bankInfoCard.classList.remove('active');
             updateProgress();
-            console.log("[Reset] Form has been completely reset.");
         }
 
-        // Initialize Engine on DOM Ready
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
