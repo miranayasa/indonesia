@@ -3,462 +3,291 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Profil Trainer Muhamad Fatoni, S.T., M.M., CBMP, CAIP - Lead Trainer Miranaya Academy. Spesialis AI, Business Management, Leadership, dan Digital Transformation.">
-    <meta name="keywords" content="Miranaya Academy, Muhamad Fatoni, AI Trainer, Business Management, Leadership, Digital Transformation, Certification">
-    <meta name="author" content="Miranaya Academy">
-    <title>Profil Trainer - Muhamad Fatoni | Miranaya Academy</title>
+    <title>Muhamad Fatoni - Miranaya Academy</title>
     
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome Icons -->
+    <!-- FontAwesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- html2pdf.js CDN (Library Konversi HTML ke PDF) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <style>
-        /* ==========================================================================
-           RESET & GLOBAL VARIABLES
-           ========================================================================== */
         :root {
-            --bg-dark: #0a1128;
-            --bg-card: rgba(16, 26, 58, 0.65);
-            --bg-glass: rgba(255, 255, 255, 0.04);
-            --border-glass: rgba(255, 255, 255, 0.08);
-            --primary: #00d2ff;
-            --primary-glow: rgba(0, 210, 255, 0.35);
-            --secondary: #0072ff;
-            --accent: #3a86ff;
-            --text-main: #f0f4f8;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #0f172a;
+            --bg-dark: #0b0f19;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-light: #f8fafc;
             --text-muted: #94a3b8;
-            --text-white: #ffffff;
-            --shadow-glow: 0 10px 30px -10px rgba(0, 210, 255, 0.3);
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --accent: #38bdf8;
         }
 
-        *, *::before, *::after {
-            box-sizing: border-box;
+        * {
             margin: 0;
             padding: 0;
-        }
-
-        html {
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
-            font-size: 16px;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
             background-color: var(--bg-dark);
-            color: var(--text-main);
+            color: var(--text-light);
             line-height: 1.6;
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 15% 15%, rgba(0, 114, 255, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 85% 65%, rgba(0, 210, 255, 0.1) 0%, transparent 40%);
-            background-attachment: fixed;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-            transition: var(--transition);
-        }
-
-        ul {
-            list-style: none;
         }
 
         .container {
-            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-
-        section {
-            padding: 5rem 0;
-            position: relative;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 3.5rem;
-        }
-
-        .section-title h2 {
-            font-size: 2.25rem;
-            font-weight: 700;
-            color: var(--text-white);
-            display: inline-block;
-            position: relative;
-            letter-spacing: -0.5px;
-        }
-
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 2px;
-        }
-
-        .section-title p {
-            color: var(--text-muted);
-            margin-top: 1rem;
-            font-size: 1rem;
+            padding: 0 20px;
         }
 
         /* Glassmorphism Card Style */
         .glass-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--border-glass);
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
             border-radius: 16px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            padding: 24px;
+            transition: all 0.3s ease;
         }
 
-        /* BUTTONS */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 0.85rem 1.75rem;
-            font-size: 0.95rem;
-            font-weight: 600;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: var(--transition);
-            border: none;
-            outline: none;
+        .glass-card:hover {
+            border-color: rgba(56, 189, 248, 0.4);
+            transform: translateY(-5px);
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: #ffffff;
-            box-shadow: var(--shadow-glow);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px -5px rgba(0, 210, 255, 0.5);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--text-white);
-            border: 2px solid var(--primary);
-        }
-
-        .btn-outline:hover {
-            background: rgba(0, 210, 255, 0.1);
-            color: var(--primary);
-            transform: translateY(-3px);
-        }
-
-        /* ==========================================================================
-           HEADER & NAVIGATION
-           ========================================================================== */
-        .header {
+        /* Header / Navbar */
+        header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
-            transition: var(--transition);
-            padding: 1.25rem 0;
-            background: transparent;
+            transition: all 0.3s ease;
+            padding: 15px 0;
         }
 
-        .header.scrolled {
-            background: rgba(10, 17, 40, 0.95);
+        header.scrolled {
+            background: rgba(11, 15, 25, 0.95);
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 0.85rem 0;
-            border-bottom: 1px solid var(--border-glass);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            border-bottom: 1px solid var(--card-border);
+            padding: 10px 0;
         }
 
         .nav-container {
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
         }
 
         .logo {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--text-white);
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-light);
+            text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 12px;
         }
 
-        .logo span {
-            background: linear-gradient(135deg, var(--primary), #ffffff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        /* Penyesuaian Agar Logo Tampak Jelas di BG Gelap */
+        .logo-img {
+            height: 45px;
+            width: auto;
+            object-fit: contain;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 4px 8px;
+            border-radius: 8px;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+            filter: drop-shadow(0px 0px 4px rgba(255, 255, 255, 0.8));
         }
 
         .nav-menu {
             display: flex;
             align-items: center;
-            gap: 2rem;
+            gap: 20px;
+            list-style: none;
         }
 
         .nav-link {
-            font-size: 0.95rem;
-            font-weight: 500;
             color: var(--text-muted);
-            position: relative;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
         }
 
-        .nav-link:hover, .nav-link.active {
-            color: var(--primary);
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: var(--transition);
-        }
-
-        .nav-link:hover::after, .nav-link.active::after {
-            width: 100%;
+        .nav-link:hover {
+            color: var(--accent);
         }
 
         .hamburger {
             display: none;
-            cursor: pointer;
             font-size: 1.5rem;
-            color: var(--text-white);
+            color: var(--text-light);
+            cursor: pointer;
         }
 
-        /* ==========================================================================
-           HERO SECTION
-           ========================================================================== */
-        .hero {
-            min-height: 100vh;
-            display: flex;
+        /* Buttons */
+        .btn {
+            display: inline-flex;
             align-items: center;
-            padding-top: 7rem;
-            padding-bottom: 4rem;
-            background: radial-gradient(circle at 50% 30%, rgba(0, 114, 255, 0.25) 0%, rgba(10, 17, 40, 1) 70%);
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--card-border);
+            color: var(--text-light);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Section Layouts */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+        }
+
+        /* Hero Section & Profile Photo */
+        #hero {
+            padding-top: 140px;
         }
 
         .hero-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 3rem;
+            grid-template-columns: 1fr 300px;
+            gap: 40px;
             align-items: center;
         }
 
-        .hero-image-wrapper {
-            display: flex;
-            justify-content: center;
-            position: relative;
-        }
-
-        .hero-img-container {
-            position: relative;
-            width: 280px;
-            height: 280px;
+        .profile-img-container {
+            width: 260px;
+            height: 260px;
+            margin: 0 auto;
             border-radius: 50%;
             padding: 8px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            box-shadow: 0 0 50px rgba(0, 210, 255, 0.4);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
         }
 
-        .hero-img {
+        .profile-img-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             border-radius: 50%;
-            border: 4px solid var(--bg-dark);
+            display: block;
         }
 
-        .hero-content {
-            text-align: center;
+        .hero-text h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
         }
 
-        .hero-title {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: var(--text-white);
-            line-height: 1.2;
-            margin-bottom: 0.5rem;
-        }
-
-        .hero-subtitle {
-            display: inline-block;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .hero-tags {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.75rem;
-            margin-bottom: 2rem;
-        }
-
-        .tag-pill {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(0, 210, 255, 0.2);
-            padding: 0.4rem 1rem;
-            border-radius: 30px;
-            font-size: 0.85rem;
+        .hero-text .subtitle {
+            font-size: 1.25rem;
+            color: var(--accent);
+            margin-bottom: 20px;
             font-weight: 500;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
 
-        .tag-pill i {
-            color: var(--primary);
+        .hero-text p {
+            color: var(--text-muted);
+            margin-bottom: 30px;
         }
 
-        .hero-cta {
+        .hero-action-btns {
             display: flex;
+            gap: 15px;
             flex-wrap: wrap;
-            gap: 1rem;
-            justify-content: center;
         }
 
-        /* ==========================================================================
-           ABOUT SECTION
-           ========================================================================== */
-        .about-text p {
-            margin-bottom: 1.25rem;
-            color: #cbd5e1;
-            font-size: 1rem;
-            text-align: justify;
-        }
-
-        .about-card {
-            padding: 2.5rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .about-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(180deg, var(--primary), var(--secondary));
-        }
-
-        /* ==========================================================================
-           STATISTICS SECTION
-           ========================================================================== */
+        /* Stats Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
         }
 
         .stat-card {
-            padding: 2rem 1.5rem;
             text-align: center;
-            transition: var(--transition);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(0, 210, 255, 0.4);
-        }
-
-        .stat-icon {
-            font-size: 2.2rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
         }
 
         .stat-number {
             font-size: 2.5rem;
             font-weight: 800;
-            color: var(--text-white);
-            margin-bottom: 0.25rem;
-            line-height: 1;
+            color: var(--accent);
         }
 
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        /* ==========================================================================
-           EXPERTISE SECTION
-           ========================================================================== */
+        /* Expertise Grid */
         .expertise-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-
-        .expertise-card {
-            padding: 2rem;
-            transition: var(--transition);
-            height: 100%;
-        }
-
-        .expertise-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary-glow);
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
         }
 
         .expertise-header {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.25rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid var(--border-glass);
+            gap: 12px;
+            margin-bottom: 15px;
+            color: var(--accent);
         }
 
         .expertise-header i {
-            font-size: 1.8rem;
-            color: var(--primary);
-        }
-
-        .expertise-header h3 {
-            font-size: 1.25rem;
-            color: var(--text-white);
-            font-weight: 600;
+            font-size: 1.5rem;
         }
 
         .expertise-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.6rem;
+            list-style: none;
         }
 
         .expertise-list li {
+            color: var(--text-muted);
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
-            gap: 0.6rem;
-            color: var(--text-muted);
+            gap: 8px;
             font-size: 0.95rem;
         }
 
@@ -467,494 +296,326 @@
             font-size: 0.8rem;
         }
 
-        /* ==========================================================================
-           EDUCATION & TIMELINE SECTION
-           ========================================================================== */
+        /* Timeline */
         .timeline {
-            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
             max-width: 800px;
             margin: 0 auto;
         }
 
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 20px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: rgba(255, 255, 255, 0.1);
-        }
-
         .timeline-item {
             position: relative;
-            padding-left: 50px;
-            margin-bottom: 2rem;
+            padding-left: 25px;
+            border-left: 2px solid var(--primary);
         }
 
         .timeline-dot {
             position: absolute;
-            left: 11px;
-            top: 5px;
-            width: 20px;
-            height: 20px;
+            left: -7px;
+            top: 0;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
-            background: var(--bg-dark);
-            border: 3px solid var(--primary);
-            box-shadow: 0 0 10px var(--primary-glow);
+            background: var(--accent);
         }
 
-        .timeline-content {
-            padding: 1.5rem;
-        }
-
-        .timeline-content h3 {
-            font-size: 1.15rem;
-            color: var(--text-white);
-            margin-bottom: 0.25rem;
-        }
-
-        .timeline-content p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* ==========================================================================
-           CERTIFICATIONS SECTION
-           ========================================================================== */
+        /* Certifications & Topics */
         .cert-category {
-            margin-bottom: 2.5rem;
+            margin-bottom: 30px;
         }
 
         .cert-cat-title {
-            font-size: 1.2rem;
-            color: var(--primary);
-            margin-bottom: 1.25rem;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: 0.6rem;
-            border-left: 3px solid var(--primary);
-            padding-left: 0.75rem;
+            gap: 10px;
+            color: var(--accent);
         }
 
         .cert-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 15px;
         }
 
         .cert-badge {
-            padding: 1rem 1.25rem;
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            transition: var(--transition);
-        }
-
-        .cert-badge:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(0, 210, 255, 0.3);
-            transform: translateX(5px);
-        }
-
-        .cert-badge i {
-            color: #ffd700;
-            font-size: 1.1rem;
-            flex-shrink: 0;
-        }
-
-        .cert-badge span {
-            color: var(--text-main);
-            font-size: 0.9rem;
+            gap: 12px;
             font-weight: 500;
         }
 
-        /* ==========================================================================
-           TOPICS SECTION
-           ========================================================================== */
+        .cert-badge i {
+            color: #f59e0b;
+        }
+
         .topics-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
         }
 
         .topic-card {
-            padding: 1.25rem;
             text-align: center;
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-        }
-
-        .topic-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-            background: rgba(0, 210, 255, 0.05);
+            padding: 30px 20px;
         }
 
         .topic-card i {
             font-size: 2rem;
-            color: var(--primary);
+            color: var(--accent);
+            margin-bottom: 15px;
         }
 
-        .topic-card h4 {
-            font-size: 0.95rem;
-            color: var(--text-white);
-            font-weight: 600;
-        }
-
-        /* ==========================================================================
-           MOTTO SECTION
-           ========================================================================== */
+        /* Motto Card */
         .motto-card {
-            padding: 3rem 2rem;
             text-align: center;
-            position: relative;
-            max-width: 900px;
+            max-width: 800px;
             margin: 0 auto;
-            background: linear-gradient(135deg, rgba(16, 26, 58, 0.8), rgba(0, 114, 255, 0.15));
-            border: 1px solid rgba(0, 210, 255, 0.3);
+            padding: 40px;
         }
 
-        .motto-card i.quote-icon {
-            font-size: 3rem;
-            color: rgba(0, 210, 255, 0.2);
-            margin-bottom: 1rem;
-            display: block;
+        .quote-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 15px;
         }
 
         .motto-text {
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             font-style: italic;
-            color: var(--text-white);
-            line-height: 1.8;
-            font-weight: 300;
         }
 
-        /* ==========================================================================
-           CTA SECTION
-           ========================================================================== */
+        /* CTA Section */
         .cta-section {
-            background: linear-gradient(135deg, var(--secondary), var(--bg-dark));
-            border-radius: 24px;
-            padding: 4rem 2rem;
             text-align: center;
-            border: 1px solid var(--border-glass);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(15, 23, 42, 0.8));
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 50px 20px;
         }
 
         .cta-title {
             font-size: 2rem;
-            font-weight: 800;
-            color: var(--text-white);
-            margin-bottom: 1rem;
+            margin-bottom: 15px;
         }
 
         .cta-subtitle {
-            font-size: 1.05rem;
-            color: #cbd5e1;
+            color: var(--text-muted);
+            margin-bottom: 30px;
             max-width: 600px;
-            margin: 0 auto 2rem auto;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .cta-buttons {
             display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
             justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
         }
 
-        /* ==========================================================================
-           FOOTER
-           ========================================================================== */
+        /* Footer */
         footer {
-            background: #050914;
-            padding: 4rem 0 2rem 0;
-            border-top: 1px solid var(--border-glass);
+            padding: 40px 0;
+            border-top: 1px solid var(--card-border);
+            text-align: center;
         }
 
         .footer-content {
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-align: center;
-            gap: 1.5rem;
-            margin-bottom: 3rem;
+            gap: 15px;
+            margin-bottom: 20px;
         }
 
-        .footer-logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--text-white);
-        }
-
-        .footer-tagline {
-            color: var(--primary);
-            font-weight: 500;
-            letter-spacing: 2px;
-            font-size: 0.9rem;
-            text-transform: uppercase;
+        /* Logo Footer Jelas di BG Gelap */
+        .footer-logo-img {
+            height: 55px;
+            width: auto;
+            object-fit: contain;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 6px 12px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            filter: drop-shadow(0px 0px 4px rgba(255, 255, 255, 0.8));
         }
 
         .social-links {
             display: flex;
-            gap: 1.25rem;
+            gap: 15px;
         }
 
         .social-icon {
-            width: 42px;
-            height: 42px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-light);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text-white);
-            font-size: 1.1rem;
-            transition: var(--transition);
-            border: 1px solid var(--border-glass);
+            text-decoration: none;
+            transition: all 0.3s ease;
         }
 
         .social-icon:hover {
             background: var(--primary);
-            color: var(--bg-dark);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-glow);
+            color: #fff;
         }
 
         .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
             color: var(--text-muted);
             font-size: 0.85rem;
         }
 
-        /* ==========================================================================
-           ANIMATIONS (AOS Style without external library)
-           ========================================================================== */
-        [data-aos] {
-            opacity: 0;
-            transition-property: transform, opacity;
-            transition-duration: 0.8s;
-            transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-
-        [data-aos="fade-up"] {
-            transform: translateY(40px);
-        }
-
-        [data-aos="fade-left"] {
-            transform: translateX(40px);
-        }
-
-        [data-aos="fade-right"] {
-            transform: translateX(-40px);
-        }
-
-        [data-aos].aos-animate {
-            opacity: 1;
-            transform: translate(0, 0);
-        }
-
-        /* ==========================================================================
-           RESPONSIVE BREAKPOINTS (Desktop Enhancements)
-           ========================================================================== */
-        @media (min-width: 640px) {
-            .stats-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-            .topics-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            .cert-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (min-width: 992px) {
+        /* Responsiveness */
+        @media (max-width: 992px) {
             .hero-grid {
-                grid-template-columns: 350px 1fr;
-                text-align: left;
+                grid-template-columns: 1fr;
+                text-align: center;
             }
-
-            .hero-img-container {
-                width: 320px;
-                height: 320px;
-            }
-
-            .hero-content {
-                text-align: left;
-            }
-
-            .hero-tags, .hero-cta {
-                justify-content: flex-start;
-            }
-
-            .expertise-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .topics-grid {
-                grid-template-columns: repeat(5, 1fr);
-            }
-
-            .timeline::before {
-                left: 50%;
-                transform: translateX(-50%);
-            }
-
-            .timeline-item {
-                width: 50%;
-                padding-left: 0;
-                padding-right: 40px;
-                margin-left: 0;
-            }
-
-            .timeline-item:nth-child(even) {
-                margin-left: 50%;
-                padding-left: 40px;
-                padding-right: 0;
-            }
-
-            .timeline-dot {
-                left: auto;
-                right: -10px;
-            }
-
-            .timeline-item:nth-child(even) .timeline-dot {
-                left: -10px;
-            }
-
-            .timeline-item:nth-child(odd) {
-                text-align: right;
+            .hero-action-btns {
+                justify-content: center;
             }
         }
 
-        @media (max-width: 991px) {
-            .hamburger {
-                display: block;
-            }
-
+        @media (max-width: 768px) {
             .nav-menu {
                 position: fixed;
-                top: 0;
-                right: -100%;
-                width: 80%;
-                max-width: 300px;
-                height: 100vh;
-                background: rgba(10, 17, 40, 0.98);
-                backdrop-filter: blur(20px);
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: var(--bg-dark);
                 flex-direction: column;
                 justify-content: center;
-                gap: 2rem;
-                transition: var(--transition);
-                box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+                transition: 0.3s ease;
             }
 
             .nav-menu.active {
-                right: 0;
+                left: 0;
             }
+
+            .hamburger {
+                display: block;
+            }
+        }
+
+        /* Style PDF Generation */
+        @media print {
+            header, footer, .cta-buttons, .no-pdf, .hamburger {
+                display: none !important;
+            }
+            body {
+                background: #ffffff !important;
+                color: #0f172a !important;
+            }
+            section {
+                padding: 20px 0 !important;
+            }
+            .glass-card {
+                background: #ffffff !important;
+                border: 1px solid #cbd5e1 !important;
+                box-shadow: none !important;
+                color: #0f172a !important;
+                page-break-inside: avoid !important;
+            }
+            .logo-img, .footer-logo-img {
+                background: transparent !important;
+                box-shadow: none !important;
+                filter: none !important;
+            }
+        }
+
+        .pdf-export-mode {
+            background: #ffffff !important;
+            color: #0f172a !important;
+            padding: 20px !important;
+        }
+
+        .pdf-export-mode .glass-card {
+            background: #f8fafc !important;
+            border: 1px solid #cbd5e1 !important;
+            color: #0f172a !important;
+        }
+
+        .pdf-export-mode .logo-img, 
+        .pdf-export-mode .footer-logo-img {
+            background: transparent !important;
+            box-shadow: none !important;
+            filter: none !important;
         }
     </style>
 </head>
 <body>
 
-    <!-- HEADER / NAVBAR -->
-    <header class="header" id="header">
+    <!-- NAVBAR HEADER -->
+    <header id="header">
         <div class="container nav-container">
-            <a href="#" class="logo">
-                <i class="fa-solid fa-graduation-cap" style="color: var(--primary);"></i>
+            <a href="https://miranaya.online" class="logo">
+                <img src="mdemy.png" alt="Logo Miranaya Academy" class="logo-img">
                 <span>Miranaya Academy</span>
             </a>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#about" class="nav-link">Tentang</a></li>
+                <li><a href="#expertise" class="nav-link">Keahlian</a></li>
+                <li><a href="#education" class="nav-link">Pendidikan</a></li>
+                <li><a href="#certifications" class="nav-link">Sertifikasi</a></li>
+                <li><a href="#topics" class="nav-link">Topik</a></li>
+                <li><a href="#contact" class="nav-link">Kontak</a></li>
+                <li class="no-pdf">
+                    <button class="btn btn-primary" onclick="downloadPDF()">
+                        <i class="fa-solid fa-file-pdf"></i> Unduh CV (PDF)
+                    </button>
+                </li>
+            </ul>
             <div class="hamburger" id="hamburger">
                 <i class="fa-solid fa-bars"></i>
             </div>
-            <nav class="nav-menu" id="nav-menu">
-                <a href="#hero" class="nav-link active">Home</a>
-                <a href="#about" class="nav-link">About</a>
-                <a href="#expertise" class="nav-link">Expertise</a>
-                <a href="#certifications" class="nav-link">Certifications</a>
-                <a href="#contact" class="nav-link">Contact</a>
-            </nav>
         </div>
     </header>
 
-    <!-- HERO SECTION -->
-    <section class="hero" id="hero">
+    <!-- HERO / ABOUT SECTION -->
+    <section id="hero">
         <div class="container">
             <div class="hero-grid">
-                <div class="hero-image-wrapper" data-aos="fade-right">
-                    <div class="hero-img-container">
-                        <img src="photo.jpeg" alt="Muhamad Fatoni, S.T., M.M., CBMP, CAIP" class="hero-img" onerror="this.src='https://via.placeholder.com/400x400/101a3a/00d2ff?text=Muhamad+Fatoni';">
+                <div class="hero-text" data-aos="fade-up">
+                    <h1>Muhamad Fatoni, S.T., M.M.</h1>
+                    <div class="subtitle">Founder Miranaya Academy | AI & Business Transformation Expert</div>
+                    <p>Praktisi dan konsultan yang berfokus pada integrasi Artificial Intelligence (AI), manajemen bisnis strategis, serta efisiensi operasional industri untuk mendorong pertumbuhan organisasi secara berkelanjutan.</p>
+                    <div class="hero-action-btns no-pdf">
+                        <a href="https://miranaya.online/register.html" class="btn btn-primary" target="_blank">
+                            <i class="fa-solid fa-user-plus"></i> Daftar Training
+                        </a>
+                        <!-- Teks tanpa menampilkan nomor HP secara fisik -->
+                        <a href="https://wa.me/6282290007890?text=Halo%20Miranaya%20Academy,%20saya%20ingin%20konsultasi/tanya%20mengenai%20program%20pelatihan" class="btn btn-outline" target="_blank">
+                            <i class="fa-brands fa-whatsapp"></i> Hubungi via WhatsApp
+                        </a>
                     </div>
                 </div>
-                <div class="hero-content" data-aos="fade-left">
-                    <h1 class="hero-title">Muhamad Fatoni, <span style="font-size:0.7em; font-weight:400; color:var(--text-muted);">S.T., M.M., CBMP, CAIP</span></h1>
-                    <span class="hero-subtitle">Professional Trainer</span>
-                    
-                    <div class="hero-tags">
-                        <div class="tag-pill"><i class="fa-solid fa-robot"></i> Artificial Intelligence</div>
-                        <div class="tag-pill"><i class="fa-solid fa-chart-line"></i> Business Management</div>
-                        <div class="tag-pill"><i class="fa-solid fa-users"></i> Leadership</div>
-                        <div class="tag-pill"><i class="fa-solid fa-network-wired"></i> Digital Transformation</div>
-                    </div>
 
-                    <div class="hero-cta">
-                        <a href="#contact" class="btn btn-primary"><i class="fa-solid fa-calendar-check"></i> Lihat Jadwal Pelatihan</a>
-                        <a href="#contact" class="btn btn-outline"><i class="fa-brands fa-whatsapp"></i> Hubungi Saya</a>
-                    </div>
+                <div class="profile-img-container" data-aos="fade-left">
+                    <img src="photo.jpeg" alt="Foto Muhamad Fatoni" id="profile-photo">
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- ABOUT SECTION -->
-    <section id="about">
-        <div class="container">
-            <div class="section-title" data-aos="fade-up">
-                <h2>Tentang Trainer</h2>
-                <p>Mengenal lebih dekat dedikasi dan perjalanan profesional</p>
-            </div>
-            <div class="glass-card about-card" data-aos="fade-up">
-                <div class="about-text">
-                    <p><strong>Muhamad Fatoni</strong> adalah praktisi industri, konsultan, dan trainer profesional dengan pengalaman lebih dari 19 tahun dalam bidang Artificial Intelligence, Business Management, Leadership, Digital Transformation, Infrastructure Management, Asset Management, Maintenance Management, Project Management, serta Operational Excellence.</p>
-                    <p>Beliau merupakan lulusan Sarjana Teknik Mesin dan Magister Manajemen serta memiliki sertifikasi profesional di bidang Artificial Intelligence, Business Management, Leadership, Manufacturing Excellence, Project Management, dan Construction Safety.</p>
-                    <p>Karier profesional beliau diawali sebagai IT Support Specialist dengan pengalaman pada bidang Networking, Programming, Web Development, Database Management, System Administration, IT Project, serta IT Training untuk berbagai instansi pemerintah, perusahaan swasta, dan institusi pendidikan.</p>
-                    <p>Selanjutnya beliau dipercaya menjadi Trainer Problem Solving & Decision Making yang berperan dalam pengembangan kompetensi SDM melalui berbagai program pelatihan berbasis analisis, pengambilan keputusan, dan continuous improvement.</p>
-                    <p>Saat ini beliau aktif sebagai Founder & Lead Trainer Miranaya Academy yang berfokus pada pengembangan kompetensi profesional di bidang Artificial Intelligence, Business Management, Leadership, Project Management, Asset Management, Operational Excellence, dan Digital Transformation.</p>
-                    <p>Dengan perpaduan pengalaman industri, teknologi informasi, dan kemampuan mengajar, setiap pelatihan dirancang praktis, interaktif, aplikatif, dan berbasis studi kasus nyata sehingga peserta dapat langsung mengimplementasikan ilmu yang diperoleh.</p>
+            <!-- STATISTICS -->
+            <div class="stats-grid" id="statistics">
+                <div class="glass-card stat-card">
+                    <div class="stat-number" data-counter="10">0</div>
+                    <p>Tahun Pengalaman</p>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- STATISTICS SECTION -->
-    <section id="statistics">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="glass-card stat-card" data-aos="fade-up" data-aos-delay="100">
-                    <i class="fa-solid fa-user-clock stat-icon"></i>
-                    <div class="stat-number" data-counter="19">0</div>
-                    <div class="stat-label">Years Experience</div>
+                <div class="glass-card stat-card">
+                    <div class="stat-number" data-counter="50">0</div>
+                    <p>In-House Training</p>
                 </div>
-                <div class="glass-card stat-card" data-aos="fade-up" data-aos-delay="200">
-                    <i class="fa-solid fa-certificate stat-icon"></i>
-                    <div class="stat-number" data-counter="30">0</div>
-                    <div class="stat-label">Professional Certifications</div>
-                </div>
-                <div class="glass-card stat-card" data-aos="fade-up" data-aos-delay="300">
-                    <i class="fa-solid fa-chalkboard-user stat-icon"></i>
-                    <div class="stat-number" data-counter="100">0</div>
-                    <div class="stat-label">Training Hours</div>
-                </div>
-                <div class="glass-card stat-card" data-aos="fade-up" data-aos-delay="400">
-                    <i class="fa-solid fa-brain stat-icon"></i>
-                    <div class="stat-number" style="font-size:1.8rem; padding-top:0.5rem;">AI & Business</div>
-                    <div class="stat-label">Core Focus</div>
+                <div class="glass-card stat-card">
+                    <div class="stat-number" data-counter="1000">0</div>
+                    <p>Alumni / Peserta</p>
                 </div>
             </div>
         </div>
@@ -964,105 +625,89 @@
     <section id="expertise">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
-                <h2>Keahlian Utama</h2>
-                <p>Bidang kompetensi utama dan spesialisasi profesional</p>
+                <h2>Area Keahlian Utama</h2>
+                <p>Penggabungan antara teknologi digital terkini dan strategi manajemen bisnis</p>
             </div>
+
             <div class="expertise-grid">
-                <!-- Card 1 -->
                 <div class="glass-card expertise-card" data-aos="fade-up">
                     <div class="expertise-header">
-                        <i class="fa-solid fa-robot"></i>
+                        <i class="fa-solid fa-brain"></i>
                         <h3>Artificial Intelligence</h3>
                     </div>
                     <ul class="expertise-list">
-                        <li><i class="fa-solid fa-check"></i> Generative AI</li>
-                        <li><i class="fa-solid fa-check"></i> AI Automation</li>
-                        <li><i class="fa-solid fa-check"></i> Prompt Engineering</li>
-                        <li><i class="fa-solid fa-check"></i> AI Productivity</li>
-                        <li><i class="fa-solid fa-check"></i> AI for Business</li>
+                        <li><i class="fa-solid fa-check"></i> Generative AI & Prompt Engineering</li>
+                        <li><i class="fa-solid fa-check"></i> AI Implementation Strategy</li>
+                        <li><i class="fa-solid fa-check"></i> Machine Learning Concepts</li>
+                        <li><i class="fa-solid fa-check"></i> AI for Business Productivity</li>
                     </ul>
                 </div>
-                <!-- Card 2 -->
+
                 <div class="glass-card expertise-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="expertise-header">
-                        <i class="fa-solid fa-briefcase"></i>
+                        <i class="fa-solid fa-chart-line"></i>
                         <h3>Business Management</h3>
                     </div>
                     <ul class="expertise-list">
-                        <li><i class="fa-solid fa-check"></i> Business Management</li>
-                        <li><i class="fa-solid fa-check"></i> Strategic Management</li>
-                        <li><i class="fa-solid fa-check"></i> Marketing Management</li>
-                        <li><i class="fa-solid fa-check"></i> Leadership</li>
-                        <li><i class="fa-solid fa-check"></i> Coaching</li>
+                        <li><i class="fa-solid fa-check"></i> Business Model Canvas</li>
+                        <li><i class="fa-solid fa-check"></i> Strategic Planning</li>
+                        <li><i class="fa-solid fa-check"></i> Operational Excellence</li>
+                        <li><i class="fa-solid fa-check"></i> Business Process Management</li>
+                        <li><i class="fa-solid fa-check"></i> Risk Management</li>
                     </ul>
                 </div>
-                <!-- Card 3 -->
+
                 <div class="glass-card expertise-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="expertise-header">
-                        <i class="fa-solid fa-laptop-code"></i>
-                        <h3>Information Technology</h3>
+                        <i class="fa-solid fa-users"></i>
+                        <h3>Leadership & Management</h3>
                     </div>
                     <ul class="expertise-list">
-                        <li><i class="fa-solid fa-check"></i> Networking & Database</li>
-                        <li><i class="fa-solid fa-check"></i> Programming & Web Development</li>
-                        <li><i class="fa-solid fa-check"></i> System Administration</li>
-                        <li><i class="fa-solid fa-check"></i> IT Project Management</li>
-                        <li><i class="fa-solid fa-check"></i> IT Training</li>
+                        <li><i class="fa-solid fa-check"></i> Problem Solving & Decision Making</li>
+                        <li><i class="fa-solid fa-check"></i> Strategic Leadership</li>
+                        <li><i class="fa-solid fa-check"></i> Change Management</li>
+                        <li><i class="fa-solid fa-check"></i> Performance Management</li>
+                        <li><i class="fa-solid fa-check"></i> Team Alignment</li>
                     </ul>
                 </div>
-                <!-- Card 4 -->
+
                 <div class="glass-card expertise-card" data-aos="fade-up" data-aos-delay="300">
                     <div class="expertise-header">
-                        <i class="fa-solid fa-gears"></i>
-                        <h3>Engineering & Operations</h3>
+                        <i class="fa-solid fa-network-wired"></i>
+                        <h3>Digital Transformation</h3>
                     </div>
                     <ul class="expertise-list">
-                        <li><i class="fa-solid fa-check"></i> Asset & Maintenance Management</li>
-                        <li><i class="fa-solid fa-check"></i> Infrastructure Management</li>
-                        <li><i class="fa-solid fa-check"></i> Operational Excellence</li>
-                        <li><i class="fa-solid fa-check"></i> Lean Manufacturing & TPM</li>
-                        <li><i class="fa-solid fa-check"></i> Project Management</li>
+                        <li><i class="fa-solid fa-check"></i> Digital Strategy</li>
+                        <li><i class="fa-solid fa-check"></i> Enterprise Architecture</li>
+                        <li><i class="fa-solid fa-check"></i> IT Governance & Strategy</li>
+                        <li><i class="fa-solid fa-check"></i> Process Automation</li>
+                        <li><i class="fa-solid fa-check"></i> Tech Integration</li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- EDUCATION & EXPERIENCE TIMELINE SECTION -->
+    <!-- EDUCATION & TIMELINE SECTION -->
     <section id="education">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
-                <h2>Pendidikan & Riwayat Karir</h2>
-                <p>Jejak akademis dan pengalaman profesional industri</p>
+                <h2>Pendidikan & Latar Belakang</h2>
+                <p>Jejak akademis yang melandasi keahlian profesional</p>
             </div>
-            
             <div class="timeline">
-                <div class="timeline-item" data-aos="fade-up">
+                <div class="timeline-item" data-aos="fade-right">
                     <div class="timeline-dot"></div>
                     <div class="glass-card timeline-content">
                         <h3>Magister Manajemen (M.M.)</h3>
-                        <p>Pendidikan Pascasarjana Fokus pada Manajemen Strategis dan Kepemimpinan.</p>
+                        <p>Fokus pada Manajemen Strategis, Bisnis, dan Kepemimpinan Organisasi.</p>
                     </div>
                 </div>
-                <div class="timeline-item" data-aos="fade-up">
+                <div class="timeline-item" data-aos="fade-left">
                     <div class="timeline-dot"></div>
                     <div class="glass-card timeline-content">
                         <h3>Sarjana Teknik Mesin (S.T.)</h3>
-                        <p>Pendidikan Akademis Dasar Teknik & Rekayasa Mesin.</p>
-                    </div>
-                </div>
-                <div class="timeline-item" data-aos="fade-up">
-                    <div class="timeline-dot"></div>
-                    <div class="glass-card timeline-content">
-                        <h3>IT Support Specialist</h3>
-                        <p>Networking, Programming, Web Development, Database, IT Project, IT Training (Pemerintah & Swasta).</p>
-                    </div>
-                </div>
-                <div class="timeline-item" data-aos="fade-up">
-                    <div class="timeline-dot"></div>
-                    <div class="glass-card timeline-content">
-                        <h3>Trainer & Consultant</h3>
-                        <p>Problem Solving, Decision Making, Leadership, Operational Excellence, & Continuous Improvement.</p>
+                        <p>Fokus pada Sistem Manufaktur, Manajemen Operasional, dan Maintenance Engineering.</p>
                     </div>
                 </div>
             </div>
@@ -1074,124 +719,105 @@
         <div class="container">
             <div class="section-title" data-aos="fade-up">
                 <h2>Sertifikasi Profesional</h2>
-                <p>Lisensi dan kualifikasi tersertifikasi nasional & internasional</p>
+                <p>Pengakuan kompetensi tingkat nasional dan internasional</p>
             </div>
 
-            <!-- AI & Business -->
             <div class="cert-category" data-aos="fade-up">
-                <div class="cert-cat-title"><i class="fa-solid fa-brain"></i> Artificial Intelligence & Business</div>
+                <h3 class="cert-cat-title"><i class="fa-solid fa-brain"></i> Artificial Intelligence & Digital</h3>
                 <div class="cert-grid">
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Certified Artificial Intelligence Professional (CAIP)</span></div>
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Certified Business Management Professional (CBMP)</span></div>
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Certified Business Management Expert</span></div>
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Certified Marketing Expert</span></div>
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Master in General Management</span></div>
+                    <div class="glass-card cert-badge">
+                        <i class="fa-solid fa-award"></i>
+                        <span>CAIP – Certified Artificial Intelligence Practitioner</span>
+                    </div>
+                    <div class="glass-card cert-badge">
+                        <i class="fa-solid fa-award"></i>
+                        <span>AI Specialist Certification</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Leadership & Management -->
             <div class="cert-category" data-aos="fade-up">
-                <div class="cert-cat-title"><i class="fa-solid fa-users-gear"></i> Leadership & Management</div>
+                <h3 class="cert-cat-title"><i class="fa-solid fa-briefcase"></i> Business & Management</h3>
                 <div class="cert-grid">
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Astra First Line Management Programme (AFMP)</span></div>
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Astra Middle Management Programme (AMMP)</span></div>
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Project Management</span></div>
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Human Resources for Line Manager</span></div>
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Coaching for Corporate Performance</span></div>
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Effective Problem Solving</span></div>
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Inventory Management</span></div>
-                </div>
-            </div>
-
-            <!-- Engineering & Manufacturing -->
-            <div class="cert-category" data-aos="fade-up">
-                <div class="cert-cat-title"><i class="fa-solid fa-industry"></i> Engineering & Manufacturing</div>
-                <div class="cert-grid">
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Total Productive Maintenance (TPM)</span></div>
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Production Management</span></div>
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Production Management Incl. KPI Tree & Daily Mgmt</span></div>
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Best Practice in Operation & Plant Maintenance</span></div>
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Fleet Workshop Management</span></div>
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Basic Isuzu Mechanic Training</span></div>
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Basic Maintenance Training Komatsu Small Excavator</span></div>
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Inhouse Training Lube & Lubrication</span></div>
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Lubricant System</span></div>
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Total Quality Management (TQM) for Facilitators</span></div>
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Achieve Cost Reduction Through Lean Thinking</span></div>
-                </div>
-            </div>
-
-            <!-- Safety & Construction -->
-            <div class="cert-category" data-aos="fade-up">
-                <div class="cert-cat-title"><i class="fa-solid fa-shield-halved"></i> Safety & Construction</div>
-                <div class="cert-grid">
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Safety Leadership</span></div>
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Safety As Basic Foundation Manufacturing</span></div>
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Food Safety Management System & Internal Audit HACCP</span></div>
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Audit Sistem Manajemen Keselamatan Konstruksi (SMKK)</span></div>
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Penerapan SMKK Mencegah Kegagalan Bangunan</span></div>
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Mempersiapkan Business Continuity Plan</span></div>
-                </div>
-            </div>
-
-            <!-- Finance -->
-            <div class="cert-category" data-aos="fade-up">
-                <div class="cert-cat-title"><i class="fa-solid fa-coins"></i> Finance</div>
-                <div class="cert-grid">
-                    <div class="glass-card cert-badge"><i class="fa-solid fa-award"></i><span>Management Keuangan</span></div>
+                    <div class="glass-card cert-badge">
+                        <i class="fa-solid fa-award"></i>
+                        <span>CBMP – Certified Business Management Professional</span>
+                    </div>
+                    <div class="glass-card cert-badge">
+                        <i class="fa-solid fa-award"></i>
+                        <span>Project Management Professional (PMP) Alignment</span>
+                    </div>
+                    <div class="glass-card cert-badge">
+                        <i class="fa-solid fa-award"></i>
+                        <span>Certified Risk Management Professional</span>
+                    </div>
+                    <div class="glass-card cert-badge">
+                        <i class="fa-solid fa-award"></i>
+                        <span>Manufacturing Excellence Specialist</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- TRAINING TOPICS SECTION -->
+    <!-- TOPICS SECTION -->
     <section id="topics">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
-                <h2>Topik Pelatihan Utama</h2>
-                <p>Materi unggulan untuk pengembangan SDM perusahaan & profesional</p>
+                <h2>Topik Pelatihan Populer</h2>
+                <p>Program unggulan yang sering dibawakan untuk korporasi dan publik</p>
             </div>
             <div class="topics-grid">
-                <div class="glass-card topic-card" data-aos="fade-up"><i class="fa-solid fa-robot"></i><h4>Artificial Intelligence</h4></div>
-                <div class="glass-card topic-card" data-aos="fade-up"><i class="fa-brands fa-microsoft"></i><h4>Microsoft Copilot</h4></div>
-                <div class="glass-card topic-card" data-aos="fade-up"><i class="fa-solid fa-comments"></i><h4>ChatGPT</h4></div>
-                <div class="glass-card topic-card" data-aos="fade-up"><i class="fa-solid fa-terminal"></i><h4>Prompt Engineering</h4></div>
-                <div class="glass-card topic-card" data-aos="fade-up"><i class="fa-solid fa-user-tie"></i><h4>Leadership</h4></div>
-                <div class="glass-card topic-card" data-aos="fade-up"><i class="fa-solid fa-chart-line"></i><h4>Business Management</h4></div>
-                <div class="glass-card topic-card" data-aos="fade-up"><i class="fa-solid fa-list-check"></i><h4>Project Management</h4></div>
-                <div class="glass-card topic-card" data-aos="fade-up"><i class="fa-solid fa-bullhorn"></i><h4>Marketing</h4></div>
-                <div class="glass-card topic-card" data-aos="fade-up"><i class="fa-solid fa-wrench"></i><h4>Maintenance Mgmt</h4></div>
-                <div class="glass-card topic-card" data-aos="fade-up"><i class="fa-solid fa-boxes-stacked"></i><h4>Asset Management</h4></div>
-                <div class="glass-card topic-card" data-aos="fade-up"><i class="fa-solid fa-sliders"></i><h4>Operational Excellence</h4></div>
-                <div class="glass-card topic-card" data-aos="fade-up"><i class="fa-solid fa-industry"></i><h4>Lean Manufacturing</h4></div>
-                <div class="glass-card topic-card" data-aos="fade-up"><i class="fa-solid fa-puzzle-piece"></i><h4>Problem Solving</h4></div>
-                <div class="glass-card topic-card" data-aos="fade-up"><i class="fa-solid fa-scale-balanced"></i><h4>Decision Making</h4></div>
-                <div class="glass-card topic-card" data-aos="fade-up"><i class="fa-solid fa-network-wired"></i><h4>Digital Transformation</h4></div>
+                <div class="glass-card topic-card" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fa-solid fa-microchip"></i>
+                    <h4>Generative AI for Business Productivity</h4>
+                </div>
+                <div class="glass-card topic-card" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fa-solid fa-lightbulb"></i>
+                    <h4>Problem Solving & Decision Making (PSDM)</h4>
+                </div>
+                <div class="glass-card topic-card" data-aos="fade-up" data-aos-delay="300">
+                    <i class="fa-solid fa-diagram-project"></i>
+                    <h4>Agile Project & Asset Management</h4>
+                </div>
+                <div class="glass-card topic-card" data-aos="fade-up" data-aos-delay="400">
+                    <i class="fa-solid fa-gears"></i>
+                    <h4>Operational Excellence & Lean Mindset</h4>
+                </div>
+                <div class="glass-card topic-card" data-aos="fade-up" data-aos-delay="500">
+                    <i class="fa-solid fa-rocket"></i>
+                    <h4>Digital Transformation Leadership</h4>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- MOTTO SECTION -->
     <section id="motto">
-        <div class="container" data-aos="fade-up">
-            <div class="glass-card motto-card">
+        <div class="container">
+            <div class="glass-card motto-card" data-aos="fade-up">
                 <i class="fa-solid fa-quote-left quote-icon"></i>
                 <p class="motto-text">
-                    "Technology is only valuable when people know how to use it effectively. My mission is to bridge technology, business, and leadership to create professionals who are adaptive, innovative, and ready for the future."
+                    "Transformasi nyata berawal dari kombinasi kepemimpinan yang adaptif, penerapan teknologi yang tepat sasaran, serta eksekusi operasional secara konsisten."
                 </p>
             </div>
         </div>
     </section>
 
-    <!-- CALL TO ACTION -->
+    <!-- CTA SECTION -->
     <section id="contact">
-        <div class="container" data-aos="fade-up">
-            <div class="cta-section">
-                <h2 class="cta-title">Ready to Upgrade Your Skills?</h2>
-                <p class="cta-subtitle">Join Miranaya Academy and learn practical skills from industry experience.</p>
-                <div class="cta-buttons">
-                    <a href="https://register.html" class="btn btn-primary"><i class="fa-solid fa-calendar-days"></i> View Training Schedule</a>
-                    <a href="https://wa.me/082290007890" class="btn btn-outline"><i class="fa-brands fa-whatsapp"></i> Contact via WhatsApp</a>
+        <div class="container">
+            <div class="cta-section" data-aos="fade-up">
+                <h2 class="cta-title">Siap Meningkatkan Kompetensi Tim Anda?</h2>
+                <p class="cta-subtitle">Diskusikan kebutuhan pelatihan, in-house training, atau konsultasi bisnis bersama Muhamad Fatoni & Miranaya Academy.</p>
+                <div class="cta-buttons no-pdf">
+                    <a href="https://miranaya.online/register.html" class="btn btn-primary" target="_blank">
+                        <i class="fa-solid fa-pen-to-square"></i> Daftar Training Sekarang
+                    </a>
+                    <!-- Tanpa menampilkan nomor HP di teks tombol -->
+                    <a href="https://wa.me/6282290007890?text=Halo%20Miranaya%20Academy,%20saya%20ingin%20konsultasi/tanya%20mengenai%20program%20pelatihan" class="btn btn-outline" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i> Chat WhatsApp
+                    </a>
                 </div>
             </div>
         </div>
@@ -1201,97 +827,122 @@
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="footer-logo">Miranaya Academy</div>
-                <div class="footer-tagline">Learn • Innovate • Apply • Impact</div>
-                <div class="social-links">
+                <a href="https://miranaya.online">
+                    <img src="mdemy.png" alt="Miranaya Academy" class="footer-logo-img">
+                </a>
+                <p class="footer-tagline">Empowering Minds • Transforming Business</p>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">
+                    Website: <a href="https://miranaya.online" style="color: var(--accent); text-decoration: none;">miranaya.online</a>
+                </p>
+                <div class="social-links no-pdf">
+                    <a href="https://wa.me/6282290007890" class="social-icon" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://miranaya.online" class="social-icon" target="_blank" title="Website"><i class="fa-solid fa-globe"></i></a>
                     <a href="#" class="social-icon" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
                     <a href="#" class="social-icon" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" class="social-icon" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-                    <a href="#" class="social-icon" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
-                    <a href="#" class="social-icon" title="Website"><i class="fa-solid fa-globe"></i></a>
                 </div>
             </div>
             <div class="footer-bottom">
-                &copy; 2026 Miranaya Academy. All rights reserved.
+                <p>&copy; 2026 Miranaya Academy. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- JAVASCRIPT FOR INTERACTIVITY, ANIMATIONS & PDF GENERATION -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-
-            // 1. Header scroll animation
-            const header = document.getElementById('header');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
-                }
-            });
-
-            // 2. Mobile Menu Toggle
-            const hamburger = document.getElementById('hamburger');
-            const navMenu = document.getElementById('nav-menu');
-            
-            hamburger.addEventListener('click', () => {
-                navMenu.classList.toggle('active');
-            });
-
-            // Close menu when clicking nav link
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', () => {
-                    navMenu.classList.remove('active');
-                });
-            });
-
-            // 3. Custom AOS (Animate On Scroll) Implementation
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.15
-            };
-
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('aos-animate');
-                        
-                        // Trigger counter animation if element is counter
-                        const counters = entry.target.querySelectorAll('[data-counter]');
-                        counters.forEach(counter => runCounter(counter));
-                    }
-                });
-            }, observerOptions);
-
-            document.querySelectorAll('[data-aos]').forEach(el => {
-                observer.observe(el);
-            });
-
-            // 4. Counter Animation Function
-            function runCounter(el) {
-                if (el.classList.contains('counted')) return;
-                el.classList.add('counted');
-                
-                const target = parseInt(el.getAttribute('data-counter'));
-                let current = 0;
-                const duration = 2000;
-                const stepTime = 30;
-                const steps = duration / stepTime;
-                const increment = target / steps;
-
-                const timer = setInterval(() => {
-                    current += increment;
-                    if (current >= target) {
-                        el.textContent = target + '+';
-                        clearInterval(timer);
-                    } else {
-                        el.textContent = Math.ceil(current) + '+';
-                    }
-                }, stepTime);
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
             }
         });
+
+        // Mobile Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Counter Animation for Statistics
+        const counters = document.querySelectorAll('.stat-number[data-counter]');
+        let animated = false;
+
+        const animateCounters = () => {
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-counter');
+                let count = 0;
+                const speed = target / 50; 
+
+                const updateCount = () => {
+                    count += speed;
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count) + '+';
+                        setTimeout(updateCount, 30);
+                    } else {
+                        counter.innerText = target + '+';
+                    }
+                };
+                updateCount();
+            });
+        };
+
+        // Scroll Observer for Counter and Simple AOS Animation
+        const observerOptions = { threshold: 0.2 };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('aos-animate');
+
+                    if (entry.target.id === 'statistics' && !animated) {
+                        animateCounters();
+                        animated = true;
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('[data-aos], #statistics').forEach(el => {
+            observer.observe(el);
+        });
+
+        // FUNCTION TO GENERATE PDF
+        function downloadPDF() {
+            const element = document.body;
+
+            const noPdfElements = document.querySelectorAll('.no-pdf');
+            noPdfElements.forEach(el => el.style.display = 'none');
+            element.classList.add('pdf-export-mode');
+
+            const options = {
+                margin:       [10, 10, 10, 10], 
+                filename:     'Profil_Muhamad_Fatoni_Miranaya.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { 
+                    scale: 2,           
+                    useCORS: true,      
+                    allowTaint: true,
+                    letterRendering: true
+                },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+            };
+
+            html2pdf().set(options).from(element).save().then(() => {
+                noPdfElements.forEach(el => el.style.display = '');
+                element.classList.remove('pdf-export-mode');
+            });
+        }
     </script>
 </body>
 </html>
