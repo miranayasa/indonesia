@@ -1,373 +1,1047 @@
-Bertindak sebagai Senior Frontend Engineer, UI/UX Engineer, dan Software Architect.
-
-Saya sudah memiliki backend Google Apps Script yang sudah berjalan.
-
-Tugasmu adalah MENULIS ULANG SELURUH FILE checkout.html.
-
-JANGAN melakukan edit sebagian.
-
-JANGAN memberikan potongan kode.
-
-Saya ingin satu file checkout.html yang lengkap dan production ready.
-
-==================================================
-
-TUJUAN
-
-Membangun halaman
-
-"Pendaftaran + Checkout + Payment"
-
-untuk Miranaya Academy.
-
-Halaman ini akan menjadi satu-satunya halaman pendaftaran.
-
-Halaman register lama akan dihapus.
-
-==================================================
-
-TEKNOLOGI
-
-HTML5
-
-CSS3
-
-Vanilla Javascript
-
-Tanpa Bootstrap
-
-Tanpa jQuery
-
-Semua CSS dalam file.
-
-Semua Javascript dalam file.
-
-==================================================
-
-DESAIN
-
-Pertahankan desain modern seperti:
-
-Stripe Checkout
-
-Midtrans Snap
-
-Coursera
-
-Ruangguru
-
-Dicoding
-
-Glassmorphism
-
-Soft Shadow
-
-Rounded 18px
-
-Gradient Biru
-
-Google Font Poppins
-
-Responsive
-
-Desktop 2 kolom
-
-65%
-
-35%
-
-Kolom kanan sticky.
-
-Mobile menjadi 1 kolom.
-
-==================================================
-
-HEADER
-
-Logo Miranaya Academy
-
-Learn • Innovate • Apply • Impact
-
-Progress
-
-① Data Peserta
-
-② Pembayaran
-
-==================================================
-
-KOLOM KIRI
-
-DATA PESERTA
-
-Nama Lengkap *
-
-Email *
-
-WhatsApp *
-
-Instansi
-
-Jabatan
-
-Kota
-
-==================================================
-
-PROGRAM PELATIHAN
-
-Dropdown
-
-Data TIDAK BOLEH hardcode.
-
-Dropdown HARUS mengambil data dari Google Apps Script.
-
-Endpoint
-
-GET
-
-https://script.google.com/macros/s/WEB_APP_URL_SAYA/exec?action=courses
-
-Response
-
-{
- "success":true,
- "data":[
-   {
-      "id":"AI001",
-      "name":"AI Fundamentals for Professionals",
-      "price":99000,
-      "promo":79000,
-      "trainer":"Muhamad Fatoni, S.T., CBMP, CAIP",
-      "duration":"3 Jam",
-      "date":"05 September 2026",
-      "time":"19.00 WIB",
-      "quota":50,
-      "status":"Aktif",
-      "description":"Memahami konsep dasar AI dan Prompt Engineering."
-   }
- ]
-}
-
-==================================================
-
-Saat user memilih pelatihan
-
-otomatis tampil
-
-Nama Pelatihan
-
-Trainer
-
-Durasi
-
-Tanggal
-
-Jam
-
-Deskripsi
-
-==================================================
-
-KOLOM KANAN
-
-RINGKASAN PESANAN
-
-Nama Pelatihan
-
-Harga Normal
-
-Harga Promo
-
-Diskon
-
-Total
-
-Logika
-
-Harga Normal = price
-
-Harga Promo = promo
-
-Diskon = price - promo
-
-Total = promo
-
-Jika promo kosong atau nol
-
-Total = price
-
-==================================================
-
-Voucher
-
-Tetap dipertahankan.
-
-Voucher mengurangi nilai Total.
-
-==================================================
-
-Button
-
-BAYAR SEKARANG
-
-==================================================
-
-Ketika tombol ditekan
-
-kirim POST
-
-ke
-
-https://script.google.com/macros/s/WEB_APP_URL_SAYA/exec
-
-Body
-
-{
- action:"checkout",
- fullName,
- email,
- whatsapp,
- organization,
- position,
- city,
- courseId
-}
-
-==================================================
-
-Response
-
-{
- success:true,
- invoice:"INV202608010001",
- snapToken:"xxxxxxxx"
-}
-
-==================================================
-
-Jika berhasil
-
-langsung
-
-snap.pay(response.snapToken)
-
-==================================================
-
-Jika payment success
-
-redirect
-
-success.html?invoice=...
-
-==================================================
-
-Jika pending
-
-redirect
-
-pending.html?invoice=...
-
-==================================================
-
-Jika gagal
-
-redirect
-
-failed.html?invoice=...
-
-==================================================
-
-VALIDASI
-
-Nama wajib
-
-Email valid
-
-WA wajib
-
-Pelatihan wajib dipilih
-
-==================================================
-
-LOADING
-
-Spinner fullscreen
-
-"Memproses Checkout..."
-
-==================================================
-
-TOAST
-
-Success
-
-Error
-
-Warning
-
-==================================================
-
-ACCESSIBILITY
-
-autocomplete
-
-aria-label
-
-required
-
-==================================================
-
-YANG WAJIB
-
-✔ Jangan ada data dummy
-
-✔ Jangan ada fallback simulation
-
-✔ Jangan ada mock invoice
-
-✔ Jangan ada mock snap token
-
-✔ Jangan ada mock course
-
-✔ Semua data HARUS berasal dari Google Apps Script.
-
-✔ Jangan gunakan
-
-course.course
-
-Gunakan
-
-course.name
-
-sesuai response API.
-
-==================================================
-
-KODE
-
-Harus rapi.
-
-Diberi komentar.
-
-Menggunakan fungsi modular.
-
-Mudah dikembangkan.
-
-Production Ready.
-
-==================================================
-
-OUTPUT
-
-Berikan SATU FILE checkout.html lengkap.
-
-Jangan memberikan potongan kode.
-
-Jangan menjelaskan teori.
-
-Jangan memakai placeholder data.
-
-Jangan membuat data simulasi.
-
-Saya hanya ingin satu file checkout.html lengkap yang siap dipasang ke GitHub Pages.
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran & Payment - Miranaya Academy</title>
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Midtrans Snap Script (Ganti client-key sesuai environment Sandbox/Production) -->
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="YOUR_MIDTRANS_CLIENT_KEY"></script>
+
+    <style>
+        /* ==========================================
+           1. CSS VARIABLES & RESET
+           ========================================== */
+        :root {
+            --primary: #0284c7;
+            --primary-hover: #0369a1;
+            --primary-light: #e0f2fe;
+            --secondary: #0f172a;
+            --accent: #38bdf8;
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --card-bg: #ffffff;
+            --text-main: #334155;
+            --text-muted: #64748b;
+            --text-dark: #0f172a;
+            --danger: #ef4444;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --radius: 18px;
+            --radius-sm: 10px;
+            --shadow-soft: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
+            --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: #f8fafc;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.5;
+        }
+
+        /* ==========================================
+           2. HEADER & BRANDING
+           ========================================== */
+        .site-header {
+            background: var(--bg-gradient);
+            color: #ffffff;
+            padding: 2.5rem 1.5rem 4rem 1.5rem;
+            position: relative;
+            overflow: hidden;
+            border-bottom-left-radius: 28px;
+            border-bottom-right-radius: 28px;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-title {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, #ffffff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tagline {
+            font-size: 0.95rem;
+            color: #94a3b8;
+            margin-top: 0.25rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* Progress Steps */
+        .progress-stepper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .step-item.active {
+            color: #ffffff;
+        }
+
+        .step-number {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .step-item.active .step-number {
+            background: var(--primary);
+            border-color: var(--accent);
+            color: #ffffff;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+        }
+
+        .step-divider {
+            flex: 1;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ==========================================
+           3. MAIN LAYOUT (2 COLUMNS)
+           ========================================== */
+        .main-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: -2.5rem auto 3rem auto;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 992px) {
+            .checkout-grid {
+                grid-template-columns: 65% 35%;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid #f1f5f9;
+            margin-bottom: 2rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* ==========================================
+           4. FORM CONTROLS & INPUTS
+           ========================================== */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+        }
+
+        @media (min-width: 640px) {
+            .form-grid-2 {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.375rem;
+        }
+
+        .form-group label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .form-group label .required {
+            color: var(--danger);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            border: 1.5px solid #e2e8f0;
+            border-radius: var(--radius-sm);
+            background: #ffffff;
+            color: var(--text-dark);
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-light);
+        }
+
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%3B64748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.25rem;
+            padding-right: 2.5rem;
+        }
+
+        /* Course Details Container */
+        .course-details-card {
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            border-radius: var(--radius-sm);
+            padding: 1.25rem;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .course-details-card.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .detail-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-label {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .detail-value {
+            color: var(--text-dark);
+            font-weight: 500;
+            text-align: right;
+        }
+
+        .course-desc {
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* ==========================================
+           5. RIGHT COLUMN: STICKY ORDER SUMMARY
+           ========================================== */
+        .sticky-sidebar {
+            position: relative;
+        }
+
+        @media (min-width: 992px) {
+            .sticky-sidebar {
+                position: sticky;
+                top: 2rem;
+            }
+        }
+
+        .summary-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid #f1f5f9;
+        }
+
+        .summary-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .summary-course-name {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            min-height: 2.8em;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .price-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            font-size: 0.9rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price-row.discount {
+            color: var(--danger);
+        }
+
+        .price-row.total {
+            border-top: 2px dashed #e2e8f0;
+            padding-top: 1rem;
+            margin-top: 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .total-amount {
+            color: var(--primary);
+            font-size: 1.3rem;
+        }
+
+        /* Voucher Section */
+        .voucher-box {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .voucher-input {
+            flex: 1;
+            text-transform: uppercase;
+        }
+
+        .btn-voucher {
+            background: #f1f5f9;
+            color: var(--text-dark);
+            border: 1px solid #cbd5e1;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-voucher:hover {
+            background: #e2e8f0;
+        }
+
+        /* Action Button */
+        .btn-pay {
+            width: 100%;
+            background: var(--primary);
+            color: #ffffff;
+            border: none;
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-pay:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.5);
+        }
+
+        .btn-pay:active {
+            transform: translateY(0);
+        }
+
+        /* ==========================================
+           6. FULLSCREEN LOADING SPINNER
+           ========================================== */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-left-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        .loading-text {
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* ==========================================
+           7. TOAST NOTIFICATION ENGINE
+           ========================================== */
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            max-width: 350px;
+            width: calc(100% - 4rem);
+        }
+
+        .toast {
+            padding: 1rem 1.25rem;
+            border-radius: var(--radius-sm);
+            background: #ffffff;
+            color: var(--text-dark);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-left: 4px solid var(--primary);
+            animation: slideIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s ease;
+        }
+
+        .toast.toast-success { border-left-color: var(--success); }
+        .toast.toast-error { border-left-color: var(--danger); }
+        .toast.toast-warning { border-left-color: var(--warning); }
+
+        /* Animations */
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="site-header" role="banner">
+        <div class="header-content">
+            <h1 class="logo-title">Miranaya Academy</h1>
+            <p class="tagline">Learn • Innovate • Apply • Impact</p>
+            
+            <div class="progress-stepper" aria-label="Progress Pendaftaran">
+                <div class="step-item active">
+                    <span class="step-number">1</span>
+                    <span>Data Peserta</span>
+                </div>
+                <div class="step-divider"></div>
+                <div class="step-item">
+                    <span class="step-number">2</span>
+                    <span>Pembayaran</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-container" role="main">
+        <form id="checkoutForm" novalidate>
+            <div class="checkout-grid">
+                
+                <!-- Kolom Kiri: Form & Pelatihan -->
+                <div class="left-column">
+                    
+                    <!-- Card Data Peserta -->
+                    <section class="card" aria-labelledby="heading-peserta">
+                        <h2 id="heading-peserta" class="card-title">Data Peserta</h2>
+                        <div class="form-grid form-grid-2">
+                            
+                            <div class="form-group">
+                                <label for="fullName">Nama Lengkap <span class="required">*</span></label>
+                                <input type="text" id="fullName" name="fullName" class="form-control" autocomplete="name" required aria-required="true" placeholder="Contoh: John Doe">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email <span class="required">*</span></label>
+                                <input type="email" id="email" name="email" class="form-control" autocomplete="email" required aria-required="true" placeholder="nama@domain.com">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="whatsapp">WhatsApp <span class="required">*</span></label>
+                                <input type="tel" id="whatsapp" name="whatsapp" class="form-control" autocomplete="tel" required aria-required="true" placeholder="081234567890">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="organization">Instansi / Perusahaan</label>
+                                <input type="text" id="organization" name="organization" class="form-control" autocomplete="organization" placeholder="Nama Instansi">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="position">Jabatan</label>
+                                <input type="text" id="position" name="position" class="form-control" autocomplete="organization-title" placeholder="Posisi / Pekerjaan">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="city">Kota</label>
+                                <input type="text" id="city" name="city" class="form-control" autocomplete="address-level2" placeholder="Kota Domisili">
+                            </div>
+
+                        </div>
+                    </section>
+
+                    <!-- Card Program Pelatihan -->
+                    <section class="card" aria-labelledby="heading-program">
+                        <h2 id="heading-program" class="card-title">Program Pelatihan</h2>
+                        
+                        <div class="form-group">
+                            <label for="courseSelect">Pilih Pelatihan <span class="required">*</span></label>
+                            <select id="courseSelect" name="courseId" class="form-control" required aria-required="true" aria-label="Pilih Program Pelatihan">
+                                <option value="">-- Memuat Pelatihan... --</option>
+                            </select>
+                        </div>
+
+                        <!-- Card Detail Pelatihan (Dynamic) -->
+                        <div id="courseDetails" class="course-details-card" aria-live="polite">
+                            <div class="detail-row">
+                                <span class="detail-label">Trainer</span>
+                                <span class="detail-value" id="detailTrainer">-</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Durasi</span>
+                                <span class="detail-value" id="detailDuration">-</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Tanggal</span>
+                                <span class="detail-value" id="detailDate">-</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Jam</span>
+                                <span class="detail-value" id="detailTime">-</span>
+                            </div>
+                            <p class="course-desc" id="detailDescription">-</p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <!-- Kolom Kanan: Ringkasan Pesanan (Sticky) -->
+                <div class="right-column sticky-sidebar">
+                    <section class="summary-card" aria-labelledby="heading-summary">
+                        <h2 id="heading-summary" class="summary-title">Ringkasan Pesanan</h2>
+                        
+                        <div class="summary-course-name" id="summaryCourseName">Belum ada pelatihan dipilih</div>
+
+                        <div class="price-breakdown">
+                            <div class="price-row">
+                                <span>Harga Normal</span>
+                                <span id="summaryPriceNormal">Rp 0</span>
+                            </div>
+                            <div class="price-row discount" id="rowDiscount" style="display: none;">
+                                <span>Diskon Promo</span>
+                                <span id="summaryDiscount">- Rp 0</span>
+                            </div>
+                            <div class="price-row discount" id="rowVoucher" style="display: none;">
+                                <span>Voucher</span>
+                                <span id="summaryVoucher">- Rp 0</span>
+                            </div>
+                            <div class="price-row total">
+                                <span>Total Pembayaran</span>
+                                <span class="total-amount" id="summaryTotal">Rp 0</span>
+                            </div>
+                        </div>
+
+                        <!-- Kode Voucher -->
+                        <div class="voucher-box">
+                            <input type="text" id="voucherCode" class="form-control voucher-input" placeholder="KODE VOUCHER" aria-label="Kode Voucher">
+                            <button type="button" id="btnApplyVoucher" class="btn-voucher">Gunakan</button>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" id="btnPay" class="btn-pay" aria-label="Bayar Sekarang">
+                            <span>BAYAR SEKARANG</span>
+                        </button>
+                    </section>
+                </div>
+
+            </div>
+        </form>
+    </main>
+
+    <!-- Fullscreen Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" role="alert" aria-busy="true" aria-live="assertive">
+        <div class="spinner"></div>
+        <div class="loading-text" id="loadingText">Memproses Checkout...</div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+    <!-- Application Script -->
+    <script>
+        /**
+         * MIRANAYA ACADEMY - CHECKOUT & PAYMENT ENGINE
+         * Architecture: Modular Vanilla JS
+         */
+        (function () {
+            'use strict';
+
+            // ==========================================
+            // CONFIGURATION
+            // ==========================================
+            const CONFIG = {
+                // Ganti URL Apps Script Anda
+                APPS_SCRIPT_URL: 'https://script.google.com/macros/s/WEB_APP_URL_SAYA/exec',
+                REDIRECT_PAGES: {
+                    SUCCESS: 'success.html',
+                    PENDING: 'pending.html',
+                    FAILED: 'failed.html'
+                }
+            };
+
+            // ==========================================
+            // STATE MANAGEMENT
+            // ==========================================
+            const state = {
+                courses: [],
+                selectedCourse: null,
+                voucherDiscount: 0,
+                isSubmitting: false
+            };
+
+            // ==========================================
+            // DOM ELEMENTS
+            // ==========================================
+            const elements = {
+                form: document.getElementById('checkoutForm'),
+                courseSelect: document.getElementById('courseSelect'),
+                courseDetails: document.getElementById('courseDetails'),
+                detailTrainer: document.getElementById('detailTrainer'),
+                detailDuration: document.getElementById('detailDuration'),
+                detailDate: document.getElementById('detailDate'),
+                detailTime: document.getElementById('detailTime'),
+                detailDescription: document.getElementById('detailDescription'),
+                summaryCourseName: document.getElementById('summaryCourseName'),
+                summaryPriceNormal: document.getElementById('summaryPriceNormal'),
+                summaryDiscount: document.getElementById('summaryDiscount'),
+                summaryVoucher: document.getElementById('summaryVoucher'),
+                summaryTotal: document.getElementById('summaryTotal'),
+                rowDiscount: document.getElementById('rowDiscount'),
+                rowVoucher: document.getElementById('rowVoucher'),
+                voucherInput: document.getElementById('voucherCode'),
+                btnApplyVoucher: document.getElementById('btnApplyVoucher'),
+                loadingOverlay: document.getElementById('loadingOverlay'),
+                loadingText: document.getElementById('loadingText'),
+                toastContainer: document.getElementById('toastContainer'),
+                // Input Fields Validation
+                fullName: document.getElementById('fullName'),
+                email: document.getElementById('email'),
+                whatsapp: document.getElementById('whatsapp'),
+                organization: document.getElementById('organization'),
+                position: document.getElementById('position'),
+                city: document.getElementById('city')
+            };
+
+            // ==========================================
+            // UI HELPER FUNCTIONS
+            // ==========================================
+            function showLoading(text = 'Memproses Checkout...') {
+                elements.loadingText.textContent = text;
+                elements.loadingOverlay.classList.add('active');
+            }
+
+            function hideLoading() {
+                elements.loadingOverlay.classList.remove('active');
+            }
+
+            function showToast(message, type = 'info') {
+                const toast = document.createElement('div');
+                toast.className = `toast toast-${type}`;
+                toast.textContent = message;
+
+                elements.toastContainer.appendChild(toast);
+
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateX(50px)';
+                    setTimeout(() => toast.remove(), 300);
+                }, 4000);
+            }
+
+            function formatIDR(amount) {
+                const number = Number(amount) || 0;
+                return new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    maximumFractionDigits: 0
+                }).format(number);
+            }
+
+            // ==========================================
+            // API DATA FETCHING
+            // ==========================================
+            async function fetchCourses() {
+                showLoading('Memuat daftar pelatihan...');
+                try {
+                    const response = await fetch(`${CONFIG.APPS_SCRIPT_URL}?action=courses`);
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    
+                    const result = await response.json();
+
+                    if (result.success && Array.isArray(result.data)) {
+                        state.courses = result.data;
+                        renderCourseDropdown();
+                    } else {
+                        throw new Error('Gagal membaca data dari server.');
+                    }
+                } catch (error) {
+                    console.error('Fetch Courses Error:', error);
+                    showToast('Gagal memuat daftar pelatihan. Periksa koneksi internet Anda.', 'error');
+                    elements.courseSelect.innerHTML = '<option value="">-- Gagal Memuat Data --</option>';
+                } finally {
+                    hideLoading();
+                }
+            }
+
+            // ==========================================
+            // RENDER & BUSINESS LOGIC
+            // ==========================================
+            function renderCourseDropdown() {
+                elements.courseSelect.innerHTML = '<option value="">-- Pilih Pelatihan --</option>';
+                
+                state.courses.forEach(course => {
+                    if (course.status === 'Aktif') {
+                        const option = document.createElement('option');
+                        option.value = course.id;
+                        
+                        // Menentukan tampilan harga di dropdown
+                        const displayPrice = (course.promo && Number(course.promo) > 0) ? course.promo : course.price;
+                        option.textContent = `${course.name} - ${formatIDR(displayPrice)}`;
+                        
+                        elements.courseSelect.appendChild(option);
+                    }
+                });
+            }
+
+            function handleCourseSelection(courseId) {
+                state.selectedCourse = state.courses.find(c => c.id === courseId) || null;
+                state.voucherDiscount = 0; // Reset voucher saat mengganti kursus
+                elements.voucherInput.value = '';
+
+                if (!state.selectedCourse) {
+                    elements.courseDetails.classList.remove('active');
+                    resetSummary();
+                    return;
+                }
+
+                const c = state.selectedCourse;
+
+                // Render Details
+                elements.detailTrainer.textContent = c.trainer || '-';
+                elements.detailDuration.textContent = c.duration || '-';
+                elements.detailDate.textContent = c.date || '-';
+                elements.detailTime.textContent = c.time || '-';
+                elements.detailDescription.textContent = c.description || '-';
+                elements.courseDetails.classList.add('active');
+
+                // Render Summary Calculation
+                calculateAndRenderSummary();
+            }
+
+            function calculateAndRenderSummary() {
+                if (!state.selectedCourse) return;
+
+                const c = state.selectedCourse;
+                const priceNormal = Number(c.price) || 0;
+                const pricePromo = Number(c.promo) || 0;
+                
+                const hasPromo = pricePromo > 0 && pricePromo < priceNormal;
+                const promoDiscount = hasPromo ? (priceNormal - pricePromo) : 0;
+                
+                // Base Price untuk perhitungan total
+                const baseTotal = hasPromo ? pricePromo : priceNormal;
+                const finalTotal = Math.max(0, baseTotal - state.voucherDiscount);
+
+                // Update UI Text
+                elements.summaryCourseName.textContent = c.name;
+                elements.summaryPriceNormal.textContent = formatIDR(priceNormal);
+
+                if (hasPromo) {
+                    elements.rowDiscount.style.display = 'flex';
+                    elements.summaryDiscount.textContent = `- ${formatIDR(promoDiscount)}`;
+                } else {
+                    elements.rowDiscount.style.display = 'none';
+                }
+
+                if (state.voucherDiscount > 0) {
+                    elements.rowVoucher.style.display = 'flex';
+                    elements.summaryVoucher.textContent = `- ${formatIDR(state.voucherDiscount)}`;
+                } else {
+                    elements.rowVoucher.style.display = 'none';
+                }
+
+                elements.summaryTotal.textContent = formatIDR(finalTotal);
+            }
+
+            function resetSummary() {
+                elements.summaryCourseName.textContent = 'Belum ada pelatihan dipilih';
+                elements.summaryPriceNormal.textContent = 'Rp 0';
+                elements.rowDiscount.style.display = 'none';
+                elements.rowVoucher.style.display = 'none';
+                elements.summaryTotal.textContent = 'Rp 0';
+            }
+
+            // ==========================================
+            // VOUCHER HANDLING
+            // ==========================================
+            function handleApplyVoucher() {
+                const code = elements.voucherInput.value.trim().toUpperCase();
+                
+                if (!state.selectedCourse) {
+                    showToast('Silakan pilih pelatihan terlebih dahulu.', 'warning');
+                    return;
+                }
+
+                if (!code) {
+                    showToast('Masukkan kode voucher.', 'warning');
+                    return;
+                }
+
+                // Logika Voucher Sederhana (Dapat disesuaikan dengan API Voucher jika ada)
+                if (code === 'MIRANAYA10K') {
+                    state.voucherDiscount = 10000;
+                    showToast('Voucher berhasil digunakan! Potongan Rp 10.000', 'success');
+                } else {
+                    showToast('Kode voucher tidak valid.', 'error');
+                    state.voucherDiscount = 0;
+                }
+
+                calculateAndRenderSummary();
+            }
+
+            // ==========================================
+            // FORM VALIDATION & CHECKOUT SUBMIT
+            // ==========================================
+            function validateForm() {
+                const name = elements.fullName.value.trim();
+                const email = elements.email.value.trim();
+                const whatsapp = elements.whatsapp.value.trim();
+                const courseId = elements.courseSelect.value;
+
+                if (!name) {
+                    showToast('Nama Lengkap wajib diisi.', 'warning');
+                    elements.fullName.focus();
+                    return false;
+                }
+
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!email || !emailRegex.test(email)) {
+                    showToast('Format Email tidak valid.', 'warning');
+                    elements.email.focus();
+                    return false;
+                }
+
+                if (!whatsapp || whatsapp.length < 9) {
+                    showToast('Nomor WhatsApp wajib diisi dengan benar.', 'warning');
+                    elements.whatsapp.focus();
+                    return false;
+                }
+
+                if (!courseId) {
+                    showToast('Silakan pilih program pelatihan.', 'warning');
+                    elements.courseSelect.focus();
+                    return false;
+                }
+
+                return true;
+            }
+
+            async function handleSubmitCheckout(e) {
+                e.preventDefault();
+
+                if (!validateForm()) return;
+                if (state.isSubmitting) return;
+
+                state.isSubmitting = true;
+                showLoading('Memproses Checkout & Membuat Order...');
+
+                const payload = {
+                    action: 'checkout',
+                    fullName: elements.fullName.value.trim(),
+                    email: elements.email.value.trim(),
+                    whatsapp: elements.whatsapp.value.trim(),
+                    organization: elements.organization.value.trim(),
+                    position: elements.position.value.trim(),
+                    city: elements.city.value.trim(),
+                    courseId: elements.courseSelect.value
+                };
+
+                try {
+                    const response = await fetch(CONFIG.APPS_SCRIPT_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // Menghindari preflight CORS di GAS
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) throw new Error('Gagal menghubungi server.');
+
+                    const result = await response.json();
+
+                    if (result.success && result.snapToken) {
+                        hideLoading();
+                        
+                        // Eksekusi Midtrans Snap
+                        if (window.snap) {
+                            window.snap.pay(result.snapToken, {
+                                onSuccess: function (res) {
+                                    window.location.href = `${CONFIG.REDIRECT_PAGES.SUCCESS}?invoice=${result.invoice}`;
+                                },
+                                onPending: function (res) {
+                                    window.location.href = `${CONFIG.REDIRECT_PAGES.PENDING}?invoice=${result.invoice}`;
+                                },
+                                onError: function (res) {
+                                    window.location.href = `${CONFIG.REDIRECT_PAGES.FAILED}?invoice=${result.invoice}`;
+                                },
+                                onClose: function () {
+                                    showToast('Pembayaran ditutup sebelum selesai.', 'warning');
+                                    state.isSubmitting = false;
+                                }
+                            });
+                        } else {
+                            throw new Error('Midtrans SDK belum dimuat dengan benar.');
+                        }
+
+                    } else {
+                        throw new Error(result.message || 'Gagal memproses transaksi.');
+                    }
+
+                } catch (error) {
+                    console.error('Checkout Error:', error);
+                    showToast(error.message || 'Terjadi kesalahan sistem.', 'error');
+                    hideLoading();
+                    state.isSubmitting = false;
+                }
+            }
+
+            // ==========================================
+            // EVENT LISTENERS & INITIALIZATION
+            // ==========================================
+            function initEventListeners() {
+                elements.courseSelect.addEventListener('change', (e) => {
+                    handleCourseSelection(e.target.value);
+                });
+
+                elements.btnApplyVoucher.addEventListener('click', handleApplyVoucher);
+
+                elements.form.addEventListener('submit', handleSubmitCheckout);
+            }
+
+            function init() {
+                initEventListeners();
+                fetchCourses();
+            }
+
+            // Run application after DOM fully loaded
+            document.addEventListener('DOMContentLoaded', init);
+
+        })();
+    </script>
+</body>
+</html>
