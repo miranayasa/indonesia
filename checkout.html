@@ -1,1270 +1,373 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Checkout Pelatihan - Miranaya Academy</title>
-  
-  <!-- Google Fonts: Poppins & Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Font Awesome for Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <style>
-    /* ==========================================================================
-       1. VARIABLES & DESIGN SYSTEM (Stripe / Notion / Modern Glassmorphism Theme)
-       ========================================================================== */
-    :root {
-      --primary: #2563eb;
-      --primary-hover: #1d4ed8;
-      --primary-light: #eff6ff;
-      --secondary: #0f172a;
-      --accent: #06b6d4;
-      --accent-gradient: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
-      --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-      
-      --text-main: #1e293b;
-      --text-muted: #64748b;
-      --text-light: #94a3b8;
-      
-      --glass-bg: rgba(255, 255, 255, 0.75);
-      --glass-border: rgba(255, 255, 255, 0.8);
-      --glass-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
-      --glass-shadow-hover: 0 25px 30px -5px rgba(37, 99, 235, 0.12), 0 10px 15px -5px rgba(15, 23, 42, 0.04);
-      
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 18px;
-      --radius-full: 9999px;
-
-      --danger: #ef4444;
-      --success: #10b981;
-      --warning: #f59e0b;
-
-      --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    /* Reset & Base Styles */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg-gradient);
-      color: var(--text-main);
-      min-height: 100vh;
-      line-height: 1.5;
-      padding-bottom: 60px;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ==========================================================================
-       2. HEADER & BRANDING
-       ========================================================================== */
-    .header {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--glass-border);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      padding: 16px 0;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-    }
-
-    .header-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-
-    .brand-group {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .brand-logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-    }
-
-    .logo-icon {
-      width: 44px;
-      height: 44px;
-      background: var(--accent-gradient);
-      border-radius: var(--radius-md);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffffff;
-      font-size: 22px;
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-    }
-
-    .brand-text h1 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--secondary);
-      letter-spacing: -0.5px;
-      line-height: 1.2;
-    }
-
-    .brand-text p {
-      font-size: 0.725rem;
-      color: var(--text-muted);
-      font-weight: 500;
-      letter-spacing: 0.5px;
-    }
-
-    /* Progress Stepper */
-    .progress-stepper {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .step-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      transition: var(--transition-fast);
-    }
-
-    .step-item.active {
-      color: var(--primary);
-    }
-
-    .step-number {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: #e2e8f0;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-      font-weight: 700;
-      transition: var(--transition-fast);
-    }
-
-    .step-item.active .step-number {
-      background: var(--primary);
-      color: #ffffff;
-      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
-    }
-
-    .step-divider {
-      width: 30px;
-      height: 2px;
-      background: #e2e8f0;
-    }
-
-    /* ==========================================================================
-       3. MAIN LAYOUT (2 Columns Desktop: 65% / 35%)
-       ========================================================================== */
-    .main-container {
-      max-width: 1200px;
-      margin: 36px auto 0;
-      padding: 0 24px;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 32px;
-    }
-
-    @media (min-width: 992px) {
-      .main-container {
-        grid-template-columns: 65% calc(35% - 32px);
-      }
-    }
-
-    /* ==========================================================================
-       4. CARDS & GLASSMORPHISM
-       ========================================================================== */
-    .glass-card {
-      background: var(--glass-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius-lg);
-      padding: 28px;
-      box-shadow: var(--glass-shadow);
-      margin-bottom: 24px;
-      transition: var(--transition-normal);
-      animation: fadeIn 0.5s ease-out forwards;
-    }
-
-    .glass-card:hover {
-      box-shadow: var(--glass-shadow-hover);
-    }
-
-    .card-title {
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: var(--secondary);
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border-bottom: 1px solid rgba(226, 232, 240, 0.6);
-      padding-bottom: 12px;
-    }
-
-    .card-title i {
-      color: var(--primary);
-    }
-
-    /* Sticky Container Right Column */
-    .sticky-column {
-      position: relative;
-    }
-
-    @media (min-width: 992px) {
-      .sticky-column {
-        position: sticky;
-        top: 96px;
-      }
-    }
-
-    /* ==========================================================================
-       5. FORM ELEMENTS & FLOATING LABELS
-       ========================================================================== */
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px 16px;
-    }
-
-    @media (min-width: 640px) {
-      .form-grid-2 {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    .floating-group {
-      position: relative;
-    }
-
-    .floating-input, .floating-select {
-      width: 100%;
-      height: 54px;
-      padding: 20px 16px 6px 16px;
-      font-family: inherit;
-      font-size: 0.95rem;
-      color: var(--text-main);
-      background: rgba(255, 255, 255, 0.9);
-      border: 1.5px solid #cbd5e1;
-      border-radius: var(--radius-md);
-      outline: none;
-      transition: var(--transition-fast);
-      appearance: none;
-    }
-
-    .floating-input:focus, .floating-select:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
-      background: #ffffff;
-    }
-
-    .floating-label {
-      position: absolute;
-      left: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      pointer-events: none;
-      transition: var(--transition-fast);
-    }
-
-    /* Floating label positioning on focus/filled */
-    .floating-input:focus ~ .floating-label,
-    .floating-input:not(:placeholder-shown) ~ .floating-label,
-    .floating-select:focus ~ .floating-label,
-    .floating-select:not([data-value=""]) ~ .floating-label,
-    .floating-select.has-value ~ .floating-label {
-      top: 14px;
-      font-size: 0.725rem;
-      font-weight: 600;
-      color: var(--primary);
-    }
-
-    /* Custom Select Arrow */
-    .select-wrapper {
-      position: relative;
-    }
-
-    .select-wrapper::after {
-      content: "107";
-      font-family: "Font Awesome 6 Free";
-      font-weight: 900;
-      position: absolute;
-      right: 18px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-muted);
-      pointer-events: none;
-    }
-
-    /* Course Detail Display Card */
-    .course-details {
-      margin-top: 20px;
-      background: rgba(239, 246, 255, 0.6);
-      border: 1px solid rgba(191, 219, 254, 0.8);
-      border-radius: var(--radius-md);
-      padding: 20px;
-      display: none; /* Controlled by JS */
-      animation: fadeIn 0.4s ease-out;
-    }
-
-    .course-details.active {
-      display: block;
-    }
-
-    .course-details-header {
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: var(--secondary);
-      margin-bottom: 12px;
-    }
-
-    .course-meta-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .meta-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.85rem;
-      color: var(--text-main);
-    }
-
-    .meta-item i {
-      color: var(--primary);
-      width: 16px;
-    }
-
-    .course-desc {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      border-top: 1px dashed #cbd5e1;
-      padding-top: 12px;
-    }
-
-    /* Skeleton Loading State */
-    .skeleton {
-      background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
-      background-size: 200% 100%;
-      animation: skeleton-loading 1.5s infinite;
-      border-radius: 4px;
-      height: 20px;
-    }
-
-    @keyframes skeleton-loading {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
-    }
-
-    /* ==========================================================================
-       6. ORDER SUMMARY (RIGHT COLUMN)
-       ========================================================================== */
-    .summary-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 0;
-      font-size: 0.9rem;
-      color: var(--text-main);
-    }
-
-    .summary-row.total {
-      border-top: 2px dashed #cbd5e1;
-      margin-top: 12px;
-      padding-top: 16px;
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: var(--secondary);
-    }
-
-    .summary-row.total .total-price {
-      color: var(--primary);
-      font-size: 1.3rem;
-    }
-
-    /* Voucher Input Box */
-    .voucher-box {
-      display: flex;
-      gap: 8px;
-      margin: 16px 0;
-    }
-
-    .voucher-input {
-      flex: 1;
-      height: 44px;
-      padding: 0 14px;
-      border: 1.5px solid #cbd5e1;
-      border-radius: var(--radius-sm);
-      outline: none;
-      font-family: inherit;
-      font-size: 0.875rem;
-      text-transform: uppercase;
-      background: #ffffff;
-    }
-
-    .voucher-input:focus {
-      border-color: var(--primary);
-    }
-
-    .btn-voucher {
-      height: 44px;
-      padding: 0 18px;
-      background: var(--secondary);
-      color: #ffffff;
-      border: none;
-      border-radius: var(--radius-sm);
-      font-weight: 600;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: var(--transition-fast);
-    }
-
-    .btn-voucher:hover {
-      background: #1e293b;
-    }
-
-    /* Security Badge */
-    .security-badge {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      color: #166534;
-      padding: 10px;
-      border-radius: var(--radius-sm);
-      font-size: 0.8rem;
-      font-weight: 600;
-      margin-bottom: 20px;
-    }
-
-    /* Payment Logos Preview */
-    .payment-methods-preview {
-      margin-top: 20px;
-    }
-
-    .payment-title {
-      font-size: 0.775rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 10px;
-      text-align: center;
-    }
-
-    .payment-icons {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-
-    .payment-chip {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 6px;
-      padding: 4px 8px;
-      font-size: 0.725rem;
-      font-weight: 700;
-      color: #475569;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-    }
-
-    .payment-note {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      text-align: center;
-      font-style: italic;
-    }
-
-    /* Primary Ripple Checkout Button */
-    .btn-checkout {
-      width: 100%;
-      height: 56px;
-      background: var(--accent-gradient);
-      color: #ffffff;
-      border: none;
-      border-radius: var(--radius-md);
-      font-family: inherit;
-      font-size: 1.05rem;
-      font-weight: 700;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4);
-      transition: var(--transition-normal);
-      margin-top: 20px;
-    }
-
-    .btn-checkout:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 24px -5px rgba(37, 99, 235, 0.5);
-    }
-
-    .btn-checkout:active {
-      transform: translateY(0);
-    }
-
-    .btn-checkout:disabled {
-      background: #94a3b8;
-      box-shadow: none;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    /* Ripple Effect */
-    .ripple {
-      position: absolute;
-      border-radius: 50%;
-      transform: scale(0);
-      animation: ripple 0.6s linear;
-      background-color: rgba(255, 255, 255, 0.4);
-    }
-
-    @keyframes ripple {
-      to {
-        transform: scale(4);
-        opacity: 0;
-      }
-    }
-
-    /* ==========================================================================
-       7. MODAL / FULLSCREEN LOADING OVERLAY
-       ========================================================================== */
-    .loading-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.65);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      opacity: 0;
-      visibility: hidden;
-      transition: var(--transition-normal);
-    }
-
-    .loading-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .spinner {
-      width: 56px;
-      height: 56px;
-      border: 4px solid rgba(255, 255, 255, 0.2);
-      border-left-color: #ffffff;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin-bottom: 20px;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .loading-text {
-      color: #ffffff;
-      font-weight: 600;
-      font-size: 1.1rem;
-      letter-spacing: 0.5px;
-    }
-
-    /* ==========================================================================
-       8. TOAST NOTIFICATIONS
-       ========================================================================== */
-    .toast-container {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      z-index: 10000;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .toast {
-      min-width: 300px;
-      background: #ffffff;
-      border-left: 5px solid var(--primary);
-      padding: 14px 20px;
-      border-radius: var(--radius-sm);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--text-main);
-      font-size: 0.875rem;
-      font-weight: 500;
-      transform: translateX(120%);
-      transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    }
-
-    .toast.show {
-      transform: translateX(0);
-    }
-
-    .toast.error { border-left-color: var(--danger); }
-    .toast.error i { color: var(--danger); }
-    .toast.success { border-left-color: var(--success); }
-    .toast.success i { color: var(--success); }
-
-    /* Keyframe Animations */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- ==========================================================================
-       HEADER SECTION
-       ========================================================================== -->
-  <header class="header">
-    <div class="header-container">
-      <div class="brand-group">
-        <a href="#" class="brand-logo" aria-label="Miranaya Academy Home">
-          <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-          <div class="brand-text">
-            <h1>Miranaya Academy</h1>
-            <p>Learn • Innovate • Apply • Impact</p>
-          </div>
-        </a>
-      </div>
-
-      <!-- Progress Stepper -->
-      <nav class="progress-stepper" aria-label="Langkah Pembayaran">
-        <div class="step-item active">
-          <span class="step-number">1</span>
-          <span>Data Peserta</span>
-        </div>
-        <div class="step-divider"></div>
-        <div class="step-item">
-          <span class="step-number">2</span>
-          <span>Pembayaran</span>
-        </div>
-      </nav>
-    </div>
-  </header>
-
-  <!-- ==========================================================================
-       MAIN CONTENT (2 COLUMNS LAYOUT)
-       ========================================================================== -->
-  <main class="main-container">
-    
-    <!-- LEFT COLUMN: INPUT FORMS (65%) -->
-    <section class="left-column">
-      <form id="checkoutForm" novalidate>
-        
-        <!-- CARD 1: DATA PESERTA -->
-        <div class="glass-card">
-          <h2 class="card-title"><i class="fa-regular fa-user"></i> Data Peserta</h2>
-          
-          <div class="form-grid form-grid-2">
-            <!-- Nama Lengkap -->
-            <div class="floating-group">
-              <input type="text" id="fullName" name="fullName" class="floating-input" placeholder=" " required autocomplete="name" aria-label="Nama Lengkap">
-              <label for="fullName" class="floating-label">Nama Lengkap *</label>
-            </div>
-
-            <!-- Email -->
-            <div class="floating-group">
-              <input type="email" id="email" name="email" class="floating-input" placeholder=" " required autocomplete="email" aria-label="Email Address">
-              <label for="email" class="floating-label">Email *</label>
-            </div>
-
-            <!-- WhatsApp -->
-            <div class="floating-group">
-              <input type="tel" id="whatsapp" name="whatsapp" class="floating-input" placeholder=" " required autocomplete="tel" aria-label="Nomor WhatsApp">
-              <label for="whatsapp" class="floating-label">WhatsApp *</label>
-            </div>
-
-            <!-- Kota -->
-            <div class="floating-group">
-              <input type="text" id="city" name="city" class="floating-input" placeholder=" " autocomplete="address-level2" aria-label="Kota Asal">
-              <label for="city" class="floating-label">Kota</label>
-            </div>
-
-            <!-- Instansi -->
-            <div class="floating-group">
-              <input type="text" id="organization" name="organization" class="floating-input" placeholder=" " autocomplete="organization" aria-label="Nama Instansi">
-              <label for="organization" class="floating-label">Instansi / Perusahaan</label>
-            </div>
-
-            <!-- Jabatan -->
-            <div class="floating-group">
-              <input type="text" id="position" name="position" class="floating-input" placeholder=" " autocomplete="organization-title" aria-label="Jabatan">
-              <label for="position" class="floating-label">Jabatan</label>
-            </div>
-          </div>
-        </div>
-
-        <!-- CARD 2: PROGRAM PELATIHAN -->
-        <div class="glass-card">
-          <h2 class="card-title"><i class="fa-solid fa-book-open"></i> Program Pelatihan</h2>
-          
-          <div class="select-wrapper">
-            <select id="courseSelect" name="courseId" class="floating-select" required aria-label="Pilih Program Pelatihan" data-value="">
-              <option value="" disabled selected hidden></option>
-              <!-- Data loaded dynamically from Apps Script -->
-            </select>
-            <label for="courseSelect" class="floating-label">Pilih Program Pelatihan *</label>
-          </div>
-
-          <!-- Selected Course Details View -->
-          <div id="courseDetailsCard" class="course-details">
-            <div id="detailTitle" class="course-details-header"></div>
-            <div class="course-meta-grid">
-              <div class="meta-item"><i class="fa-solid fa-user-tie"></i> <span id="detailTrainer"></span></div>
-              <div class="meta-item"><i class="fa-regular fa-clock"></i> <span id="detailDuration"></span></div>
-              <div class="meta-item"><i class="fa-regular fa-calendar-days"></i> <span id="detailDate"></span></div>
-              <div class="meta-item"><i class="fa-solid fa-business-time"></i> <span id="detailTime"></span></div>
-            </div>
-            <div id="detailDesc" class="course-desc"></div>
-          </div>
-        </div>
-
-      </form>
-    </section>
-
-    <!-- RIGHT COLUMN: ORDER SUMMARY (35% Sticky) -->
-    <aside class="sticky-column">
-      <div class="glass-card">
-        <h2 class="card-title"><i class="fa-solid fa-receipt"></i> Ringkasan Pesanan</h2>
-
-        <div id="summaryCourseName" class="summary-row" style="font-weight: 600;">
-          <span>Pelatihan:</span>
-          <span style="text-align: right; color: var(--text-muted); font-size: 0.85rem;">(Pilih Pelatihan)</span>
-        </div>
-
-        <div class="summary-row">
-          <span>Harga Normal</span>
-          <span id="summaryPrice">Rp 0</span>
-        </div>
-
-        <!-- Voucher Form -->
-        <div class="voucher-box">
-          <input type="text" id="voucherCode" class="voucher-input" placeholder="KODE VOUCHER" aria-label="Kode Voucher">
-          <button type="button" id="btnApplyVoucher" class="btn-voucher">Gunakan</button>
-        </div>
-
-        <div class="summary-row" style="color: var(--success);">
-          <span>Diskon Voucher</span>
-          <span id="summaryDiscount">- Rp 0</span>
-        </div>
-
-        <!-- Total -->
-        <div class="summary-row total">
-          <span>Total Bayar</span>
-          <span id="summaryTotal" class="total-price">Rp 0</span>
-        </div>
-
-        <!-- Submit Button -->
-        <button type="button" id="btnPayNow" class="btn-checkout">
-          <i class="fa-solid fa-lock"></i> BAYAR SEKARANG
-        </button>
-
-        <!-- Security Badge -->
-        <div class="security-badge" style="margin-top: 20px;">
-          <i class="fa-solid fa-shield-halved"></i> 100% Secure Payment • Powered by Midtrans
-        </div>
-
-        <!-- Payment Method Previews -->
-        <div class="payment-methods-preview">
-          <div class="payment-title">Metode Pembayaran Tersedia</div>
-          <div class="payment-icons">
-            <span class="payment-chip">QRIS</span>
-            <span class="payment-chip">GoPay</span>
-            <span class="payment-chip">ShopeePay</span>
-            <span class="payment-chip">DANA</span>
-            <span class="payment-chip">OVO</span>
-            <span class="payment-chip">BCA VA</span>
-            <span class="payment-chip">Mandiri VA</span>
-            <span class="payment-chip">BRI VA</span>
-            <span class="payment-chip">Permata</span>
-            <span class="payment-chip">Visa</span>
-            <span class="payment-chip">Mastercard</span>
-          </div>
-          <p class="payment-note">Metode pembayaran dipilih setelah klik Bayar Sekarang.</p>
-        </div>
-
-      </div>
-    </aside>
-
-  </main>
-
-  <!-- ==========================================================================
-       FULLSCREEN LOADING SPINNER OVERLAY
-       ========================================================================== -->
-  <div id="loadingOverlay" class="loading-overlay" aria-hidden="true">
-    <div class="spinner"></div>
-    <div class="loading-text">Memproses Checkout...</div>
-  </div>
-
-  <!-- TOAST CONTAINER -->
-  <div id="toastContainer" class="toast-container"></div>
-
-  <!-- MIDTRANS SNAP JS (Sandbox Mode for Integration) -->
-  <!-- Replace client-key with your actual Midtrans Client Key -->
-  <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-XXXXXXXXXXXXXXXX"></script>
-
-  <!-- ==========================================================================
-       JAVASCRIPT LOGIC
-       ========================================================================== -->
-  <script>
-    /**
-     * MIRANAYA ACADEMY CHECKOUT SYSTEM
-     * Clean, modular Vanilla JS logic
-     */
-
-    // Configuration
-    const CONFIG = {
-      // GOOGLE APPS SCRIPT ENDPOINT URL
-      APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbx_EXAMPLE_REPLACE_WITH_YOUR_ACTUAL_SCRIPT_URL/exec'
-    };
-
-    // State Management
-    let coursesData = [];
-    let selectedCourse = null;
-    let currentDiscount = 0;
-
-    // DOM Elements
-    const elements = {
-      courseSelect: document.getElementById('courseSelect'),
-      courseDetailsCard: document.getElementById('courseDetailsCard'),
-      detailTitle: document.getElementById('detailTitle'),
-      detailTrainer: document.getElementById('detailTrainer'),
-      detailDuration: document.getElementById('detailDuration'),
-      detailDate: document.getElementById('detailDate'),
-      detailTime: document.getElementById('detailTime'),
-      detailDesc: document.getElementById('detailDesc'),
-      
-      summaryCourseName: document.getElementById('summaryCourseName'),
-      summaryPrice: document.getElementById('summaryPrice'),
-      summaryDiscount: document.getElementById('summaryDiscount'),
-      summaryTotal: document.getElementById('summaryTotal'),
-      
-      checkoutForm: document.getElementById('checkoutForm'),
-      btnPayNow: document.getElementById('btnPayNow'),
-      loadingOverlay: document.getElementById('loadingOverlay'),
-      toastContainer: document.getElementById('toastContainer'),
-      
-      voucherCode: document.getElementById('voucherCode'),
-      btnApplyVoucher: document.getElementById('btnApplyVoucher')
-    };
-
-    // Initialize Application
-    document.addEventListener('DOMContentLoaded', () => {
-      initRippleEffect();
-      fetchCoursesFromAppsScript();
-      bindEvents();
-    });
-
-    /**
-     * 1. Fetch Course Data from Google Apps Script
-     */
-    async function fetchCoursesFromAppsScript() {
-      try {
-        elements.courseSelect.disabled = true;
-        
-        // Fetch from Apps Script
-        const response = await fetch(CONFIG.APPS_SCRIPT_URL);
-        
-        if (!response.ok) {
-          throw new Error('Gagal mengambil data dari Google Apps Script');
-        }
-
-        coursesData = await response.json();
-        populateCourseDropdown(coursesData);
-
-      } catch (error) {
-        console.warn('Menggunakan fallback data simulasi untuk pengetesan:', error.message);
-        
-        // Fallback simulation data matching exact prompt spec if Apps Script URL is placeholder
-        coursesData = [
-          {
-            id: "AI001",
-            course: "AI Fundamentals for Professionals",
-            trainer: "Muhamad Fatoni",
-            duration: "3 Jam",
-            price: 99000,
-            date: "30 Agustus 2026",
-            time: "19.00 WIB",
-            description: "Kuasai konsep dasar Artificial Intelligence dan implementasi AI tools untuk meningkatkan produktivitas karir profesional Anda secara signifikan."
-          },
-          {
-            id: "UI002",
-            course: "Mastering UI/UX Design & Design Systems",
-            trainer: "Siti Rahmawati",
-            duration: "5 Jam",
-            price: 149000,
-            date: "15 September 2026",
-            time: "13.00 WIB",
-            description: "Panduan praktis membangun antarmuka modern, intuitif, dan terstandarisasi dengan metodologi design system terkini."
-          }
-        ];
-
-        populateCourseDropdown(coursesData);
-        showToast('Data pelatihan berhasil dimuat (Mode Simulasi)', 'success');
-      } finally {
-        elements.courseSelect.disabled = false;
-      }
-    }
-
-    /**
-     * Populate Dropdown Options
-     */
-    function populateCourseDropdown(courses) {
-      elements.courseSelect.innerHTML = '<option value="" disabled selected hidden></option>';
-      
-      courses.forEach(course => {
-        const option = document.createElement('option');
-        option.value = course.id;
-        option.textContent = `${course.course} - ${formatRupiah(course.price)}`;
-        elements.courseSelect.appendChild(option);
-      });
-    }
-
-    /**
-     * 2. Event Listeners Binding
-     */
-    function bindEvents() {
-      // Course Selection Change Event
-      elements.courseSelect.addEventListener('change', (e) => {
-        const courseId = e.target.value;
-        if(courseId) {
-          elements.courseSelect.classList.add('has-value');
-          elements.courseSelect.setAttribute('data-value', courseId);
-        }
-        handleCourseSelection(courseId);
-      });
-
-      // Floating Label fix for select
-      elements.courseSelect.addEventListener('blur', (e) => {
-        if (!e.target.value) {
-          elements.courseSelect.classList.remove('has-value');
-          elements.courseSelect.setAttribute('data-value', '');
-        }
-      });
-
-      // Voucher Application
-      elements.btnApplyVoucher.addEventListener('click', handleVoucherApply);
-
-      // Checkout Button Click Event
-      elements.btnPayNow.addEventListener('click', handleCheckoutSubmit);
-    }
-
-    /**
-     * 3. Handle Selected Course Display & Calculation
-     */
-    function handleCourseSelection(courseId) {
-      selectedCourse = coursesData.find(c => c.id === courseId);
-
-      if (!selectedCourse) return;
-
-      // Update Card Detail Left
-      elements.detailTitle.textContent = selectedCourse.course;
-      elements.detailTrainer.textContent = selectedCourse.trainer;
-      elements.detailDuration.textContent = selectedCourse.duration;
-      elements.detailDate.textContent = selectedCourse.date;
-      elements.detailTime.textContent = selectedCourse.time;
-      elements.detailDesc.textContent = selectedCourse.description || 'Program pelatihan intensif bersertifikat untuk meningkatkan keterampilan Anda secara praktis.';
-      
-      elements.courseDetailsCard.classList.add('active');
-
-      // Update Summary Right Column
-      updateSummaryUI();
-    }
-
-    /**
-     * Update Right Column Pricing Summary
-     */
-    function updateSummaryUI() {
-      if (!selectedCourse) {
-        elements.summaryCourseName.innerHTML = `<span>Pelatihan:</span><span style="color:var(--text-muted);">(Pilih Pelatihan)</span>`;
-        elements.summaryPrice.textContent = 'Rp 0';
-        elements.summaryDiscount.textContent = '- Rp 0';
-        elements.summaryTotal.textContent = 'Rp 0';
-        return;
-      }
-
-      const price = selectedCourse.price;
-      const total = Math.max(0, price - currentDiscount);
-
-      elements.summaryCourseName.innerHTML = `<span>Pelatihan:</span><span style="font-weight:700; color:var(--secondary); text-align:right;">${selectedCourse.course}</span>`;
-      elements.summaryPrice.textContent = formatRupiah(price);
-      elements.summaryDiscount.textContent = `- ${formatRupiah(currentDiscount)}`;
-      elements.summaryTotal.textContent = formatRupiah(total);
-    }
-
-    /**
-     * Handle Voucher Discount Logic
-     */
-    function handleVoucherApply() {
-      const code = elements.voucherCode.value.trim().toUpperCase();
-      
-      if (!selectedCourse) {
-        showToast('Silakan pilih program pelatihan terlebih dahulu.', 'error');
-        return;
-      }
-
-      if (!code) {
-        showToast('Masukkan kode voucher.', 'error');
-        return;
-      }
-
-      // Simple Voucher Logic
-      if (code === 'MIRANAYA20') {
-        currentDiscount = Math.round(selectedCourse.price * 0.20);
-        showToast('Voucher diskon 20% berhasil dipasang!', 'success');
-      } else if (code === 'HEMAT10K') {
-        currentDiscount = 10000;
-        showToast('Voucher potongan Rp 10.000 berhasil dipasang!', 'success');
-      } else {
-        currentDiscount = 0;
-        showToast('Kode voucher tidak valid.', 'error');
-      }
-
-      updateSummaryUI();
-    }
-
-    /**
-     * 4. Form Validation & Checkout Process
-     */
-    async function handleCheckoutSubmit(e) {
-      e.preventDefault();
-
-      // Form Elements Validation
-      const fullName = document.getElementById('fullName').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const whatsapp = document.getElementById('whatsapp').value.trim();
-      const organization = document.getElementById('organization').value.trim();
-      const position = document.getElementById('position').value.trim();
-      const city = document.getElementById('city').value.trim();
-      const courseId = elements.courseSelect.value;
-
-      // Validation Rules
-      if (!fullName) {
-        showToast('Nama Lengkap wajib diisi.', 'error');
-        document.getElementById('fullName').focus();
-        return;
-      }
-
-      if (!email || !validateEmail(email)) {
-        showToast('Masukkan alamat Email yang valid.', 'error');
-        document.getElementById('email').focus();
-        return;
-      }
-
-      if (!whatsapp) {
-        showToast('Nomor WhatsApp wajib diisi.', 'error');
-        document.getElementById('whatsapp').focus();
-        return;
-      }
-
-      if (!courseId) {
-        showToast('Silakan pilih Program Pelatihan.', 'error');
-        elements.courseSelect.focus();
-        return;
-      }
-
-      // Construct Payload exactly as requested in Flow
-      const payload = {
-        action: "checkout",
-        fullName,
-        email,
-        whatsapp,
-        organization,
-        position,
-        city,
-        courseId
-      };
-
-      // Show Fullscreen Loading Overlay
-      showLoading(true);
-
-      try {
-        // Send Payload to Google Apps Script
-        const response = await fetch(CONFIG.APPS_SCRIPT_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'text/plain;charset=utf-8', // Gas requirement
-          },
-          body: JSON.stringify(payload)
-        });
-
-        let result;
-        try {
-          result = await response.json();
-        } catch (err) {
-          // Fallback response simulation if real server returns mock
-          result = {
-            success: true,
-            invoice: "INV" + new Date().toISOString().replace(/[-:T.Z]/g, "").slice(0, 12),
-            snapToken: "MOCK_SNAP_TOKEN_FOR_TESTING"
-          };
-        }
-
-        showLoading(false);
-
-        if (result.success && result.snapToken) {
-          // Trigger Midtrans Snap Payment Gateway
-          triggerMidtransSnap(result.snapToken, result.invoice);
-        } else {
-          showToast(result.message || 'Gagal memproses checkout.', 'error');
-        }
-
-      } catch (error) {
-        showLoading(false);
-        console.warn('Fallback ke Midtrans Simulation Snap:', error);
-        
-        // Simulation mode trigger for demonstration when Apps Script isn't active
-        const mockInvoice = "INV202608010001";
-        const mockSnapToken = "xxxxxxxx";
-        triggerMidtransSnap(mockSnapToken, mockInvoice);
-      }
-    }
-
-    /**
-     * 5. Midtrans Snap Trigger & Flow Handlers
-     */
-    function triggerMidtransSnap(snapToken, invoice) {
-      if (typeof snap !== 'undefined' && snap.pay) {
-        snap.pay(snapToken, {
-          onSuccess: function (result) {
-            console.log('Payment Success:', result);
-            window.location.href = `success.html?invoice=${invoice}`;
-          },
-          onPending: function (result) {
-            console.log('Payment Pending:', result);
-            window.location.href = `pending.html?invoice=${invoice}`;
-          },
-          onError: function (result) {
-            console.error('Payment Error:', result);
-            window.location.href = `failed.html?invoice=${invoice}`;
-          },
-          onClose: function () {
-            showToast('Anda menutup halaman pembayaran sebelum selesai.', 'error');
-          }
-        });
-      } else {
-        // Fallback simulation behavior when snap.js isn't initialized with real key
-        console.log('Simulasi Redirect Snap untuk invoice:', invoice);
-        showToast('Memunculkan simulasi Midtrans Snap...', 'success');
-        setTimeout(() => {
-          window.location.href = `success.html?invoice=${invoice}`;
-        }, 1500);
-      }
-    }
-
-    /**
-     * Utilities & Helpers
-     */
-    function formatRupiah(number) {
-      return new Intl.NumberFormat('id-ID', {
-        style: 'currency',
-        currency: 'IDR',
-        minimumFractionDigits: 0
-      }).format(number);
-    }
-
-    function validateEmail(email) {
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    }
-
-    function showLoading(active) {
-      if (active) {
-        elements.loadingOverlay.classList.add('active');
-        elements.loadingOverlay.setAttribute('aria-hidden', 'false');
-      } else {
-        elements.loadingOverlay.classList.remove('active');
-        elements.loadingOverlay.setAttribute('aria-hidden', 'true');
-      }
-    }
-
-    function showToast(message, type = 'info') {
-      const toast = document.createElement('div');
-      toast.className = `toast ${type}`;
-      
-      const icon = type === 'success' ? 'fa-circle-check' : 'fa-circle-exclamation';
-      toast.innerHTML = `<i class="fa-solid ${icon}"></i> <span>${message}</span>`;
-
-      elements.toastContainer.appendChild(toast);
-
-      setTimeout(() => toast.classList.add('show'), 100);
-
-      setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => toast.remove(), 300);
-      }, 4000);
-    }
-
-    // Ripple Effect Logic for Button
-    function initRippleEffect() {
-      const buttons = document.querySelectorAll('.btn-checkout');
-      buttons.forEach(button => {
-        button.addEventListener('click', function (e) {
-          const rect = button.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-
-          const circle = document.createElement('span');
-          circle.classList.add('ripple');
-          circle.style.top = `${y}px`;
-          circle.style.left = `${x}px`;
-
-          this.appendChild(circle);
-
-          setTimeout(() => circle.remove(), 600);
-        });
-      });
-    }
-  </script>
-</body>
-</html>
+Bertindak sebagai Senior Frontend Engineer, UI/UX Engineer, dan Software Architect.
+
+Saya sudah memiliki backend Google Apps Script yang sudah berjalan.
+
+Tugasmu adalah MENULIS ULANG SELURUH FILE checkout.html.
+
+JANGAN melakukan edit sebagian.
+
+JANGAN memberikan potongan kode.
+
+Saya ingin satu file checkout.html yang lengkap dan production ready.
+
+==================================================
+
+TUJUAN
+
+Membangun halaman
+
+"Pendaftaran + Checkout + Payment"
+
+untuk Miranaya Academy.
+
+Halaman ini akan menjadi satu-satunya halaman pendaftaran.
+
+Halaman register lama akan dihapus.
+
+==================================================
+
+TEKNOLOGI
+
+HTML5
+
+CSS3
+
+Vanilla Javascript
+
+Tanpa Bootstrap
+
+Tanpa jQuery
+
+Semua CSS dalam file.
+
+Semua Javascript dalam file.
+
+==================================================
+
+DESAIN
+
+Pertahankan desain modern seperti:
+
+Stripe Checkout
+
+Midtrans Snap
+
+Coursera
+
+Ruangguru
+
+Dicoding
+
+Glassmorphism
+
+Soft Shadow
+
+Rounded 18px
+
+Gradient Biru
+
+Google Font Poppins
+
+Responsive
+
+Desktop 2 kolom
+
+65%
+
+35%
+
+Kolom kanan sticky.
+
+Mobile menjadi 1 kolom.
+
+==================================================
+
+HEADER
+
+Logo Miranaya Academy
+
+Learn • Innovate • Apply • Impact
+
+Progress
+
+① Data Peserta
+
+② Pembayaran
+
+==================================================
+
+KOLOM KIRI
+
+DATA PESERTA
+
+Nama Lengkap *
+
+Email *
+
+WhatsApp *
+
+Instansi
+
+Jabatan
+
+Kota
+
+==================================================
+
+PROGRAM PELATIHAN
+
+Dropdown
+
+Data TIDAK BOLEH hardcode.
+
+Dropdown HARUS mengambil data dari Google Apps Script.
+
+Endpoint
+
+GET
+
+https://script.google.com/macros/s/WEB_APP_URL_SAYA/exec?action=courses
+
+Response
+
+{
+ "success":true,
+ "data":[
+   {
+      "id":"AI001",
+      "name":"AI Fundamentals for Professionals",
+      "price":99000,
+      "promo":79000,
+      "trainer":"Muhamad Fatoni, S.T., CBMP, CAIP",
+      "duration":"3 Jam",
+      "date":"05 September 2026",
+      "time":"19.00 WIB",
+      "quota":50,
+      "status":"Aktif",
+      "description":"Memahami konsep dasar AI dan Prompt Engineering."
+   }
+ ]
+}
+
+==================================================
+
+Saat user memilih pelatihan
+
+otomatis tampil
+
+Nama Pelatihan
+
+Trainer
+
+Durasi
+
+Tanggal
+
+Jam
+
+Deskripsi
+
+==================================================
+
+KOLOM KANAN
+
+RINGKASAN PESANAN
+
+Nama Pelatihan
+
+Harga Normal
+
+Harga Promo
+
+Diskon
+
+Total
+
+Logika
+
+Harga Normal = price
+
+Harga Promo = promo
+
+Diskon = price - promo
+
+Total = promo
+
+Jika promo kosong atau nol
+
+Total = price
+
+==================================================
+
+Voucher
+
+Tetap dipertahankan.
+
+Voucher mengurangi nilai Total.
+
+==================================================
+
+Button
+
+BAYAR SEKARANG
+
+==================================================
+
+Ketika tombol ditekan
+
+kirim POST
+
+ke
+
+https://script.google.com/macros/s/WEB_APP_URL_SAYA/exec
+
+Body
+
+{
+ action:"checkout",
+ fullName,
+ email,
+ whatsapp,
+ organization,
+ position,
+ city,
+ courseId
+}
+
+==================================================
+
+Response
+
+{
+ success:true,
+ invoice:"INV202608010001",
+ snapToken:"xxxxxxxx"
+}
+
+==================================================
+
+Jika berhasil
+
+langsung
+
+snap.pay(response.snapToken)
+
+==================================================
+
+Jika payment success
+
+redirect
+
+success.html?invoice=...
+
+==================================================
+
+Jika pending
+
+redirect
+
+pending.html?invoice=...
+
+==================================================
+
+Jika gagal
+
+redirect
+
+failed.html?invoice=...
+
+==================================================
+
+VALIDASI
+
+Nama wajib
+
+Email valid
+
+WA wajib
+
+Pelatihan wajib dipilih
+
+==================================================
+
+LOADING
+
+Spinner fullscreen
+
+"Memproses Checkout..."
+
+==================================================
+
+TOAST
+
+Success
+
+Error
+
+Warning
+
+==================================================
+
+ACCESSIBILITY
+
+autocomplete
+
+aria-label
+
+required
+
+==================================================
+
+YANG WAJIB
+
+✔ Jangan ada data dummy
+
+✔ Jangan ada fallback simulation
+
+✔ Jangan ada mock invoice
+
+✔ Jangan ada mock snap token
+
+✔ Jangan ada mock course
+
+✔ Semua data HARUS berasal dari Google Apps Script.
+
+✔ Jangan gunakan
+
+course.course
+
+Gunakan
+
+course.name
+
+sesuai response API.
+
+==================================================
+
+KODE
+
+Harus rapi.
+
+Diberi komentar.
+
+Menggunakan fungsi modular.
+
+Mudah dikembangkan.
+
+Production Ready.
+
+==================================================
+
+OUTPUT
+
+Berikan SATU FILE checkout.html lengkap.
+
+Jangan memberikan potongan kode.
+
+Jangan menjelaskan teori.
+
+Jangan memakai placeholder data.
+
+Jangan membuat data simulasi.
+
+Saya hanya ingin satu file checkout.html lengkap yang siap dipasang ke GitHub Pages.
