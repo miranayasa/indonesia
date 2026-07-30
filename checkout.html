@@ -940,22 +940,66 @@
 
                     const result = await response.json();
 
-                    if (result.success) {
-                        hideLoading();
-                        showToast(`Pendaftaran Berhasil! Invoice: ${result.invoice}`, 'success');
-                        
-                        setTimeout(() => {
-                            alert(`Pendaftaran Berhasil!\n\nNomor Invoice: ${result.invoice}\nTotal: Rp ${result.amount.toLocaleString('id-ID')}\n\nData telah tersimpan di Google Sheets.`);
-                            elements.form.reset();
-                            resetSummary();
-                            elements.courseDetails.classList.remove('active');
-                            state.isSubmitting = false;
-                        }, 500);
+                   if (result.success) {
 
-                    } else {
-                        throw new Error(result.message || 'Gagal memproses pendaftaran.');
-                    }
+    hideLoading();
 
+    console.log(result);
+
+    if (!result.snapToken) {
+        throw new Error("Snap Token tidak diterima dari Apps Script.");
+    }
+
+    snap.pay(result.snapToken, {
+
+        onSuccess: function(result) {
+
+            showToast("Pembayaran berhasil", "success");
+
+            console.log(result);
+
+            elements.form.reset();
+            resetSummary();
+            elements.courseDetails.classList.remove("active");
+            state.isSubmitting = false;
+
+        },
+
+        onPending: function(result) {
+
+            showToast("Silakan selesaikan pembayaran.", "warning");
+
+            console.log(result);
+
+            state.isSubmitting = false;
+
+        },
+
+        onError: function(result) {
+
+            showToast("Pembayaran gagal.", "error");
+
+            console.log(result);
+
+            state.isSubmitting = false;
+
+        },
+
+        onClose: function() {
+
+            showToast("Popup pembayaran ditutup.", "warning");
+
+            state.isSubmitting = false;
+
+        }
+
+    });
+
+} else {
+
+    throw new Error(result.message || "Gagal memproses checkout.");
+
+}
                 } catch (error) {
                     console.error('Checkout Error:', error);
                     showToast(error.message || 'Terjadi kesalahan sistem.', 'error');
