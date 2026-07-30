@@ -3,15 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pendaftaran & Payment - Miranaya Academy</title>
+    <title>Pendaftaran Pelatihan - Miranaya Academy</title>
     
     <!-- Google Fonts: Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Midtrans Snap Script (Ganti client-key sesuai environment Sandbox/Production) -->
-    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="YOUR_MIDTRANS_CLIENT_KEY"></script>
 
     <style>
         /* ==========================================
@@ -535,7 +532,7 @@
                 <div class="step-divider"></div>
                 <div class="step-item">
                     <span class="step-number">2</span>
-                    <span>Pembayaran</span>
+                    <span>Konfirmasi</span>
                 </div>
             </div>
         </div>
@@ -655,8 +652,8 @@
                         </div>
 
                         <!-- Submit Button -->
-                        <button type="submit" id="btnPay" class="btn-pay" aria-label="Bayar Sekarang">
-                            <span>BAYAR SEKARANG</span>
+                        <button type="submit" id="btnPay" class="btn-pay" aria-label="Daftar Sekarang">
+                            <span>DAFTAR SEKARANG</span>
                         </button>
                     </section>
                 </div>
@@ -676,29 +673,14 @@
 
     <!-- Application Script -->
     <script>
-        /**
-         * MIRANAYA ACADEMY - CHECKOUT & PAYMENT ENGINE
-         * Architecture: Modular Vanilla JS
-         */
         (function () {
             'use strict';
 
-            // ==========================================
-            // CONFIGURATION
-            // ==========================================
             const CONFIG = {
-                // Ganti URL Apps Script Anda
-                APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwRyfqj0_bYD5ocp3En9BomvGZDVaN9gbAO-r514MnLl_4bmPwhCPp-jFyx4C6M-9Hl/exec',
-                REDIRECT_PAGES: {
-                    SUCCESS: 'success.html',
-                    PENDING: 'pending.html',
-                    FAILED: 'failed.html'
-                }
+                // Ganti URL Apps Script hasil Deployment Anda di sini
+                APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwRyfqj0_bYD5ocp3En9BomvGZDVaN9gbAO-r514MnLl_4bmPwhCPp-jFyx4C6M-9Hl/exec'
             };
 
-            // ==========================================
-            // STATE MANAGEMENT
-            // ==========================================
             const state = {
                 courses: [],
                 selectedCourse: null,
@@ -706,9 +688,6 @@
                 isSubmitting: false
             };
 
-            // ==========================================
-            // DOM ELEMENTS
-            // ==========================================
             const elements = {
                 form: document.getElementById('checkoutForm'),
                 courseSelect: document.getElementById('courseSelect'),
@@ -730,7 +709,6 @@
                 loadingOverlay: document.getElementById('loadingOverlay'),
                 loadingText: document.getElementById('loadingText'),
                 toastContainer: document.getElementById('toastContainer'),
-                // Input Fields Validation
                 fullName: document.getElementById('fullName'),
                 email: document.getElementById('email'),
                 whatsapp: document.getElementById('whatsapp'),
@@ -739,9 +717,6 @@
                 city: document.getElementById('city')
             };
 
-            // ==========================================
-            // UI HELPER FUNCTIONS
-            // ==========================================
             function showLoading(text = 'Memproses Checkout...') {
                 elements.loadingText.textContent = text;
                 elements.loadingOverlay.classList.add('active');
@@ -774,9 +749,6 @@
                 }).format(number);
             }
 
-            // ==========================================
-            // API DATA FETCHING
-            // ==========================================
             async function fetchCourses() {
                 showLoading('Memuat daftar pelatihan...');
                 try {
@@ -800,29 +772,21 @@
                 }
             }
 
-            // ==========================================
-            // RENDER & BUSINESS LOGIC
-            // ==========================================
             function renderCourseDropdown() {
                 elements.courseSelect.innerHTML = '<option value="">-- Pilih Pelatihan --</option>';
                 
                 state.courses.forEach(course => {
-                    if (course.status === 'Aktif') {
-                        const option = document.createElement('option');
-                        option.value = course.id;
-                        
-                        // Menentukan tampilan harga di dropdown
-                        const displayPrice = (course.promo && Number(course.promo) > 0) ? course.promo : course.price;
-                        option.textContent = `${course.name} - ${formatIDR(displayPrice)}`;
-                        
-                        elements.courseSelect.appendChild(option);
-                    }
+                    const option = document.createElement('option');
+                    option.value = course.id;
+                    const displayPrice = (course.promo && Number(course.promo) > 0) ? course.promo : course.price;
+                    option.textContent = `${course.name} - ${formatIDR(displayPrice)}`;
+                    elements.courseSelect.appendChild(option);
                 });
             }
 
             function handleCourseSelection(courseId) {
                 state.selectedCourse = state.courses.find(c => c.id === courseId) || null;
-                state.voucherDiscount = 0; // Reset voucher saat mengganti kursus
+                state.voucherDiscount = 0;
                 elements.voucherInput.value = '';
 
                 if (!state.selectedCourse) {
@@ -833,7 +797,6 @@
 
                 const c = state.selectedCourse;
 
-                // Render Details
                 elements.detailTrainer.textContent = c.trainer || '-';
                 elements.detailDuration.textContent = c.duration || '-';
                 elements.detailDate.textContent = c.date || '-';
@@ -841,7 +804,6 @@
                 elements.detailDescription.textContent = c.description || '-';
                 elements.courseDetails.classList.add('active');
 
-                // Render Summary Calculation
                 calculateAndRenderSummary();
             }
 
@@ -855,11 +817,9 @@
                 const hasPromo = pricePromo > 0 && pricePromo < priceNormal;
                 const promoDiscount = hasPromo ? (priceNormal - pricePromo) : 0;
                 
-                // Base Price untuk perhitungan total
                 const baseTotal = hasPromo ? pricePromo : priceNormal;
                 const finalTotal = Math.max(0, baseTotal - state.voucherDiscount);
 
-                // Update UI Text
                 elements.summaryCourseName.textContent = c.name;
                 elements.summaryPriceNormal.textContent = formatIDR(priceNormal);
 
@@ -888,9 +848,6 @@
                 elements.summaryTotal.textContent = 'Rp 0';
             }
 
-            // ==========================================
-            // VOUCHER HANDLING
-            // ==========================================
             function handleApplyVoucher() {
                 const code = elements.voucherInput.value.trim().toUpperCase();
                 
@@ -904,7 +861,6 @@
                     return;
                 }
 
-                // Logika Voucher Sederhana (Dapat disesuaikan dengan API Voucher jika ada)
                 if (code === 'MIRANAYA10K') {
                     state.voucherDiscount = 10000;
                     showToast('Voucher berhasil digunakan! Potongan Rp 10.000', 'success');
@@ -916,9 +872,6 @@
                 calculateAndRenderSummary();
             }
 
-            // ==========================================
-            // FORM VALIDATION & CHECKOUT SUBMIT
-            // ==========================================
             function validateForm() {
                 const name = elements.fullName.value.trim();
                 const email = elements.email.value.trim();
@@ -960,7 +913,7 @@
                 if (state.isSubmitting) return;
 
                 state.isSubmitting = true;
-                showLoading('Memproses Checkout & Membuat Order...');
+                showLoading('Memproses Pendaftaran...');
 
                 const payload = {
                     action: 'checkout',
@@ -976,7 +929,7 @@
                 try {
                     const response = await fetch(CONFIG.APPS_SCRIPT_URL, {
                         method: 'POST',
-                        headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // Menghindari preflight CORS di GAS
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                         body: JSON.stringify(payload)
                     });
 
@@ -984,32 +937,20 @@
 
                     const result = await response.json();
 
-                    if (result.success && result.snapToken) {
+                    if (result.success) {
                         hideLoading();
+                        showToast(`Pendaftaran Berhasil! Invoice: ${result.invoice}`, 'success');
                         
-                        // Eksekusi Midtrans Snap
-                        if (window.snap) {
-                            window.snap.pay(result.snapToken, {
-                                onSuccess: function (res) {
-                                    window.location.href = `${CONFIG.REDIRECT_PAGES.SUCCESS}?invoice=${result.invoice}`;
-                                },
-                                onPending: function (res) {
-                                    window.location.href = `${CONFIG.REDIRECT_PAGES.PENDING}?invoice=${result.invoice}`;
-                                },
-                                onError: function (res) {
-                                    window.location.href = `${CONFIG.REDIRECT_PAGES.FAILED}?invoice=${result.invoice}`;
-                                },
-                                onClose: function () {
-                                    showToast('Pembayaran ditutup sebelum selesai.', 'warning');
-                                    state.isSubmitting = false;
-                                }
-                            });
-                        } else {
-                            throw new Error('Midtrans SDK belum dimuat dengan benar.');
-                        }
+                        setTimeout(() => {
+                            alert(`Pendaftaran Berhasil!\n\nNomor Invoice: ${result.invoice}\nTotal: Rp ${result.amount.toLocaleString('id-ID')}\n\nData telah tersimpan di Google Sheets.`);
+                            elements.form.reset();
+                            resetSummary();
+                            elements.courseDetails.classList.remove('active');
+                            state.isSubmitting = false;
+                        }, 500);
 
                     } else {
-                        throw new Error(result.message || 'Gagal memproses transaksi.');
+                        throw new Error(result.message || 'Gagal memproses pendaftaran.');
                     }
 
                 } catch (error) {
@@ -1020,16 +961,12 @@
                 }
             }
 
-            // ==========================================
-            // EVENT LISTENERS & INITIALIZATION
-            // ==========================================
             function initEventListeners() {
                 elements.courseSelect.addEventListener('change', (e) => {
                     handleCourseSelection(e.target.value);
                 });
 
                 elements.btnApplyVoucher.addEventListener('click', handleApplyVoucher);
-
                 elements.form.addEventListener('submit', handleSubmitCheckout);
             }
 
@@ -1038,7 +975,6 @@
                 fetchCourses();
             }
 
-            // Run application after DOM fully loaded
             document.addEventListener('DOMContentLoaded', init);
 
         })();
