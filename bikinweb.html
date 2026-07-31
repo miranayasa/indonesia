@@ -43,16 +43,16 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* MODIFIKASI LOGO NAVBAR AGAR TERLIHAT TERANG & KELIHATAN */
+        /* MODIFIKASI LOGO NAVBAR */
         .logo-wrapper {
-            background: rgba(255, 255, 255, 0.95); /* Latar putih terang di belakang logo */
+            background: rgba(255, 255, 255, 0.95);
             padding: 4px;
             border-radius: 8px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid #00f2fe; /* Border Cyan menyala */
-            box-shadow: 0 0 10px rgba(0, 242, 254, 0.3); /* Efek Glowing */
+            border: 1px solid #00f2fe;
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
         }
         .logo-wrapper img {
             width: 32px;
@@ -60,10 +60,10 @@
             object-fit: contain;
         }
 
-        /* MODIFIKASI HARGA CORET AGAR CONTRAST TERANG */
+        /* MODIFIKASI HARGA CORET */
         .harga-coret {
             text-decoration: line-through;
-            color: #ff6b6b !important; /* Warna merah muda terang agar langsung mencolok */
+            color: #ff6b6b !important;
             font-weight: 700;
             font-size: 1.5rem;
             background: rgba(255, 107, 107, 0.1);
@@ -108,7 +108,6 @@
     <nav id="navbar" class="navbar navbar-expand-lg fixed-top navbar-custom navbar-dark">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center gap-2" href="#">
-                <!-- LOGO DIPERBAIKI DENGAN WRAPPER TERANG & BORDER GLOW -->
                 <div class="logo-wrapper">
                     <img src="mdemy.png" alt="Miranaya Academy Logo">
                 </div>
@@ -119,6 +118,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
+                    <li class="nav-item"><a class="nav-link text-light" href="#jadwal">Jadwal</a></li>
                     <li class="nav-item"><a class="nav-link text-light" href="#materi">Materi</a></li>
                     <li class="nav-item"><a class="nav-link text-light" href="#solusi">Keunggulan</a></li>
                     <li class="nav-item"><a class="nav-link text-light" href="#peluang">Peluang Hasil</a></li>
@@ -175,6 +175,60 @@
         </div>
     </section>
 
+    <!-- SECTION JADWAL PELATIHAN (NEW) -->
+    <section class="jadwal-section bg-navy-dark" id="jadwal">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="badge bg-info text-dark mb-2 px-3 py-2 fw-bold">PILIHAN WAKTU FLEKSIBEL</span>
+                <h2 class="text-white fw-bold display-6">Jadwal Pelatihan Masterclass</h2>
+                <p class="text-gray">Pilih jadwal reguler yang sesuai dengan waktu Anda atau request jadwal custom!</p>
+            </div>
+
+            <div class="row g-4 justify-content-center">
+                <!-- Jadwal Selasa -->
+                <div class="col-md-5">
+                    <div class="glass-card p-4 rounded-4 text-center h-100 border-cyan position-relative overflow-hidden">
+                        <div class="badge bg-primary position-absolute top-0 end-0 m-3 px-3 py-1">Sesi Malam</div>
+                        <div class="fs-1 text-cyan mb-2"><i class="fa-solid fa-calendar-day"></i></div>
+                        <h4 class="text-white fw-bold mb-2">Setiap Hari SELASA</h4>
+                        <div class="bg-dark-navy p-3 rounded-3 my-3">
+                            <p class="text-cyan fs-5 fw-bold mb-0"><i class="fa-regular fa-clock me-2"></i>18.30 - 21.30 WIB</p>
+                        </div>
+                        <p class="text-gray mb-0 fs-14">Sangat cocok untuk Anda yang ingin belajar setelah pulang kerja/kuliah.</p>
+                    </div>
+                </div>
+
+                <!-- Jadwal Sabtu -->
+                <div class="col-md-5">
+                    <div class="glass-card p-4 rounded-4 text-center h-100 border-cyan position-relative overflow-hidden">
+                        <div class="badge bg-success position-absolute top-0 end-0 m-3 px-3 py-1">Sesi Weekend</div>
+                        <div class="fs-1 text-cyan mb-2"><i class="fa-solid fa-calendar-week"></i></div>
+                        <h4 class="text-white fw-bold mb-2">Setiap Hari SABTU</h4>
+                        <div class="bg-dark-navy p-3 rounded-3 my-3">
+                            <p class="text-cyan fs-5 fw-bold mb-0"><i class="fa-regular fa-clock me-2"></i>09.00 - 12.00 WIB</p>
+                        </div>
+                        <p class="text-gray mb-0 fs-14">Pilihan pas untuk mengisi akhir pekan dengan upgrade keterampilan baru.</p>
+                    </div>
+                </div>
+
+                <!-- Request Custom Hari -->
+                <div class="col-md-10 mt-4">
+                    <div class="glass-card p-4 rounded-4 text-center border-glow-yellow">
+                        <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 text-start">
+                            <div>
+                                <h5 class="text-yellow-accent fw-bold mb-1"><i class="fa-solid fa-user-gear me-2"></i>Jadwal Bentrok / Butuh Hari Khusus?</h5>
+                                <p class="text-gray mb-0">Anda dapat mengajukan <strong>Custom Schedule (Request Hari & Jam)</strong> khusus untuk sesi Private/Group perusahaan.</p>
+                            </div>
+                            <a href="https://wa.me/6282290007890?text=Halo%20Admin,%20saya%20ingin%20request%20jadwal%20custom%20untuk%20Masterclass%20AI%20Website" target="_blank" class="btn btn-outline-warning rounded-pill px-4 py-2 text-nowrap fw-bold">
+                                💬 Request Jadwal Custom
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Promo Section -->
     <section class="promo-section bg-dark-navy">
         <div class="container">
@@ -188,7 +242,6 @@
                 <h2 class="text-yellow-accent fw-extrabold mb-2">PROMO SPESIAL HARI INI</h2>
                 <p class="text-light fs-5 mb-4">Investasi leher ke atas terbaik untuk menguasai skill masa depan!</p>
 
-                <!-- BAGIAN HARGA YANG SUDAH DIPERBAIKI SANGAT KONTRAS -->
                 <div class="d-flex flex-wrap justify-content-center align-items-center gap-3 mb-4">
                     <div class="harga-coret">Rp99.000</div>
                     <div class="fs-1 fw-extrabold text-cyan">Hari Ini Hanya Rp49.900</div>
@@ -470,6 +523,18 @@
                             <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#accordionFaq">
                                 <div class="accordion-body text-gray">
                                     Kami mengusung konsep Private & Semi-Private untuk menjaga kualitas pembelajaran agar trainer bisa membimbing intensif satu per satu.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item glass-card mb-3 border-0">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed text-light bg-transparent fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    3. Bagaimana jika jadwal Selasa/Sabtu saya tidak cocok?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#accordionFaq">
+                                <div class="accordion-body text-gray">
+                                    Anda dapat menghubungi admin WhatsApp kami untuk mengajukan hari dan jam kustom (Custom Schedule) yang bisa disesuaikan dengan kesibukan Anda.
                                 </div>
                             </div>
                         </div>
