@@ -412,7 +412,7 @@
                         <i class="fa-solid fa-graduation-cap"></i> Program Pelatihan
                     </div>
 
-                    <!-- Field: Pilih Pelatihan (Dinamis dari Sheet Courses via getCoursesList) -->
+                    <!-- Field: Pilih Pelatihan -->
                     <div class="form-group full-width">
                         <label for="course"><i class="fa-solid fa-graduation-cap"></i> Pilih Program Pelatihan</label>
                         <div class="input-wrapper">
@@ -510,7 +510,7 @@
     </footer>
 
     <script>
-        // Data Rekening Bank (Tetap & Tidak Diubah)
+        // Data Rekening Bank
         const bankAccounts = {
             "BRI": { num: "757901000077504", name: "Muhamad Fatoni" },
             "BSI": { num: "7023706517", name: "Muhamad Fatoni" },
@@ -568,31 +568,44 @@
             if (typeof google !== 'undefined' && google.script && google.script.run) {
                 google.script.run
                     .withSuccessHandler(function(courses) {
-                        coursesData = courses || [];
-                        courseSelect.innerHTML = '<option value="" disabled selected>-- Pilih Program Pelatihan --</option>';
-                        
-                        if (coursesData.length === 0) {
-                            courseSelect.innerHTML = '<option value="" disabled>Tidak ada pelatihan aktif</option>';
-                            return;
-                        }
-
-                        coursesData.forEach(c => {
-                            const opt = document.createElement("option");
-                            const courseName = c.name || c.title;
-                            opt.value = courseName;
-                            opt.textContent = courseName;
-                            courseSelect.appendChild(opt);
-                        });
+                        renderCoursesToDropdown(courses);
                     })
                     .withFailureHandler(function(err) {
                         console.error("Gagal memuat courses:", err);
                         courseSelect.innerHTML = '<option value="" disabled selected>Gagal memuat data pelatihan</option>';
                     })
-                    .getCoursesList(); // Sesuai dengan nama fungsi di Course.gs
+                    .getCoursesList();
             } else {
-                console.warn("Mode Lokal (Tidak di Google Apps Script): Menggunakan data dummy");
-                courseSelect.innerHTML = '<option value="" disabled selected>-- Pilih Program Pelatihan --</option>';
+                fetch('?action=getCourses')
+                    .then(res => res.json())
+                    .then(courses => {
+                        renderCoursesToDropdown(courses);
+                    })
+                    .catch(err => {
+                        console.error("Error Fetch Courses:", err);
+                        courseSelect.innerHTML = '<option value="" disabled selected>Gagal memuat data pelatihan</option>';
+                    });
             }
+        }
+
+        // Helper untuk merender array pelatihan ke dropdown select
+        function renderCoursesToDropdown(courses) {
+            const courseSelect = document.getElementById("course");
+            coursesData = courses || [];
+            courseSelect.innerHTML = '<option value="" disabled selected>-- Pilih Program Pelatihan --</option>';
+            
+            if (coursesData.length === 0) {
+                courseSelect.innerHTML = '<option value="" disabled>Tidak ada pelatihan aktif</option>';
+                return;
+            }
+
+            coursesData.forEach(c => {
+                const opt = document.createElement("option");
+                const courseName = c.name || c.title;
+                opt.value = courseName;
+                opt.textContent = courseName;
+                courseSelect.appendChild(opt);
+            });
         }
 
         // Memanggil fungsi saveRegistration() pada Register.gs
@@ -634,7 +647,7 @@
                         btnSubmit.disabled = false;
                         btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Pendaftaran';
                     })
-                    .saveRegistration(formData); // Sesuai dengan nama fungsi di Register.gs
+                    .saveRegistration(formData);
             } else {
                 alert("Mode lokal: Pendaftaran disimulasikan berhasil.");
                 btnSubmit.disabled = false;
