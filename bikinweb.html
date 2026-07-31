@@ -18,7 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* CSS Utama yang Ringan & Kontras Tinggi */
+        /* CSS Utama & Penyesuaian Kontras Tinggi */
         html {
             scroll-behavior: smooth;
         }
@@ -42,6 +42,36 @@
             background-color: rgba(11, 19, 41, 0.95);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
+
+        /* MODIFIKASI LOGO NAVBAR AGAR TERLIHAT TERANG & KELIHATAN */
+        .logo-wrapper {
+            background: rgba(255, 255, 255, 0.95); /* Latar putih terang di belakang logo */
+            padding: 4px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #00f2fe; /* Border Cyan menyala */
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.3); /* Efek Glowing */
+        }
+        .logo-wrapper img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        /* MODIFIKASI HARGA CORET AGAR CONTRAST TERANG */
+        .harga-coret {
+            text-decoration: line-through;
+            color: #ff6b6b !important; /* Warna merah muda terang agar langsung mencolok */
+            font-weight: 700;
+            font-size: 1.5rem;
+            background: rgba(255, 107, 107, 0.1);
+            padding: 2px 12px;
+            border-radius: 6px;
+            border: 1px dashed rgba(255, 107, 107, 0.4);
+        }
+
         .btn-gradient-primary {
             background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
             color: #fff;
@@ -56,17 +86,7 @@
         .border-glow-yellow { border: 1px solid #ffd700 !important; }
         .border-glow-blue { border: 1px solid #00c6ff !important; }
         
-        /* Smooth Spacing */
         section { padding: 80px 0; }
-        .time-box {
-            background: rgba(0, 242, 254, 0.1);
-            border: 1px solid #00f2fe;
-            padding: 10px 15px;
-            border-radius: 8px;
-            min-width: 65px;
-        }
-        .time-box span { font-size: 1.5rem; font-weight: bold; color: #00f2fe; display: block; }
-        .time-box small { font-size: 0.75rem; color: #cbd5e1; }
         .floating-wa {
             position: fixed;
             bottom: 20px;
@@ -88,8 +108,11 @@
     <nav id="navbar" class="navbar navbar-expand-lg fixed-top navbar-custom navbar-dark">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center gap-2" href="#">
-                <img src="mdemy.png" alt="Miranaya Academy Logo" width="36" height="36" class="img-fluid rounded">
-                <span class="fw-bold text-white">MIRANAYA <span class="text-cyan">ACADEMY</span></span>
+                <!-- LOGO DIPERBAIKI DENGAN WRAPPER TERANG & BORDER GLOW -->
+                <div class="logo-wrapper">
+                    <img src="mdemy.png" alt="Miranaya Academy Logo">
+                </div>
+                <span class="fw-bold text-white ms-1">MIRANAYA <span class="text-cyan">ACADEMY</span></span>
             </a>
             <button class="navbar-toggler border-0 text-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <i class="fa-solid fa-bars fs-3"></i>
@@ -165,8 +188,9 @@
                 <h2 class="text-yellow-accent fw-extrabold mb-2">PROMO SPESIAL HARI INI</h2>
                 <p class="text-light fs-5 mb-4">Investasi leher ke atas terbaik untuk menguasai skill masa depan!</p>
 
-                <div class="d-flex justify-content-center align-items-center gap-3 mb-4">
-                    <div class="text-decoration-line-through text-muted fs-4">Rp99.000</div>
+                <!-- BAGIAN HARGA YANG SUDAH DIPERBAIKI SANGAT KONTRAS -->
+                <div class="d-flex flex-wrap justify-content-center align-items-center gap-3 mb-4">
+                    <div class="harga-coret">Rp99.000</div>
                     <div class="fs-1 fw-extrabold text-cyan">Hari Ini Hanya Rp49.900</div>
                 </div>
 
