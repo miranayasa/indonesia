@@ -411,11 +411,14 @@ Berikut saya lampirkan foto/file *Bukti Transfer* pada pesan ini. Mohon untuk di
 
                 // Kirim data POST ke Google Apps Script
                 if (SCRIPT_URL && !SCRIPT_URL.includes("AKfycbw...")) {
+                    const payloadParams = new URLSearchParams(formData).toString();
+
                     fetch(SCRIPT_URL, {
                         method: "POST",
-                        mode: "no-cors", // Menghindari CORS blocking pada POST Google Apps Script
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(formData)
+                        headers: { 
+                            "Content-Type": "application/x-www-form-urlencoded" 
+                        },
+                        body: payloadParams
                     })
                     .then(() => {
                         proceedToWhatsApp();
