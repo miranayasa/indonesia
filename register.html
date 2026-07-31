@@ -434,7 +434,6 @@
         /* ==========================================================================
            4. MODAL, LOADING OVERLAY & TOAST NOTIFICATIONS
            ========================================================================== */
-        /* Loading Overlay */
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -486,7 +485,6 @@
             font-size: 1rem;
         }
 
-        /* Modal Backdrop */
         .modal-backdrop {
             position: fixed;
             top: 0;
@@ -605,7 +603,6 @@
             color: var(--navy-deep);
         }
 
-        /* Toast Notification */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -633,7 +630,6 @@
             border-left-color: var(--error-color);
         }
 
-        /* Floating WhatsApp Button */
         .floating-wa {
             position: fixed;
             bottom: 30px;
@@ -840,17 +836,12 @@
                         <i class="fa-solid fa-graduation-cap"></i> Program Pelatihan
                     </div>
 
-                    <!-- Field: Pilih Pelatihan -->
+                    <!-- Field: Pilih Pelatihan (Dinamis dari Google Sheet) -->
                     <div class="form-group full-width">
                         <label for="course"><i class="fa-solid fa-graduation-cap"></i> Pilih Program Pelatihan</label>
                         <div class="input-wrapper">
                             <select id="course" name="course" class="input-control" required>
-                                <option value="" disabled selected>-- Pilih Program Pelatihan AI --</option>
-                                <option value="AI Fundamentals for Professionals">AI Fundamentals for Professionals</option>
-                                <option value="AI for Data Corporate Analyst">AI for Data Corporate Analyst</option>
-                                <option value="Masterclass Bikin Website Tanpa Coding dengan AI Gratis">Masterclass Bikin Website Tanpa Coding dengan AI Gratis</option>
-                                <option value="AI for Business Leader & Professionals">AI for Business Leader & Professionals</option>
-                                <option value="Creating Business Presentation with AI">Creating Business Presentation with AI</option>
+                                <option value="" disabled selected>-- Memuat daftar pelatihan... --</option>
                             </select>
                         </div>
                         <span class="error-message"><i class="fa-solid fa-circle-exclamation"></i> Silakan pilih salah satu program pelatihan.</span>
@@ -939,15 +930,6 @@
                         </div>
                     </div>
 
-                    <!-- Field: Upload Bukti Pembayaran -->
-                    <div class="form-group full-width">
-                        <label for="paymentProof"><i class="fa-solid fa-file-invoice-dollar"></i> Upload Bukti Pembayaran</label>
-                        <div class="input-wrapper">
-                            <input type="file" id="paymentProof" name="paymentProof" class="input-control" accept="image/*,.pdf" required>
-                        </div>
-                        <span class="error-message"><i class="fa-solid fa-circle-exclamation"></i> Bukti pembayaran wajib diunggah.</span>
-                    </div>
-
                     <!-- Field: Catatan (Opsional) -->
                     <div class="form-group full-width">
                         <label for="notes"><i class="fa-solid fa-note-sticky"></i> Catatan Khusus (Opsional)</label>
@@ -959,7 +941,7 @@
                     <!-- Submit Button Container -->
                     <div class="full-width">
                         <button type="submit" id="submitBtn" class="submit-btn">
-                            <span id="btnText">Kirim & Konfirmasi Pembayaran</span>
+                            <span id="btnText">Kirim Pendaftaran</span>
                             <i class="fa-solid fa-arrow-right" id="btnIcon"></i>
                             <div class="spinner" id="btnSpinner"></div>
                         </button>
@@ -974,7 +956,7 @@
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-box">
             <div class="large-spinner"></div>
-            <div class="loading-text">Memproses Pendaftaran & Pembayaran...</div>
+            <div class="loading-text">Memproses Pendaftaran...</div>
         </div>
     </div>
 
@@ -996,10 +978,10 @@
                 <i class="fa-solid fa-circle-check"></i>
             </div>
             <h3 class="modal-title">Pendaftaran Berhasil</h3>
-            <p class="modal-text">Terima kasih telah mendaftar di Miranaya Academy.<br>Silakan klik tombol di bawah untuk mengirimkan rincian pendaftaran dan bukti pembayaran ke WhatsApp Admin.</p>
+            <p class="modal-text">Terima kasih telah mendaftar di Miranaya Academy.<br>Silakan klik tombol di bawah untuk mengirimkan rincian pendaftaran dan melampirkan bukti pembayaran via chat WhatsApp.</p>
             <div class="modal-actions">
                 <a href="#" id="modalWaBtn" target="_blank" class="btn-wa-admin">
-                    <i class="fa-brands fa-whatsapp"></i> Kirim Bukti ke WhatsApp
+                    <i class="fa-brands fa-whatsapp"></i> Kirim Bukti Pembayaran via Chat
                 </a>
                 <button type="button" class="btn-close-modal" id="closeModalBtn">Tutup</button>
             </div>
@@ -1032,34 +1014,8 @@
             "Bank Saqu": { bank: "Bank Saqu", number: "10061893666", holder: "Muhamad Fatoni" }
         };
 
-        // Course Catalog Data
-        const COURSE_DETAILS = {
-            "AI Fundamentals for Professionals": {
-                icon: "fa-brain",
-                title: "AI Fundamentals for Professionals",
-                desc: "Memahami konsep dasar AI, Generative AI, Prompt Engineering, dan cara mengintegrasikan AI untuk efisiensi kerja harian."
-            },
-            "AI for Data Corporate Analyst": {
-                icon: "fa-chart-line",
-                title: "AI for Data Corporate Analyst",
-                desc: "Menggunakan AI untuk otomasi analisis data bisnis, pembersihan data, pembuatan dashboard interaktif, serta interpretasi data cepat."
-            },
-            "Masterclass Bikin Website Tanpa Coding dengan AI Gratis": {
-                icon: "fa-laptop-code",
-                title: "Masterclass Website Tanpa Coding",
-                desc: "Panduan praktis membangun website profesional, landing page, dan sistem pendaftaran menggunakan tool AI gratis tanpa perlu coding."
-            },
-            "AI for Business Leader & Professionals": {
-                icon: "fa-user-tie",
-                title: "AI for Business Leader & Professionals",
-                desc: "Strategi penerapan AI dalam pengambilan keputusan bisnis, efisiensi operasional perusahaan, serta transformasi digital tim."
-            },
-            "Creating Business Presentation with AI": {
-                icon: "fa-file-powerpoint",
-                title: "Creating Business Presentation with AI",
-                desc: "Trik cepat menyusun slide presentasi bisnis profesional, menarik, dan berstandar eksekutif hanya dalam hitungan menit memanfaatkan AI."
-            }
-        };
+        // Course Catalog Cache & Fallback Data
+        let coursesCatalog = [];
 
         let isSubmitting = false;
 
@@ -1081,7 +1037,6 @@
             displayBankName: document.getElementById('displayBankName'),
             displayAccNum: document.getElementById('displayAccNum'),
             copyAccBtn: document.getElementById('copyAccBtn'),
-            paymentProof: document.getElementById('paymentProof'),
             loadingOverlay: document.getElementById('loadingOverlay'),
             toast: document.getElementById('toast'),
             toastMsg: document.getElementById('toastMsg'),
@@ -1092,13 +1047,57 @@
             requiredInputs: document.querySelectorAll('#registrationForm [required]')
         };
 
-        function init() {
+        async function init() {
             const today = new Date().toISOString().split('T')[0];
             const dateInput = document.getElementById('trainingDate');
             if (dateInput) dateInput.setAttribute('min', today);
 
             bindEvents();
+            await fetchCoursesFromSheet();
             updateProgress();
+        }
+
+        /* Fetch daftar materi/pelatihan dari Google Sheets API (Sheet Courses) */
+        async function fetchCoursesFromSheet() {
+            try {
+                const response = await fetch(`${SCRIPT_URL}?action=getCourses`);
+                if (!response.ok) throw new Error("Gagal mengambil data dari server.");
+
+                const data = await response.json();
+                
+                // Pastikan data berupa Array (mengambil kolom nama pelatihan)
+                if (Array.isArray(data) && data.length > 0) {
+                    coursesCatalog = data;
+                    renderCourseOptions(data);
+                } else {
+                    throw new Error("Format data tidak sesuai.");
+                }
+            } catch (error) {
+                console.warn("[Fetch Courses Warning]", error);
+                // Fallback jika API bermasalah
+                const defaultCourses = [
+                    { title: "AI Fundamentals for Professionals", desc: "Memahami konsep dasar AI, Generative AI, dan Prompt Engineering." },
+                    { title: "AI for Data Corporate Analyst", desc: "Menggunakan AI untuk otomasi analisis data bisnis dan visualisasi." },
+                    { title: "Masterclass Bikin Website Tanpa Coding dengan AI Gratis", desc: "Membangun website profesional menggunakan tools AI gratis." },
+                    { title: "AI for Business Leader & Professionals", desc: "Strategi penerapan AI dalam pengambilan keputusan bisnis." },
+                    { title: "Creating Business Presentation with AI", desc: "Menyusun slide presentasi bisnis profesional dengan AI." }
+                ];
+                coursesCatalog = defaultCourses;
+                renderCourseOptions(defaultCourses);
+            }
+        }
+
+        /* Render option pada dropdown select pelatihan */
+        function renderCourseOptions(courses) {
+            elements.courseSelect.innerHTML = '<option value="" disabled selected>-- Pilih Program Pelatihan --</option>';
+            
+            courses.forEach(item => {
+                const name = typeof item === 'string' ? item : (item.title || item['Nama Pelatihan']);
+                const option = document.createElement('option');
+                option.value = name;
+                option.textContent = name;
+                elements.courseSelect.appendChild(option);
+            });
         }
 
         function bindEvents() {
@@ -1209,20 +1208,23 @@
             if (!isAllValid && firstErrorElement) {
                 firstErrorElement.focus();
                 firstErrorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                showToast("Harap lengkapi seluruh field dan bukti pembayaran.", "error");
+                showToast("Harap lengkapi seluruh field yang wajib diisi.", "error");
             }
 
             return isAllValid;
         }
 
         function handleCourseChange(e) {
-            const selectedCourse = e.target.value;
-            const details = COURSE_DETAILS[selectedCourse];
+            const selectedTitle = e.target.value;
+            const courseObj = coursesCatalog.find(c => {
+                const title = typeof c === 'string' ? c : (c.title || c['Nama Pelatihan']);
+                return title === selectedTitle;
+            });
 
-            if (details) {
-                elements.courseCardIcon.className = `fa-solid ${details.icon}`;
-                elements.courseCardTitle.textContent = details.title;
-                elements.courseCardDesc.textContent = details.desc;
+            if (courseObj) {
+                elements.courseCardIcon.className = `fa-solid ${courseObj.icon || 'fa-brain'}`;
+                elements.courseCardTitle.textContent = selectedTitle;
+                elements.courseCardDesc.textContent = courseObj.desc || courseObj['Deskripsi'] || 'Program pelatihan akselerasi AI terbaik untuk meningkatkan produktivitas Anda.';
                 elements.courseCard.classList.add('active');
             } else {
                 elements.courseCard.classList.remove('active');
@@ -1251,7 +1253,6 @@
         }
 
         function collectFormData() {
-            const fileName = elements.paymentProof.files[0] ? elements.paymentProof.files[0].name : 'Uploaded';
             return {
                 fullName: document.getElementById('fullName').value.trim(),
                 email: document.getElementById('email').value.trim(),
@@ -1263,7 +1264,6 @@
                 trainingDate: document.getElementById('trainingDate').value,
                 source: document.getElementById('source').value,
                 bankSelected: document.getElementById('bankSelect').value,
-                paymentFileName: fileName,
                 notes: document.getElementById('notes').value.trim()
             };
         }
@@ -1306,7 +1306,6 @@
                 }
             } catch (error) {
                 console.error("[Submission Error]", error);
-                // Tetap memunculkan modal WA agar proses pengiriman bukti user tidak terhambat
                 setupWhatsAppLink(payload);
                 showSuccessModal();
                 resetForm();
@@ -1316,10 +1315,10 @@
             }
         }
 
-        /* Menyiapkan Link WhatsApp dengan Rincian & Bukti Pembayaran */
+        /* Menyiapkan Link WhatsApp dengan Rincian Pendaftaran */
         function setupWhatsAppLink(data) {
             const adminPhone = "6282290007890";
-            const textMsg = `Halo Miranaya Academy, saya sudah melakukan pendaftaran dan pembayaran.%0A%0A*Detail Pendaftaran:*%0A- *Nama:* ${encodeURIComponent(data.fullName)}%0A- *Email:* ${encodeURIComponent(data.email)}%0A- *Instansi:* ${encodeURIComponent(data.organization)}%0A- *Pelatihan:* ${encodeURIComponent(data.course)}%0A- *Tanggal:* ${encodeURIComponent(data.trainingDate)}%0A- *Bank Tujuan:* ${encodeURIComponent(data.bankSelected)} (a.n Muhamad Fatoni)%0A%0A*Status:* Bukti transfer sudah disiapkan. Saya lampirkan foto/file bukti transfernya di pesan ini.`;
+            const textMsg = `Halo Miranaya Academy, saya sudah melakukan pendaftaran.%0A%0A*Detail Pendaftaran:*%0A- *Nama:* ${encodeURIComponent(data.fullName)}%0A- *Email:* ${encodeURIComponent(data.email)}%0A- *Instansi:* ${encodeURIComponent(data.organization)}%0A- *Pelatihan:* ${encodeURIComponent(data.course)}%0A- *Tanggal:* ${encodeURIComponent(data.trainingDate)}%0A- *Bank Tujuan:* ${encodeURIComponent(data.bankSelected)} (a.n Muhamad Fatoni)%0A%0ABerikut saya lampirkan foto/file bukti transfernya.`;
             
             elements.modalWaBtn.href = `https://wa.me/${adminPhone}?text=${textMsg}`;
         }
@@ -1333,7 +1332,7 @@
                 elements.loadingOverlay.classList.add('active');
             } else {
                 elements.submitBtn.disabled = false;
-                elements.btnText.textContent = "Kirim & Konfirmasi Pembayaran";
+                elements.btnText.textContent = "Kirim Pendaftaran";
                 elements.btnIcon.style.display = "inline-block";
                 elements.btnSpinner.style.display = "none";
                 elements.loadingOverlay.classList.remove('active');
