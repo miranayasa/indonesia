@@ -25,21 +25,31 @@
             --gray-border: #E2E8F0;
             --text-main: #1E293B;
             --text-muted: #64748B;
+            --error-color: #EF4444;
+            --success-color: #10B981;
+            
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --glass-shadow: 0 20px 40px rgba(7, 28, 77, 0.08);
             --card-radius: 18px;
             --transition-fast: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --whatsapp-green: #25D366;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        
-        body { 
-            background-color: var(--gray-light); 
-            color: var(--text-main); 
-            min-height: 100vh; 
-            display: flex; 
-            flex-direction: column; 
-            position: relative; 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--gray-light);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
             overflow-x: hidden;
+            position: relative;
         }
 
         body::before {
@@ -55,84 +65,257 @@
             pointer-events: none;
         }
 
-        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; flex: 1; }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            flex: 1;
+        }
 
         .hero-card {
-            background: var(--white); border-radius: var(--card-radius); padding: 40px 30px;
-            text-align: center; box-shadow: 0 20px 40px rgba(7, 28, 77, 0.08);
-            border: 1px solid var(--gray-border); margin-bottom: 30px; position: relative; overflow: hidden;
+            background: var(--white);
+            border-radius: var(--card-radius);
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: var(--glass-shadow);
+            border: 1px solid var(--gray-border);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
             animation: fadeIn 0.8s ease-out;
         }
 
-        .hero-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, var(--navy-deep), var(--blue-royal), var(--blue-electric)); }
-        .logo-container { max-width: 280px; margin: 0 auto 15px auto; }
-        .logo-container img { width: 100%; height: auto; object-fit: contain; }
-        .slogan { font-size: 0.95rem; font-weight: 600; letter-spacing: 2px; color: var(--blue-royal); text-transform: uppercase; margin-bottom: 20px; }
-        .hero-title { font-size: 2.2rem; font-weight: 700; color: var(--navy-deep); margin-bottom: 12px; line-height: 1.2; }
-        .hero-subtitle { font-size: 1rem; color: var(--text-muted); max-width: 700px; margin: 0 auto; line-height: 1.6; }
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--navy-deep), var(--blue-royal), var(--blue-electric));
+        }
+
+        .logo-container {
+            max-width: 280px;
+            margin: 0 auto 15px auto;
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .slogan {
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: var(--blue-royal);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .hero-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--navy-deep);
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
 
         .form-card {
-            background: rgba(255, 255, 255, 0.85); 
+            background: var(--glass-bg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-radius: var(--card-radius); padding: 40px; 
-            box-shadow: 0 20px 40px rgba(7, 28, 77, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: var(--card-radius);
+            padding: 40px;
+            box-shadow: var(--glass-shadow);
+            border: 1px solid var(--glass-border);
             animation: slideUp 0.8s ease-out 0.2s backwards;
         }
 
-        .section-header { font-size: 1.1rem; font-weight: 700; color: var(--navy-deep); margin: 25px 0 15px 0; display: flex; align-items: center; gap: 10px; border-bottom: 2px solid var(--gray-border); padding-bottom: 8px; }
-        .section-header i { color: var(--blue-royal); }
-        .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-        .full-width { grid-column: span 2; }
-
-        .form-group { display: flex; flex-direction: column; }
-        .form-group label { font-size: 0.875rem; font-weight: 600; color: var(--navy-deep); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-        .form-group label i { color: var(--blue-royal); font-size: 0.9rem; }
-
-        .input-control { width: 100%; padding: 14px 16px; font-size: 0.95rem; color: var(--text-main); background: #FFFFFF; border: 1.5px solid var(--gray-border); border-radius: 10px; outline: none; transition: var(--transition-fast); }
-        .input-control:focus { border-color: var(--blue-royal); box-shadow: 0 0 0 4px var(--blue-glow); }
-        select.input-control { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%230F62FE'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; background-size: 18px; padding-right: 40px; cursor: pointer; }
-
-        .submit-btn { width: 100%; padding: 16px 24px; background: linear-gradient(135deg, var(--navy-deep) 0%, var(--blue-royal) 50%, var(--blue-electric) 100%); color: var(--white); border: none; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: var(--transition-fast); display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 8px 20px rgba(15, 98, 254, 0.25); margin-top: 20px; }
-        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0, 174, 239, 0.4); }
-        .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
-
-        .bank-info-card { display: none; background: #F8FAFC; border: 1.5px dashed var(--blue-royal); border-radius: 12px; padding: 20px; margin-top: 10px; animation: fadeIn 0.4s ease-out; }
-        .bank-info-card.active { display: block; }
-        .bank-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; margin-top: 6px; }
-        .bank-account-num { font-size: 1.2rem; font-weight: 700; color: var(--navy-deep); letter-spacing: 1px; }
-        .btn-copy { background: var(--blue-royal); color: white; border: none; padding: 6px 14px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: var(--transition-fast); }
-        .btn-copy:hover { background: var(--navy-deep); }
-
-        /* Floating WhatsApp Button */
-        .float-wa {
-            position: fixed;
-            width: 60px;
-            height: 60px;
-            bottom: 30px;
-            right: 30px;
-            background-color: var(--whatsapp-green);
-            color: #FFF;
-            border-radius: 50px;
-            text-align: center;
-            font-size: 32px;
-            box-shadow: 2px 5px 15px rgba(0,0,0,0.3);
-            z-index: 1000;
+        .section-header {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--navy-deep);
+            margin: 25px 0 15px 0;
             display: flex;
             align-items: center;
-            justify-content: center;
-            text-decoration: none;
+            gap: 10px;
+            border-bottom: 2px solid var(--gray-border);
+            padding-bottom: 8px;
+        }
+
+        .section-header i {
+            color: var(--blue-royal);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .form-group label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--navy-deep);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .form-group label i {
+            color: var(--blue-royal);
+            font-size: 0.9rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-control {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            background: #FFFFFF;
+            border: 1.5px solid var(--gray-border);
+            border-radius: 10px;
+            outline: none;
             transition: var(--transition-fast);
         }
 
-        .float-wa:hover {
-            transform: scale(1.1);
-            background-color: #128C7E;
-            color: #FFF;
+        .input-control:focus {
+            border-color: var(--blue-royal);
+            box-shadow: 0 0 0 4px var(--blue-glow);
+            background: #FFFFFF;
         }
 
-        footer { background: var(--navy-deep); color: var(--white); padding: 40px 20px; text-align: center; margin-top: auto; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+        select.input-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%230F62FE'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 18px;
+            padding-right: 40px;
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px 24px;
+            background: linear-gradient(135deg, var(--navy-deep) 0%, var(--blue-royal) 50%, var(--blue-electric) 100%);
+            background-size: 200% auto;
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 8px 20px rgba(15, 98, 254, 0.25);
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background-position: right center;
+            box-shadow: 0 10px 25px rgba(0, 174, 239, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .bank-info-card {
+            display: none;
+            background: #F8FAFC;
+            border: 1.5px dashed var(--blue-royal);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 10px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .bank-info-card.active {
+            display: block;
+        }
+
+        .bank-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .bank-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .bank-account-num {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--navy-deep);
+            letter-spacing: 1px;
+        }
+
+        .btn-copy {
+            background: var(--blue-royal);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition-fast);
+        }
+
+        .btn-copy:hover {
+            background: var(--navy-deep);
+        }
+
+        footer {
+            background: var(--navy-deep);
+            color: var(--white);
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
@@ -144,20 +327,19 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @media (max-width: 768px) { 
-            .form-grid { grid-template-columns: 1fr; } 
-            .full-width { grid-column: span 1; } 
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
             .hero-card { padding: 30px 20px; }
             .hero-title { font-size: 1.75rem; }
             .form-card { padding: 25px 20px; }
-            .float-wa { width: 50px; height: 50px; font-size: 26px; bottom: 20px; right: 20px; }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- Hero Header -->
+        <!-- Hero Header Section -->
         <header class="hero-card">
             <div class="logo-container">
                 <img src="mdemy.png" alt="Miranaya Academy Logo">
@@ -167,109 +349,142 @@
             <p class="hero-subtitle">Tingkatkan kompetensi Anda bersama Miranaya Academy melalui pelatihan berbasis Artificial Intelligence yang aplikatif dan relevan dengan kebutuhan industri.</p>
         </header>
 
-        <!-- Form Registration -->
+        <!-- Form Registration Section -->
         <main class="form-card">
             <form id="registrationForm">
                 <div class="form-grid">
                     
-                    <!-- Section 1: Data Diri -->
+                    <!-- Section Header 1 -->
                     <div class="full-width section-header">
                         <i class="fa-solid fa-id-card"></i> Informasi Data Diri
                     </div>
 
+                    <!-- Field: Nama Lengkap -->
                     <div class="form-group">
                         <label for="fullName"><i class="fa-solid fa-user"></i> Nama Lengkap</label>
-                        <input type="text" id="fullName" class="input-control" placeholder="Contoh: Budi Santoso, S.T." required>
+                        <div class="input-wrapper">
+                            <input type="text" id="fullName" name="fullName" class="input-control" placeholder="Contoh: Budi Santoso, S.T." required>
+                        </div>
                     </div>
 
+                    <!-- Field: Email -->
                     <div class="form-group">
                         <label for="email"><i class="fa-solid fa-envelope"></i> Email Perusahaan / Pribadi</label>
-                        <input type="email" id="email" class="input-control" placeholder="budi@perusahaan.com" required>
+                        <div class="input-wrapper">
+                            <input type="email" id="email" name="email" class="input-control" placeholder="budi@perusahaan.com" required>
+                        </div>
                     </div>
 
+                    <!-- Field: Nomor WhatsApp -->
                     <div class="form-group">
                         <label for="whatsapp"><i class="fa-brands fa-whatsapp"></i> Nomor WhatsApp</label>
-                        <input type="tel" id="whatsapp" class="input-control" placeholder="081234567890" required>
+                        <div class="input-wrapper">
+                            <input type="tel" id="whatsapp" name="whatsapp" class="input-control" placeholder="081234567890" required>
+                        </div>
                     </div>
 
+                    <!-- Field: Instansi / Perusahaan -->
                     <div class="form-group">
                         <label for="organization"><i class="fa-solid fa-building"></i> Instansi / Perusahaan</label>
-                        <input type="text" id="organization" class="input-control" placeholder="PT Digital Indonesia" required>
+                        <div class="input-wrapper">
+                            <input type="text" id="organization" name="organization" class="input-control" placeholder="PT Digital Indonesia" required>
+                        </div>
                     </div>
 
+                    <!-- Field: Jabatan -->
                     <div class="form-group">
                         <label for="position"><i class="fa-solid fa-briefcase"></i> Jabatan / Posisi</label>
-                        <input type="text" id="position" class="input-control" placeholder="Manager / Analyst / Staff" required>
+                        <div class="input-wrapper">
+                            <input type="text" id="position" name="position" class="input-control" placeholder="Manager / Analyst / Staff" required>
+                        </div>
                     </div>
 
+                    <!-- Field: Kota -->
                     <div class="form-group">
                         <label for="city"><i class="fa-solid fa-location-dot"></i> Kota Domisili</label>
-                        <input type="text" id="city" class="input-control" placeholder="Jakarta Selatan" required>
+                        <div class="input-wrapper">
+                            <input type="text" id="city" name="city" class="input-control" placeholder="Jakarta Selatan" required>
+                        </div>
                     </div>
 
-                    <!-- Section 2: Program Pelatihan -->
+                    <!-- Section Header 2 -->
                     <div class="full-width section-header">
                         <i class="fa-solid fa-graduation-cap"></i> Program Pelatihan
                     </div>
 
+                    <!-- Field: Pilih Pelatihan (Dinamis Koneksi ke Sheet Courses) -->
                     <div class="form-group full-width">
                         <label for="course"><i class="fa-solid fa-graduation-cap"></i> Pilih Program Pelatihan</label>
-                        <select id="course" class="input-control" required>
-                            <!-- Pilihan dimuat dinamis & cepat -->
-                        </select>
+                        <div class="input-wrapper">
+                            <select id="course" name="course" class="input-control" required>
+                                <option value="" disabled selected>-- Memuat Daftar Pelatihan... --</option>
+                            </select>
+                        </div>
                     </div>
 
+                    <!-- Field: Tanggal Pelatihan -->
                     <div class="form-group">
                         <label for="trainingDate"><i class="fa-solid fa-calendar-days"></i> Tanggal Pelatihan</label>
-                        <input type="date" id="trainingDate" class="input-control" required>
+                        <div class="input-wrapper">
+                            <input type="date" id="trainingDate" name="trainingDate" class="input-control" required>
+                        </div>
                     </div>
 
+                    <!-- Field: Sumber Informasi -->
                     <div class="form-group">
                         <label for="source"><i class="fa-solid fa-bullhorn"></i> Bagaimana mengetahui pelatihan ini?</label>
-                        <select id="source" class="input-control" required>
-                            <option value="" disabled selected>-- Pilih Sumber Informasi --</option>
-                            <option value="Instagram">Instagram</option>
-                            <option value="LinkedIn">LinkedIn</option>
-                            <option value="WhatsApp Group">WhatsApp Group</option>
-                            <option value="Rekomendasi Teman / Rekan kerja">Rekomendasi Teman / Rekan kerja</option>
-                            <option value="Website Miranaya">Website Miranaya</option>
-                            <option value="Lainnya">Lainnya</option>
-                        </select>
+                        <div class="input-wrapper">
+                            <select id="source" name="source" class="input-control" required>
+                                <option value="" disabled selected>-- Pilih Sumber Informasi --</option>
+                                <option value="Instagram">Instagram</option>
+                                <option value="LinkedIn">LinkedIn</option>
+                                <option value="WhatsApp Group">WhatsApp Group</option>
+                                <option value="Rekomendasi Teman / Rekan kerja">Rekomendasi Teman / Rekan kerja</option>
+                                <option value="Website Miranaya">Website Miranaya</option>
+                                <option value="Lainnya">Lainnya</option>
+                            </select>
+                        </div>
                     </div>
 
-                    <!-- Section 3: Pembayaran -->
+                    <!-- Section Header 3: Pembayaran -->
                     <div class="full-width section-header">
                         <i class="fa-solid fa-wallet"></i> Metode & Pembayaran
                     </div>
 
+                    <!-- Field: Pilih Bank -->
                     <div class="form-group full-width">
                         <label for="bankSelect"><i class="fa-solid fa-building-columns"></i> Pilih Metode Transfer Bank</label>
-                        <select id="bankSelect" class="input-control" required>
-                            <option value="" disabled selected>-- Pilih Rekening Bank Tujuan --</option>
-                            <option value="BRI">Bank BRI</option>
-                            <option value="BSI">Bank BSI</option>
-                            <option value="Mandiri">Bank Mandiri</option>
-                            <option value="Permata">Bank Permata</option>
-                            <option value="Bank Saqu">Bank Saqu</option>
-                        </select>
+                        <div class="input-wrapper">
+                            <select id="bankSelect" name="bankSelect" class="input-control" required>
+                                <option value="" disabled selected>-- Pilih Rekening Bank Tujuan --</option>
+                                <option value="BRI">Bank BRI</option>
+                                <option value="BSI">Bank BSI</option>
+                                <option value="Mandiri">Bank Mandiri</option>
+                                <option value="Permata">Bank Permata</option>
+                                <option value="Bank Saqu">Bank Saqu</option>
+                            </select>
+                        </div>
                     </div>
 
+                    <!-- Card Rekening Tampil Dinamis -->
                     <div class="full-width">
                         <div id="bankInfoCard" class="bank-info-card">
-                            <div class="bank-row">
-                                <span style="color: var(--text-muted);">Bank Tujuan:</span>
-                                <span id="displayBankName" style="font-weight: 700; color: var(--navy-deep);"></span>
-                            </div>
-                            <div class="bank-row" style="margin-top: 8px;">
-                                <div>
-                                    <div style="color: var(--text-muted); font-size: 0.8rem;">Nomor Rekening:</div>
-                                    <div id="displayAccountNum" class="bank-account-num"></div>
+                            <div class="bank-details">
+                                <div class="bank-row">
+                                    <span style="color: var(--text-muted); font-size: 0.85rem;">Bank Tujuan:</span>
+                                    <span id="displayBankName" style="font-weight: 700; color: var(--navy-deep);"></span>
                                 </div>
-                                <button type="button" class="btn-copy" id="btnCopyAcc"><i class="fa-regular fa-copy"></i> Salin</button>
-                            </div>
-                            <div class="bank-row" style="margin-top: 4px;">
-                                <span style="color: var(--text-muted);">Atas Nama:</span>
-                                <span id="displayAccountHolder" style="font-weight: 600;"></span>
+                                <div class="bank-row" style="margin-top: 8px;">
+                                    <div>
+                                        <div style="color: var(--text-muted); font-size: 0.8rem;">Nomor Rekening:</div>
+                                        <div id="displayAccountNum" class="bank-account-num"></div>
+                                    </div>
+                                    <button type="button" class="btn-copy" id="btnCopyAcc"><i class="fa-regular fa-copy"></i> Salin</button>
+                                </div>
+                                <div class="bank-row" style="margin-top: 4px;">
+                                    <span style="color: var(--text-muted); font-size: 0.85rem;">Atas Nama:</span>
+                                    <span id="displayAccountHolder" style="font-weight: 600; color: var(--text-main);"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -285,51 +500,33 @@
         </main>
     </div>
 
-    <!-- Tombol Floating WhatsApp (Pojok Kanan Bawah) -->
-    <a href="https://wa.me/6282290007890?text=Halo%20Admin%20Miranaya%20Academy,%20saya%20ingin%20bertanya%20mengenai%20pelatihan." class="float-wa" target="_blank" title="Hubungi Admin via WhatsApp">
-        <i class="fa-brands fa-whatsapp"></i>
-    </a>
-
     <!-- Footer -->
     <footer>
-        <div style="font-weight:700; font-size:1.1rem; margin-bottom: 5px;">MIRANAYA ACADEMY</div>
-        <div style="font-size:0.85rem; opacity:0.8; margin-bottom: 15px;">Learn. Innovate. Apply. Impact.</div>
-        <div style="font-size:0.8rem; opacity:0.6;">&copy; 2026 Miranaya Academy. All Rights Reserved.</div>
+        <div class="footer-brand" style="font-weight:700; font-size:1.1rem; margin-bottom: 5px;">MIRANAYA ACADEMY</div>
+        <div class="footer-slogan" style="font-size:0.85rem; opacity:0.8; margin-bottom: 15px;">Learn. Innovate. Apply. Impact.</div>
+        <div class="footer-copy" style="font-size:0.8rem; opacity:0.6;">
+            &copy; 2026 Miranaya Academy. All Rights Reserved.
+        </div>
     </footer>
 
     <script>
-        // CONFIGURATIONS
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx980xHfxun4gBHumhyMhEF2_LbQ_nQsROC9bPY1jX2Vz1A8lvdkRbPdn1Q4PewqQV9/exec"; // Ganti dengan Executable URL Google Apps Script Anda
-        const TARGET_WA_NUMBER = "6282290007890"; // Nomor WhatsApp Admin Tujuan (Format tanpa '0' depan)
-
-        // Default list pelatihan (Digunakan sebagai fallback instant)
-        const defaultCourses = [
-            "AI Fundamentals for Professionals",
-            "Bangun sistem kerja cerdas dengan AI",
-            "Masterclass Bikin Website Tanpa Coding dengan AI Gratis",
-            "Produktif dengan AI : Bekerja Lebih Cepat, Hasil Lebih banyak",
-            "AI Praktis untuk Pemula",
-            "Creating Business Presentation With AI",
-            "Membuat Berbagai Tools untuk Productivity Tanpa Tau Coding"
-        ];
-
-        // Data Bank
+        // Data Rekening Bank (Tetap & Tidak Diubah)
         const bankAccounts = {
-            "BRI": { num: "0123-01-000123-50-8", name: "PT Miranaya Academy Indonesia" },
-            "BSI": { num: "7123456789", name: "PT Miranaya Academy Indonesia" },
-            "Mandiri": { num: "137-00-1234567-8", name: "PT Miranaya Academy Indonesia" },
-            "Permata": { num: "8901234567", name: "PT Miranaya Academy Indonesia" },
-            "Bank Saqu": { num: "9012345678", name: "PT Miranaya Academy Indonesia" }
+            "BRI": { num: "757901000077504", name: "Muhamad Fatoni" },
+            "BSI": { num: "7023706517", name: "Muhamad Fatoni" },
+            "Mandiri": { num: "1590000317403", name: "Muhamad Fatoni" },
+            "Permata": { num: "004136030286", name: "Muhamad Fatoni" },
+            "Bank Saqu": { num: "10061893666", name: "Muhamad Fatoni" }
         };
 
+        // Variabel global penyimpan data course
+        let coursesData = [];
+
         document.addEventListener("DOMContentLoaded", function() {
-            // A. TAMPILKAN DAFTAR PELATIHAN DENGAN CEPAT
-            renderCourses();
+            // 1. Muat daftar pelatihan dari sheet Courses secara dinamis
+            loadCoursesData();
 
-            // B. AMBIL SINKRONISASI SHEET TERBARU DI LATAR BELAKANG
-            syncWithGoogleSheets();
-
-            // Event listener Pilih Bank
+            // 2. Event listener memilih bank
             document.getElementById("bankSelect").addEventListener("change", function(e) {
                 const bankKey = e.target.value;
                 const card = document.getElementById("bankInfoCard");
@@ -343,123 +540,114 @@
                 }
             });
 
-            // Tombol Salin No Rekening
+            // 3. Tombol Salin Rekening
             document.getElementById("btnCopyAcc").addEventListener("click", function() {
                 const num = document.getElementById("displayAccountNum").textContent;
-                navigator.clipboard.writeText(num).then(() => alert("Nomor rekening berhasil disalin!"));
+                navigator.clipboard.writeText(num).then(() => {
+                    alert("Nomor rekening berhasil disalin!");
+                });
             });
 
-            // HANDLE SUBMIT FORM (Kirim Data ke Google Sheets DULU, Lalu Buka WhatsApp)
-            document.getElementById("registrationForm").addEventListener("submit", function(e) {
-                e.preventDefault();
-
-                const btnSubmit = document.getElementById("btnSubmit");
-                const originalBtnText = btnSubmit.innerHTML;
-                
-                // Set indikator loading pada tombol
-                btnSubmit.disabled = true;
-                btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan Data...';
-
-                // Data Form
-                const formData = {
-                    action: "register",
-                    fullName: document.getElementById("fullName").value,
-                    email: document.getElementById("email").value,
-                    whatsapp: document.getElementById("whatsapp").value,
-                    organization: document.getElementById("organization").value,
-                    position: document.getElementById("position").value,
-                    city: document.getElementById("city").value,
-                    course: document.getElementById("course").value,
-                    trainingDate: document.getElementById("trainingDate").value,
-                    source: document.getElementById("source").value,
-                    bankSelect: document.getElementById("bankSelect").value
-                };
-
-                // Format Pesan WhatsApp Resume
-                const waMessage = 
-`*HALO ADMIN MIRANAYA ACADEMY*
-Saya telah mengisi form pendaftaran pelatihan dengan rincian berikut:
-
-📌 *RESUME PENDAFTARAN*
-▫️ *Nama Lengkap:* ${formData.fullName}
-▫️ *Email:* ${formData.email}
-▫️ *No. WhatsApp:* ${formData.whatsapp}
-▫️ *Instansi/Perusahaan:* ${formData.organization}
-▫️ *Jabatan:* ${formData.position}
-▫️ *Kota Domisili:* ${formData.city}
-
-📚 *PROGRAM PELATIHAN*
-▫️ *Judul:* ${formData.course}
-▫️ *Tanggal Pelatihan:* ${formData.trainingDate}
-▫️ *Info Dari:* ${formData.source}
-
-💳 *PEMBAYARAN*
-▫️ *Bank Tujuan:* ${formData.bankSelect}
-
----
-*Catatan:*
-Berikut saya lampirkan foto/file *Bukti Transfer* pada pesan ini. Mohon untuk diverifikasi. Terima kasih!`;
-
-                const encodedMessage = encodeURIComponent(waMessage);
-                const waUrl = `https://wa.me/${TARGET_WA_NUMBER}?text=${encodedMessage}`;
-
-                const proceedToWhatsApp = () => {
-                    btnSubmit.disabled = false;
-                    btnSubmit.innerHTML = originalBtnText;
-                    window.open(waUrl, "_blank");
-                };
-
-                // Kirim data POST ke Google Apps Script
-                if (SCRIPT_URL && !SCRIPT_URL.includes("AKfycbw...")) {
-                    const payloadParams = new URLSearchParams(formData).toString();
-
-                    fetch(SCRIPT_URL, {
-                        method: "POST",
-                        headers: { 
-                            "Content-Type": "application/x-www-form-urlencoded" 
-                        },
-                        body: payloadParams
-                    })
-                    .then(() => {
-                        proceedToWhatsApp();
-                    })
-                    .catch(err => {
-                        console.error("Error menyimpan ke Apps Script:", err);
-                        proceedToWhatsApp();
-                    });
-                } else {
-                    proceedToWhatsApp();
+            // 4. Autofill Tanggal ketika Pelatihan Dipilih
+            document.getElementById("course").addEventListener("change", function(e) {
+                const selectedTitle = e.target.value;
+                const foundCourse = coursesData.find(c => c.title === selectedTitle);
+                if (foundCourse && foundCourse.date) {
+                    // Konversi format tanggal jika perlu (YYYY-MM-DD)
+                    document.getElementById("trainingDate").value = formatDateForInput(foundCourse.date);
                 }
             });
+
+            // 5. Submit Form ke Apps Script
+            document.getElementById("registrationForm").addEventListener("submit", handleFormSubmit);
         });
 
-        function renderCourses() {
-            const selectEl = document.getElementById("course");
-            const cachedData = localStorage.getItem("miranaya_courses");
-            const coursesToDisplay = cachedData ? JSON.parse(cachedData) : defaultCourses;
+        // Fungsi mengambil data dari Apps Script (Sheet Courses)
+        function loadCoursesData() {
+            const courseSelect = document.getElementById("course");
+            
+            if (typeof google !== 'undefined' && google.script && google.script.run) {
+                google.script.run
+                    .withSuccessHandler(function(courses) {
+                        coursesData = courses || [];
+                        courseSelect.innerHTML = '<option value="" disabled selected>-- Pilih Program Pelatihan --</option>';
+                        
+                        if (coursesData.length === 0) {
+                            courseSelect.innerHTML = '<option value="" disabled>Tidak ada pelatihan aktif</option>';
+                            return;
+                        }
 
-            selectEl.innerHTML = '<option value="" disabled selected>-- Pilih Program Pelatihan --</option>';
-            coursesToDisplay.forEach(item => {
-                const title = typeof item === 'object' ? item.name : item;
-                const opt = document.createElement("option");
-                opt.value = title;
-                opt.textContent = title;
-                selectEl.appendChild(opt);
-            });
+                        coursesData.forEach(c => {
+                            const opt = document.createElement("option");
+                            opt.value = c.title || c['Nama Pelatihan'];
+                            opt.textContent = c.title || c['Nama Pelatihan'];
+                            courseSelect.appendChild(opt);
+                        });
+                    })
+                    .withFailureHandler(function(err) {
+                        console.error("Gagal memuat courses:", err);
+                        courseSelect.innerHTML = '<option value="" disabled selected>Gagal memuat data pelatihan</option>';
+                    })
+                    .getCoursesList(); // Memanggil fungsi backend di Apps Script
+            } else {
+                console.warn("Jaringan Google Apps Script tidak terdeteksi (Running local mode).");
+                courseSelect.innerHTML = '<option value="" disabled selected>-- Pilih Program Pelatihan --</option>';
+            }
         }
 
-        function syncWithGoogleSheets() {
-            if (!SCRIPT_URL || SCRIPT_URL.includes("AKfycbw...")) return;
+        // Fungsi penanganan kirim form pendaftaran
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const btnSubmit = document.getElementById("btnSubmit");
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim Pendaftaran...';
 
-            fetch(`${SCRIPT_URL}?action=courses`)
-                .then(res => res.json())
-                .then(res => {
-                    if (res.success && res.data && res.data.length > 0) {
-                        localStorage.setItem("miranaya_courses", JSON.stringify(res.data));
-                        renderCourses();
-                    }
-                })
-                .catch(err => console.warn("Menggunakan data cache lokal (Offline/Error Fetch):", err));
+            // Menyiapkan Objek Data Peserta
+            const formData = {
+                fullName: document.getElementById("fullName").value.trim(),
+                email: document.getElementById("email").value.trim(),
+                whatsapp: document.getElementById("whatsapp").value.trim(),
+                organization: document.getElementById("organization").value.trim(),
+                position: document.getElementById("position").value.trim(),
+                city: document.getElementById("city").value.trim(),
+                course: document.getElementById("course").value,
+                trainingDate: document.getElementById("trainingDate").value,
+                source: document.getElementById("source").value,
+                bankSelect: document.getElementById("bankSelect").value,
+                notes: `Metode Pembayaran: Transfer Bank ${document.getElementById("bankSelect").value}`
+            };
+
+            if (typeof google !== 'undefined' && google.script && google.script.run) {
+                google.script.run
+                    .withSuccessHandler(function(response) {
+                        alert("Pendaftaran Berhasil! Terima kasih telah mendaftar.");
+                        document.getElementById("registrationForm").reset();
+                        document.getElementById("bankInfoCard").classList.remove("active");
+                        btnSubmit.disabled = false;
+                        btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Pendaftaran';
+                    })
+                    .withFailureHandler(function(err) {
+                        alert("Terjadi kesalahan saat menyimpan pendaftaran: " + err.message);
+                        btnSubmit.disabled = false;
+                        btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Pendaftaran';
+                    })
+                    .saveParticipant(formData); // Memanggil fungsi backend pendaftaran
+            } else {
+                alert("Mode lokal: Pendaftaran disimulasikan berhasil.");
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Pendaftaran';
+            }
+        }
+
+        // Helper format tanggal untuk input type="date"
+        function formatDateForInput(dateStr) {
+            if (!dateStr) return "";
+            const d = new Date(dateStr);
+            if (isNaN(d.getTime())) return dateStr; 
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
         }
     </script>
 </body>
