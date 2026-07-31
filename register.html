@@ -5,18 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pendaftaran Pelatihan - Miranaya Academy</title>
     
-    <!-- Google Fonts: Poppins -->
+    <!-- Google Fonts & Font Awesome Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
             --navy-deep: #071C4D;
-            --navy-dark: #0A192F;
             --blue-royal: #0F62FE;
             --blue-electric: #00AEEF;
             --blue-glow: rgba(0, 174, 239, 0.4);
@@ -25,475 +22,199 @@
             --gray-border: #E2E8F0;
             --text-main: #1E293B;
             --text-muted: #64748B;
-            --error-color: #EF4444;
-            --success-color: #10B981;
-            
-            --glass-bg: rgba(255, 255, 255, 0.85);
-            --glass-border: rgba(255, 255, 255, 0.3);
-            --glass-shadow: 0 20px 40px rgba(7, 28, 77, 0.08);
             --card-radius: 18px;
             --transition-fast: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --whatsapp-green: #25D366;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            background-color: var(--gray-light);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: -10%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100vw;
-            height: 600px;
-            background: radial-gradient(circle at 50% 20%, rgba(15, 98, 254, 0.15) 0%, rgba(0, 174, 239, 0.05) 50%, transparent 80%);
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            flex: 1;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--gray-light); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; position: relative; }
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; flex: 1; }
 
         .hero-card {
-            background: var(--white);
-            border-radius: var(--card-radius);
-            padding: 40px 30px;
-            text-align: center;
-            box-shadow: var(--glass-shadow);
-            border: 1px solid var(--gray-border);
-            margin-bottom: 30px;
-            position: relative;
-            overflow: hidden;
-            animation: fadeIn 0.8s ease-out;
+            background: var(--white); border-radius: var(--card-radius); padding: 40px 30px;
+            text-align: center; box-shadow: 0 20px 40px rgba(7, 28, 77, 0.08);
+            border: 1px solid var(--gray-border); margin-bottom: 30px; position: relative; overflow: hidden;
         }
-
-        .hero-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--navy-deep), var(--blue-royal), var(--blue-electric));
-        }
-
-        .logo-container {
-            max-width: 280px;
-            margin: 0 auto 15px auto;
-        }
-
-        .logo-container img {
-            width: 100%;
-            height: auto;
-            object-fit: contain;
-        }
-
-        .slogan {
-            font-size: 0.95rem;
-            font-weight: 600;
-            letter-spacing: 2px;
-            color: var(--blue-royal);
-            text-transform: uppercase;
-            margin-bottom: 20px;
-        }
-
-        .hero-title {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--navy-deep);
-            margin-bottom: 12px;
-            line-height: 1.2;
-        }
-
-        .hero-subtitle {
-            font-size: 1rem;
-            color: var(--text-muted);
-            max-width: 700px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
+        .hero-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, var(--navy-deep), var(--blue-royal), var(--blue-electric)); }
+        .logo-container { max-width: 280px; margin: 0 auto 15px auto; }
+        .logo-container img { width: 100%; height: auto; }
+        .slogan { font-size: 0.95rem; font-weight: 600; letter-spacing: 2px; color: var(--blue-royal); text-transform: uppercase; margin-bottom: 20px; }
+        .hero-title { font-size: 2.2rem; font-weight: 700; color: var(--navy-deep); margin-bottom: 12px; }
+        .hero-subtitle { font-size: 1rem; color: var(--text-muted); max-width: 700px; margin: 0 auto; line-height: 1.6; }
 
         .form-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: var(--card-radius);
-            padding: 40px;
-            box-shadow: var(--glass-shadow);
-            border: 1px solid var(--glass-border);
-            animation: slideUp 0.8s ease-out 0.2s backwards;
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px);
+            border-radius: var(--card-radius); padding: 40px; box-shadow: 0 20px 40px rgba(7, 28, 77, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        .section-header {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--navy-deep);
-            margin: 25px 0 15px 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-bottom: 2px solid var(--gray-border);
-            padding-bottom: 8px;
-        }
+        .section-header { font-size: 1.1rem; font-weight: 700; color: var(--navy-deep); margin: 25px 0 15px 0; display: flex; align-items: center; gap: 10px; border-bottom: 2px solid var(--gray-border); padding-bottom: 8px; }
+        .section-header i { color: var(--blue-royal); }
+        .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+        .full-width { grid-column: span 2; }
 
-        .section-header i {
-            color: var(--blue-royal);
-        }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group label { font-size: 0.875rem; font-weight: 600; color: var(--navy-deep); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+        .form-group label i { color: var(--blue-royal); }
 
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-        }
+        .input-control { width: 100%; padding: 14px 16px; font-size: 0.95rem; color: var(--text-main); background: #FFFFFF; border: 1.5px solid var(--gray-border); border-radius: 10px; outline: none; transition: var(--transition-fast); }
+        .input-control:focus { border-color: var(--blue-royal); box-shadow: 0 0 0 4px var(--blue-glow); }
+        select.input-control { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%230F62FE'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; background-size: 18px; padding-right: 40px; cursor: pointer; }
 
-        .full-width {
-            grid-column: span 2;
-        }
+        .submit-btn { width: 100%; padding: 16px 24px; background: linear-gradient(135deg, var(--navy-deep) 0%, var(--blue-royal) 50%, var(--blue-electric) 100%); color: var(--white); border: none; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: var(--transition-fast); display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 8px 20px rgba(15, 98, 254, 0.25); margin-top: 20px; }
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0, 174, 239, 0.4); }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
+        .bank-info-card { display: none; background: #F8FAFC; border: 1.5px dashed var(--blue-royal); border-radius: 12px; padding: 20px; margin-top: 10px; }
+        .bank-info-card.active { display: block; }
+        .bank-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; margin-top: 6px; }
+        .bank-account-num { font-size: 1.2rem; font-weight: 700; color: var(--navy-deep); }
+        .btn-copy { background: var(--blue-royal); color: white; border: none; padding: 6px 14px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; }
 
-        .form-group label {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--navy-deep);
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .form-group label i {
-            color: var(--blue-royal);
-            font-size: 0.9rem;
-        }
-
-        .input-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .input-control {
-            width: 100%;
-            padding: 14px 16px;
-            font-size: 0.95rem;
-            color: var(--text-main);
-            background: #FFFFFF;
-            border: 1.5px solid var(--gray-border);
-            border-radius: 10px;
-            outline: none;
-            transition: var(--transition-fast);
-        }
-
-        .input-control:focus {
-            border-color: var(--blue-royal);
-            box-shadow: 0 0 0 4px var(--blue-glow);
-            background: #FFFFFF;
-        }
-
-        select.input-control {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%230F62FE'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 16px center;
-            background-size: 18px;
-            padding-right: 40px;
-            cursor: pointer;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 16px 24px;
-            background: linear-gradient(135deg, var(--navy-deep) 0%, var(--blue-royal) 50%, var(--blue-electric) 100%);
-            background-size: 200% auto;
-            color: var(--white);
-            border: none;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-fast);
+        /* CSS Tombol Floating WhatsApp */
+        .float-wa {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--whatsapp-green);
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 32px;
+            box-shadow: 2px 5px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            box-shadow: 0 8px 20px rgba(15, 98, 254, 0.25);
-            margin-top: 20px;
-        }
-
-        .submit-btn:hover {
-            background-position: right center;
-            box-shadow: 0 10px 25px rgba(0, 174, 239, 0.4);
-            transform: translateY(-2px);
-        }
-
-        .bank-info-card {
-            display: none;
-            background: #F8FAFC;
-            border: 1.5px dashed var(--blue-royal);
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 10px;
-            animation: fadeIn 0.4s ease-out;
-        }
-
-        .bank-info-card.active {
-            display: block;
-        }
-
-        .bank-details {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .bank-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.9rem;
-        }
-
-        .bank-account-num {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--navy-deep);
-            letter-spacing: 1px;
-        }
-
-        .btn-copy {
-            background: var(--blue-royal);
-            color: white;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            text-decoration: none;
             transition: var(--transition-fast);
         }
 
-        .btn-copy:hover {
-            background: var(--navy-deep);
+        .float-wa:hover {
+            transform: scale(1.1);
+            background-color: #128C7E;
+            color: #FFF;
         }
 
-        footer {
-            background: var(--navy-deep);
-            color: var(--white);
-            padding: 40px 20px;
-            text-align: center;
-            margin-top: auto;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
+        footer { background: var(--navy-deep); color: var(--white); padding: 30px 20px; text-align: center; margin-top: auto; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 768px) {
-            .form-grid { grid-template-columns: 1fr; }
-            .full-width { grid-column: span 1; }
-            .hero-card { padding: 30px 20px; }
-            .hero-title { font-size: 1.75rem; }
-            .form-card { padding: 25px 20px; }
+        @media (max-width: 768px) { 
+            .form-grid { grid-template-columns: 1fr; } 
+            .full-width { grid-column: span 1; } 
+            .float-wa { width: 50px; height: 50px; font-size: 26px; bottom: 20px; right: 20px; }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- Hero Header Section -->
         <header class="hero-card">
-            <div class="logo-container">
-                <img src="mdemy.png" alt="Miranaya Academy Logo">
-            </div>
+            <div class="logo-container"><img src="mdemy.png" alt="Miranaya Academy Logo"></div>
             <div class="slogan">Learn. Innovate. Apply. Impact.</div>
             <h1 class="hero-title">Pendaftaran Pelatihan</h1>
-            <p class="hero-subtitle">Tingkatkan kompetensi Anda bersama Miranaya Academy melalui pelatihan berbasis Artificial Intelligence yang aplikatif dan relevan dengan kebutuhan industri.</p>
+            <p class="hero-subtitle">Tingkatkan kompetensi Anda bersama Miranaya Academy melalui pelatihan berbasis Artificial Intelligence yang aplikatif.</p>
         </header>
 
-        <!-- Form Registration Section -->
         <main class="form-card">
             <form id="registrationForm">
                 <div class="form-grid">
                     
-                    <!-- Section Header 1 -->
-                    <div class="full-width section-header">
-                        <i class="fa-solid fa-id-card"></i> Informasi Data Diri
-                    </div>
+                    <div class="full-width section-header"><i class="fa-solid fa-id-card"></i> Informasi Data Diri</div>
 
-                    <!-- Field: Nama Lengkap -->
                     <div class="form-group">
                         <label for="fullName"><i class="fa-solid fa-user"></i> Nama Lengkap</label>
-                        <div class="input-wrapper">
-                            <input type="text" id="fullName" name="fullName" class="input-control" placeholder="Contoh: Budi Santoso, S.T." required>
-                        </div>
+                        <input type="text" id="fullName" class="input-control" placeholder="Contoh: Budi Santoso, S.T." required>
                     </div>
 
-                    <!-- Field: Email -->
                     <div class="form-group">
-                        <label for="email"><i class="fa-solid fa-envelope"></i> Email Perusahaan / Pribadi</label>
-                        <div class="input-wrapper">
-                            <input type="email" id="email" name="email" class="input-control" placeholder="budi@perusahaan.com" required>
-                        </div>
+                        <label for="email"><i class="fa-solid fa-envelope"></i> Email</label>
+                        <input type="email" id="email" class="input-control" placeholder="budi@perusahaan.com" required>
                     </div>
 
-                    <!-- Field: Nomor WhatsApp -->
                     <div class="form-group">
                         <label for="whatsapp"><i class="fa-brands fa-whatsapp"></i> Nomor WhatsApp</label>
-                        <div class="input-wrapper">
-                            <input type="tel" id="whatsapp" name="whatsapp" class="input-control" placeholder="081234567890" required>
-                        </div>
+                        <input type="tel" id="whatsapp" class="input-control" placeholder="081234567890" required>
                     </div>
 
-                    <!-- Field: Instansi / Perusahaan -->
                     <div class="form-group">
                         <label for="organization"><i class="fa-solid fa-building"></i> Instansi / Perusahaan</label>
-                        <div class="input-wrapper">
-                            <input type="text" id="organization" name="organization" class="input-control" placeholder="PT Digital Indonesia" required>
-                        </div>
+                        <input type="text" id="organization" class="input-control" placeholder="PT Digital Indonesia" required>
                     </div>
 
-                    <!-- Field: Jabatan -->
                     <div class="form-group">
                         <label for="position"><i class="fa-solid fa-briefcase"></i> Jabatan / Posisi</label>
-                        <div class="input-wrapper">
-                            <input type="text" id="position" name="position" class="input-control" placeholder="Manager / Analyst / Staff" required>
-                        </div>
+                        <input type="text" id="position" class="input-control" placeholder="Manager / Staff" required>
                     </div>
 
-                    <!-- Field: Kota -->
                     <div class="form-group">
                         <label for="city"><i class="fa-solid fa-location-dot"></i> Kota Domisili</label>
-                        <div class="input-wrapper">
-                            <input type="text" id="city" name="city" class="input-control" placeholder="Jakarta Selatan" required>
-                        </div>
+                        <input type="text" id="city" class="input-control" placeholder="Jakarta Selatan" required>
                     </div>
 
-                    <!-- Section Header 2 -->
-                    <div class="full-width section-header">
-                        <i class="fa-solid fa-graduation-cap"></i> Program Pelatihan
-                    </div>
+                    <div class="full-width section-header"><i class="fa-solid fa-graduation-cap"></i> Program Pelatihan</div>
 
-                    <!-- Field: Pilih Pelatihan (MANUAL HASIL OPSI ANDA) -->
                     <div class="form-group full-width">
                         <label for="course"><i class="fa-solid fa-graduation-cap"></i> Pilih Program Pelatihan</label>
-                        <div class="input-wrapper">
-                            <select id="course" name="course" class="input-control" required>
-                                <option value="" disabled selected>-- Pilih Program Pelatihan --</option>
-                                <option value="AI Fundamentals for Professionals">AI Fundamentals for Professionals</option>
-                                <option value="Bangun sistem kerja cerdas dengan AI">Bangun sistem kerja cerdas dengan AI</option>
-                                <option value="Masterclass Bikin Website Tanpa Coding dengan AI Gratis">Masterclass Bikin Website Tanpa Coding dengan AI Gratis</option>
-                                <option value="Produktif dengan AI : Bekerja Lebih Cepat, Hasil Lebih banyak">Produktif dengan AI : Bekerja Lebih Cepat, Hasil Lebih banyak</option>
-                                <option value="AI Praktis untuk Pemula">AI Praktis untuk Pemula</option>
-                                <option value="Creating Business Presentation With AI">Creating Business Presentation With AI</option>
-                                <option value="Membuat Berbagai Tools untuk Productivity Tanpa Tau Coding">Membuat Berbagai Tools untuk Productivity Tanpa Tau Coding</option>
-                            </select>
-                        </div>
+                        <select id="course" class="input-control" required>
+                            <!-- Pilihan dimuat dinamis & instan -->
+                        </select>
                     </div>
 
-                    <!-- Field: Tanggal Pelatihan -->
                     <div class="form-group">
                         <label for="trainingDate"><i class="fa-solid fa-calendar-days"></i> Tanggal Pelatihan</label>
-                        <div class="input-wrapper">
-                            <input type="date" id="trainingDate" name="trainingDate" class="input-control" required>
-                        </div>
+                        <input type="date" id="trainingDate" class="input-control" required>
                     </div>
 
-                    <!-- Field: Sumber Informasi -->
                     <div class="form-group">
-                        <label for="source"><i class="fa-solid fa-bullhorn"></i> Bagaimana mengetahui pelatihan ini?</label>
-                        <div class="input-wrapper">
-                            <select id="source" name="source" class="input-control" required>
-                                <option value="" disabled selected>-- Pilih Sumber Informasi --</option>
-                                <option value="Instagram">Instagram</option>
-                                <option value="LinkedIn">LinkedIn</option>
-                                <option value="WhatsApp Group">WhatsApp Group</option>
-                                <option value="Rekomendasi Teman / Rekan kerja">Rekomendasi Teman / Rekan kerja</option>
-                                <option value="Website Miranaya">Website Miranaya</option>
-                                <option value="Lainnya">Lainnya</option>
-                            </select>
-                        </div>
+                        <label for="source"><i class="fa-solid fa-bullhorn"></i> Sumber Informasi</label>
+                        <select id="source" class="input-control" required>
+                            <option value="" disabled selected>-- Pilih Sumber --</option>
+                            <option value="Instagram">Instagram</option>
+                            <option value="LinkedIn">LinkedIn</option>
+                            <option value="WhatsApp Group">WhatsApp Group</option>
+                            <option value="Rekomendasi Teman">Rekomendasi Teman</option>
+                            <option value="Website Miranaya">Website Miranaya</option>
+                        </select>
                     </div>
 
-                    <!-- Section Header 3: Pembayaran -->
-                    <div class="full-width section-header">
-                        <i class="fa-solid fa-wallet"></i> Metode & Pembayaran
-                    </div>
+                    <div class="full-width section-header"><i class="fa-solid fa-wallet"></i> Metode & Pembayaran</div>
 
-                    <!-- Field: Pilih Bank -->
                     <div class="form-group full-width">
-                        <label for="bankSelect"><i class="fa-solid fa-building-columns"></i> Pilih Metode Transfer Bank</label>
-                        <div class="input-wrapper">
-                            <select id="bankSelect" name="bankSelect" class="input-control" required>
-                                <option value="" disabled selected>-- Pilih Rekening Bank Tujuan --</option>
-                                <option value="BRI">Bank BRI</option>
-                                <option value="BSI">Bank BSI</option>
-                                <option value="Mandiri">Bank Mandiri</option>
-                                <option value="Permata">Bank Permata</option>
-                                <option value="Bank Saqu">Bank Saqu</option>
-                            </select>
-                        </div>
+                        <label for="bankSelect"><i class="fa-solid fa-building-columns"></i> Pilih Bank Tujuan</label>
+                        <select id="bankSelect" class="input-control" required>
+                            <option value="" disabled selected>-- Pilih Bank --</option>
+                            <option value="BRI">Bank BRI</option>
+                            <option value="BSI">Bank BSI</option>
+                            <option value="Mandiri">Bank Mandiri</option>
+                            <option value="Permata">Bank Permata</option>
+                            <option value="Bank Saqu">Bank Saqu</option>
+                        </select>
                     </div>
 
-                    <!-- Card Rekening Tampil Dinamis -->
                     <div class="full-width">
                         <div id="bankInfoCard" class="bank-info-card">
-                            <div class="bank-details">
-                                <div class="bank-row">
-                                    <span style="color: var(--text-muted); font-size: 0.85rem;">Bank Tujuan:</span>
-                                    <span id="displayBankName" style="font-weight: 700; color: var(--navy-deep);"></span>
+                            <div class="bank-row">
+                                <span style="color: var(--text-muted);">Bank Tujuan:</span>
+                                <span id="displayBankName" style="font-weight: 700;"></span>
+                            </div>
+                            <div class="bank-row">
+                                <div>
+                                    <div style="color: var(--text-muted); font-size: 0.8rem;">Nomor Rekening:</div>
+                                    <div id="displayAccountNum" class="bank-account-num"></div>
                                 </div>
-                                <div class="bank-row" style="margin-top: 8px;">
-                                    <div>
-                                        <div style="color: var(--text-muted); font-size: 0.8rem;">Nomor Rekening:</div>
-                                        <div id="displayAccountNum" class="bank-account-num"></div>
-                                    </div>
-                                    <button type="button" class="btn-copy" id="btnCopyAcc"><i class="fa-regular fa-copy"></i> Salin</button>
-                                </div>
-                                <div class="bank-row" style="margin-top: 4px;">
-                                    <span style="color: var(--text-muted); font-size: 0.85rem;">Atas Nama:</span>
-                                    <span id="displayAccountHolder" style="font-weight: 600; color: var(--text-main);"></span>
-                                </div>
+                                <button type="button" class="btn-copy" id="btnCopyAcc"><i class="fa-regular fa-copy"></i> Salin</button>
+                            </div>
+                            <div class="bank-row">
+                                <span style="color: var(--text-muted);">Atas Nama:</span>
+                                <span id="displayAccountHolder"></span>
                             </div>
                         </div>
                     </div>
 
                     <div class="full-width">
-                        <button type="submit" class="submit-btn" id="btnSubmit">
-                            <i class="fa-solid fa-paper-plane"></i> Kirim Pendaftaran
-                        </button>
+                        <button type="submit" class="submit-btn"><i class="fa-solid fa-paper-plane"></i> Kirim Pendaftaran</button>
                     </div>
 
                 </div>
@@ -501,27 +222,42 @@
         </main>
     </div>
 
-    <!-- Footer -->
+    <!-- Tombol Floating WhatsApp Kanan Bawah -->
+    <a href="https://wa.me/6282290007890?text=Halo%20Admin%20Miranaya%20Academy,%20saya%20ingin%20bertanya%20mengenai%20pelatihan." class="float-wa" target="_blank" title="Hubungi Admin via WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
     <footer>
-        <div class="footer-brand" style="font-weight:700; font-size:1.1rem; margin-bottom: 5px;">MIRANAYA ACADEMY</div>
-        <div class="footer-slogan" style="font-size:0.85rem; opacity:0.8; margin-bottom: 15px;">Learn. Innovate. Apply. Impact.</div>
-        <div class="footer-copy" style="font-size:0.8rem; opacity:0.6;">
-            &copy; 2026 Miranaya Academy. All Rights Reserved.
-        </div>
+        <div style="font-weight:700;">MIRANAYA ACADEMY</div>
+        <div style="font-size:0.8rem; opacity:0.7;">&copy; 2026 Miranaya Academy. All Rights Reserved.</div>
     </footer>
 
     <script>
-        // Data Rekening Bank
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw.../exec"; // Masukkan URL GAS Anda jika ada
+        const TARGET_WA_NUMBER = "6282290007890"; // Nomor WA Tujuan (Format Internasional tanpa 0)
+
+        const defaultCourses = [
+            "AI Fundamentals for Professionals",
+            "Bangun sistem kerja cerdas dengan AI",
+            "Masterclass Bikin Website Tanpa Coding dengan AI Gratis",
+            "Produktif dengan AI : Bekerja Lebih Cepat, Hasil Lebih banyak",
+            "AI Praktis untuk Pemula",
+            "Creating Business Presentation With AI",
+            "Membuat Berbagai Tools untuk Productivity Tanpa Tau Coding"
+        ];
+
         const bankAccounts = {
-            "BRI": { num: "757901000077504", name: "Muhamad Fatoni" },
-            "BSI": { num: "7023706517", name: "Muhamad Fatoni" },
-            "Mandiri": { num: "1590000317403", name: "Muhamad Fatoni" },
-            "Permata": { num: "004136030286", name: "Muhamad Fatoni" },
-            "Bank Saqu": { num: "10061893666", name: "Muhamad Fatoni" }
+            "BRI": { num: "0123-01-000123-50-8", name: "PT Miranaya Academy Indonesia" },
+            "BSI": { num: "7123456789", name: "PT Miranaya Academy Indonesia" },
+            "Mandiri": { num: "137-00-1234567-8", name: "PT Miranaya Academy Indonesia" },
+            "Permata": { num: "8901234567", name: "PT Miranaya Academy Indonesia" },
+            "Bank Saqu": { num: "9012345678", name: "PT Miranaya Academy Indonesia" }
         };
 
         document.addEventListener("DOMContentLoaded", function() {
-            // Event listener memilih bank
+            renderCourses();
+            syncWithGoogleSheets();
+
             document.getElementById("bankSelect").addEventListener("change", function(e) {
                 const bankKey = e.target.value;
                 const card = document.getElementById("bankInfoCard");
@@ -535,14 +271,88 @@
                 }
             });
 
-            // Tombol Salin Rekening
             document.getElementById("btnCopyAcc").addEventListener("click", function() {
                 const num = document.getElementById("displayAccountNum").textContent;
-                navigator.clipboard.writeText(num).then(() => {
-                    alert("Nomor rekening berhasil disalin!");
-                });
+                navigator.clipboard.writeText(num).then(() => alert("Nomor rekening berhasil disalin!"));
+            });
+
+            // HANDLE SUBMIT FORM KIRIM KE WHATSAPP
+            document.getElementById("registrationForm").addEventListener("submit", function(e) {
+                e.preventDefault();
+
+                // Ambil nilai dari Form
+                const fullName = document.getElementById("fullName").value;
+                const email = document.getElementById("email").value;
+                const whatsapp = document.getElementById("whatsapp").value;
+                const organization = document.getElementById("organization").value;
+                const position = document.getElementById("position").value;
+                const city = document.getElementById("city").value;
+                const course = document.getElementById("course").value;
+                const trainingDate = document.getElementById("trainingDate").value;
+                const source = document.getElementById("source").value;
+                const bankSelect = document.getElementById("bankSelect").value;
+
+                // Format Pesan WhatsApp Resume
+                const waMessage = 
+`*HALO ADMIN MIRANAYA ACADEMY*
+Saya telah mengisi form pendaftaran pelatihan dengan rincian berikut:
+
+📌 *RESUME PENDAFTARAN*
+▫️ *Nama Lengkap:* ${fullName}
+▫️ *Email:* ${email}
+▫️ *No. WhatsApp:* ${whatsapp}
+▫️ *Instansi/Perusahaan:* ${organization}
+▫️ *Jabatan:* ${position}
+▫️ *Kota Domisili:* ${city}
+
+📚 *PROGRAM PELATIHAN*
+▫️ *Judul:* ${course}
+▫️ *Tanggal Pelatihan:* ${trainingDate}
+▫️ *Info Dari:* ${source}
+
+💳 *PEMBAYARAN*
+▫️ *Bank Tujuan:* ${bankSelect}
+
+---
+*Catatan:*
+Berikut saya lampirkan foto/file *Bukti Transfer* pada pesan ini. Mohon untuk diverifikasi. Terima kasih!`;
+
+                // Encode pesan agar bisa dibaca link WhatsApp
+                const encodedMessage = encodeURIComponent(waMessage);
+                const waUrl = `https://wa.me/${TARGET_WA_NUMBER}?text=${encodedMessage}`;
+
+                // Buka WhatsApp di tab baru
+                window.open(waUrl, "_blank");
             });
         });
+
+        function renderCourses() {
+            const selectEl = document.getElementById("course");
+            const cachedData = localStorage.getItem("miranaya_courses");
+            const coursesToDisplay = cachedData ? JSON.parse(cachedData) : defaultCourses;
+
+            selectEl.innerHTML = '<option value="" disabled selected>-- Pilih Program Pelatihan --</option>';
+            coursesToDisplay.forEach(item => {
+                const title = typeof item === 'object' ? item.name : item;
+                const opt = document.createElement("option");
+                opt.value = title;
+                opt.textContent = title;
+                selectEl.appendChild(opt);
+            });
+        }
+
+        function syncWithGoogleSheets() {
+            if (!SCRIPT_URL || SCRIPT_URL.includes("AKfycbw...")) return;
+            fetch(`${SCRIPT_URL}?action=courses`)
+                .then(res => res.json())
+                .then(res => {
+                    if (res.success && res.data && res.data.length > 0) {
+                        localStorage.setItem("miranaya_courses", JSON.stringify(res.data));
+                        renderCourses();
+                    }
+                })
+                .catch(err => console.warn("Menggunakan data cache lokal:", err));
+        }
     </script>
 </body>
 </html>
