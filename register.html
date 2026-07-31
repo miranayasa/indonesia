@@ -412,7 +412,7 @@
                         <i class="fa-solid fa-graduation-cap"></i> Program Pelatihan
                     </div>
 
-                    <!-- Field: Pilih Pelatihan (Dinamis Koneksi ke Sheet Courses) -->
+                    <!-- Field: Pilih Pelatihan (Dinamis dari Sheet Courses via getCoursesList) -->
                     <div class="form-group full-width">
                         <label for="course"><i class="fa-solid fa-graduation-cap"></i> Pilih Program Pelatihan</label>
                         <div class="input-wrapper">
@@ -519,11 +519,11 @@
             "Bank Saqu": { num: "10061893666", name: "Muhamad Fatoni" }
         };
 
-        // Variabel global penyimpan data course
+        // Variable global penyimpan data courses
         let coursesData = [];
 
         document.addEventListener("DOMContentLoaded", function() {
-            // 1. Muat daftar pelatihan dari sheet Courses secara dinamis
+            // 1. Muat daftar pelatihan dari sheet Courses via Course.gs
             loadCoursesData();
 
             // 2. Event listener memilih bank
@@ -551,18 +551,17 @@
             // 4. Autofill Tanggal ketika Pelatihan Dipilih
             document.getElementById("course").addEventListener("change", function(e) {
                 const selectedTitle = e.target.value;
-                const foundCourse = coursesData.find(c => c.title === selectedTitle);
+                const foundCourse = coursesData.find(c => (c.name === selectedTitle || c.title === selectedTitle));
                 if (foundCourse && foundCourse.date) {
-                    // Konversi format tanggal jika perlu (YYYY-MM-DD)
                     document.getElementById("trainingDate").value = formatDateForInput(foundCourse.date);
                 }
             });
 
-            // 5. Submit Form ke Apps Script
+            // 5. Submit Form ke Register.gs
             document.getElementById("registrationForm").addEventListener("submit", handleFormSubmit);
         });
 
-        // Fungsi mengambil data dari Apps Script (Sheet Courses)
+        // Memanggil fungsi getCoursesList() pada Course.gs
         function loadCoursesData() {
             const courseSelect = document.getElementById("course");
             
@@ -579,8 +578,9 @@
 
                         coursesData.forEach(c => {
                             const opt = document.createElement("option");
-                            opt.value = c.title || c['Nama Pelatihan'];
-                            opt.textContent = c.title || c['Nama Pelatihan'];
+                            const courseName = c.name || c.title;
+                            opt.value = courseName;
+                            opt.textContent = courseName;
                             courseSelect.appendChild(opt);
                         });
                     })
@@ -588,14 +588,14 @@
                         console.error("Gagal memuat courses:", err);
                         courseSelect.innerHTML = '<option value="" disabled selected>Gagal memuat data pelatihan</option>';
                     })
-                    .getCoursesList(); // Memanggil fungsi backend di Apps Script
+                    .getCoursesList(); // Sesuai dengan nama fungsi di Course.gs
             } else {
-                console.warn("Jaringan Google Apps Script tidak terdeteksi (Running local mode).");
+                console.warn("Mode Lokal (Tidak di Google Apps Script): Menggunakan data dummy");
                 courseSelect.innerHTML = '<option value="" disabled selected>-- Pilih Program Pelatihan --</option>';
             }
         }
 
-        // Fungsi penanganan kirim form pendaftaran
+        // Memanggil fungsi saveRegistration() pada Register.gs
         function handleFormSubmit(e) {
             e.preventDefault();
             const btnSubmit = document.getElementById("btnSubmit");
@@ -613,25 +613,28 @@
                 course: document.getElementById("course").value,
                 trainingDate: document.getElementById("trainingDate").value,
                 source: document.getElementById("source").value,
-                bankSelect: document.getElementById("bankSelect").value,
-                notes: `Metode Pembayaran: Transfer Bank ${document.getElementById("bankSelect").value}`
+                bankSelect: document.getElementById("bankSelect").value
             };
 
             if (typeof google !== 'undefined' && google.script && google.script.run) {
                 google.script.run
                     .withSuccessHandler(function(response) {
-                        alert("Pendaftaran Berhasil! Terima kasih telah mendaftar.");
-                        document.getElementById("registrationForm").reset();
-                        document.getElementById("bankInfoCard").classList.remove("active");
+                        if (response && response.success === false) {
+                            alert("Gagal: " + response.message);
+                        } else {
+                            alert("Pendaftaran Berhasil! Data pendaftaran Anda telah tersimpan.");
+                            document.getElementById("registrationForm").reset();
+                            document.getElementById("bankInfoCard").classList.remove("active");
+                        }
                         btnSubmit.disabled = false;
                         btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Pendaftaran';
                     })
                     .withFailureHandler(function(err) {
-                        alert("Terjadi kesalahan saat menyimpan pendaftaran: " + err.message);
+                        alert("Terjadi kesalahan sistem: " + err.message);
                         btnSubmit.disabled = false;
                         btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Pendaftaran';
                     })
-                    .saveParticipant(formData); // Memanggil fungsi backend pendaftaran
+                    .saveRegistration(formData); // Sesuai dengan nama fungsi di Register.gs
             } else {
                 alert("Mode lokal: Pendaftaran disimulasikan berhasil.");
                 btnSubmit.disabled = false;
@@ -639,7 +642,7 @@
             }
         }
 
-        // Helper format tanggal untuk input type="date"
+        // Helper format tanggal untuk input type="date" (YYYY-MM-DD)
         function formatDateForInput(dateStr) {
             if (!dateStr) return "";
             const d = new Date(dateStr);
