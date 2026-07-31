@@ -14,9 +14,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* ==========================================================================
-           1. CSS VARIABLES & RESET
-           ========================================================================== */
         :root {
             --navy-deep: #071C4D;
             --navy-dark: #0A192F;
@@ -55,7 +52,6 @@
             position: relative;
         }
 
-        /* Ambient Background Elements */
         body::before {
             content: '';
             position: fixed;
@@ -69,9 +65,6 @@
             pointer-events: none;
         }
 
-        /* ==========================================================================
-           2. LAYOUT & CONTAINERS
-           ========================================================================== */
         .container {
             max-width: 900px;
             margin: 0 auto;
@@ -79,7 +72,6 @@
             flex: 1;
         }
 
-        /* Hero Card Section */
         .hero-card {
             background: var(--white);
             border-radius: var(--card-radius);
@@ -139,7 +131,6 @@
             line-height: 1.6;
         }
 
-        /* Form Card */
         .form-card {
             background: var(--glass-bg);
             backdrop-filter: blur(12px);
@@ -151,7 +142,6 @@
             animation: slideUp 0.8s ease-out 0.2s backwards;
         }
 
-        /* Section Title Header */
         .section-header {
             font-size: 1.1rem;
             font-weight: 700;
@@ -168,51 +158,6 @@
             color: var(--blue-royal);
         }
 
-        /* Dynamic Course Description Card */
-        .course-card {
-            background: linear-gradient(135deg, rgba(7, 28, 77, 0.03) 0%, rgba(15, 98, 254, 0.05) 100%);
-            border: 1px solid rgba(15, 98, 254, 0.2);
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: -10px;
-            display: none;
-            align-items: flex-start;
-            gap: 15px;
-            animation: fadeIn 0.4s ease-out;
-        }
-
-        .course-card.active {
-            display: flex;
-        }
-
-        .course-icon {
-            width: 42px;
-            height: 42px;
-            background: linear-gradient(135deg, var(--blue-royal), var(--blue-electric));
-            color: var(--white);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            flex-shrink: 0;
-            box-shadow: 0 4px 10px rgba(0, 174, 239, 0.3);
-        }
-
-        .course-info h4 {
-            font-size: 0.95rem;
-            color: var(--navy-deep);
-            margin-bottom: 4px;
-            font-weight: 600;
-        }
-
-        .course-info p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.5;
-        }
-
-        /* Grid Layout for Form */
         .form-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -223,7 +168,6 @@
             grid-column: span 2;
         }
 
-        /* Form Controls */
         .form-group {
             display: flex;
             flex-direction: column;
@@ -279,25 +223,6 @@
             cursor: pointer;
         }
 
-        .error-message {
-            font-size: 0.78rem;
-            color: var(--error-color);
-            margin-top: 6px;
-            display: none;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .form-group.error .input-control {
-            border-color: var(--error-color);
-            background-color: rgba(239, 68, 68, 0.02);
-        }
-
-        .form-group.error .error-message {
-            display: flex;
-        }
-
-        /* Submit Button */
         .submit-btn {
             width: 100%;
             padding: 16px 24px;
@@ -324,7 +249,6 @@
             transform: translateY(-2px);
         }
 
-        /* Bank Info Box */
         .bank-info-card {
             display: none;
             background: #F8FAFC;
@@ -378,7 +302,6 @@
             background: var(--navy-deep);
         }
 
-        /* Footer */
         footer {
             background: var(--navy-deep);
             color: var(--white);
@@ -422,7 +345,7 @@
 
         <!-- Form Registration Section -->
         <main class="form-card">
-            <form id="registrationForm" novalidate>
+            <form id="registrationForm">
                 <div class="form-grid">
                     
                     <!-- Section Header 1 -->
@@ -436,7 +359,6 @@
                         <div class="input-wrapper">
                             <input type="text" id="fullName" name="fullName" class="input-control" placeholder="Contoh: Budi Santoso, S.T." required>
                         </div>
-                        <span class="error-message"><i class="fa-solid fa-circle-exclamation"></i> Nama lengkap wajib diisi.</span>
                     </div>
 
                     <!-- Field: Email -->
@@ -445,7 +367,6 @@
                         <div class="input-wrapper">
                             <input type="email" id="email" name="email" class="input-control" placeholder="budi@perusahaan.com" required>
                         </div>
-                        <span class="error-message"><i class="fa-solid fa-circle-exclamation"></i> Format email tidak valid.</span>
                     </div>
 
                     <!-- Field: Nomor WhatsApp -->
@@ -454,7 +375,6 @@
                         <div class="input-wrapper">
                             <input type="tel" id="whatsapp" name="whatsapp" class="input-control" placeholder="081234567890" required>
                         </div>
-                        <span class="error-message"><i class="fa-solid fa-circle-exclamation"></i> Gunakan format WhatsApp valid (min. 10 digit).</span>
                     </div>
 
                     <!-- Field: Instansi / Perusahaan -->
@@ -463,7 +383,6 @@
                         <div class="input-wrapper">
                             <input type="text" id="organization" name="organization" class="input-control" placeholder="PT Digital Indonesia" required>
                         </div>
-                        <span class="error-message"><i class="fa-solid fa-circle-exclamation"></i> Nama instansi/perusahaan wajib diisi.</span>
                     </div>
 
                     <!-- Field: Jabatan -->
@@ -472,7 +391,6 @@
                         <div class="input-wrapper">
                             <input type="text" id="position" name="position" class="input-control" placeholder="Manager / Analyst / Staff" required>
                         </div>
-                        <span class="error-message"><i class="fa-solid fa-circle-exclamation"></i> Jabatan wajib diisi.</span>
                     </div>
 
                     <!-- Field: Kota -->
@@ -481,7 +399,6 @@
                         <div class="input-wrapper">
                             <input type="text" id="city" name="city" class="input-control" placeholder="Jakarta Selatan" required>
                         </div>
-                        <span class="error-message"><i class="fa-solid fa-circle-exclamation"></i> Kota wajib diisi.</span>
                     </div>
 
                     <!-- Section Header 2 -->
@@ -489,27 +406,20 @@
                         <i class="fa-solid fa-graduation-cap"></i> Program Pelatihan
                     </div>
 
-                    <!-- Field: Pilih Pelatihan (Dinamis dari Google Sheet) -->
+                    <!-- Field: Pilih Pelatihan (MANUAL HASIL OPSI ANDA) -->
                     <div class="form-group full-width">
                         <label for="course"><i class="fa-solid fa-graduation-cap"></i> Pilih Program Pelatihan</label>
                         <div class="input-wrapper">
                             <select id="course" name="course" class="input-control" required>
-                                <option value="" disabled selected>-- Memuat daftar pelatihan... --</option>
+                                <option value="" disabled selected>-- Pilih Program Pelatihan --</option>
+                                <option value="AI Fundamentals for Professionals">AI Fundamentals for Professionals</option>
+                                <option value="Bangun sistem kerja cerdas dengan AI">Bangun sistem kerja cerdas dengan AI</option>
+                                <option value="Masterclass Bikin Website Tanpa Coding dengan AI Gratis">Masterclass Bikin Website Tanpa Coding dengan AI Gratis</option>
+                                <option value="Produktif dengan AI : Bekerja Lebih Cepat, Hasil Lebih banyak">Produktif dengan AI : Bekerja Lebih Cepat, Hasil Lebih banyak</option>
+                                <option value="AI Praktis untuk Pemula">AI Praktis untuk Pemula</option>
+                                <option value="Creating Business Presentation With AI">Creating Business Presentation With AI</option>
+                                <option value="Membuat Berbagai Tools untuk Productivity Tanpa Tau Coding">Membuat Berbagai Tools untuk Productivity Tanpa Tau Coding</option>
                             </select>
-                        </div>
-                        <span class="error-message"><i class="fa-solid fa-circle-exclamation"></i> Silakan pilih salah satu program pelatihan.</span>
-                    </div>
-
-                    <!-- Dynamic Course Description Card -->
-                    <div class="full-width">
-                        <div id="courseCard" class="course-card">
-                            <div class="course-icon">
-                                <i class="fa-solid fa-brain" id="courseCardIcon"></i>
-                            </div>
-                            <div class="course-info">
-                                <h4 id="courseCardTitle">Detail Pelatihan</h4>
-                                <p id="courseCardDesc">Pilih program pelatihan di atas untuk melihat deskripsi ringkas modul dan tujuan instruksional.</p>
-                            </div>
                         </div>
                     </div>
 
@@ -519,7 +429,6 @@
                         <div class="input-wrapper">
                             <input type="date" id="trainingDate" name="trainingDate" class="input-control" required>
                         </div>
-                        <span class="error-message"><i class="fa-solid fa-circle-exclamation"></i> Tanggal pelatihan wajib dipilih.</span>
                     </div>
 
                     <!-- Field: Sumber Informasi -->
@@ -536,7 +445,6 @@
                                 <option value="Lainnya">Lainnya</option>
                             </select>
                         </div>
-                        <span class="error-message"><i class="fa-solid fa-circle-exclamation"></i> Sumber informasi wajib dipilih.</span>
                     </div>
 
                     <!-- Section Header 3: Pembayaran -->
@@ -557,7 +465,6 @@
                                 <option value="Bank Saqu">Bank Saqu</option>
                             </select>
                         </div>
-                        <span class="error-message"><i class="fa-solid fa-circle-exclamation"></i> Pilih bank untuk tujuan pembayaran.</span>
                     </div>
 
                     <!-- Card Rekening Tampil Dinamis -->
@@ -596,22 +503,14 @@
 
     <!-- Footer -->
     <footer>
-        <div class="footer-brand">MIRANAYA ACADEMY</div>
-        <div class="footer-slogan">Learn. Innovate. Apply. Impact.</div>
-        <div class="footer-copy">
+        <div class="footer-brand" style="font-weight:700; font-size:1.1rem; margin-bottom: 5px;">MIRANAYA ACADEMY</div>
+        <div class="footer-slogan" style="font-size:0.85rem; opacity:0.8; margin-bottom: 15px;">Learn. Innovate. Apply. Impact.</div>
+        <div class="footer-copy" style="font-size:0.8rem; opacity:0.6;">
             &copy; 2026 Miranaya Academy. All Rights Reserved.
         </div>
     </footer>
 
-    <!-- ==========================================================================
-       JAVASCRIPT BACKEND INTEGRATION
-       ========================================================================== -->
     <script>
-        // PASTI KAN URL INI SESUAI DENGAN WEB APP APPS SCRIPT ANDA
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx980xHfxun4gBHumhyMhEF2_LbQ_nQsROC9bPY1jX2Vz1A8lvdkRbPdn1Q4PewqQV9/exec; // <-- GANTI DENGAN URL DEPLOYMENT ANDA!
-
-        let courseList = [];
-
         // Data Rekening Bank
         const bankAccounts = {
             "BRI": { num: "0123-01-000123-50-8", name: "PT Miranaya Academy Indonesia" },
@@ -622,23 +521,6 @@
         };
 
         document.addEventListener("DOMContentLoaded", function() {
-            loadCourses();
-
-            // Event listener saat memilih opsi pelatihan
-            document.getElementById("course").addEventListener("change", function(e) {
-                const selectedId = e.target.value;
-                const found = courseList.find(c => String(c.id) === String(selectedId));
-                
-                const card = document.getElementById("courseCard");
-                if (found) {
-                    document.getElementById("courseCardTitle").textContent = found.name;
-                    document.getElementById("courseCardDesc").textContent = found.description || found.desc || "Program pelatihan akselerasi AI.";
-                    card.classList.add("active");
-                } else {
-                    card.classList.remove("active");
-                }
-            });
-
             // Event listener memilih bank
             document.getElementById("bankSelect").addEventListener("change", function(e) {
                 const bankKey = e.target.value;
@@ -661,33 +543,6 @@
                 });
             });
         });
-
-        // Mengambil daftar pelatihan dari Apps Script
-        function loadCourses() {
-            const selectEl = document.getElementById("course");
-
-            fetch(`${SCRIPT_URL}?action=courses`)
-                .then(res => res.json())
-                .then(res => {
-                    if (res.success && res.data && res.data.length > 0) {
-                        courseList = res.data;
-                        selectEl.innerHTML = '<option value="" disabled selected>-- Pilih Program Pelatihan --</option>';
-                        
-                        res.data.forEach(item => {
-                            const opt = document.createElement("option");
-                            opt.value = item.id;
-                            opt.textContent = `${item.name} (${item.date || 'TBA'})`;
-                            selectEl.appendChild(opt);
-                        });
-                    } else {
-                        selectEl.innerHTML = '<option value="" disabled>Gagal memuat atau tidak ada pelatihan aktif</option>';
-                    }
-                })
-                .catch(err => {
-                    console.error("Error loading courses:", err);
-                    selectEl.innerHTML = '<option value="" disabled>Terjadi kesalahan saat memuat data</option>';
-                });
-        }
     </script>
 </body>
 </html>
