@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Business Consultant Dashboard</title>
+    <title>AI Executive Business Consultant</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -24,6 +24,7 @@
 
     <main class="max-w-7xl mx-auto px-4 py-8">
         
+        <!-- Form Section -->
         <section id="formSection" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 mb-8">
             <div class="mb-6">
                 <h2 class="text-2xl font-bold text-slate-900">Form Parameter Bisnis</h2>
@@ -75,6 +76,7 @@
             </form>
         </section>
 
+        <!-- Loading Section -->
         <section id="loadingSection" class="hidden py-20 text-center bg-white rounded-2xl shadow-sm border border-slate-200 mb-8">
             <div class="inline-block animate-spin text-indigo-600 text-4xl mb-4">
                 <i class="fa-solid fa-spinner"></i>
@@ -83,6 +85,7 @@
             <p id="loadingStatusText" class="text-sm text-slate-500 mt-1">Menganalisa data parameter usaha Anda...</p>
         </section>
 
+        <!-- Result Dashboard -->
         <section id="resultDashboard" class="hidden space-y-6">
             
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -117,6 +120,7 @@
                 </div>
             </div>
 
+            <!-- BMC -->
             <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
                 <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
                     <i class="fa-solid fa-table-cells text-indigo-600"></i>
@@ -160,6 +164,7 @@
                 </div>
             </div>
 
+            <!-- Analisis Kelayakan, Pasar, Kompetitor -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
                     <h4 class="font-bold text-slate-900 mb-2 flex items-center space-x-2">
@@ -184,6 +189,7 @@
                 </div>
             </div>
 
+            <!-- SWOT & PESTEL -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
                     <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
@@ -226,6 +232,7 @@
                 </div>
             </div>
 
+            <!-- Finansial & Strategi -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
                     <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
@@ -266,6 +273,7 @@
                 </div>
             </div>
 
+            <!-- Roadmap & Risiko -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
                     <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
@@ -298,6 +306,7 @@
     </main>
 
     <script>
+        // URL Cloudflare Worker Anda (Aman, tidak ada API key terekspos di sini)
         const API_URL = "https://dawn-dew-b706.miranayanasa.workers.dev";
 
         function resetForm() {
@@ -359,10 +368,10 @@
                 clearInterval(loadingInterval);
                 document.getElementById("loadingSection").classList.add("hidden");
 
-                if (!response.ok) throw new Error("Gagal terhubung ke AI Gateway server.");
+                if (!response.ok) throw new Error("Gagal terhubung ke Cloudflare Worker.");
 
-                const rawData = await response.json();
-                displayResults(rawData);
+                const finalJson = await response.json();
+                displayResults(finalJson);
 
                 document.getElementById("resultDashboard").classList.remove("hidden");
 
