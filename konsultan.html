@@ -254,4 +254,133 @@
                 try {
                     if (rawData.candidates && rawData.candidates[0]?.content?.parts?.[0]?.text) {
                         let textResp = rawData.candidates[0].content.parts[0].text;
-                        textResp = textResp.replace(/```json/g, "").replace(/
+                        textResp = textResp.replace(/```json/g, "").replace(/```/g, "").trim();
+                        parsedData = JSON.parse(textResp);
+                    }
+                } catch (e) {
+                    console.error("Parsing JSON Gemini gagal:", e);
+                }
+
+                currentAnalysisData = parsedData;
+                displayResults(parsedData);
+                saveToHistory(parsedData);
+
+                document.getElementById("resultDashboard").classList.remove("hidden");
+                document.getElementById("exportActionButtons").classList.remove("flex");
+                document.getElementById("exportActionButtons").classList.add("flex");
+
+            } catch (error) {
+                clearInterval(loadingInterval);
+                document.getElementById("loadingSection").classList.add("hidden");
+                document.getElementById("formSection").classList.remove("hidden");
+                alert("Terjadi kesalahan: " + error.message);
+            }
+        }
+
+        function displayResults(data) {
+            document.getElementById("resCategory").textContent = data.category || "Umum";
+            document.getElementById("resName").textContent = data.name || "Analisis Bisnis";
+            document.getElementById("resConclusion").textContent = data.conclusion || "-";
+            document.getElementById("scoreNumber").textContent = data.score || 0;
+
+            const badge = document.getElementById("feasibilityBadge");
+            badge.textContent = data.feasibility || "Layak";
+            badge.className = "text-xs font-bold px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300";
+
+            document.getElementById("finCapital").textContent = data.financial?.capital || "-";
+            document.getElementById("finRevenue").textContent = data.financial?.revenue || "-";
+            document.getElementById("finProfit").textContent = data.financial?.profit || "-";
+            document.getElementById("finBep").textContent = data.financial?.bep || "-";
+
+            document.getElementById("swotS").textContent = data.swot?.strength || "-";
+            document.getElementById("swotW").textContent = data.swot?.weakness || "-";
+            document.getElementById("swotO").textContent = data.swot?.opportunity || "-";
+            document.getElementById("swotT").textContent = data.swot?.threat || "-";
+
+            renderGauge(data.score || 0);
+        }
+
+        function renderGauge(score) {
+            const ctx = document.getElementById("gaugeChart").getContext("2d");
+            if (gaugeChartInstance) gaugeChartInstance.destroy();
+
+            gaugeChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [score, 100 - score],
+                        backgroundColor: ['#2563eb', '#e2e8f0'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    cutout: '80%',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { tooltip: { enabled: false }, legend: { display: false } }
+                }
+            });
+        }
+
+        function resetFormToNew() {
+            document.getElementById("consultantForm").reset();
+            document.getElementById("resultDashboard").classList.add("hidden");
+            document.getElementById("exportActionButtons").classList.remove("flex");
+            document.getElementById("exportActionButtons").classList.add("hidden");
+            document.getElementById("formSection").classList.remove("hidden");
+        }
+
+        function saveToHistory(data) {
+            let history = JSON.parse(localStorage.getItem("miranaya_history") || "[]");
+            history.unshift({ timestamp: new Date().toISOString(), data });
+            if (history.length > 10) history.pop();
+            localStorage.setItem("miranaya_history", JSON.stringify(history));
+            renderHistoryList();
+        }
+
+        function renderHistoryList() {
+            const listEl = document.getElementById("historyList");
+            let history = JSON.parse(localStorage.getItem("miranaya_history") || "[]");
+            if (history.length === 0) {
+                listEl.innerHTML = `<p class="text-xs text-slate-400 px-2 italic">Belum ada riwayat analisa.</p>`;
+                return;
+            }
+            listEl.innerHTML = history.map((item, idx) => `
+                <button onclick="loadHistoryItem(${idx})" class="w-full text-left p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-xs truncate block">
+                    <span class="font-semibold block truncate text-slate-700 dark:text-slate-200">${item.data.name || 'Analisis'}</span>
+                    <span class="text-[10px] text-slate-400">${new Date(item.timestamp).toLocaleDateString()}</span>
+                </button>
+            `).join("");
+        }
+
+        function loadHistoryItem(idx) {
+            let history = JSON.parse(localStorage.getItem("miranaya_history") || "[]");
+            if (history[idx]) {
+                currentAnalysisData = history[idx].data;
+                document.getElementById("formSection").classList.add("hidden");
+                displayResults(currentAnalysisData);
+                document.getElementById("resultDashboard").classList.remove("hidden");
+                document.getElementById("exportActionButtons").classList.remove("hidden");
+                document.getElementById("exportActionButtons").classList.add("flex");
+            }
+        }
+
+        function copyResultJSON() {
+            if (!currentAnalysisData) return;
+            navigator.clipboard.writeText(JSON.stringify(currentAnalysisData, null, 2));
+            alert("Data JSON berhasil disalin ke clipboard!");
+        }
+
+        function downloadJSON() {
+            if (!currentAnalysisData) return;
+            const blob = new Blob([JSON.stringify(currentAnalysisData, null, 2)], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `analisis-bisnis-${Date.now()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
