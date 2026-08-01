@@ -8,9 +8,6 @@
     <!-- FontAwesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- html2pdf.js CDN (Library Konversi HTML ke PDF) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <style>
         :root {
@@ -504,51 +501,6 @@
                 display: block;
             }
         }
-
-        /* Style PDF Generation */
-        @media print {
-            header, footer, .cta-buttons, .no-pdf, .hamburger {
-                display: none !important;
-            }
-            body {
-                background: #ffffff !important;
-                color: #0f172a !important;
-            }
-            section {
-                padding: 20px 0 !important;
-            }
-            .glass-card {
-                background: #ffffff !important;
-                border: 1px solid #cbd5e1 !important;
-                box-shadow: none !important;
-                color: #0f172a !important;
-                page-break-inside: avoid !important;
-            }
-            .logo-img, .footer-logo-img {
-                background: transparent !important;
-                box-shadow: none !important;
-                filter: none !important;
-            }
-        }
-
-        .pdf-export-mode {
-            background: #ffffff !important;
-            color: #0f172a !important;
-            padding: 20px !important;
-        }
-
-        .pdf-export-mode .glass-card {
-            background: #f8fafc !important;
-            border: 1px solid #cbd5e1 !important;
-            color: #0f172a !important;
-        }
-
-        .pdf-export-mode .logo-img, 
-        .pdf-export-mode .footer-logo-img {
-            background: transparent !important;
-            box-shadow: none !important;
-            filter: none !important;
-        }
     </style>
 </head>
 <body>
@@ -567,11 +519,6 @@
                 <li><a href="#certifications" class="nav-link">Sertifikasi</a></li>
                 <li><a href="#topics" class="nav-link">Topik</a></li>
                 <li><a href="#contact" class="nav-link">Kontak</a></li>
-                <li class="no-pdf">
-                    <button class="btn btn-primary" onclick="downloadPDF()">
-                        <i class="fa-solid fa-file-pdf"></i> Unduh CV (PDF)
-                    </button>
-                </li>
             </ul>
             <div class="hamburger" id="hamburger">
                 <i class="fa-solid fa-bars"></i>
@@ -587,11 +534,10 @@
                     <h1>Muhamad Fatoni, S.T., M.M., CBMP, CAIP</h1>
                     <div class="subtitle">Proffesional Trainer | AI & Business Transformation Expert</div>
                     <p>Praktisi dan konsultan yang berfokus pada integrasi Artificial Intelligence (AI), manajemen bisnis strategis, serta efisiensi operasional industri untuk mendorong pertumbuhan organisasi secara berkelanjutan.</p>
-                    <div class="hero-action-btns no-pdf">
+                    <div class="hero-action-btns">
                         <a href="https://miranaya.online/register.html" class="btn btn-primary" target="_blank">
                             <i class="fa-solid fa-user-plus"></i> Daftar Training
                         </a>
-                        <!-- Teks tanpa menampilkan nomor HP secara fisik -->
                         <a href="https://wa.me/6282290007890?text=Halo%20Miranaya%20Academy,%20saya%20ingin%20konsultasi/tanya%20mengenai%20program%20pelatihan" class="btn btn-outline" target="_blank">
                             <i class="fa-brands fa-whatsapp"></i> Hubungi via WhatsApp
                         </a>
@@ -753,7 +699,7 @@
                     </div>
                     <div class="glass-card cert-badge">
                         <i class="fa-solid fa-award"></i>
-                        <span>Manufacturing Excellence Specialist & Safety Leadership</span>
+                        <span>Manufacturing Excellence Specialist</span>
                     </div>
                 </div>
             </div>
@@ -810,11 +756,10 @@
             <div class="cta-section" data-aos="fade-up">
                 <h2 class="cta-title">Siap Meningkatkan Kompetensi Tim Anda?</h2>
                 <p class="cta-subtitle">Diskusikan kebutuhan pelatihan, in-house training, atau konsultasi bisnis bersama Muhamad Fatoni & Miranaya Academy.</p>
-                <div class="cta-buttons no-pdf">
+                <div class="cta-buttons">
                     <a href="https://miranaya.online/register.html" class="btn btn-primary" target="_blank">
                         <i class="fa-solid fa-pen-to-square"></i> Daftar Training Sekarang
                     </a>
-                    <!-- Tanpa menampilkan nomor HP di teks tombol -->
                     <a href="https://wa.me/6282290007890?text=Halo%20Miranaya%20Academy,%20saya%20ingin%20konsultasi/tanya%20mengenai%20program%20pelatihan" class="btn btn-outline" target="_blank">
                         <i class="fa-brands fa-whatsapp"></i> Chat WhatsApp
                     </a>
@@ -834,7 +779,7 @@
                 <p style="font-size: 0.9rem; color: var(--text-muted);">
                     Website: <a href="https://miranaya.online" style="color: var(--accent); text-decoration: none;">miranaya.online</a>
                 </p>
-                <div class="social-links no-pdf">
+                <div class="social-links">
                     <a href="https://wa.me/6282290007890" class="social-icon" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
                     <a href="https://miranaya.online" class="social-icon" target="_blank" title="Website"><i class="fa-solid fa-globe"></i></a>
                     <a href="#" class="social-icon" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
@@ -847,7 +792,7 @@
         </div>
     </footer>
 
-    <!-- JAVASCRIPT FOR INTERACTIVITY, ANIMATIONS & PDF GENERATION -->
+    <!-- JAVASCRIPT FOR INTERACTIVITY & ANIMATIONS -->
     <script>
         // Header scroll effect
         const header = document.getElementById('header');
@@ -915,34 +860,6 @@
         document.querySelectorAll('[data-aos], #statistics').forEach(el => {
             observer.observe(el);
         });
-
-        // FUNCTION TO GENERATE PDF
-        function downloadPDF() {
-            const element = document.body;
-
-            const noPdfElements = document.querySelectorAll('.no-pdf');
-            noPdfElements.forEach(el => el.style.display = 'none');
-            element.classList.add('pdf-export-mode');
-
-            const options = {
-                margin:       [10, 10, 10, 10], 
-                filename:     'Profil_Muhamad_Fatoni_Miranaya.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { 
-                    scale: 2,           
-                    useCORS: true,      
-                    allowTaint: true,
-                    letterRendering: true
-                },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
-            };
-
-            html2pdf().set(options).from(element).save().then(() => {
-                noPdfElements.forEach(el => el.style.display = '');
-                element.classList.remove('pdf-export-mode');
-            });
-        }
     </script>
 </body>
 </html>
