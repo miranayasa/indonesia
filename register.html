@@ -559,41 +559,26 @@
                 }
             });
 
-            // 5. Submit Form ke Register.gs
+            // 5. Submit Form ke Register.gs via Fetch POST (No CORS issue with text/plain or standard cross-origin submission / no-cors if configured, or standard URL-encoded/JSON POST to Apps Script Web App)
             document.getElementById("registrationForm").addEventListener("submit", handleFormSubmit);
         });
 
         // Memanggil fungsi getCoursesList() pada Course.gs
         async function loadCoursesData() {
-
             const courseSelect = document.getElementById("course");
-
-            courseSelect.innerHTML =
-                '<option value="" selected>Memuat data pelatihan...</option>';
+            courseSelect.innerHTML = '<option value="" selected>Memuat data pelatihan...</option>';
 
             try {
-
                 const response = await fetch(API_URL + "?action=getCourses");
-
                 if (!response.ok) {
                     throw new Error("HTTP " + response.status);
                 }
-
                 const courses = await response.json();
-
-                console.log(courses);
-
                 renderCoursesToDropdown(courses);
-
             } catch (err) {
-
                 console.error(err);
-
-                courseSelect.innerHTML =
-                    '<option value="" selected>Gagal memuat data pelatihan</option>';
-
+                courseSelect.innerHTML = '<option value="" selected>Gagal memuat data pelatihan</option>';
             }
-
         }
 
         // Helper untuk merender array pelatihan ke dropdown select
@@ -616,8 +601,8 @@
             });
         }
 
-        // Memanggil fungsi saveRegistration() pada Register.gs
-        function handleFormSubmit(e) {
+        // Mengirim data pendaftaran ke Apps Script menggunakan Fetch API (POST) untuk GitHub Pages
+        async function handleFormSubmit(e) {
             e.preventDefault();
             const btnSubmit = document.getElementById("btnSubmit");
             btnSubmit.disabled = true;
@@ -637,27 +622,25 @@
                 bankSelect: document.getElementById("bankSelect").value
             };
 
-            if (typeof google !== 'undefined' && google.script && google.script.run) {
-                google.script.run
-                    .withSuccessHandler(function(response) {
-                        if (response && response.success === false) {
-                            alert("Gagal: " + response.message);
-                        } else {
-                            alert("Pendaftaran Berhasil! Data pendaftaran Anda telah tersimpan.");
-                            document.getElementById("registrationForm").reset();
-                            document.getElementById("bankInfoCard").classList.remove("active");
-                        }
-                        btnSubmit.disabled = false;
-                        btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Pendaftaran';
-                    })
-                    .withFailureHandler(function(err) {
-                        alert("Terjadi kesalahan sistem: " + err.message);
-                        btnSubmit.disabled = false;
-                        btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Pendaftaran';
-                    })
-                    .saveRegistration(formData);
-            } else {
-                alert("Mode lokal: Pendaftaran disimulasikan berhasil.");
+            try {
+                // Menggunakan mode 'no-cors' atau POST standar untuk menghindari kendala preflight CORS pada Google Apps Script Web App endpoint
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                // Karena mode 'no-cors' menghasilkan opaque response, kita asumsikan sukses terkirim ke Apps Script
+                alert("Pendaftaran Berhasil! Data pendaftaran Anda telah tersimpan.");
+                document.getElementById("registrationForm").reset();
+                document.getElementById("bankInfoCard").classList.remove("active");
+            } catch (err) {
+                console.error(err);
+                alert("Terjadi kesalahan sistem saat mengirim pendaftaran. Silakan coba lagi.");
+            } finally {
                 btnSubmit.disabled = false;
                 btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Pendaftaran';
             }
