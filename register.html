@@ -564,30 +564,36 @@
         });
 
         // Memanggil fungsi getCoursesList() pada Course.gs
-        function loadCoursesData() {
+        async function loadCoursesData() {
+
             const courseSelect = document.getElementById("course");
-            
-            if (typeof google !== 'undefined' && google.script && google.script.run) {
-                google.script.run
-                    .withSuccessHandler(function(courses) {
-                        renderCoursesToDropdown(courses);
-                    })
-                    .withFailureHandler(function(err) {
-                        console.error("Gagal memuat courses:", err);
-                        courseSelect.innerHTML = '<option value="" disabled selected>Gagal memuat data pelatihan</option>';
-                    })
-                    .getCoursesList();
-            } else {
-                fetch(API_URL + "?action=getCourses")
-                    .then(res => res.json())
-                    .then(courses => {
-                        renderCoursesToDropdown(courses);
-                    })
-                    .catch(err => {
-                        console.error("Error Fetch Courses:", err);
-                        courseSelect.innerHTML = '<option value="" disabled selected>Gagal memuat data pelatihan</option>';
-                    });
+
+            courseSelect.innerHTML =
+                '<option value="" selected>Memuat data pelatihan...</option>';
+
+            try {
+
+                const response = await fetch(API_URL + "?action=getCourses");
+
+                if (!response.ok) {
+                    throw new Error("HTTP " + response.status);
+                }
+
+                const courses = await response.json();
+
+                console.log(courses);
+
+                renderCoursesToDropdown(courses);
+
+            } catch (err) {
+
+                console.error(err);
+
+                courseSelect.innerHTML =
+                    '<option value="" selected>Gagal memuat data pelatihan</option>';
+
             }
+
         }
 
         // Helper untuk merender array pelatihan ke dropdown select
@@ -611,17 +617,14 @@
         }
 
         // Memanggil fungsi saveRegistration() pada Register.gs
-        async function handleFormSubmit(e) {
-
+        function handleFormSubmit(e) {
             e.preventDefault();
-
             const btnSubmit = document.getElementById("btnSubmit");
-
             btnSubmit.disabled = true;
             btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim Pendaftaran...';
 
+            // Menyiapkan Objek Data Peserta
             const formData = {
-                action: "saveRegistration",
                 fullName: document.getElementById("fullName").value.trim(),
                 email: document.getElementById("email").value.trim(),
                 whatsapp: document.getElementById("whatsapp").value.trim(),
@@ -634,40 +637,30 @@
                 bankSelect: document.getElementById("bankSelect").value
             };
 
-            try {
-
-                const response = await fetch(API_URL,{
-                    method:"POST",
-                    headers:{
-                        "Content-Type":"application/json"
-                    },
-                    body:JSON.stringify(formData)
-                });
-
-                const result = await response.json();
-
-                if(!result.success){
-                    alert(result.message);
-                    return;
-                }
-
-                alert("Pendaftaran Berhasil!\n\nNomor Registrasi : " + result.registrationID);
-
-                document.getElementById("registrationForm").reset();
-                document.getElementById("bankInfoCard").classList.remove("active");
-
-            } catch(err){
-
-                console.error(err);
-                alert("Terjadi kesalahan : " + err);
-
-            } finally{
-
+            if (typeof google !== 'undefined' && google.script && google.script.run) {
+                google.script.run
+                    .withSuccessHandler(function(response) {
+                        if (response && response.success === false) {
+                            alert("Gagal: " + response.message);
+                        } else {
+                            alert("Pendaftaran Berhasil! Data pendaftaran Anda telah tersimpan.");
+                            document.getElementById("registrationForm").reset();
+                            document.getElementById("bankInfoCard").classList.remove("active");
+                        }
+                        btnSubmit.disabled = false;
+                        btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Pendaftaran';
+                    })
+                    .withFailureHandler(function(err) {
+                        alert("Terjadi kesalahan sistem: " + err.message);
+                        btnSubmit.disabled = false;
+                        btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Pendaftaran';
+                    })
+                    .saveRegistration(formData);
+            } else {
+                alert("Mode lokal: Pendaftaran disimulasikan berhasil.");
                 btnSubmit.disabled = false;
                 btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Pendaftaran';
-
             }
-
         }
 
         // Helper format tanggal untuk input type="date" (YYYY-MM-DD)
