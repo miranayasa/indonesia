@@ -519,6 +519,8 @@
             "Bank Saqu": { num: "10061893666", name: "Muhamad Fatoni" }
         };
 
+        const API_URL = "https://script.google.com/macros/s/AKfycbx8Y7SpJ57OiyIvmCKX1axWfBjYrA95xJPx3ZAaqE9slJePvq2OKdkP5EzqM7Ygi8m14w/exec";
+
         // Variable global penyimpan data courses
         let coursesData = [];
 
@@ -551,7 +553,7 @@
             // 4. Autofill Tanggal ketika Pelatihan Dipilih
             document.getElementById("course").addEventListener("change", function(e) {
                 const selectedTitle = e.target.value;
-                const foundCourse = coursesData.find(c => (c.name === selectedTitle || c.title === selectedTitle));
+                const foundCourse = coursesData.find(c => c.name === selectedTitle);
                 if (foundCourse && foundCourse.date) {
                     document.getElementById("trainingDate").value = formatDateForInput(foundCourse.date);
                 }
@@ -562,30 +564,36 @@
         });
 
         // Memanggil fungsi getCoursesList() pada Course.gs
-        function loadCoursesData() {
+        async function loadCoursesData() {
+
             const courseSelect = document.getElementById("course");
-            
-            if (typeof google !== 'undefined' && google.script && google.script.run) {
-                google.script.run
-                    .withSuccessHandler(function(courses) {
-                        renderCoursesToDropdown(courses);
-                    })
-                    .withFailureHandler(function(err) {
-                        console.error("Gagal memuat courses:", err);
-                        courseSelect.innerHTML = '<option value="" disabled selected>Gagal memuat data pelatihan</option>';
-                    })
-                    .getCoursesList();
-            } else {
-                fetch('?action=getCourses')
-                    .then(res => res.json())
-                    .then(courses => {
-                        renderCoursesToDropdown(courses);
-                    })
-                    .catch(err => {
-                        console.error("Error Fetch Courses:", err);
-                        courseSelect.innerHTML = '<option value="" disabled selected>Gagal memuat data pelatihan</option>';
-                    });
+
+            courseSelect.innerHTML =
+                '<option value="" selected>Memuat data pelatihan...</option>';
+
+            try {
+
+                const response = await fetch(API_URL + "?action=getCourses");
+
+                if (!response.ok) {
+                    throw new Error("HTTP " + response.status);
+                }
+
+                const courses = await response.json();
+
+                console.log(courses);
+
+                renderCoursesToDropdown(courses);
+
+            } catch (err) {
+
+                console.error(err);
+
+                courseSelect.innerHTML =
+                    '<option value="" selected>Gagal memuat data pelatihan</option>';
+
             }
+
         }
 
         // Helper untuk merender array pelatihan ke dropdown select
@@ -601,7 +609,7 @@
 
             coursesData.forEach(c => {
                 const opt = document.createElement("option");
-                const courseName = c.name || c.title;
+                const courseName = c.name;
                 opt.value = courseName;
                 opt.textContent = courseName;
                 courseSelect.appendChild(opt);
