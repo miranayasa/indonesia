@@ -616,15 +616,19 @@
             });
         }
 
+        
         // Memanggil fungsi saveRegistration() pada Register.gs
-        function handleFormSubmit(e) {
+        async function handleFormSubmit(e) {
+
             e.preventDefault();
+
             const btnSubmit = document.getElementById("btnSubmit");
+
             btnSubmit.disabled = true;
             btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim Pendaftaran...';
 
-            // Menyiapkan Objek Data Peserta
             const formData = {
+                action: "saveRegistration",
                 fullName: document.getElementById("fullName").value.trim(),
                 email: document.getElementById("email").value.trim(),
                 whatsapp: document.getElementById("whatsapp").value.trim(),
@@ -637,31 +641,42 @@
                 bankSelect: document.getElementById("bankSelect").value
             };
 
-            if (typeof google !== 'undefined' && google.script && google.script.run) {
-                google.script.run
-                    .withSuccessHandler(function(response) {
-                        if (response && response.success === false) {
-                            alert("Gagal: " + response.message);
-                        } else {
-                            alert("Pendaftaran Berhasil! Data pendaftaran Anda telah tersimpan.");
-                            document.getElementById("registrationForm").reset();
-                            document.getElementById("bankInfoCard").classList.remove("active");
-                        }
-                        btnSubmit.disabled = false;
-                        btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Pendaftaran';
-                    })
-                    .withFailureHandler(function(err) {
-                        alert("Terjadi kesalahan sistem: " + err.message);
-                        btnSubmit.disabled = false;
-                        btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Pendaftaran';
-                    })
-                    .saveRegistration(formData);
-            } else {
-                alert("Mode lokal: Pendaftaran disimulasikan berhasil.");
+            try {
+
+                const response = await fetch(API_URL,{
+                    method:"POST",
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+                    body:JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if(!result.success){
+                    alert("Gagal : " + result.message);
+                    return;
+                }
+
+                alert("Pendaftaran Berhasil!\n\nNomor Registrasi : " + result.registrationID);
+
+                document.getElementById("registrationForm").reset();
+                document.getElementById("bankInfoCard").classList.remove("active");
+
+            } catch(err){
+
+                console.error(err);
+                alert("Terjadi kesalahan : " + err);
+
+            } finally{
+
                 btnSubmit.disabled = false;
                 btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Pendaftaran';
+
             }
+
         }
+
 
         // Helper format tanggal untuk input type="date" (YYYY-MM-DD)
         function formatDateForInput(dateStr) {
