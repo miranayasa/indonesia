@@ -1,356 +1,361 @@
 <!DOCTYPE html>
-<html lang="id" class="h-full">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Business Consultant - Miranaya Academy</title>
+    <title>AI Business Consultant Dashboard</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'media',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: { 50: '#eff6ff', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-        @media print {
-            body { background: white !important; color: black !important; }
-            .no-print { display: none !important; }
-            .page-break { page-break-before: always; }
-        }
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(156, 163, 175, 0.5); border-radius: 3px; }
-    </style>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="h-full bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col md:flex-row antialiased">
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
 
-    <!-- SIDEBAR -->
-    <aside class="no-print w-full md:w-80 bg-white dark:bg-slate-900 border-b md:border-r border-slate-200 dark:border-slate-800 flex flex-col h-auto md:h-screen shrink-0">
-        <div class="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center gap-3">
-            <div class="w-10 h-10 object-contain rounded-xl shadow-sm bg-blue-600 text-white flex items-center justify-center font-bold text-lg">MA</div>
-            <div>
-                <h1 class="font-bold text-sm tracking-wide text-blue-600 dark:text-blue-400">Miranaya Academy</h1>
-                <p class="text-xs text-slate-500 font-medium">AI Business Consultant</p>
+    <!-- Header / Navbar -->
+    <header class="bg-indigo-700 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-brain text-2xl"></i>
+                <h1 class="text-xl font-bold tracking-wide">AI Executive Business Consultant</h1>
             </div>
-        </div>
-
-        <div class="p-4 border-b border-slate-100 dark:border-slate-800">
-            <button onclick="resetFormToNew()" class="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-xl shadow-lg shadow-blue-500/20 transition-all flex items-center justify-center gap-2">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                Konsultasi Baru
+            <button onclick="resetForm()" class="bg-indigo-600 hover:bg-indigo-500 text-sm px-4 py-2 rounded-lg font-medium transition flex items-center space-x-2">
+                <i class="fa-solid fa-plus"></i>
+                <span>Analisis Baru</span>
             </button>
         </div>
+    </header>
 
-        <div class="flex-1 overflow-y-auto p-4 space-y-2">
-            <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-2 mb-2">Riwayat Analisa</h2>
-            <div id="historyList" class="space-y-1.5">
-                <p class="text-xs text-slate-400 px-2 italic">Belum ada riwayat analisa.</p>
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        
+        <!-- Form Section -->
+        <section id="formSection" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 mb-8">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-slate-900">Form Parameter Bisnis</h2>
+                <p class="text-sm text-slate-500 mt-1">Masukkan detail ide atau bisnis Anda untuk mendapatkan analisis komprehensif dari AI.</p>
             </div>
-        </div>
 
-        <div class="p-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
-            <a href="https://miranaya.online" target="_blank" class="flex items-center gap-2 text-xs text-slate-500 hover:text-blue-600 font-medium">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
-                miranaya.online
-            </a>
-        </div>
-    </aside>
-
-    <!-- KONTEN UTAMA -->
-    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
-        <header class="no-print border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-30 px-6 py-4 flex items-center justify-between">
-            <div>
-                <h2 class="text-lg font-bold tracking-tight">AI Business Consultant Executive Report</h2>
-                <p class="text-xs text-slate-500">Analisis Komprehensif Skala Eksekutif</p>
-            </div>
-            <div id="exportActionButtons" class="hidden items-center gap-2">
-                <button onclick="window.print()" class="px-3 py-1.5 text-xs font-medium border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">Print / PDF</button>
-                <button onclick="copyResultJSON()" class="px-3 py-1.5 text-xs font-medium border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">Copy JSON</button>
-                <button onclick="downloadJSON()" class="px-3 py-1.5 text-xs font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700">Download JSON</button>
-            </div>
-        </header>
-
-        <div class="p-6 md:p-10 max-w-6xl mx-auto w-full flex-1 space-y-8">
-
-            <!-- FORM INPUT -->
-            <section id="formSection" class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 md:p-8 shadow-sm">
-                <div class="mb-6">
-                    <h3 class="text-base font-semibold">Formulasi Ide Bisnis Eksekutif</h3>
-                    <p class="text-xs text-slate-500 mt-0.5">Lengkapi detail untuk menghasilkan laporan lengkap termasuk BMC, Finansial, PESTEL, Porter, dan Strategi.</p>
+            <form id="businessForm" onsubmit="handleFormSubmit(event)" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Nama Bisnis / Ide <span class="text-red-500">*</span></label>
+                    <input type="text" id="busName" required placeholder="Contoh: Kedai Kopi Senja" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                 </div>
 
-                <form id="consultantForm" onsubmit="handleFormSubmit(event)" class="space-y-5">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Nama Ide Bisnis *</label>
-                            <input type="text" id="busName" required placeholder="Contoh: Kedai Kopi Senja" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Kategori Usaha *</label>
-                            <input type="text" id="busCategory" required placeholder="Contoh: Kuliner / F&B" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        </div>
-                    </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Kategori Industri <span class="text-red-500">*</span></label>
+                    <input type="text" id="busCategory" required placeholder="Contoh: Kuliner / F&B" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Lokasi *</label>
-                            <input type="text" id="busLocation" required placeholder="Contoh: Bandung" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Target Pasar *</label>
-                            <input type="text" id="busMarket" required placeholder="Contoh: Gen Z & Milenial" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        </div>
-                    </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Lokasi / Wilayah</label>
+                    <input type="text" id="busLocation" placeholder="Contoh: Bandung, Jawa Barat" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Modal Tersedia (Opsional)</label>
-                            <input type="text" id="busCapital" placeholder="Contoh: Rp 20.000.000" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Pengalaman (Opsional)</label>
-                            <input type="text" id="busExperience" placeholder="Contoh: Menengah" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        </div>
-                    </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Target Pasar</label>
+                    <input type="text" id="busMarket" placeholder="Contoh: Mahasiswa & Pekerja Kantor" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
 
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Estimasi Modal Awal</label>
+                    <input type="text" id="busCapital" placeholder="Contoh: Rp 15.000.000" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Pengalaman Terkait</label>
+                    <input type="text" id="busExperience" placeholder="Contoh: Pemula / 2 Tahun di bidang F&B" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Keterangan / Detail Tambahan</label>
+                    <textarea id="busDescription" rows="3" placeholder="Jelaskan konsep unik, kendala, atau hal khusus yang ingin dianalisis..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+                </div>
+
+                <div class="md:col-span-2 flex justify-end">
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-8 py-3 rounded-xl transition shadow-md flex items-center space-x-2">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>Buat Laporan Analisis Eksekutif</span>
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Loading Section -->
+        <section id="loadingSection" class="hidden py-20 text-center bg-white rounded-2xl shadow-sm border border-slate-200 mb-8">
+            <div class="inline-block animate-spin text-indigo-600 text-4xl mb-4">
+                <i class="fa-solid fa-spinner"></i>
+            </div>
+            <h3 class="text-lg font-semibold text-slate-800">AI Sedang Menyusun Analisis Bisnis...</h3>
+            <p id="loadingStatusText" class="text-sm text-slate-500 mt-1">Menganalisa data parameter usaha Anda...</p>
+        </section>
+
+        <!-- Result Dashboard Section -->
+        <section id="resultDashboard" class="hidden space-y-6">
+            
+            <!-- Top Summary & Verdict Card -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
                     <div>
-                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Keterangan Tambahan</label>
-                        <textarea id="busDescription" rows="3" placeholder="Jelaskan detail produk/layanan..." class="w-full px-3.5 py-2.5 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        <span id="resCategory" class="inline-block bg-indigo-50 text-indigo-700 text-xs font-semibold px-3 py-1 rounded-full mb-3">Kategori</span>
+                        <h2 id="resName" class="text-2xl font-bold text-slate-900 mb-2">Nama Bisnis</h2>
+                        <p id="resExecSummary" class="text-slate-600 leading-relaxed text-sm"></p>
                     </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                        <span>Status Analisis: Berhasil Disusun</span>
+                        <span class="font-medium text-indigo-600">AI Business Intelligence Engine</span>
+                    </div>
+                </div>
 
+                <div class="bg-indigo-900 text-white rounded-2xl p-6 shadow-sm flex flex-col justify-between">
                     <div>
-                        <button type="submit" class="w-full py-3.5 px-6 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm rounded-xl shadow-lg shadow-blue-500/25 transition-all flex items-center justify-center gap-2">
-                            Buat Laporan Analisis Eksekutif
-                        </button>
+                        <span class="text-xs uppercase tracking-wider text-indigo-300 font-semibold">Keputusan Eksekutif</span>
+                        <div id="resVerdict" class="text-3xl font-black mt-2 text-emerald-400">CONDITIONAL GO</div>
+                        <p id="resCoreRationale" class="text-xs text-indigo-100 mt-2 leading-relaxed"></p>
                     </div>
-                </form>
-            </section>
-
-            <!-- LOADING STATE -->
-            <section id="loadingSection" class="hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-10 text-center space-y-6 shadow-sm">
-                <div class="relative w-16 h-16 mx-auto">
-                    <div class="absolute inset-0 border-4 border-blue-200 dark:border-slate-800 rounded-full animate-pulse"></div>
-                    <div class="absolute inset-0 border-4 border-blue-600 rounded-full animate-spin border-t-transparent"></div>
+                    <div class="grid grid-cols-2 gap-4 mt-6 pt-4 border-t border-indigo-800 text-center">
+                        <div>
+                            <div id="resOpportunityScore" class="text-2xl font-bold text-white">85</div>
+                            <div class="text-[10px] text-indigo-300 uppercase">Opportunity Score</div>
+                        </div>
+                        <div>
+                            <div id="resReadynessIndex" class="text-2xl font-bold text-white">78</div>
+                            <div class="text-[10px] text-indigo-300 uppercase">Readiness Index</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="space-y-2">
-                    <h3 id="loadingStatusText" class="text-base font-semibold">Menganalisa pasar & kompetitor...</h3>
-                    <p class="text-xs text-slate-400">Menyusun BMC, Finansial, PESTEL, Porter, dan Strategi Bisnis...</p>
-                </div>
-            </section>
-
-            <!-- DASHBOARD LAPORAN UTAMA -->
-            <div id="resultDashboard" class="hidden space-y-8">
-
-                <!-- 1 & 2. Executive Summary & Business Decision Card -->
-                <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
-                        <div>
-                            <span class="text-xs font-semibold px-2.5 py-1 bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 rounded-lg" id="resCategory">-</span>
-                            <h3 id="resName" class="text-2xl font-bold mt-2 mb-1">-</h3>
-                        </div>
-                        <div>
-                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Executive Summary</h4>
-                            <p id="resExecSummary" class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">-</p>
-                        </div>
-                    </div>
-                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
-                        <div>
-                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Business Decision Card</h4>
-                            <div class="p-3.5 bg-slate-50 dark:bg-slate-800/50 rounded-xl mb-3">
-                                <span class="text-[10px] text-slate-400 block font-medium">VERDICT</span>
-                                <span id="cardVerdict" class="text-base font-extrabold text-blue-600">-</span>
-                            </div>
-                            <p id="cardRationale" class="text-xs text-slate-600 dark:text-slate-400">-</p>
-                        </div>
-                        <div class="grid grid-cols-2 gap-2 mt-4 pt-4 border-t border-slate-100 dark:border-slate-800 text-center">
-                            <div>
-                                <span class="text-[10px] text-slate-400 block">Opportunity Score</span>
-                                <span id="scoreOpp" class="text-lg font-bold text-emerald-600">0</span>
-                            </div>
-                            <div>
-                                <span class="text-[10px] text-slate-400 block">Readiness Index</span>
-                                <span id="scoreReady" class="text-lg font-bold text-blue-600">0</span>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 24. Dashboard KPI & Visualisasi Data (Charts) -->
-                <section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-6">
-                    <h4 class="font-bold text-sm">Dashboard KPI & Visualisasi Data</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl h-64 flex flex-col items-center">
-                            <span class="text-xs font-semibold text-slate-500 mb-2">Skor Kinerja Bisnis (Radar)</span>
-                            <div class="flex-1 w-full relative flex items-center justify-center">
-                                <canvas id="radarChart"></canvas>
-                            </div>
-                        </div>
-                        <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl h-64 flex flex-col items-center">
-                            <span class="text-xs font-semibold text-slate-500 mb-2">Komposisi Finansial (Pie)</span>
-                            <div class="flex-1 w-full relative flex items-center justify-center">
-                                <canvas id="pieChart"></canvas>
-                            </div>
-                        </div>
-                        <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl h-64 flex flex-col items-center">
-                            <span class="text-xs font-semibold text-slate-500 mb-2">Proyeksi Pendapatan (Bar)</span>
-                            <div class="flex-1 w-full relative flex items-center justify-center">
-                                <canvas id="barChart"></canvas>
-                            </div>
-                        </div>
-                        <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl h-64 flex flex-col items-center">
-                            <span class="text-xs font-semibold text-slate-500 mb-2">Tren Pertumbuhan (Line)</span>
-                            <div class="flex-1 w-full relative flex items-center justify-center">
-                                <canvas id="lineChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 5. Business Model Canvas (BMC) -->
-                <section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
-                    <h4 class="font-bold text-sm">Business Model Canvas (BMC)</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-5 gap-3 text-xs">
-                        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl space-y-2"><strong class="text-blue-600 block">Key Partners</strong><ul id="bmcPartners" class="list-disc pl-4 space-y-1 text-slate-600 dark:text-slate-300"></ul></div>
-                        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl space-y-2"><strong class="text-blue-600 block">Key Activities & Resources</strong><ul id="bmcActivities" class="list-disc pl-4 space-y-1 text-slate-600 dark:text-slate-300"></ul></div>
-                        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl space-y-2"><strong class="text-blue-600 block">Value Propositions</strong><ul id="bmcValue" class="list-disc pl-4 space-y-1 text-slate-600 dark:text-slate-300"></ul></div>
-                        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl space-y-2"><strong class="text-blue-600 block">Customer Relationships & Channels</strong><ul id="bmcChannels" class="list-disc pl-4 space-y-1 text-slate-600 dark:text-slate-300"></ul></div>
-                        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl space-y-2"><strong class="text-blue-600 block">Cost & Revenue Structure</strong><ul id="bmcCost" class="list-disc pl-4 space-y-1 text-slate-600 dark:text-slate-300"></ul></div>
-                    </div>
-                </section>
-
-                <!-- 6, 7, 8. Feasibility, Market & Competitor Analysis -->
-                <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-2">
-                        <h4 class="font-bold text-sm text-blue-600">Business Feasibility</h4>
-                        <p id="resFeasibility" class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">-</p>
-                    </div>
-                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-2">
-                        <h4 class="font-bold text-sm text-blue-600">Market Analysis</h4>
-                        <p id="resMarket" class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">-</p>
-                    </div>
-                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-2">
-                        <h4 class="font-bold text-sm text-blue-600">Competitor Analysis</h4>
-                        <p id="resCompetitor" class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">-</p>
-                    </div>
-                </section>
-
-                <!-- 9 & 10. SWOT & PESTEL Analysis -->
-                <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-3">
-                        <h4 class="font-bold text-sm">SWOT Analysis</h4>
-                        <div class="grid grid-cols-2 gap-3 text-xs">
-                            <div class="p-3 bg-emerald-50/50 dark:bg-emerald-950/20 rounded-xl"><strong class="text-emerald-600 block mb-1">Strength</strong><ul id="swotS" class="list-disc pl-4 space-y-1"></ul></div>
-                            <div class="p-3 bg-rose-50/50 dark:bg-rose-950/20 rounded-xl"><strong class="text-rose-600 block mb-1">Weakness</strong><ul id="swotW" class="list-disc pl-4 space-y-1"></ul></div>
-                            <div class="p-3 bg-blue-50/50 dark:bg-blue-950/20 rounded-xl"><strong class="text-blue-600 block mb-1">Opportunity</strong><ul id="swotO" class="list-disc pl-4 space-y-1"></ul></div>
-                            <div class="p-3 bg-amber-50/50 dark:bg-amber-950/20 rounded-xl"><strong class="text-amber-600 block mb-1">Threat</strong><ul id="swotT" class="list-disc pl-4 space-y-1"></ul></div>
-                        </div>
-                    </div>
-                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-3">
-                        <h4 class="font-bold text-sm">PESTEL Analysis</h4>
-                        <div class="grid grid-cols-2 gap-2 text-xs">
-                            <div class="p-2.5 bg-slate-50 dark:bg-slate-800/50 rounded-xl"><strong>Political:</strong> <span id="pestelP">-</span></div>
-                            <div class="p-2.5 bg-slate-50 dark:bg-slate-800/50 rounded-xl"><strong>Economic:</strong> <span id="pestelE">-</span></div>
-                            <div class="p-2.5 bg-slate-50 dark:bg-slate-800/50 rounded-xl"><strong>Social:</strong> <span id="pestelS">-</span></div>
-                            <div class="p-2.5 bg-slate-50 dark:bg-slate-800/50 rounded-xl"><strong>Technological:</strong> <span id="pestelT">-</span></div>
-                            <div class="p-2.5 bg-slate-50 dark:bg-slate-800/50 rounded-xl"><strong>Environmental:</strong> <span id="pestelEnv">-</span></div>
-                            <div class="p-2.5 bg-slate-50 dark:bg-slate-800/50 rounded-xl"><strong>Legal:</strong> <span id="pestelL">-</span></div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 11 & 12. Porter's Five Forces & Financial / Capex / Opex -->
-                <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-3">
-                        <h4 class="font-bold text-sm">Porter's Five Forces</h4>
-                        <div class="space-y-2 text-xs text-slate-600 dark:text-slate-300">
-                            <p><strong>Pendatang Baru:</strong> <span id="porterEntrants">-</span></p>
-                            <p><strong>Daya Tawar Pembeli:</strong> <span id="porterBuyers">-</span></p>
-                            <p><strong>Daya Tawar Pemasok:</strong> <span id="porterSuppliers">-</span></p>
-                            <p><strong>Ancaman Substitusi:</strong> <span id="porterSubstitutes">-</span></p>
-                            <p><strong>Persaingan Industri:</strong> <span id="porterRivalry">-</span></p>
-                        </div>
-                    </div>
-                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
-                        <h4 class="font-bold text-sm">Finansial, Capex, & Opex</h4>
-                        <div class="grid grid-cols-2 gap-3 text-xs">
-                            <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl"><strong>Modal Awal:</strong> <span id="finCap" class="block font-bold mt-1">-</span></div>
-                            <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl"><strong>Omzet / Bln:</strong> <span id="finRev" class="block font-bold mt-1">-</span></div>
-                            <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl"><strong>Laba / Bln:</strong> <span id="finProf" class="block font-bold mt-1">-</span></div>
-                            <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl"><strong>BEP:</strong> <span id="finBep" class="block font-bold mt-1">-</span></div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 16, 17, 18, 19, 20. Strategy & Roadmap -->
-                <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-3">
-                        <h4 class="font-bold text-sm">Marketing & Growth Strategy</h4>
-                        <p class="text-xs text-slate-600 dark:text-slate-300"><strong class="text-blue-600 block mb-1">Marketing:</strong> <span id="stratMarketing">-</span></p>
-                        <p class="text-xs text-slate-600 dark:text-slate-300"><strong class="text-blue-600 block mb-1">Growth:</strong> <span id="stratGrowth">-</span></p>
-                    </div>
-                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-3">
-                        <h4 class="font-bold text-sm">Operational & HR Strategy</h4>
-                        <p class="text-xs text-slate-600 dark:text-slate-300"><strong class="text-blue-600 block mb-1">Operational:</strong> <span id="stratOperational">-</span></p>
-                        <p class="text-xs text-slate-600 dark:text-slate-300"><strong class="text-blue-600 block mb-1">HR:</strong> <span id="stratHr">-</span></p>
-                    </div>
-                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-3">
-                        <h4 class="font-bold text-sm">Business Roadmap</h4>
-                        <ul id="roadmapList" class="list-disc pl-4 text-xs text-slate-600 dark:text-slate-300 space-y-1"></ul>
-                    </div>
-                </section>
-
-                <!-- 21, 22, 23. Recommendations & Risk -->
-                <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-2">
-                        <h4 class="font-bold text-sm text-blue-600">Risk Analysis</h4>
-                        <p id="resRisk" class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">-</p>
-                    </div>
-                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-2">
-                        <h4 class="font-bold text-sm text-emerald-600">Rekomendasi Eksekutif</h4>
-                        <p id="resRecommendations" class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">-</p>
-                    </div>
-                </section>
-
             </div>
 
-            <!-- FOOTER -->
-            <footer class="no-print pt-10 pb-6 border-t border-slate-200 dark:border-slate-800 text-center space-y-2">
-                <p class="text-[11px] text-slate-400">&copy; 2026 Miranaya Academy. All rights reserved.</p>
-            </footer>
+            <!-- Business Model Canvas (BMC) Grid -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
+                    <i class="fa-solid fa-table-cells text-indigo-600"></i>
+                    <span>Business Model Canvas (BMC)</span>
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4 text-xs">
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                        <strong class="block text-indigo-700 font-bold mb-1">Key Partners</strong>
+                        <ul id="bmcKeyPartners" class="list-disc list-inside space-y-1 text-slate-600"></ul>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                        <strong class="block text-indigo-700 font-bold mb-1">Key Activities</strong>
+                        <ul id="bmcKeyActivities" class="list-disc list-inside space-y-1 text-slate-600"></ul>
+                        <strong class="block text-indigo-700 font-bold mt-3 mb-1">Key Resources</strong>
+                        <ul id="bmcKeyResources" class="list-disc list-inside space-y-1 text-slate-600"></ul>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                        <strong class="block text-indigo-700 font-bold mb-1">Value Propositions</strong>
+                        <ul id="bmcValueProps" class="list-disc list-inside space-y-1 text-slate-600"></ul>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                        <strong class="block text-indigo-700 font-bold mb-1">Customer Relationships</strong>
+                        <ul id="bmcCustomerRel" class="list-disc list-inside space-y-1 text-slate-600"></ul>
+                        <strong class="block text-indigo-700 font-bold mt-3 mb-1">Channels</strong>
+                        <ul id="bmcChannels" class="list-disc list-inside space-y-1 text-slate-600"></ul>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                        <strong class="block text-indigo-700 font-bold mb-1">Customer Segments</strong>
+                        <ul id="bmcCustomerSeg" class="list-disc list-inside space-y-1 text-slate-600"></ul>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 text-xs">
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                        <strong class="block text-indigo-700 font-bold mb-1">Cost Structure</strong>
+                        <ul id="bmcCostStructure" class="list-disc list-inside space-y-1 text-slate-600"></ul>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                        <strong class="block text-indigo-700 font-bold mb-1">Revenue Streams</strong>
+                        <ul id="bmcRevenueStreams" class="list-disc list-inside space-y-1 text-slate-600"></ul>
+                    </div>
+                </div>
+            </div>
 
-        </div>
+            <!-- Analisis Kelayakan, Pasar, & Kompetitor -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                    <h4 class="font-bold text-slate-900 mb-2 flex items-center space-x-2">
+                        <i class="fa-solid fa-check-circle text-emerald-600"></i>
+                        <span>Kelayakan Usaha</span>
+                    </h4>
+                    <p id="resFeasibility" class="text-xs text-slate-600 leading-relaxed"></p>
+                </div>
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                    <h4 class="font-bold text-slate-900 mb-2 flex items-center space-x-2">
+                        <i class="fa-solid fa-chart-line text-indigo-600"></i>
+                        <span>Analisis Pasar</span>
+                    </h4>
+                    <p id="resMarket" class="text-xs text-slate-600 leading-relaxed"></p>
+                </div>
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                    <h4 class="font-bold text-slate-900 mb-2 flex items-center space-x-2">
+                        <i class="fa-solid fa-shield-halved text-amber-600"></i>
+                        <span>Analisis Kompetitor</span>
+                    </h4>
+                    <p id="resCompetitor" class="text-xs text-slate-600 leading-relaxed"></p>
+                </div>
+            </div>
+
+            <!-- SWOT & PESTEL Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- SWOT -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
+                        <i class="fa-solid fa-compass text-indigo-600"></i>
+                        <span>Analisis SWOT</span>
+                    </h3>
+                    <div class="grid grid-cols-2 gap-3 text-xs">
+                        <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-100">
+                            <strong class="text-emerald-800 font-bold block mb-1">Strengths</strong>
+                            <ul id="swotStrength" class="list-disc list-inside text-slate-700 space-y-1"></ul>
+                        </div>
+                        <div class="bg-rose-50 p-3 rounded-xl border border-rose-100">
+                            <strong class="text-rose-800 font-bold block mb-1">Weaknesses</strong>
+                            <ul id="swotWeakness" class="list-disc list-inside text-slate-700 space-y-1"></ul>
+                        </div>
+                        <div class="bg-sky-50 p-3 rounded-xl border border-sky-100">
+                            <strong class="text-sky-800 font-bold block mb-1">Opportunities</strong>
+                            <ul id="swotOpportunity" class="list-disc list-inside text-slate-700 space-y-1"></ul>
+                        </div>
+                        <div class="bg-amber-50 p-3 rounded-xl border border-amber-100">
+                            <strong class="text-amber-800 font-bold block mb-1">Threats</strong>
+                            <ul id="swotThreat" class="list-disc list-inside text-slate-700 space-y-1"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PESTEL -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
+                        <i class="fa-solid fa-globe text-indigo-600"></i>
+                        <span>Analisis PESTEL</span>
+                    </h3>
+                    <div class="space-y-2 text-xs text-slate-600">
+                        <p><strong>Politik:</strong> <span id="pestelPolitical"></span></p>
+                        <p><strong>Ekonomi:</strong> <span id="pestelEconomic"></span></p>
+                        <p><strong>Sosial:</strong> <span id="pestelSocial"></span></p>
+                        <p><strong>Teknologi:</strong> <span id="pestelTechnological"></span></p>
+                        <p><strong>Lingkungan:</strong> <span id="pestelEnvironmental"></span></p>
+                        <p><strong>Hukum:</strong> <span id="pestelLegal"></span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Proyeksi Finansial & Strategi -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
+                        <i class="fa-solid fa-wallet text-indigo-600"></i>
+                        <span>Proyeksi Finansial</span>
+                    </h3>
+                    <div class="grid grid-cols-2 gap-4 text-xs">
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                            <span class="text-slate-500 block">Modal Awal</span>
+                            <strong id="finInitialCapital" class="text-sm font-bold text-slate-900"></strong>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                            <span class="text-slate-500 block">Estimasi Omzet / Bln</span>
+                            <strong id="finMonthlyRevenue" class="text-sm font-bold text-slate-900"></strong>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                            <span class="text-slate-500 block">Estimasi Laba / Bln</span>
+                            <strong id="finMonthlyProfit" class="text-sm font-bold text-slate-900"></strong>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                            <span class="text-slate-500 block">Balik Modal (BEP)</span>
+                            <strong id="finBepMonths" class="text-sm font-bold text-slate-900"></strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
+                        <i class="fa-solid fa-chess text-indigo-600"></i>
+                        <span>Strategi Bisnis Utama</span>
+                    </h3>
+                    <div class="space-y-2 text-xs text-slate-600">
+                        <p><strong>Pemasaran:</strong> <span id="stratMarketing"></span></p>
+                        <p><strong>Pertumbuhan:</strong> <span id="stratGrowth"></span></p>
+                        <p><strong>Operasional:</strong> <span id="stratOperational"></span></p>
+                        <p><strong>SDM:</strong> <span id="stratHr"></span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Roadmap & Risiko -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
+                        <i class="fa-solid fa-road text-indigo-600"></i>
+                        <span>Roadmap Bisnis</span>
+                    </h3>
+                    <ul id="businessRoadmapList" class="list-disc list-inside text-xs text-slate-600 space-y-2"></ul>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
+                        <i class="fa-solid fa-triangle-exclamation text-amber-500"></i>
+                        <span>Analisis Risiko & Rekomendasi</span>
+                    </h3>
+                    <div class="space-y-3 text-xs text-slate-600">
+                        <div>
+                            <strong class="text-slate-800 block mb-1">Analisis Risiko:</strong>
+                            <p id="resRiskAnalysis"></p>
+                        </div>
+                        <div class="pt-2 border-t border-slate-100">
+                            <strong class="text-slate-800 block mb-1">Rekomendasi Eksekutif:</strong>
+                            <p id="resRecommendations"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
     </main>
 
+    <!-- Script Utama Frontend -->
     <script>
-        const API_URL = "https://dawn-dew-b706.miranayasa.workers.dev";
-        let radarChartInst = null, pieChartInst = null, barChartInst = null, lineChartInst = null;
-        let currentAnalysisData = null;
+        // Ganti dengan URL Cloudflare Worker Anda yang aktif
+        const API_URL = "https://worker-anda.nama-subdomain.workers.dev";
 
-        document.addEventListener("DOMContentLoaded", () => { renderHistoryList(); });
+        function resetForm() {
+            document.getElementById("businessForm").reset();
+            document.getElementById("resultDashboard").classList.add("hidden");
+            document.getElementById("formSection").classList.remove("hidden");
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
         async function handleFormSubmit(event) {
             event.preventDefault();
-            const name = document.getElementById("busName").value.trim();
-            const category = document.getElementById("busCategory").value.trim();
-            const location = document.getElementById("busLocation").value.trim();
-            const market = document.getElementById("busMarket").value.trim();
-            const capital = document.getElementById("busCapital").value.trim();
-            const experience = document.getElementById("busExperience").value.trim();
-            const description = document.getElementById("busDescription").value.trim();
+            
+            const nameInput = document.getElementById("busName").value.trim();
+            const categoryInput = document.getElementById("busCategory").value.trim();
+            const locationInput = document.getElementById("busLocation").value.trim();
+            const marketInput = document.getElementById("busMarket").value.trim();
+            const capitalInput = document.getElementById("busCapital").value.trim();
+            const experienceInput = document.getElementById("busExperience").value.trim();
+            const descriptionInput = document.getElementById("busDescription").value.trim();
+
+            if (!nameInput || !categoryInput) {
+                alert("Nama Bisnis dan Kategori wajib diisi!");
+                return;
+            }
+
+            const payload = {
+                mode: "business_analysis",
+                data: { 
+                    name: nameInput, 
+                    category: categoryInput, 
+                    location: locationInput, 
+                    market: marketInput, 
+                    capital: capitalInput, 
+                    experience: experienceInput, 
+                    description: descriptionInput 
+                }
+            };
 
             document.getElementById("formSection").classList.add("hidden");
             document.getElementById("resultDashboard").classList.add("hidden");
-            document.getElementById("exportActionButtons").classList.add("hidden");
             document.getElementById("loadingSection").classList.remove("hidden");
+            window.scrollTo({ top: 0, behavior: 'smooth' });
 
             const loadingTexts = ["Menganalisa pasar & kompetitor...", "Menyusun BMC & PESTEL...", "Menghitung proyeksi finansial...", "Merumuskan strategi bisnis..."];
             let textIdx = 0;
@@ -359,11 +364,6 @@
                 textIdx = (textIdx + 1) % loadingTexts.length;
                 statusEl.textContent = loadingTexts[textIdx];
             }, 1500);
-
-            const payload = {
-                mode: "business_analysis",
-                data: { name, category, location, market, capital, experience, description }
-            };
 
             try {
                 const response = await fetch(API_URL, {
@@ -378,14 +378,9 @@
                 if (!response.ok) throw new Error("Gagal terhubung ke AI Gateway server.");
 
                 const rawData = await response.json();
-                currentAnalysisData = rawData;
-
                 displayResults(rawData);
-                saveToHistory(rawData);
 
                 document.getElementById("resultDashboard").classList.remove("hidden");
-                document.getElementById("exportActionButtons").classList.remove("hidden");
-                document.getElementById("exportActionButtons").classList.add("flex");
 
             } catch (error) {
                 clearInterval(loadingInterval);
@@ -395,204 +390,79 @@
             }
         }
 
+        function populateList(elementId, items) {
+            const ul = document.getElementById(elementId);
+            ul.innerHTML = "";
+            if (Array.isArray(items)) {
+                items.forEach(item => {
+                    const li = document.createElement("li");
+                    li.textContent = item;
+                    ul.appendChild(li);
+                });
+            }
+        }
+
         function displayResults(data) {
-            document.getElementById("resCategory").textContent = data.category || "Umum";
             document.getElementById("resName").textContent = data.name || "Analisis Bisnis";
-            document.getElementById("resExecSummary").textContent = data.executiveSummary || "-";
+            document.getElementById("resCategory").textContent = data.category || "Umum";
+            document.getElementById("resExecSummary").textContent = data.executiveSummary || "";
             
-            document.getElementById("cardVerdict").textContent = data.businessDecisionCard?.verdict || "CONDITIONAL GO";
-            document.getElementById("cardRationale").textContent = data.businessDecisionCard?.coreRationale || "-";
-            document.getElementById("scoreOpp").textContent = data.businessOpportunityScore || 85;
-            document.getElementById("scoreReady").textContent = data.businessReadynessIndex || 78;
+            document.getElementById("resVerdict").textContent = data.businessDecisionCard?.verdict || "CONDITIONAL GO";
+            document.getElementById("resCoreRationale").textContent = data.businessDecisionCard?.coreRationale || "";
+            document.getElementById("resOpportunityScore").textContent = data.businessOpportunityScore || "85";
+            document.getElementById("resReadynessIndex").textContent = data.businessReadynessIndex || "78";
 
             // BMC
-            const fillList = (elId, arr) => {
-                const el = document.getElementById(elId);
-                if (el) {
-                    el.innerHTML = (arr && arr.length) ? arr.map(i => `<li>${i}</li>`).join('') : '<li>-</li>';
-                }
-            };
-            fillList("bmcPartners", data.bmc?.keyPartners);
-            fillList("bmcActivities", [...(data.bmc?.keyActivities || []), ...(data.bmc?.keyResources || [])]);
-            fillList("bmcValue", data.bmc?.valuePropositions);
-            fillList("bmcChannels", [...(data.bmc?.customerRelationships || []), ...(data.bmc?.channels || []), ...(data.bmc?.customerSegments || [])]);
-            fillList("bmcCost", [...(data.bmc?.costStructure || []), ...(data.bmc?.revenueStreams || [])]);
+            const bmc = data.bmc || {};
+            populateList("bmcKeyPartners", bmc.keyPartners);
+            populateList("bmcKeyActivities", bmc.keyActivities);
+            populateList("bmcKeyResources", bmc.keyResources);
+            populateList("bmcValueProps", bmc.valuePropositions);
+            populateList("bmcCustomerRel", bmc.customerRelationships);
+            populateList("bmcChannels", bmc.channels);
+            populateList("bmcCustomerSeg", bmc.customerSegments);
+            populateList("bmcCostStructure", bmc.costStructure);
+            populateList("bmcRevenueStreams", bmc.revenueStreams);
 
-            document.getElementById("resFeasibility").textContent = data.businessFeasibility || "-";
-            document.getElementById("resMarket").textContent = data.marketAnalysis || "-";
-            document.getElementById("resCompetitor").textContent = data.competitorAnalysis || "-";
+            document.getElementById("resFeasibility").textContent = data.businessFeasibility || "";
+            document.getElementById("resMarket").textContent = data.marketAnalysis || "";
+            document.getElementById("resCompetitor").textContent = data.competitorAnalysis || "";
 
             // SWOT
-            const fillSwot = (elId, arr) => {
-                const el = document.getElementById(elId);
-                if (el) {
-                    el.innerHTML = (arr && arr.length) ? arr.map(i => `<li>${i}</li>`).join('') : '<li>-</li>';
-                }
-            };
-            fillSwot("swotS", data.swot?.strength);
-            fillSwot("swotW", data.swot?.weakness);
-            fillSwot("swotO", data.swot?.opportunity);
-            fillSwot("swotT", data.swot?.threat);
+            const swot = data.swot || {};
+            populateList("swotStrength", swot.strength);
+            populateList("swotWeakness", swot.weakness);
+            populateList("swotOpportunity", swot.opportunity);
+            populateList("swotThreat", swot.threat);
 
             // PESTEL
-            document.getElementById("pestelP").textContent = data.pestel?.political || "-";
-            document.getElementById("pestelE").textContent = data.pestel?.economic || "-";
-            document.getElementById("pestelS").textContent = data.pestel?.social || "-";
-            document.getElementById("pestelT").textContent = data.pestel?.technological || "-";
-            document.getElementById("pestelEnv").textContent = data.pestel?.environmental || "-";
-            document.getElementById("pestelL").textContent = data.pestel?.legal || "-";
-
-            // Porter's Five Forces
-            document.getElementById("porterEntrants").textContent = data.portersFiveForces?.threatOfNewEntrants || "-";
-            document.getElementById("porterBuyers").textContent = data.portersFiveForces?.bargainingPowerOfBuyers || "-";
-            document.getElementById("porterSuppliers").textContent = data.portersFiveForces?.bargainingPowerOfSuppliers || "-";
-            document.getElementById("porterSubstitutes").textContent = data.portersFiveForces?.threatOfSubstitutes || "-";
-            document.getElementById("porterRivalry").textContent = data.portersFiveForces?.industryRivalry || "-";
+            const pestel = data.pestel || {};
+            document.getElementById("pestelPolitical").textContent = pestel.political || "";
+            document.getElementById("pestelEconomic").textContent = pestel.economic || "";
+            document.getElementById("pestelSocial").textContent = pestel.social || "";
+            document.getElementById("pestelTechnological").textContent = pestel.technological || "";
+            document.getElementById("pestelEnvironmental").textContent = pestel.environmental || "";
+            document.getElementById("pestelLegal").textContent = pestel.legal || "";
 
             // Financial
-            document.getElementById("finCap").textContent = data.financialProjection?.initialCapital || "-";
-            document.getElementById("finRev").textContent = data.financialProjection?.monthlyRevenue || "-";
-            document.getElementById("finProf").textContent = data.financialProjection?.monthlyProfit || "-";
-            document.getElementById("finBep").textContent = data.financialProjection?.bepMonths || "-";
+            const fin = data.financialProjection || {};
+            document.getElementById("finInitialCapital").textContent = fin.initialCapital || "";
+            document.getElementById("finMonthlyRevenue").textContent = fin.monthlyRevenue || "";
+            document.getElementById("finMonthlyProfit").textContent = fin.monthlyProfit || "";
+            document.getElementById("finBepMonths").textContent = fin.bepMonths || "";
 
             // Strategies
-            document.getElementById("stratMarketing").textContent = data.strategies?.marketing || "-";
-            document.getElementById("stratGrowth").textContent = data.strategies?.growth || "-";
-            document.getElementById("stratOperational").textContent = data.strategies?.operational || "-";
-            document.getElementById("stratHr").textContent = data.strategies?.hr || "-";
+            const strat = data.strategies || {};
+            document.getElementById("stratMarketing").textContent = strat.marketing || "";
+            document.getElementById("stratGrowth").textContent = strat.growth || "";
+            document.getElementById("stratOperational").textContent = strat.operational || "";
+            document.getElementById("stratHr").textContent = strat.hr || "";
 
-            fillList("roadmapList", data.businessRoadmap);
+            // Roadmap
+            populateList("businessRoadmapList", data.businessRoadmap);
 
-            document.getElementById("resRisk").textContent = data.riskAnalysis || "-";
-            document.getElementById("resRecommendations").textContent = data.recommendations || "-";
-
-            renderCharts(data);
-        }
-
-        function renderCharts(data) {
-            if (radarChartInst) radarChartInst.destroy();
-            const ctxRadar = document.getElementById("radarChart").getContext("2d");
-            radarChartInst = new Chart(ctxRadar, {
-                type: 'radar',
-                data: {
-                    labels: ['Pasar', 'Finansial', 'Tim', 'Teknis', 'Risiko'],
-                    datasets: [{
-                        label: 'Indeks',
-                        data: [85, 78, 80, 82, 75],
-                        backgroundColor: 'rgba(37, 99, 235, 0.2)',
-                        borderColor: '#2563eb',
-                        borderWidth: 2
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
-            });
-
-            if (pieChartInst) pieChartInst.destroy();
-            const ctxPie = document.getElementById("pieChart").getContext("2d");
-            pieChartInst = new Chart(ctxPie, {
-                type: 'pie',
-                data: {
-                    labels: ['Capex', 'Opex', 'Cadangan Kas'],
-                    datasets: [{
-                        data: [40, 45, 15],
-                        backgroundColor: ['#2563eb', '#38bdf8', '#94a3b8']
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } } }
-            });
-
-            if (barChartInst) barChartInst.destroy();
-            const ctxBar = document.getElementById("barChart").getContext("2d");
-            barChartInst = new Chart(ctxBar, {
-                type: 'bar',
-                data: {
-                    labels: ['Bulan 1', 'Bulan 2', 'Bulan 3', 'Bulan 4'],
-                    datasets: [{
-                        label: 'Proyeksi Pendapatan',
-                        data: [10, 25, 45, 70],
-                        backgroundColor: '#2563eb'
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
-            });
-
-            if (lineChartInst) lineChartInst.destroy();
-            const ctxLine = document.getElementById("lineChart").getContext("2d");
-            lineChartInst = new Chart(ctxLine, {
-                type: 'line',
-                data: {
-                    labels: ['Q1', 'Q2', 'Q3', 'Q4'],
-                    datasets: [{
-                        label: 'Pertumbuhan',
-                        data: [20, 45, 75, 110],
-                        borderColor: '#10b981',
-                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                        fill: true,
-                        tension: 0.3
-                    }]
-                },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
-            });
-        }
-
-        function resetFormToNew() {
-            document.getElementById("consultantForm").reset();
-            document.getElementById("resultDashboard").classList.add("hidden");
-            document.getElementById("exportActionButtons").classList.remove("flex");
-            document.getElementById("exportActionButtons").classList.add("hidden");
-            document.getElementById("formSection").classList.remove("hidden");
-        }
-
-        function saveToHistory(data) {
-            let history = JSON.parse(localStorage.getItem("miranaya_history") || "[]");
-            history.unshift({ timestamp: new Date().toISOString(), data });
-            if (history.length > 10) history.pop();
-            localStorage.setItem("miranaya_history", JSON.stringify(history));
-            renderHistoryList();
-        }
-
-        function renderHistoryList() {
-            const listEl = document.getElementById("historyList");
-            let history = JSON.parse(localStorage.getItem("miranaya_history") || "[]");
-            if (history.length === 0) {
-                listEl.innerHTML = `<p class="text-xs text-slate-400 px-2 italic">Belum ada riwayat analisa.</p>`;
-                return;
-            }
-            listEl.innerHTML = history.map((item, idx) => `
-                <button onclick="loadHistoryItem(${idx})" class="w-full text-left p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-xs truncate block">
-                    <span class="font-semibold block truncate text-slate-700 dark:text-slate-200">${item.data.name || 'Analisis'}</span>
-                    <span class="text-[10px] text-slate-400">${new Date(item.timestamp).toLocaleDateString()}</span>
-                </button>
-            `).join("");
-        }
-
-        function loadHistoryItem(idx) {
-            let history = JSON.parse(localStorage.getItem("miranaya_history") || "[]");
-            if (history[idx]) {
-                currentAnalysisData = history[idx].data;
-                document.getElementById("formSection").classList.add("hidden");
-                displayResults(currentAnalysisData);
-                document.getElementById("resultDashboard").classList.remove("hidden");
-                document.getElementById("exportActionButtons").classList.remove("hidden");
-                document.getElementById("exportActionButtons").classList.add("flex");
-            }
-        }
-
-        function copyResultJSON() {
-            if (!currentAnalysisData) return;
-            navigator.clipboard.writeText(JSON.stringify(currentAnalysisData, null, 2));
-            alert("Data JSON berhasil disalin ke clipboard!");
-        }
-
-        function downloadJSON() {
-            if (!currentAnalysisData) return;
-            const blob = new Blob([JSON.stringify(currentAnalysisData, null, 2)], { type: "application/json" });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = `laporan-eksekutif-${Date.now()}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
+            document.getElementById("resRiskAnalysis").textContent = data.riskAnalysis || "";
+            document.getElementById("resRecommendations").textContent = data.recommendations || "";
         }
     </script>
 </body>
