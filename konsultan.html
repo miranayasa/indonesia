@@ -4,27 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minaraya Consulting - Transformation & Business Consultant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Palet warna premium: "indigo" diganti nuansa navy korporat,
+        // ditambah warna "gold" sebagai aksen kelas eksekutif.
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        indigo: {
+                            50: '#eef1f8', 100: '#dbe2f0', 200: '#b3c1de', 300: '#8199c9',
+                            400: '#54739f', 500: '#3a577f', 600: '#2c4467', 700: '#213655',
+                            800: '#182842', 900: '#0f1b30', 950: '#0a1220',
+                        },
+                        gold: {
+                            300: '#ecd9a0', 400: '#e0c473', 500: '#c9a227',
+                            600: '#a9861f', 700: '#8a6c18',
+                        },
+                    },
+                },
+            },
+        };
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+        .premium-card { transition: box-shadow .25s ease, transform .25s ease; }
+        .premium-card:hover { box-shadow: 0 12px 32px -12px rgba(15,27,48,0.18); }
+    </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
 
     <!-- ================= GERBANG PASSWORD ================= -->
-    <div id="authOverlay" class="fixed inset-0 z-50 bg-indigo-900 flex items-center justify-center px-4">
-        <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-sm text-center">
-            <div class="flex justify-center mb-4">
-                <div class="bg-white p-1.5 rounded-full ring-4 ring-white shadow-lg border border-slate-100">
-                    <img src="mconsult.png" alt="Minaraya Consulting" class="h-16 w-16 rounded-full object-contain">
+    <div id="authOverlay" class="fixed inset-0 z-50 bg-gradient-to-br from-indigo-950 via-indigo-900 to-indigo-800 flex items-center justify-center px-4">
+        <div class="bg-white rounded-3xl shadow-2xl p-10 w-full max-w-sm text-center border-t-4 border-gold-500">
+            <div class="flex justify-center mb-5">
+                <div class="bg-white p-2 rounded-full ring-4 ring-gold-400/50 shadow-lg">
+                    <img src="mconsult.png" alt="Minaraya Consulting" class="h-28 w-28 rounded-full object-contain">
                 </div>
             </div>
-            <h2 class="text-lg font-bold text-slate-900">Minaraya Consulting</h2>
-            <p class="text-xs text-slate-500 mb-6">Transformation & Business Consultant</p>
+            <h2 class="text-xl font-extrabold text-indigo-900 tracking-tight">Minaraya Consulting</h2>
+            <p class="text-[11px] uppercase tracking-[0.2em] text-gold-600 font-bold mb-7">Transformation & Business Consultant</p>
             <form id="authForm" onsubmit="handleAuthSubmit(event)" class="space-y-3">
                 <input type="password" id="authPasswordInput" required placeholder="Masukkan password akses"
-                    class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none text-center">
+                    class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-gold-500 focus:border-gold-500 focus:outline-none text-center">
                 <p id="authError" class="hidden text-xs text-rose-600 font-medium">Password salah, silakan coba lagi.</p>
-                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-2.5 rounded-xl transition shadow-md">
+                <button type="submit" class="w-full bg-gradient-to-r from-indigo-800 to-indigo-900 hover:from-indigo-900 hover:to-indigo-950 text-white font-semibold px-6 py-3 rounded-xl transition shadow-lg tracking-wide">
                     Masuk
                 </button>
             </form>
@@ -34,18 +67,18 @@
     <!-- ================= KONTEN APLIKASI (tersembunyi sampai password benar) ================= -->
     <div id="appContent" class="hidden">
 
-    <header class="bg-indigo-700 text-white shadow-md">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <div class="bg-white p-1 rounded-full ring-2 ring-white shadow-md">
-                    <img src="mconsult.png" alt="Minaraya Consulting" class="h-8 w-8 rounded-full object-contain">
+    <header class="bg-gradient-to-r from-indigo-950 via-indigo-900 to-indigo-800 text-white shadow-lg border-b-2 border-gold-500">
+        <div class="max-w-7xl mx-auto px-4 py-5 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <div class="bg-white p-1.5 rounded-full ring-2 ring-gold-400/60 shadow-md">
+                    <img src="mconsult.png" alt="Minaraya Consulting" class="h-14 w-14 rounded-full object-contain">
                 </div>
                 <div class="leading-tight">
-                    <h1 class="text-lg font-bold tracking-wide">Minaraya Consulting</h1>
-                    <p class="text-[11px] text-indigo-200">Transformation & Business Consultant</p>
+                    <h1 class="text-xl font-extrabold tracking-tight">Minaraya Consulting</h1>
+                    <p class="text-[11px] uppercase tracking-[0.2em] text-gold-400 font-bold mt-0.5">Transformation & Business Consultant</p>
                 </div>
             </div>
-            <button onclick="resetForm()" class="bg-indigo-600 hover:bg-indigo-500 text-sm px-4 py-2 rounded-lg font-medium transition flex items-center space-x-2">
+            <button onclick="resetForm()" class="bg-white/10 hover:bg-white/20 border border-white/20 text-sm px-4 py-2.5 rounded-xl font-medium transition flex items-center space-x-2 backdrop-blur-sm">
                 <i class="fa-solid fa-plus"></i>
                 <span>Analisis Baru</span>
             </button>
@@ -55,7 +88,7 @@
     <main class="max-w-7xl mx-auto px-4 py-8">
 
         <!-- Form Section -->
-        <section id="formSection" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 mb-8">
+        <section id="formSection" class="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 md:p-8 mb-8">
             <div class="mb-6">
                 <h2 class="text-2xl font-bold text-slate-900">Form Parameter Bisnis</h2>
                 <p class="text-sm text-slate-500 mt-1">Masukkan detail ide atau bisnis Anda untuk mendapatkan analisis komprehensif dari AI.</p>
@@ -98,8 +131,8 @@
                 </div>
 
                 <div class="md:col-span-2 flex justify-end">
-                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-8 py-3 rounded-xl transition shadow-md flex items-center space-x-2">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <button type="submit" class="bg-gradient-to-r from-indigo-800 to-indigo-900 hover:from-indigo-900 hover:to-indigo-950 text-white font-semibold px-8 py-3 rounded-xl transition shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center space-x-2">
+                        <i class="fa-solid fa-wand-magic-sparkles text-gold-400"></i>
                         <span>Buat Laporan Analisis Eksekutif</span>
                     </button>
                 </div>
@@ -107,7 +140,7 @@
         </section>
 
         <!-- Loading Section -->
-        <section id="loadingSection" class="hidden py-20 text-center bg-white rounded-2xl shadow-sm border border-slate-200 mb-8">
+        <section id="loadingSection" class="hidden py-20 text-center bg-white rounded-3xl shadow-sm border border-slate-200 mb-8">
             <div class="inline-block animate-spin text-indigo-600 text-4xl mb-4">
                 <i class="fa-solid fa-spinner"></i>
             </div>
@@ -119,7 +152,7 @@
         <section id="resultDashboard" class="hidden space-y-6">
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div class="lg:col-span-2 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
+                <div class="lg:col-span-2 bg-white rounded-3xl p-6 border border-slate-200/70 shadow-md premium-card flex flex-col justify-between">
                     <div>
                         <span id="resCategory" class="inline-block bg-indigo-50 text-indigo-700 text-xs font-semibold px-3 py-1 rounded-full mb-3">Kategori</span>
                         <h2 id="resName" class="text-2xl font-bold text-slate-900 mb-2">Nama Bisnis</h2>
@@ -131,53 +164,55 @@
                     </div>
                 </div>
 
-                <div class="bg-indigo-900 text-white rounded-2xl p-6 shadow-sm flex flex-col justify-between">
-                    <div>
-                        <span class="text-xs uppercase tracking-wider text-indigo-300 font-semibold">Keputusan Eksekutif</span>
-                        <div id="resVerdict" class="text-3xl font-black mt-2 text-emerald-400">CONDITIONAL GO</div>
-                        <p id="resCoreRationale" class="text-xs text-indigo-100 mt-2 leading-relaxed"></p>
+                <div class="bg-gradient-to-br from-indigo-950 to-indigo-800 text-white rounded-3xl p-6 shadow-lg border border-indigo-900/50 flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-gold-500/10 rounded-full -mr-8 -mt-8"></div>
+                    <div class="relative">
+                        <span class="text-[10px] uppercase tracking-[0.2em] text-gold-400 font-bold">Keputusan Eksekutif</span>
+                        <div id="resVerdict" class="text-3xl font-black mt-2 text-gold-400">CONDITIONAL GO</div>
+                        <p id="resCoreRationale" class="text-xs text-indigo-200 mt-2 leading-relaxed"></p>
                     </div>
-                    <div class="grid grid-cols-2 gap-4 mt-6 pt-4 border-t border-indigo-800 text-center">
+                    <div class="grid grid-cols-2 gap-4 mt-6 pt-4 border-t border-white/10 text-center relative">
                         <div>
                             <div id="resOpportunityScore" class="text-2xl font-bold text-white">85</div>
-                            <div class="text-[10px] text-indigo-300 uppercase">Opportunity Score</div>
+                            <div class="text-[10px] text-indigo-300 uppercase tracking-wider">Opportunity Score</div>
                         </div>
                         <div>
                             <div id="resReadynessIndex" class="text-2xl font-bold text-white">78</div>
-                            <div class="text-[10px] text-indigo-300 uppercase">Readiness Index</div>
+                            <div class="text-[10px] text-indigo-300 uppercase tracking-wider">Readiness Index</div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- ================= DASHBOARD KPI ================= -->
-            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
-                <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
+            <div class="bg-white rounded-3xl p-6 border border-slate-200/70 shadow-md premium-card">
+                <span class="text-[10px] uppercase tracking-[0.2em] text-gold-600 font-bold">Ringkasan</span>
+                <h3 class="text-lg font-bold text-slate-900 mb-4 mt-1 flex items-center space-x-2">
                     <i class="fa-solid fa-gauge-high text-indigo-600"></i>
                     <span>Dashboard KPI Utama</span>
                 </h3>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
                     <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                        <div id="kpiOpportunity" class="text-2xl font-bold text-indigo-600">--</div>
-                        <div class="text-[11px] text-slate-500 uppercase mt-1">Opportunity Score</div>
+                        <div id="kpiOpportunity" class="text-2xl font-bold text-indigo-700">--</div>
+                        <div class="text-[11px] text-slate-500 uppercase mt-1 tracking-wide">Opportunity Score</div>
                     </div>
                     <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                        <div id="kpiReadiness" class="text-2xl font-bold text-indigo-600">--</div>
-                        <div class="text-[11px] text-slate-500 uppercase mt-1">Readiness Index</div>
+                        <div id="kpiReadiness" class="text-2xl font-bold text-indigo-700">--</div>
+                        <div class="text-[11px] text-slate-500 uppercase mt-1 tracking-wide">Readiness Index</div>
                     </div>
                     <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                        <div id="kpiRoi" class="text-2xl font-bold text-indigo-600">--</div>
-                        <div class="text-[11px] text-slate-500 uppercase mt-1">ROI Tahunan</div>
+                        <div id="kpiRoi" class="text-2xl font-bold text-gold-600">--</div>
+                        <div class="text-[11px] text-slate-500 uppercase mt-1 tracking-wide">ROI Tahunan</div>
                     </div>
                     <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
                         <div id="kpiCashflow" class="text-2xl font-bold">--</div>
-                        <div class="text-[11px] text-slate-500 uppercase mt-1">Status Cash Flow</div>
+                        <div class="text-[11px] text-slate-500 uppercase mt-1 tracking-wide">Status Cash Flow</div>
                     </div>
                 </div>
             </div>
 
             <!-- BMC -->
-            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+            <div class="bg-white rounded-3xl p-6 border border-slate-200/70 shadow-md premium-card">
                 <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
                     <i class="fa-solid fa-table-cells text-indigo-600"></i>
                     <span>Business Model Canvas (BMC)</span>
@@ -222,21 +257,21 @@
 
             <!-- Analisis Kelayakan, Pasar, Kompetitor -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <div class="bg-white rounded-3xl p-6 border border-slate-200/70 shadow-md premium-card">
                     <h4 class="font-bold text-slate-900 mb-2 flex items-center space-x-2">
                         <i class="fa-solid fa-check-circle text-emerald-600"></i>
                         <span>Kelayakan Usaha</span>
                     </h4>
                     <p id="resFeasibility" class="text-xs text-slate-600 leading-relaxed"></p>
                 </div>
-                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <div class="bg-white rounded-3xl p-6 border border-slate-200/70 shadow-md premium-card">
                     <h4 class="font-bold text-slate-900 mb-2 flex items-center space-x-2">
                         <i class="fa-solid fa-chart-line text-indigo-600"></i>
                         <span>Analisis Pasar</span>
                     </h4>
                     <p id="resMarket" class="text-xs text-slate-600 leading-relaxed"></p>
                 </div>
-                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <div class="bg-white rounded-3xl p-6 border border-slate-200/70 shadow-md premium-card">
                     <h4 class="font-bold text-slate-900 mb-2 flex items-center space-x-2">
                         <i class="fa-solid fa-shield-halved text-amber-600"></i>
                         <span>Analisis Kompetitor</span>
@@ -246,7 +281,7 @@
             </div>
 
             <!-- ================= PORTER'S FIVE FORCES ================= -->
-            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+            <div class="bg-white rounded-3xl p-6 border border-slate-200/70 shadow-md premium-card">
                 <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
                     <i class="fa-solid fa-diagram-project text-indigo-600"></i>
                     <span>Porter's Five Forces</span>
@@ -282,7 +317,7 @@
 
             <!-- SWOT & PESTEL -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <div class="bg-white rounded-3xl p-6 border border-slate-200/70 shadow-md premium-card">
                     <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
                         <i class="fa-solid fa-compass text-indigo-600"></i>
                         <span>Analisis SWOT</span>
@@ -307,7 +342,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <div class="bg-white rounded-3xl p-6 border border-slate-200/70 shadow-md premium-card">
                     <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
                         <i class="fa-solid fa-globe text-indigo-600"></i>
                         <span>Analisis PESTEL</span>
@@ -324,7 +359,7 @@
             </div>
 
             <!-- ================= PROYEKSI FINANSIAL (DIPERLUAS) ================= -->
-            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+            <div class="bg-white rounded-3xl p-6 border border-slate-200/70 shadow-md premium-card">
                 <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
                     <i class="fa-solid fa-wallet text-indigo-600"></i>
                     <span>Proyeksi Finansial Lengkap</span>
@@ -371,7 +406,7 @@
             </div>
 
             <!-- ================= VISUALISASI DATA / CHARTS ================= -->
-            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+            <div class="bg-white rounded-3xl p-6 border border-slate-200/70 shadow-md premium-card">
                 <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
                     <i class="fa-solid fa-chart-simple text-indigo-600"></i>
                     <span>Visualisasi Data Bisnis</span>
@@ -405,7 +440,7 @@
             </div>
 
             <!-- Strategi -->
-            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+            <div class="bg-white rounded-3xl p-6 border border-slate-200/70 shadow-md premium-card">
                 <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
                     <i class="fa-solid fa-chess text-indigo-600"></i>
                     <span>Strategi Bisnis Utama</span>
@@ -420,7 +455,7 @@
 
             <!-- Roadmap & Risiko -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <div class="bg-white rounded-3xl p-6 border border-slate-200/70 shadow-md premium-card">
                     <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
                         <i class="fa-solid fa-road text-indigo-600"></i>
                         <span>Roadmap Bisnis</span>
@@ -428,7 +463,7 @@
                     <ul id="businessRoadmapList" class="list-disc list-inside text-xs text-slate-600 space-y-2"></ul>
                 </div>
 
-                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <div class="bg-white rounded-3xl p-6 border border-slate-200/70 shadow-md premium-card">
                     <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
                         <i class="fa-solid fa-triangle-exclamation text-amber-500"></i>
                         <span>Analisis Risiko & Rekomendasi</span>
@@ -740,14 +775,19 @@
                     datasets: [{
                         data: alloc.values || [],
                         backgroundColor: [
-                            "rgba(79, 70, 229, 0.85)",
+                            "rgba(33, 54, 85, 0.9)",
+                            "rgba(201, 162, 39, 0.9)",
+                            "rgba(84, 115, 159, 0.9)",
                             "rgba(16, 185, 129, 0.85)",
-                            "rgba(245, 158, 11, 0.85)",
-                            "rgba(244, 63, 94, 0.85)",
-                            "rgba(56, 189, 248, 0.85)",
+                            "rgba(148, 163, 184, 0.85)",
                         ],
+                        borderColor: "#ffffff",
+                        borderWidth: 2,
                     }],
                 },
+                // Plugin datalabels dimuat khusus untuk chart ini, supaya persentase
+                // tiap komponen langsung terlihat di atas potongan pie-nya.
+                plugins: typeof ChartDataLabels !== "undefined" ? [ChartDataLabels] : [],
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
@@ -757,6 +797,11 @@
                             callbacks: {
                                 label: (ctx) => ctx.label + ": " + ctx.raw + "%",
                             },
+                        },
+                        datalabels: {
+                            color: "#ffffff",
+                            font: { weight: "bold", size: 11 },
+                            formatter: (value) => value + "%",
                         },
                     },
                 },
@@ -769,7 +814,14 @@
             document.getElementById("resExecSummary").textContent = data.executiveSummary || "";
 
             const decisionCard = data.businessDecisionCard || {};
-            document.getElementById("resVerdict").textContent = decisionCard.verdict || "CONDITIONAL GO";
+            const verdictText = decisionCard.verdict || "CONDITIONAL GO";
+            const verdictEl = document.getElementById("resVerdict");
+            verdictEl.textContent = verdictText;
+            const verdictLower = verdictText.toLowerCase();
+            verdictEl.className = "text-3xl font-black mt-2 " +
+                (verdictLower.includes("no go") ? "text-rose-400" :
+                 verdictLower.includes("conditional") ? "text-gold-400" :
+                 verdictLower.includes("go") ? "text-emerald-400" : "text-gold-400");
             document.getElementById("resCoreRationale").textContent = decisionCard.coreRationale || "";
             document.getElementById("resOpportunityScore").textContent = data.businessOpportunityScore || "85";
             document.getElementById("resReadynessIndex").textContent = data.businessReadynessIndex || "78";
