@@ -37,8 +37,8 @@
             resultDiv.textContent = 'Memproses...';
 
             try {
-                // ⚠️ Ganti URL di bawah dengan URL Cloudflare Worker Anda (contoh: https://dawn-dew-b706.namapengguna.workers.dev)
-                const response = await fetch('https://dawn-dew-b706.miranayasa.workers.dev/', {
+                // ⚠️ Pastikan URL Cloudflare Worker Anda sudah benar di sini
+                const response = await fetch('https://dawn-dew-b706.namapengguna.workers.dev', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -49,10 +49,13 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text || "Tidak ada respons teks.";
+                    // Ambil teks dari struktur respons Gemini
+                    const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text || JSON.stringify(data, null, 2);
                     resultDiv.textContent = aiText;
                 } else {
-                    resultDiv.textContent = 'Error: ' + (data.error || 'Terjadi kesalahan sistem.');
+                    // Jika error berupa objek, ubah jadi string agar terbaca jelas
+                    const errMessage = typeof data.error === 'object' ? JSON.stringify(data.error) : (data.error || 'Terjadi kesalahan sistem.');
+                    resultDiv.textContent = 'Error dari Server: ' + errMessage;
                 }
             } catch (error) {
                 resultDiv.textContent = 'Network Error: ' + error.message;
