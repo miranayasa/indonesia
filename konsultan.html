@@ -102,7 +102,31 @@
 
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-2">Kategori Industri <span class="text-red-500">*</span></label>
-                    <input type="text" id="busCategory" required placeholder="Contoh: Kuliner / F&B" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    <div class="relative">
+                        <select id="busCategory" required onchange="toggleCategoryOther()"
+                            class="w-full appearance-none px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white pr-10">
+                            <option value="" disabled selected>Pilih kategori industri</option>
+                            <option value="Kuliner & F&B">Kuliner & F&B</option>
+                            <option value="Fashion & Retail">Fashion & Retail</option>
+                            <option value="Teknologi & Startup Digital">Teknologi & Startup Digital</option>
+                            <option value="Jasa & Konsultasi">Jasa & Konsultasi</option>
+                            <option value="Pendidikan & Pelatihan">Pendidikan & Pelatihan</option>
+                            <option value="Kesehatan & Kecantikan">Kesehatan & Kecantikan</option>
+                            <option value="Pertanian & Agribisnis">Pertanian & Agribisnis</option>
+                            <option value="Otomotif">Otomotif</option>
+                            <option value="Properti & Konstruksi">Properti & Konstruksi</option>
+                            <option value="Pariwisata & Perhotelan">Pariwisata & Perhotelan</option>
+                            <option value="Manufaktur & Produksi">Manufaktur & Produksi</option>
+                            <option value="Keuangan & Investasi">Keuangan & Investasi</option>
+                            <option value="E-commerce">E-commerce</option>
+                            <option value="Kerajinan & UMKM Kreatif">Kerajinan & UMKM Kreatif</option>
+                            <option value="Logistik & Transportasi">Logistik & Transportasi</option>
+                            <option value="Lainnya">Lainnya (kategori tidak tersedia)</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down text-xs text-slate-400 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                    </div>
+                    <input type="text" id="busCategoryOther" placeholder="Tuliskan kategori industri Anda"
+                        class="hidden w-full mt-2 px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                 </div>
 
                 <div>
@@ -537,16 +561,35 @@
 
         function resetForm() {
             document.getElementById("businessForm").reset();
+            document.getElementById("busCategoryOther").classList.add("hidden");
+            document.getElementById("busCategoryOther").required = false;
             document.getElementById("resultDashboard").classList.add("hidden");
             document.getElementById("formSection").classList.remove("hidden");
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Menampilkan/menyembunyikan kolom isian manual saat opsi "Lainnya" dipilih
+        function toggleCategoryOther() {
+            const select = document.getElementById("busCategory");
+            const otherInput = document.getElementById("busCategoryOther");
+            if (select.value === "Lainnya") {
+                otherInput.classList.remove("hidden");
+                otherInput.required = true;
+                otherInput.focus();
+            } else {
+                otherInput.classList.add("hidden");
+                otherInput.required = false;
+                otherInput.value = "";
+            }
         }
 
         async function handleFormSubmit(event) {
             event.preventDefault();
 
             const nameInput = document.getElementById("busName").value.trim();
-            const categoryInput = document.getElementById("busCategory").value.trim();
+            const categorySelectValue = document.getElementById("busCategory").value;
+            const categoryOtherValue = document.getElementById("busCategoryOther").value.trim();
+            const categoryInput = categorySelectValue === "Lainnya" ? categoryOtherValue : categorySelectValue;
             const locationInput = document.getElementById("busLocation").value.trim();
             const marketInput = document.getElementById("busMarket").value.trim();
             const capitalInput = document.getElementById("busCapital").value.trim();
