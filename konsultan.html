@@ -6,6 +6,7 @@
     <title>AI Executive Business Consultant</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
 
@@ -23,7 +24,7 @@
     </header>
 
     <main class="max-w-7xl mx-auto px-4 py-8">
-        
+
         <!-- Form Section -->
         <section id="formSection" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 mb-8">
             <div class="mb-6">
@@ -87,7 +88,7 @@
 
         <!-- Result Dashboard -->
         <section id="resultDashboard" class="hidden space-y-6">
-            
+
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="lg:col-span-2 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
                     <div>
@@ -116,6 +117,32 @@
                             <div id="resReadynessIndex" class="text-2xl font-bold text-white">78</div>
                             <div class="text-[10px] text-indigo-300 uppercase">Readiness Index</div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= DASHBOARD KPI ================= -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
+                    <i class="fa-solid fa-gauge-high text-indigo-600"></i>
+                    <span>Dashboard KPI Utama</span>
+                </h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <div id="kpiOpportunity" class="text-2xl font-bold text-indigo-600">--</div>
+                        <div class="text-[11px] text-slate-500 uppercase mt-1">Opportunity Score</div>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <div id="kpiReadiness" class="text-2xl font-bold text-indigo-600">--</div>
+                        <div class="text-[11px] text-slate-500 uppercase mt-1">Readiness Index</div>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <div id="kpiRoi" class="text-2xl font-bold text-indigo-600">--</div>
+                        <div class="text-[11px] text-slate-500 uppercase mt-1">ROI Tahunan</div>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <div id="kpiCashflow" class="text-2xl font-bold">--</div>
+                        <div class="text-[11px] text-slate-500 uppercase mt-1">Status Cash Flow</div>
                     </div>
                 </div>
             </div>
@@ -189,6 +216,41 @@
                 </div>
             </div>
 
+            <!-- ================= PORTER'S FIVE FORCES ================= -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
+                    <i class="fa-solid fa-diagram-project text-indigo-600"></i>
+                    <span>Porter's Five Forces</span>
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4 text-xs">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <strong class="block text-slate-800 font-bold mb-1">Persaingan Industri</strong>
+                        <span id="porterRivalryLevel" class="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full mb-2">--</span>
+                        <p id="porterRivalryText" class="text-slate-600 leading-relaxed"></p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <strong class="block text-slate-800 font-bold mb-1">Daya Tawar Pemasok</strong>
+                        <span id="porterSupplierLevel" class="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full mb-2">--</span>
+                        <p id="porterSupplierText" class="text-slate-600 leading-relaxed"></p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <strong class="block text-slate-800 font-bold mb-1">Daya Tawar Pembeli</strong>
+                        <span id="porterBuyerLevel" class="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full mb-2">--</span>
+                        <p id="porterBuyerText" class="text-slate-600 leading-relaxed"></p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <strong class="block text-slate-800 font-bold mb-1">Ancaman Substitusi</strong>
+                        <span id="porterSubstitutionLevel" class="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full mb-2">--</span>
+                        <p id="porterSubstitutionText" class="text-slate-600 leading-relaxed"></p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <strong class="block text-slate-800 font-bold mb-1">Ancaman Pendatang Baru</strong>
+                        <span id="porterNewEntryLevel" class="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full mb-2">--</span>
+                        <p id="porterNewEntryText" class="text-slate-600 leading-relaxed"></p>
+                    </div>
+                </div>
+            </div>
+
             <!-- SWOT & PESTEL -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
@@ -232,44 +294,98 @@
                 </div>
             </div>
 
-            <!-- Finansial & Strategi -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
-                    <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
-                        <i class="fa-solid fa-wallet text-indigo-600"></i>
-                        <span>Proyeksi Finansial</span>
-                    </h3>
-                    <div class="grid grid-cols-2 gap-4 text-xs">
-                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                            <span class="text-slate-500 block">Modal Awal</span>
-                            <strong id="finInitialCapital" class="text-sm font-bold text-slate-900"></strong>
+            <!-- ================= PROYEKSI FINANSIAL (DIPERLUAS) ================= -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
+                    <i class="fa-solid fa-wallet text-indigo-600"></i>
+                    <span>Proyeksi Finansial Lengkap</span>
+                </h3>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4 text-xs">
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                        <span class="text-slate-500 block">Modal Awal</span>
+                        <strong id="finInitialCapital" class="text-sm font-bold text-slate-900"></strong>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                        <span class="text-slate-500 block">Omzet / Bulan</span>
+                        <strong id="finMonthlyRevenue" class="text-sm font-bold text-slate-900"></strong>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                        <span class="text-slate-500 block">Laba / Bulan</span>
+                        <strong id="finMonthlyProfit" class="text-sm font-bold text-slate-900"></strong>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                        <span class="text-slate-500 block">Payback Period</span>
+                        <strong id="finPaybackPeriod" class="text-sm font-bold text-slate-900"></strong>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                        <span class="text-slate-500 block">BEP</span>
+                        <strong id="finBepMonths" class="text-sm font-bold text-slate-900"></strong>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                        <span class="text-slate-500 block">ROI Tahunan</span>
+                        <strong id="finAnnualRoi" class="text-sm font-bold text-slate-900"></strong>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                        <span class="text-slate-500 block">NPV</span>
+                        <strong id="finNpv" class="text-sm font-bold text-slate-900"></strong>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                        <span class="text-slate-500 block">IRR</span>
+                        <strong id="finIrr" class="text-sm font-bold text-slate-900"></strong>
+                    </div>
+                    <div class="col-span-2 p-3 rounded-xl border" id="finCashflowBox">
+                        <span class="text-slate-500 block">Status Cash Flow</span>
+                        <strong id="finCashflowStatus" class="text-sm font-bold"></strong>
+                        <p id="finCashflowNote" class="text-slate-600 mt-1"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= VISUALISASI DATA / CHARTS ================= -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
+                    <i class="fa-solid fa-chart-simple text-indigo-600"></i>
+                    <span>Visualisasi Data Bisnis</span>
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <h5 class="text-xs font-bold text-slate-700 mb-3 text-center">Proyeksi Pendapatan 12 Bulan</h5>
+                        <div class="relative" style="height: 260px;">
+                            <canvas id="chartRevenue"></canvas>
                         </div>
-                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                            <span class="text-slate-500 block">Estimasi Omzet / Bln</span>
-                            <strong id="finMonthlyRevenue" class="text-sm font-bold text-slate-900"></strong>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <h5 class="text-xs font-bold text-slate-700 mb-3 text-center">Pertumbuhan Pasar 5 Tahun</h5>
+                        <div class="relative" style="height: 260px;">
+                            <canvas id="chartMarketGrowth"></canvas>
                         </div>
-                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                            <span class="text-slate-500 block">Estimasi Laba / Bln</span>
-                            <strong id="finMonthlyProfit" class="text-sm font-bold text-slate-900"></strong>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <h5 class="text-xs font-bold text-slate-700 mb-3 text-center">Analisis Aspek Bisnis</h5>
+                        <div class="relative" style="height: 280px;">
+                            <canvas id="chartRadar"></canvas>
                         </div>
-                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                            <span class="text-slate-500 block">Balik Modal (BEP)</span>
-                            <strong id="finBepMonths" class="text-sm font-bold text-slate-900"></strong>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <h5 class="text-xs font-bold text-slate-700 mb-3 text-center">Alokasi Investasi Awal</h5>
+                        <div class="relative" style="height: 280px;">
+                            <canvas id="chartAllocation"></canvas>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
-                    <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
-                        <i class="fa-solid fa-chess text-indigo-600"></i>
-                        <span>Strategi Bisnis Utama</span>
-                    </h3>
-                    <div class="space-y-2 text-xs text-slate-600">
-                        <p><strong>Pemasaran:</strong> <span id="stratMarketing"></span></p>
-                        <p><strong>Pertumbuhan:</strong> <span id="stratGrowth"></span></p>
-                        <p><strong>Operasional:</strong> <span id="stratOperational"></span></p>
-                        <p><strong>SDM:</strong> <span id="stratHr"></span></p>
-                    </div>
+            <!-- Strategi -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
+                    <i class="fa-solid fa-chess text-indigo-600"></i>
+                    <span>Strategi Bisnis Utama</span>
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-slate-600">
+                    <p><strong>Pemasaran:</strong> <span id="stratMarketing"></span></p>
+                    <p><strong>Pertumbuhan:</strong> <span id="stratGrowth"></span></p>
+                    <p><strong>Operasional:</strong> <span id="stratOperational"></span></p>
+                    <p><strong>SDM:</strong> <span id="stratHr"></span></p>
                 </div>
             </div>
 
@@ -307,7 +423,15 @@
 
     <script>
         // URL Cloudflare Worker Anda (Aman, tidak ada API key terekspos di sini)
-        const API_URL = "https://dawn-dew-b706.miranayasa.workers.dev/";
+        const API_URL = "https://dawn-dew-b706.miranayasa.workers.dev";
+
+        // Menyimpan instance chart supaya bisa dihancurkan sebelum dibuat ulang
+        let chartInstances = {
+            revenue: null,
+            marketGrowth: null,
+            radar: null,
+            allocation: null,
+        };
 
         function resetForm() {
             document.getElementById("businessForm").reset();
@@ -318,7 +442,7 @@
 
         async function handleFormSubmit(event) {
             event.preventDefault();
-            
+
             const nameInput = document.getElementById("busName").value.trim();
             const categoryInput = document.getElementById("busCategory").value.trim();
             const locationInput = document.getElementById("busLocation").value.trim();
@@ -334,14 +458,14 @@
 
             const payload = {
                 mode: "business_analysis",
-                data: { 
-                    name: nameInput, 
-                    category: categoryInput, 
-                    location: locationInput, 
-                    market: marketInput, 
-                    capital: capitalInput, 
-                    experience: experienceInput, 
-                    description: descriptionInput 
+                data: {
+                    name: nameInput,
+                    category: categoryInput,
+                    location: locationInput,
+                    market: marketInput,
+                    capital: capitalInput,
+                    experience: experienceInput,
+                    description: descriptionInput
                 }
             };
 
@@ -350,7 +474,7 @@
             document.getElementById("loadingSection").classList.remove("hidden");
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            const loadingTexts = ["Menganalisa pasar & kompetitor...", "Menyusun BMC & PESTEL...", "Menghitung proyeksi finansial...", "Merumuskan strategi bisnis..."];
+            const loadingTexts = ["Menganalisa pasar & kompetitor...", "Menyusun BMC, PESTEL & Porter's Five Forces...", "Menghitung proyeksi finansial & ROI...", "Menyusun visualisasi data..."];
             let textIdx = 0;
             const statusEl = document.getElementById("loadingStatusText");
             const loadingInterval = setInterval(() => {
@@ -368,7 +492,11 @@
                 clearInterval(loadingInterval);
                 document.getElementById("loadingSection").classList.add("hidden");
 
-                if (!response.ok) throw new Error("Gagal terhubung ke Cloudflare Worker.");
+                if (!response.ok) {
+                    const errBody = await response.json().catch(() => null);
+                    const msg = errBody && errBody.error ? errBody.error : "Gagal terhubung ke Cloudflare Worker.";
+                    throw new Error(msg);
+                }
 
                 const finalJson = await response.json();
                 displayResults(finalJson);
@@ -395,16 +523,193 @@
             }
         }
 
+        // Memberi warna badge sesuai level Rendah/Sedang/Tinggi (khusus Porter's Five Forces)
+        function setLevelBadge(elementId, level) {
+            const el = document.getElementById(elementId);
+            el.textContent = level || "--";
+            el.className = "inline-block text-[10px] font-bold px-2 py-0.5 rounded-full mb-2";
+            const lvl = (level || "").toLowerCase();
+            if (lvl.includes("tinggi")) {
+                el.classList.add("bg-rose-100", "text-rose-700");
+            } else if (lvl.includes("sedang")) {
+                el.classList.add("bg-amber-100", "text-amber-700");
+            } else if (lvl.includes("rendah")) {
+                el.classList.add("bg-emerald-100", "text-emerald-700");
+            } else {
+                el.classList.add("bg-slate-200", "text-slate-700");
+            }
+        }
+
+        function formatRupiahShort(num) {
+            if (typeof num !== "number") return num;
+            if (Math.abs(num) >= 1000000000) return "Rp " + (num / 1000000000).toFixed(1) + " M";
+            if (Math.abs(num) >= 1000000) return "Rp " + (num / 1000000).toFixed(1) + " Jt";
+            if (Math.abs(num) >= 1000) return "Rp " + (num / 1000).toFixed(0) + " Rb";
+            return "Rp " + num;
+        }
+
+        function destroyChart(key) {
+            if (chartInstances[key]) {
+                chartInstances[key].destroy();
+                chartInstances[key] = null;
+            }
+        }
+
+        function renderCharts(chartData) {
+            if (!chartData) return;
+
+            const cd = chartData;
+
+            // ---- Bar Chart: Proyeksi Pendapatan 12 Bulan ----
+            destroyChart("revenue");
+            const revCtx = document.getElementById("chartRevenue").getContext("2d");
+            const rev = cd.revenueProjection || { labels: [], values: [] };
+            chartInstances.revenue = new Chart(revCtx, {
+                type: "bar",
+                data: {
+                    labels: rev.labels || [],
+                    datasets: [{
+                        label: "Pendapatan (Rp)",
+                        data: rev.values || [],
+                        backgroundColor: "rgba(79, 70, 229, 0.75)",
+                        borderRadius: 6,
+                    }],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: (ctx) => "Rp " + Number(ctx.raw).toLocaleString("id-ID"),
+                            },
+                        },
+                    },
+                    scales: {
+                        y: {
+                            ticks: { callback: (val) => formatRupiahShort(val) },
+                        },
+                    },
+                },
+            });
+
+            // ---- Line Chart: Pertumbuhan Pasar 5 Tahun ----
+            destroyChart("marketGrowth");
+            const mgCtx = document.getElementById("chartMarketGrowth").getContext("2d");
+            const mg = cd.marketGrowth || { labels: [], values: [] };
+            chartInstances.marketGrowth = new Chart(mgCtx, {
+                type: "line",
+                data: {
+                    labels: mg.labels || [],
+                    datasets: [{
+                        label: "Estimasi Pasar (Rp)",
+                        data: mg.values || [],
+                        borderColor: "rgb(79, 70, 229)",
+                        backgroundColor: "rgba(79, 70, 229, 0.15)",
+                        tension: 0.35,
+                        fill: true,
+                        pointRadius: 4,
+                    }],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: (ctx) => "Rp " + Number(ctx.raw).toLocaleString("id-ID"),
+                            },
+                        },
+                    },
+                    scales: {
+                        y: {
+                            ticks: { callback: (val) => formatRupiahShort(val) },
+                        },
+                    },
+                },
+            });
+
+            // ---- Radar Chart: Analisis Aspek Bisnis ----
+            destroyChart("radar");
+            const radarCtx = document.getElementById("chartRadar").getContext("2d");
+            const radar = cd.businessAspectRadar || { labels: [], values: [] };
+            chartInstances.radar = new Chart(radarCtx, {
+                type: "radar",
+                data: {
+                    labels: radar.labels || [],
+                    datasets: [{
+                        label: "Skor (0-100)",
+                        data: radar.values || [],
+                        backgroundColor: "rgba(79, 70, 229, 0.25)",
+                        borderColor: "rgb(79, 70, 229)",
+                        pointBackgroundColor: "rgb(79, 70, 229)",
+                    }],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: { min: 0, max: 100, ticks: { stepSize: 20, backdropColor: "transparent" } },
+                    },
+                    plugins: { legend: { display: false } },
+                },
+            });
+
+            // ---- Pie Chart: Alokasi Investasi Awal ----
+            destroyChart("allocation");
+            const allocCtx = document.getElementById("chartAllocation").getContext("2d");
+            const alloc = cd.investmentAllocation || { labels: [], values: [] };
+            chartInstances.allocation = new Chart(allocCtx, {
+                type: "pie",
+                data: {
+                    labels: alloc.labels || [],
+                    datasets: [{
+                        data: alloc.values || [],
+                        backgroundColor: [
+                            "rgba(79, 70, 229, 0.85)",
+                            "rgba(16, 185, 129, 0.85)",
+                            "rgba(245, 158, 11, 0.85)",
+                            "rgba(244, 63, 94, 0.85)",
+                            "rgba(56, 189, 248, 0.85)",
+                        ],
+                    }],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: "bottom", labels: { font: { size: 10 } } },
+                        tooltip: {
+                            callbacks: {
+                                label: (ctx) => ctx.label + ": " + ctx.raw + "%",
+                            },
+                        },
+                    },
+                },
+            });
+        }
+
         function displayResults(data) {
             document.getElementById("resName").textContent = data.name || "Analisis Bisnis";
             document.getElementById("resCategory").textContent = data.category || "Umum";
             document.getElementById("resExecSummary").textContent = data.executiveSummary || "";
-            
+
             const decisionCard = data.businessDecisionCard || {};
             document.getElementById("resVerdict").textContent = decisionCard.verdict || "CONDITIONAL GO";
             document.getElementById("resCoreRationale").textContent = decisionCard.coreRationale || "";
             document.getElementById("resOpportunityScore").textContent = data.businessOpportunityScore || "85";
             document.getElementById("resReadynessIndex").textContent = data.businessReadynessIndex || "78";
+
+            // ---- Dashboard KPI ----
+            document.getElementById("kpiOpportunity").textContent = (data.businessOpportunityScore || "--") + (data.businessOpportunityScore ? "/100" : "");
+            document.getElementById("kpiReadiness").textContent = (data.businessReadynessIndex || "--") + (data.businessReadynessIndex ? "/100" : "");
+            const fin0 = data.financialProjection || {};
+            document.getElementById("kpiRoi").textContent = fin0.annualROI || "--";
+            const kpiCashEl = document.getElementById("kpiCashflow");
+            kpiCashEl.textContent = fin0.cashFlowStatus || "--";
+            kpiCashEl.className = "text-2xl font-bold " + ((fin0.cashFlowStatus || "").toLowerCase().includes("positif") ? "text-emerald-600" : "text-rose-600");
 
             const bmc = data.bmc || {};
             populateList("bmcKeyPartners", bmc.keyPartners);
@@ -435,11 +740,51 @@
             document.getElementById("pestelEnvironmental").textContent = pestel.environmental || "";
             document.getElementById("pestelLegal").textContent = pestel.legal || "";
 
+            // ---- Porter's Five Forces ----
+            const porter = data.porterFiveForces || {};
+            const pRivalry = porter.competitiveRivalry || {};
+            const pSupplier = porter.supplierPower || {};
+            const pBuyer = porter.buyerPower || {};
+            const pSubstitution = porter.threatOfSubstitution || {};
+            const pNewEntry = porter.threatOfNewEntry || {};
+
+            setLevelBadge("porterRivalryLevel", pRivalry.level);
+            document.getElementById("porterRivalryText").textContent = pRivalry.analysis || "";
+            setLevelBadge("porterSupplierLevel", pSupplier.level);
+            document.getElementById("porterSupplierText").textContent = pSupplier.analysis || "";
+            setLevelBadge("porterBuyerLevel", pBuyer.level);
+            document.getElementById("porterBuyerText").textContent = pBuyer.analysis || "";
+            setLevelBadge("porterSubstitutionLevel", pSubstitution.level);
+            document.getElementById("porterSubstitutionText").textContent = pSubstitution.analysis || "";
+            setLevelBadge("porterNewEntryLevel", pNewEntry.level);
+            document.getElementById("porterNewEntryText").textContent = pNewEntry.analysis || "";
+
+            // ---- Proyeksi Finansial Lengkap ----
             const fin = data.financialProjection || {};
             document.getElementById("finInitialCapital").textContent = fin.initialCapital || "";
             document.getElementById("finMonthlyRevenue").textContent = fin.monthlyRevenue || "";
             document.getElementById("finMonthlyProfit").textContent = fin.monthlyProfit || "";
+            document.getElementById("finPaybackPeriod").textContent = fin.paybackPeriod || "";
             document.getElementById("finBepMonths").textContent = fin.bepMonths || "";
+            document.getElementById("finAnnualRoi").textContent = fin.annualROI || "";
+            document.getElementById("finNpv").textContent = fin.npv || "";
+            document.getElementById("finIrr").textContent = fin.irr || "";
+
+            const cashPositive = (fin.cashFlowStatus || "").toLowerCase().includes("positif");
+            const cashBox = document.getElementById("finCashflowBox");
+            const cashStatusEl = document.getElementById("finCashflowStatus");
+            cashStatusEl.textContent = fin.cashFlowStatus || "--";
+            document.getElementById("finCashflowNote").textContent = fin.cashFlowNote || "";
+            if (cashPositive) {
+                cashBox.className = "col-span-2 p-3 rounded-xl border bg-emerald-50 border-emerald-200";
+                cashStatusEl.className = "text-sm font-bold text-emerald-700";
+            } else {
+                cashBox.className = "col-span-2 p-3 rounded-xl border bg-rose-50 border-rose-200";
+                cashStatusEl.className = "text-sm font-bold text-rose-700";
+            }
+
+            // ---- Charts ----
+            renderCharts(data.chartData);
 
             const strat = data.strategies || {};
             document.getElementById("stratMarketing").textContent = strat.marketing || "";
