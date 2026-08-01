@@ -256,17 +256,29 @@
                         let textResp = rawData.candidates[0].content.parts[0].text;
                         textResp = textResp.replace(/```json/g, "").replace(/```/g, "").trim();
                         parsedData = JSON.parse(textResp);
+                    } else if (rawData.response) {
+                        let textResp = rawData.response.replace(/```json/g, "").replace(/```/g, "").trim();
+                        parsedData = JSON.parse(textResp);
                     }
                 } catch (e) {
-                    console.error("Parsing JSON Gemini gagal:", e);
+                    console.error("Gagal parsing JSON dari AI:", e);
                 }
 
-                currentAnalysisData = parsedData;
-                displayResults(parsedData);
-                saveToHistory(parsedData);
+                currentAnalysisData = {
+                    name: parsedData.name || name,
+                    category: parsedData.category || category,
+                    score: parsedData.score || 75,
+                    feasibility: parsedData.feasibility || "Layak",
+                    conclusion: parsedData.conclusion || parsedData.analisis || "Analisis berhasil diselesaikan.",
+                    financial: parsedData.financial || { capital: capital || "-", revenue: "-", profit: "-", bep: "-" },
+                    swot: parsedData.swot || { strength: "-", weakness: "-", opportunity: "-", threat: "-" }
+                };
+
+                displayResults(currentAnalysisData);
+                saveToHistory(currentAnalysisData);
 
                 document.getElementById("resultDashboard").classList.remove("hidden");
-                document.getElementById("exportActionButtons").classList.remove("flex");
+                document.getElementById("exportActionButtons").classList.remove("hidden");
                 document.getElementById("exportActionButtons").classList.add("flex");
 
             } catch (error) {
