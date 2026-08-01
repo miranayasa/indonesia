@@ -27,6 +27,7 @@
             --text-muted: #64748B;
             --error-color: #EF4444;
             --success-color: #10B981;
+            --wa-color: #25D366;
             
             --glass-bg: rgba(255, 255, 255, 0.85);
             --glass-border: rgba(255, 255, 255, 0.3);
@@ -308,6 +309,32 @@
             background: var(--navy-deep);
         }
 
+        /* Floating WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--wa-color);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            background-color: #20ba5a;
+        }
+
         footer {
             background: var(--navy-deep);
             color: var(--white);
@@ -333,6 +360,7 @@
             .hero-card { padding: 30px 20px; }
             .hero-title { font-size: 1.75rem; }
             .form-card { padding: 25px 20px; }
+            .whatsapp-float { bottom: 20px; right: 20px; width: 50px; height: 50px; font-size: 24px; }
         }
     </style>
 </head>
@@ -428,9 +456,10 @@
                         <div class="input-wrapper">
                             <select id="trainingDate" name="trainingDate" class="input-control" required>
                                 <option value="" disabled selected>-- Pilih Jadwal Pelatihan --</option>
-                                <option value="Setiap Sabtu (09:00 - 12:00 WIB)">Setiap Sabtu (09:00 - 12:00 WIB)</option>
-                                <option value="Setiap Selasa (18:30 - 21:30 WIB)">Setiap Selasa (18:30 - 21:30 WIB)</option>
-                                <option value="Request Jadwal Lain via WhatsApp (082290007890)">Request Jadwal Lain via WhatsApp (082290007890)</option>
+                                <option value="Selasa (18:30 - 21:30 WIB)">Selasa (18:30 - 21:30 WIB)</option>
+                                <option value="Kamis (18:30 - 21:30 WIB)">Kamis (18:30 - 21:30 WIB)</option>
+                                <option value="Sabtu (09:00 - 12:00 WIB)">Sabtu (09:00 - 12:00 WIB)</option>
+                                <option value="By Request (Hubungi WA)">By Request (Hubungi WA)</option>
                             </select>
                         </div>
                     </div>
@@ -496,7 +525,7 @@
 
                     <div class="full-width">
                         <button type="submit" class="submit-btn" id="btnSubmit">
-                            <i class="fa-solid fa-paper-plane"></i> Kirim Pendaftaran
+                            <i class="fa-solid fa-paper-plane"></i> Kirim & Konfirmasi Pendaftaran
                         </button>
                     </div>
 
@@ -504,6 +533,11 @@
             </form>
         </main>
     </div>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/6282290007890?text=Halo%20Admin%20Miranaya%20Academy,%20saya%20ingin%20bertanya%20mengenai%20pendaftaran%20pelatihan." class="whatsapp-float" target="_blank" title="Hubungi Admin via WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
 
     <!-- Footer -->
     <footer>
@@ -526,7 +560,6 @@
 
         const API_URL = "https://script.google.com/macros/s/AKfycbx8Y7SpJ57OiyIvmCKX1axWfBjYrA95xJPx3ZAaqE9slJePvq2OKdkP5EzqM7Ygi8m14w/exec";
 
-        // Variable global penyimpan data courses
         let coursesData = [];
 
         document.addEventListener("DOMContentLoaded", function() {
@@ -597,12 +630,12 @@
             });
         }
 
-        // Mengirim data pendaftaran & mengarahkan konfirmasi ke WhatsApp admin
+        // Mengirim data pendaftaran & otomatis mengarahkan ke WhatsApp admin
         async function handleFormSubmit(e) {
             e.preventDefault();
             const btnSubmit = document.getElementById("btnSubmit");
             btnSubmit.disabled = true;
-            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim Pendaftaran...';
+            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan & Mengarahkan ke WhatsApp...';
 
             // Menyiapkan Objek Data Peserta
             const formData = {
@@ -619,6 +652,7 @@
             };
 
             try {
+                // Kirim ke Google Apps Script (Sheet)
                 await fetch(API_URL, {
                     method: "POST",
                     mode: "no-cors",
@@ -628,27 +662,25 @@
                     body: JSON.stringify(formData)
                 });
 
-                // Konfirmasi sukses tersimpan dan arahkan konfirmasi ke WhatsApp admin
-                const confirmWA = confirm("Pendaftaran Berhasil & Data telah tersimpan!\n\nApakah Anda ingin segera mengirimkan konfirmasi data peserta & bukti transfer ke WhatsApp Admin?");
+                // Otomatis arahkan ke WhatsApp admin tanpa popup konfirmasi
+                const waAdmin = "6282290007890"; 
+                const message = `Halo Admin Miranaya Academy, saya telah melakukan pendaftaran pelatihan.\n\n` +
+                                `*DETAIL PENDAFTARAN*\n` +
+                                `- Nama: ${formData.fullName}\n` +
+                                `- Email: ${formData.email}\n` +
+                                `- WhatsApp: ${formData.whatsapp}\n` +
+                                `- Instansi: ${formData.organization}\n` +
+                                `- Jabatan: ${formData.position}\n` +
+                                `- Kota: ${formData.city}\n` +
+                                `- Program: ${formData.course}\n` +
+                                `- Jadwal: ${formData.trainingDate}\n` +
+                                `- Metode Pembayaran: Transfer ${formData.bankSelect}\n\n` +
+                                `Berikut saya lampirkan bukti transfer pembayaran saya. Terima kasih!`;
                 
-                if (confirmWA) {
-                    const waAdmin = "6282290007890"; // Format nomor WhatsApp internasional tanpa 0 di depan
-                    const message = `Halo Admin Miranaya Academy, saya telah melakukan pendaftaran pelatihan.\n\n` +
-                                    `*DETAIL PENDAFTARAN*\n` +
-                                    `- Nama: ${formData.fullName}\n` +
-                                    `- Email: ${formData.email}\n` +
-                                    `- WhatsApp: ${formData.whatsapp}\n` +
-                                    `- Instansi: ${formData.organization}\n` +
-                                    `- Jabatan: ${formData.position}\n` +
-                                    `- Kota: ${formData.city}\n` +
-                                    `- Program: ${formData.course}\n` +
-                                    `- Jadwal: ${formData.trainingDate}\n` +
-                                    `- Metode Pembayaran: Transfer ${formData.bankSelect}\n\n` +
-                                    `Berikut saya lampirkan bukti transfer pembayaran saya. Terima kasih!`;
-                    
-                    const waUrl = `https://wa.me/${waAdmin}?text=${encodeURIComponent(message)}`;
-                    window.open(waUrl, '_blank');
-                }
+                const waUrl = `https://wa.me/${waAdmin}?text=${encodeURIComponent(message)}`;
+                window.open(waUrl, '_blank');
+
+                alert("Pendaftaran berhasil tersimpan! Halaman WhatsApp akan segera terbuka untuk konfirmasi pengiriman data dan bukti transfer.");
 
                 document.getElementById("registrationForm").reset();
                 document.getElementById("bankInfoCard").classList.remove("active");
@@ -657,7 +689,7 @@
                 alert("Terjadi kesalahan sistem saat mengirim pendaftaran. Silakan coba lagi.");
             } finally {
                 btnSubmit.disabled = false;
-                btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Pendaftaran';
+                btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim & Konfirmasi Pendaftaran';
             }
         }
     </script>
