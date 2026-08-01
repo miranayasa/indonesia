@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Business Consultant - Miranaya Academy</title>
-    <!-- Tailwind CSS CDN untuk styling modern berstandar SaaS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js CDN untuk Visualisasi Data -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+    <script src="[https://cdn.jsdelivr.net/npm/chart.js](https://cdn.jsdelivr.net/npm/chart.js)"></script>
     <script>
         tailwind.config = {
             darkMode: 'media',
@@ -21,7 +19,7 @@
         }
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('[https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap](https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap)');
         body { font-family: 'Inter', sans-serif; }
         .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); }
         @media (prefers-color-scheme: dark) {
@@ -31,7 +29,6 @@
             body { background: white !important; color: black !important; }
             no-print { display: none !important; }
         }
-        /* Custom Scrollbar untuk Sidebar Riwayat */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(156, 163, 175, 0.5); border-radius: 3px; }
@@ -39,10 +36,10 @@
 </head>
 <body class="h-full bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col md:flex-row antialiased transition-colors duration-300">
 
-    <!-- ==================== SIDEBAR (RIWAYAT & NAVIGASI) ==================== -->
+    <!-- SIDEBAR -->
     <aside class="no-print w-full md:w-80 bg-white dark:bg-slate-900 border-b md:border-r border-slate-200 dark:border-slate-800 flex flex-col h-auto md:h-screen shrink-0">
         <div class="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center gap-3">
-            <img src="mdemy.png" alt="Logo" class="w-10 h-10 object-contain rounded-xl shadow-sm bg-slate-100 dark:bg-slate-800 p-1" onerror="this.src='https://via.placeholder.com/40?text=MA'">
+            <img src="mdemy.png" alt="Logo" class="w-10 h-10 object-contain rounded-xl shadow-sm bg-slate-100 dark:bg-slate-800 p-1" onerror="this.src='[https://via.placeholder.com/40?text=MA](https://via.placeholder.com/40?text=MA)'">
             <div>
                 <h1 class="font-bold text-sm tracking-wide text-blue-600 dark:text-blue-400">Miranaya Academy</h1>
                 <p class="text-xs text-slate-500 font-medium">AI Business Consultant</p>
@@ -59,46 +56,35 @@
         <div class="flex-1 overflow-y-auto p-4 space-y-2">
             <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-2 mb-2">Riwayat Analisa</h2>
             <div id="historyList" class="space-y-1.5">
-                <!-- Riwayat dimuat dinamis via JS -->
                 <p class="text-xs text-slate-400 px-2 italic">Belum ada riwayat analisa.</p>
             </div>
         </div>
 
         <div class="p-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
-            <a href="https://miranaya.online" target="_blank" class="flex items-center gap-2 text-xs text-slate-500 hover:text-blue-600 font-medium">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round5" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+            <a href="[https://miranaya.online](https://miranaya.online)" target="_blank" class="flex items-center gap-2 text-xs text-slate-500 hover:text-blue-600 font-medium">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
                 miranaya.online
             </a>
         </div>
     </aside>
 
-    <!-- ==================== KONTEN UTAMA ==================== -->
+    <!-- KONTEN UTAMA -->
     <main class="flex-1 flex flex-col h-screen overflow-y-auto">
-        <!-- Top Navigation Bar -->
         <header class="no-print border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-30 px-6 py-4 flex items-center justify-between">
             <div>
                 <h2 class="text-lg font-bold tracking-tight">AI Business Consultant</h2>
                 <p class="text-xs text-slate-500">Konsultan Bisnis Berbasis Artificial Intelligence</p>
             </div>
             <div id="exportActionButtons" class="hidden items-center gap-2">
-                <button onclick="window.print()" class="px-3 py-1.5 text-xs font-medium border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-1.5">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
-                    Print / PDF
-                </button>
-                <button onclick="copyResultJSON()" class="px-3 py-1.5 text-xs font-medium border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-1.5">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round5" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
-                    Copy JSON
-                </button>
-                <button onclick="downloadJSON()" class="px-3 py-1.5 text-xs font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center gap-1.5">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                    Download JSON
-                </button>
+                <button onclick="window.print()" class="px-3 py-1.5 text-xs font-medium border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-1.5">Print / PDF</button>
+                <button onclick="copyResultJSON()" class="px-3 py-1.5 text-xs font-medium border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-1.5">Copy JSON</button>
+                <button onclick="downloadJSON()" class="px-3 py-1.5 text-xs font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center gap-1.5">Download JSON</button>
             </div>
         </header>
 
         <div class="p-6 md:p-10 max-w-5xl mx-auto w-full flex-1 space-y-8">
 
-            <!-- ==================== FORM INPUT SECTION ==================== -->
+            <!-- FORM INPUT -->
             <section id="formSection" class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 md:p-8 shadow-sm">
                 <div class="mb-6">
                     <h3 class="text-base font-semibold">Formulasi Ide Bisnis</h3>
@@ -135,30 +121,24 @@
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Pengalaman Usaha (Opsional)</label>
-                            <input type="text" id="busExperience" placeholder="Contoh: Pemula / Sudah pernah berjualan online 1 tahun" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <input type="text" id="busExperience" placeholder="Contoh: Pemula" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Keterangan Tambahan / Detail Ide Bisnis (Opsional)</label>
-                        <textarea id="busDescription" rows="3" placeholder="Ceritakan detail produk, keunggulan unik, atau kendala yang dihadapi saat ini..." class="w-full px-3.5 py-2.5 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Keterangan Tambahan (Opsional)</label>
+                        <textarea id="busDescription" rows="3" placeholder="Ceritakan detail produk atau keunggulan unik..." class="w-full px-3.5 py-2.5 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
                     </div>
 
                     <div>
-                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Upload Gambar / Brosur / Mockup Produk (Opsional)</label>
-                        <input type="file" id="busImage" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-600 dark:file:bg-slate-800 dark:file:text-blue-400 hover:file:bg-blue-100 cursor-pointer">
-                    </div>
-
-                    <div class="pt-2">
                         <button type="submit" class="w-full py-3.5 px-6 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm rounded-xl shadow-lg shadow-blue-500/25 transition-all flex items-center justify-center gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                             Analisa Sekarang
                         </button>
                     </div>
                 </form>
             </section>
 
-            <!-- ==================== LOADING STATE (PROFESIONAL PROGRESS) ==================== -->
+            <!-- LOADING STATE -->
             <section id="loadingSection" class="hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-10 text-center space-y-6 shadow-sm">
                 <div class="relative w-16 h-16 mx-auto">
                     <div class="absolute inset-0 border-4 border-blue-200 dark:border-slate-800 rounded-full animate-pulse"></div>
@@ -168,17 +148,10 @@
                     <h3 id="loadingStatusText" class="text-base font-semibold text-slate-800 dark:text-slate-200">Mengumpulkan data...</h3>
                     <p class="text-xs text-slate-400">Sistem AI sedang memproses model bisnis Anda secara mendalam.</p>
                 </div>
-                <!-- Skeleton Loader Preview -->
-                <div class="max-w-md mx-auto space-y-3 pt-4 opacity-60">
-                    <div class="h-4 bg-slate-200 dark:bg-slate-800 rounded-lg animate-pulse w-3/4 mx-auto"></div>
-                    <div class="h-4 bg-slate-200 dark:bg-slate-800 rounded-lg animate-pulse w-1/2 mx-auto"></div>
-                </div>
             </section>
 
-            <!-- ==================== DASHBOARD HASIL ANALISA ==================== -->
+            <!-- DASHBOARD HASIL ANALISA -->
             <div id="resultDashboard" class="hidden space-y-8">
-
-                <!-- 1. Ringkasan Bisnis & Skor -->
                 <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div class="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
                         <div>
@@ -189,12 +162,7 @@
                             <h3 id="resName" class="text-xl font-bold mb-2">-</h3>
                             <p id="resConclusion" class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">-</p>
                         </div>
-                        <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center gap-6 text-xs text-slate-500">
-                            <div>📍 Lokasi: <span id="resLocation" class="font-medium text-slate-800 dark:text-slate-200">-</span></div>
-                            <div>🎯 Pasar: <span id="resMarket" class="font-medium text-slate-800 dark:text-slate-200">-</span></div>
-                        </div>
                     </div>
-
                     <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm flex flex-col items-center justify-center text-center">
                         <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Skor Kelayakan Bisnis</h4>
                         <div class="relative w-32 h-32 flex items-center justify-center my-2">
@@ -204,234 +172,36 @@
                                 <span class="text-[10px] text-slate-400 font-medium">dari 100</span>
                             </div>
                         </div>
-                        <p id="scoreLabel" class="text-xs font-medium text-slate-500">Analisa Berbasis AI</p>
                     </div>
                 </section>
 
-                <!-- 2. Financial Analysis & Charts Grid -->
                 <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
-                        <h4 class="font-semibold text-sm flex items-center gap-2">
-                            <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            Analisis Finansial
-                        </h4>
+                        <h4 class="font-semibold text-sm">Analisis Finansial</h4>
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="p-3.5 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
-                                <span class="text-[11px] text-slate-400 block">Estimasi Modal</span>
-                                <span id="finCapital" class="text-sm font-bold mt-0.5 block">-</span>
-                            </div>
-                            <div class="p-3.5 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
-                                <span class="text-[11px] text-slate-400 block">Estimasi Omzet / Bln</span>
-                                <span id="finRevenue" class="text-sm font-bold mt-0.5 block">-</span>
-                            </div>
-                            <div class="p-3.5 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
-                                <span class="text-[11px] text-slate-400 block">Estimasi Laba / Bln</span>
-                                <span id="finProfit" class="text-sm font-bold mt-0.5 block">-</span>
-                            </div>
-                            <div class="p-3.5 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
-                                <span class="text-[11px] text-slate-400 block">Estimasi BEP</span>
-                                <span id="finBep" class="text-sm font-bold mt-0.5 block">-</span>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4 pt-1">
-                            <div class="text-xs text-slate-500">Payback Period: <span id="finPayback" class="font-medium text-slate-800 dark:text-slate-200">-</span></div>
-                            <div class="text-xs text-slate-500">ROI: <span id="finRoi" class="font-medium text-slate-800 dark:text-slate-200">-</span></div>
+                            <div class="p-3.5 bg-slate-50 dark:bg-slate-800/50 rounded-xl"><span class="text-[11px] text-slate-400 block">Modal</span><span id="finCapital" class="text-sm font-bold mt-0.5 block">-</span></div>
+                            <div class="p-3.5 bg-slate-50 dark:bg-slate-800/50 rounded-xl"><span class="text-[11px] text-slate-400 block">Omzet / Bln</span><span id="finRevenue" class="text-sm font-bold mt-0.5 block">-</span></div>
+                            <div class="p-3.5 bg-slate-50 dark:bg-slate-800/50 rounded-xl"><span class="text-[11px] text-slate-400 block">Laba / Bln</span><span id="finProfit" class="text-sm font-bold mt-0.5 block">-</span></div>
+                            <div class="p-3.5 bg-slate-50 dark:bg-slate-800/50 rounded-xl"><span class="text-[11px] text-slate-400 block">BEP</span><span id="finBep" class="text-sm font-bold mt-0.5 block">-</span></div>
                         </div>
                     </div>
-
-                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
-                        <h4 class="font-semibold text-sm mb-3">Visualisasi Finansial (Bar Chart)</h4>
-                        <div class="relative h-48 w-full flex items-center justify-center">
-                            <canvas id="barChart"></canvas>
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm">
+                        <h4 class="font-semibold text-sm mb-3">Analisis SWOT</h4>
+                        <div class="grid grid-cols-2 gap-3 text-xs">
+                            <div class="p-3 bg-emerald-50/50 rounded-xl"><strong class="text-emerald-600 block mb-1">Strength</strong><p id="swotS">-</p></div>
+                            <div class="p-3 bg-rose-50/50 rounded-xl"><strong class="text-rose-600 block mb-1">Weakness</strong><p id="swotW">-</p></div>
+                            <div class="p-3 bg-blue-50/50 rounded-xl"><strong class="text-blue-600 block mb-1">Opportunity</strong><p id="swotO">-</p></div>
+                            <div class="p-3 bg-amber-50/50 rounded-xl"><strong class="text-amber-600 block mb-1">Threat</strong><p id="swotT">-</p></div>
                         </div>
                     </div>
                 </section>
-
-                <!-- 3. SWOT Analysis -->
-                <section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
-                    <div class="flex items-center justify-between">
-                        <h4 class="font-semibold text-sm">Analisis SWOT & Radar Visual</h4>
-                    </div>
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
-                        <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="p-4 bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/30 rounded-xl space-y-1">
-                                <h5 class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Strengths (Kekuatan)</h5>
-                                <p id="swotS" class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">-</p>
-                            </div>
-                            <div class="p-4 bg-rose-50/50 dark:bg-rose-950/20 border border-rose-100 dark:border-rose-900/30 rounded-xl space-y-1">
-                                <h5 class="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Weaknesses (Kelemahan)</h5>
-                                <p id="swotW" class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">-</p>
-                            </div>
-                            <div class="p-4 bg-blue-50/50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/30 rounded-xl space-y-1">
-                                <h5 class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Opportunities (Peluang)</h5>
-                                <p id="swotO" class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">-</p>
-                            </div>
-                            <div class="p-4 bg-amber-50/50 dark:bg-amber-950/20 border border-amber-100 dark:border-amber-900/30 rounded-xl space-y-1">
-                                <h5 class="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Threats (Ancaman)</h5>
-                                <p id="swotT" class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">-</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-center p-2">
-                            <div class="w-full max-w-[220px] h-[220px] relative">
-                                <canvas id="radarChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 4. Business Model Canvas (BMC) -->
-                <section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
-                    <h4 class="font-semibold text-sm">Business Model Canvas (BMC - 9 Blok) <span class="text-xs font-normal text-slate-400">(Dapat diedit langsung)</span></h4>
-                    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3">
-                        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200/60 dark:border-slate-700/60 flex flex-col">
-                            <label class="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase">Key Partners</label>
-                            <textarea id="bmcKeyPartners" contenteditable="true" class="w-full bg-transparent text-xs text-slate-700 dark:text-slate-300 mt-1 resize-none focus:outline-none" rows="4">-</textarea>
-                        </div>
-                        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200/60 dark:border-slate-700/60 flex flex-col">
-                            <label class="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase">Key Activities</label>
-                            <textarea id="bmcKeyActivities" class="w-full bg-transparent text-xs text-slate-700 dark:text-slate-300 mt-1 resize-none focus:outline-none" rows="4">-</textarea>
-                        </div>
-                        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200/60 dark:border-slate-700/60 flex flex-col">
-                            <label class="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase">Value Propositions</label>
-                            <textarea id="bmcValueProps" class="w-full bg-transparent text-xs text-slate-700 dark:text-slate-300 mt-1 resize-none focus:outline-none" rows="4">-</textarea>
-                        </div>
-                        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200/60 dark:border-slate-700/60 flex flex-col">
-                            <label class="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase">Customer Relationships</label>
-                            <textarea id="bmcCustomerRel" class="w-full bg-transparent text-xs text-slate-700 dark:text-slate-300 mt-1 resize-none focus:outline-none" rows="4">-</textarea>
-                        </div>
-                        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200/60 dark:border-slate-700/60 flex flex-col">
-                            <label class="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase">Customer Segments</label>
-                            <textarea id="bmcCustomerSeg" class="w-full bg-transparent text-xs text-slate-700 dark:text-slate-300 mt-1 resize-none focus:outline-none" rows="4">-</textarea>
-                        </div>
-                        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200/60 dark:border-slate-700/60 flex flex-col lg:col-span-2">
-                            <label class="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase">Key Resources</label>
-                            <textarea id="bmcKeyResources" class="w-full bg-transparent text-xs text-slate-700 dark:text-slate-300 mt-1 resize-none focus:outline-none" rows="3">-</textarea>
-                        </div>
-                        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200/60 dark:border-slate-700/60 flex flex-col lg:col-span-3">
-                            <label class="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase">Channels</label>
-                            <textarea id="bmcChannels" class="w-full bg-transparent text-xs text-slate-700 dark:text-slate-300 mt-1 resize-none focus:outline-none" rows="3">-</textarea>
-                        </div>
-                        <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200/60 dark:border-slate-700/60 flex flex-col lg:col-span-5 md:col-span-3">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="text-[10px] font-bold text-rose-600 dark:text-rose-400 uppercase">Cost Structure</label>
-                                    <textarea id="bmcCostStructure" class="w-full bg-transparent text-xs text-slate-700 dark:text-slate-300 mt-1 resize-none focus:outline-none" rows="2">-</textarea>
-                                </div>
-                                <div>
-                                    <label class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase">Revenue Streams</label>
-                                    <textarea id="bmcRevenueStreams" class="w-full bg-transparent text-xs text-slate-700 dark:text-slate-300 mt-1 resize-none focus:outline-none" rows="2">-</textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 5. Market & Risk Analysis -->
-                <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
-                        <h4 class="font-semibold text-sm">Analisis Pasar & Tren</h4>
-                        <div class="space-y-3 text-xs">
-                            <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
-                                <span class="font-semibold text-slate-400 block mb-1">Target Pasar Detail</span>
-                                <p id="marketTargetDetail" class="text-slate-700 dark:text-slate-300">-</p>
-                            </div>
-                            <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
-                                <span class="font-semibold text-slate-400 block mb-1">Kompetitor Utama</span>
-                                <p id="marketCompetitors" class="text-slate-700 dark:text-slate-300">-</p>
-                            </div>
-                            <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
-                                <span class="font-semibold text-slate-400 block mb-1">Peluang & Tren Industri</span>
-                                <p id="marketTrend" class="text-slate-700 dark:text-slate-300">-</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
-                        <h4 class="font-semibold text-sm">Analisis Risiko & Mitigasi</h4>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left text-xs">
-                                <thead class="border-b border-slate-100 dark:border-slate-800 text-slate-400">
-                                    <tr>
-                                        <th class="py-2 px-2">Risiko</th>
-                                        <th class="py-2 px-2">Probabilitas</th>
-                                        <th class="py-2 px-2">Dampak</th>
-                                        <th class="py-2 px-2">Mitigasi</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="riskTableBody" class="divide-y divide-slate-100 dark:divide-slate-800">
-                                    <tr><td colspan="4" class="py-3 text-center text-slate-400">Tidak tersedia</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 6. Strategi Memulai & Timeline -->
-                <section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
-                    <h4 class="font-semibold text-sm">Strategi Memulai & Timeline Eksekusi</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl space-y-2 border-t-2 border-blue-500">
-                            <span class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">30 Hari Pertama</span>
-                            <p id="timeline30" class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">-</p>
-                        </div>
-                        <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl space-y-2 border-t-2 border-blue-500">
-                            <span class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">90 Hari</span>
-                            <p id="timeline90" class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">-</p>
-                        </div>
-                        <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl space-y-2 border-t-2 border-blue-500">
-                            <span class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">180 Hari</span>
-                            <p id="timeline180" class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">-</p>
-                        </div>
-                        <div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl space-y-2 border-t-2 border-blue-500">
-                            <span class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">1 Tahun</span>
-                            <p id="timeline365" class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">-</p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 7. Strategi Marketing & Checklist Rekomendasi AI -->
-                <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
-                        <h4 class="font-semibold text-sm">Strategi Marketing Komprehensif</h4>
-                        <div class="space-y-3 text-xs">
-                            <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
-                                <span class="font-semibold text-slate-400 block mb-1">Strategi Offline</span>
-                                <p id="marketingOffline" class="text-slate-700 dark:text-slate-300">-</p>
-                            </div>
-                            <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
-                                <span class="font-semibold text-slate-400 block mb-1">Strategi Online</span>
-                                <p id="marketingOnline" class="text-slate-700 dark:text-slate-300">-</p>
-                            </div>
-                            <div class="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
-                                <span class="font-semibold text-slate-400 block mb-1">Digital Marketing & Ads</span>
-                                <p id="marketingDigital" class="text-slate-700 dark:text-slate-300">-</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
-                        <h4 class="font-semibold text-sm">Checklist Langkah Memulai (Interaktif)</h4>
-                        <div id="aiChecklistContainer" class="space-y-2 max-h-72 overflow-y-auto pr-1">
-                            <p class="text-xs text-slate-400 italic">Belum ada checklist.</p>
-                        </div>
-                    </div>
-                </section>
-
             </div>
 
-            <!-- ==================== FOOTER ==================== -->
+            <!-- FOOTER -->
             <footer class="no-print pt-10 pb-6 border-t border-slate-200 dark:border-slate-800 text-center space-y-4">
                 <div class="flex items-center justify-center gap-2">
-                    <img src="mdemy.png" alt="Logo" class="w-6 h-6 object-contain rounded-md" onerror="this.src='https://via.placeholder.com/24?text=MA'">
+                    <img src="mdemy.png" alt="Logo" class="w-6 h-6 object-contain rounded-md" onerror="this.src='[https://via.placeholder.com/24?text=MA](https://via.placeholder.com/24?text=MA)'">
                     <span class="text-xs font-bold text-slate-700 dark:text-slate-300">Miranaya Academy</span>
-                </div>
-                <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-slate-500">
-                    <a href="https://miranaya.online" target="_blank" class="hover:text-blue-600 font-medium">Website: miranaya.online</a>
-                    <a href="https://wa.me/6282290007890" target="_blank" class="hover:text-blue-600 font-medium">WhatsApp: 082290007890</a>
-                </div>
-                <div class="p-4 bg-blue-50/50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/30 rounded-xl max-w-md mx-auto space-y-2">
-                    <p class="text-xs text-slate-600 dark:text-slate-400 font-medium">Ingin membuat aplikasi AI seperti ini?</p>
-                    <a href="https://miranaya.online/register.html" target="_blank" class="inline-block px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg shadow-sm transition-all">Daftar Training AI Sekarang</a>
                 </div>
                 <p class="text-[11px] text-slate-400">&copy; 2026 Miranaya Academy. All rights reserved.</p>
             </footer>
@@ -439,25 +209,15 @@
         </div>
     </main>
 
-    <!-- ==================== SCRIPT JAVASCRIPT MURNI ==================== -->
     <script>
-        // Konfigurasi Endpoint Cloudflare Worker AI Gateway Anda
-        const API_URL = "https://dawn-dew-b706.miranayasa.workers.dev";
-
+        const API_URL = "[https://dawn-dew-b706.miranayasa.workers.dev](https://dawn-dew-b706.miranayasa.workers.dev)";
         let gaugeChartInstance = null;
-        let barChartInstance = null;
-        let radarChartInstance = null;
         let currentAnalysisData = null;
 
-        // Saat halaman dimuat, ambil riwayat dari LocalStorage
-        document.addEventListener("DOMContentLoaded", () => {
-            renderHistoryList();
-        });
+        document.addEventListener("DOMContentLoaded", () => { renderHistoryList(); });
 
-        // Handler saat Form Disubmit
         async function handleFormSubmit(event) {
             event.preventDefault();
-
             const name = document.getElementById("busName").value.trim();
             const category = document.getElementById("busCategory").value.trim();
             const location = document.getElementById("busLocation").value.trim();
@@ -465,21 +225,13 @@
             const capital = document.getElementById("busCapital").value.trim();
             const experience = document.getElementById("busExperience").value.trim();
             const description = document.getElementById("busDescription").value.trim();
-            const imageFile = document.getElementById("busImage").files[0];
 
-            // Tampilkan section loading, sembunyikan form & hasil lama
             document.getElementById("formSection").classList.add("hidden");
             document.getElementById("resultDashboard").classList.add("hidden");
             document.getElementById("exportActionButtons").classList.add("hidden");
             document.getElementById("loadingSection").classList.remove("hidden");
 
-            // Simulasi animasi progress teks loading profesional
-            const loadingTexts = [
-                "Mengumpulkan data...",
-                "Menganalisa peluang...",
-                "Menyusun strategi...",
-                "Menghasilkan rekomendasi..."
-            ];
+            const loadingTexts = ["Mengumpulkan data...", "Menganalisa peluang...", "Menyusun strategi...", "Menghasilkan rekomendasi..."];
             let textIdx = 0;
             const statusEl = document.getElementById("loadingStatusText");
             const loadingInterval = setInterval(() => {
@@ -487,49 +239,36 @@
                 statusEl.textContent = loadingTexts[textIdx];
             }, 1200);
 
-            // Menyiapkan payload sesuai dengan saran best practice mode AI Gateway
             const payload = {
                 mode: "business_analysis",
-                data: {
-                    name,
-                    category,
-                    location,
-                    market,
-                    capital,
-                    experience,
-                    description
-                }
+                data: { name, category, location, market, capital, experience, description }
             };
 
             try {
                 const response = await fetch(API_URL, {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(payload)
                 });
 
                 clearInterval(loadingInterval);
                 document.getElementById("loadingSection").classList.add("hidden");
 
-                if (!response.ok) {
-                    throw new Error("Gagal terhubung ke AI Gateway server.");
-                }
+                if (!response.ok) throw new Error("Gagal terhubung ke AI Gateway server.");
 
                 const rawData = await response.json();
-                
-                // Ekstraksi respons dari Gemini backend AI Gateway
                 let parsedData = rawData;
-                if (rawData.candidates && rawData.candidates[0]?.content?.parts?.[0]?.text) {
-                    try {
+                
+                try {
+                    if (rawData.candidates && rawData.candidates[0]?.content?.parts?.[0]?.text) {
                         let textResp = rawData.candidates[0].content.parts[0].text;
-                        // Bersihkan markdown code block jika ada
                         textResp = textResp.replace(/```json/g, "").replace(/```/g, "").trim();
                         parsedData = JSON.parse(textResp);
-                    } catch (e) {
-                        parsedData = rawData;
+                    } else if (rawData.error) {
+                        throw new Error(rawData.error.message || JSON.stringify(rawData.error));
                     }
+                } catch (e) {
+                    throw new Error("Gagal memproses struktur data dari AI.");
                 }
 
                 currentAnalysisData = parsedData;
@@ -549,233 +288,64 @@
             }
         }
 
-        // Fungsi menampilkan data JSON ke Dashboard
         function displayAnalysisResult(data, inputData) {
-            // Helper untuk mengambil field atau fallback "Tidak tersedia"
             const getField = (val, def = "Tidak tersedia") => (val !== undefined && val !== null && val !== "") ? val : def;
 
-            // 1. Ringkasan Bisnis
             document.getElementById("resName").textContent = getField(data.name || inputData.name);
             document.getElementById("resCategory").textContent = getField(data.category || inputData.category);
-            document.getElementById("resLocation").textContent = getField(data.location || inputData.location);
-            document.getElementById("resMarket").textContent = getField(data.market || inputData.market);
             document.getElementById("resConclusion").textContent = getField(data.conclusion);
 
-            // Feasibility Badge & Score
             const score = typeof data.score === 'number' ? data.score : 75;
             document.getElementById("scoreNumber").textContent = score;
-            
+
             const badgeEl = document.getElementById("feasibilityBadge");
             if (score >= 75) {
                 badgeEl.textContent = "Layak";
-                badgeEl.className = "text-xs font-bold px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-900";
-            } else if (score >= 50) {
-                badgeEl.textContent = "Cukup Layak";
-                badgeEl.className = "text-xs font-bold px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-900";
+                badgeEl.className = "text-xs font-bold px-3 py-1 rounded-full bg-emerald-50 text-emerald-600";
             } else {
-                badgeEl.textContent = "Tidak Layak";
-                badgeEl.className = "text-xs font-bold px-3 py-1 rounded-full bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900";
+                badgeEl.textContent = "Cukup Layak";
+                badgeEl.className = "text-xs font-bold px-3 py-1 rounded-full bg-amber-50 text-amber-600";
             }
 
             renderGaugeChart(score);
 
-            // 2. Financial Analysis
             const fin = data.financial || {};
             document.getElementById("finCapital").textContent = getField(fin.capital);
             document.getElementById("finRevenue").textContent = getField(fin.revenue);
             document.getElementById("finProfit").textContent = getField(fin.profit);
             document.getElementById("finBep").textContent = getField(fin.bep);
-            document.getElementById("finPayback").textContent = getField(fin.payback_period);
-            document.getElementById("finRoi").textContent = getField(fin.roi);
 
-            renderBarChart(fin);
-
-            // 3. SWOT Analysis
             const swot = data.swot || {};
             document.getElementById("swotS").textContent = getField(swot.strength);
             document.getElementById("swotW").textContent = getField(swot.weakness);
             document.getElementById("swotO").textContent = getField(swot.opportunity);
             document.getElementById("swotT").textContent = getField(swot.threat);
-
-            renderRadarChart(swot);
-
-            // 4. Business Model Canvas (BMC)
-            const bmc = data.bmc || {};
-            document.getElementById("bmcKeyPartners").value = getField(bmc.key_partners);
-            document.getElementById("bmcKeyActivities").value = getField(bmc.key_activities);
-            document.getElementById("bmcValueProps").value = getField(bmc.value_propositions);
-            document.getElementById("bmcCustomerRel").value = getField(bmc.customer_relationships);
-            document.getElementById("bmcCustomerSeg").value = getField(bmc.customer_segments);
-            document.getElementById("bmcKeyResources").value = getField(bmc.key_resources);
-            document.getElementById("bmcChannels").value = getField(bmc.channels);
-            document.getElementById("bmcCostStructure").value = getField(bmc.cost_structure);
-            document.getElementById("bmcRevenueStreams").value = getField(bmc.revenue_streams);
-
-            // 5. Market Analysis
-            const market = data.market_analysis || {};
-            document.getElementById("marketTargetDetail").textContent = getField(market.target_market);
-            document.getElementById("marketCompetitors").textContent = getField(market.competitors);
-            document.getElementById("marketTrend").textContent = getField(market.trend);
-
-            // Risk Analysis
-            const risks = data.risks || [];
-            const riskBody = document.getElementById("riskTableBody");
-            riskBody.innerHTML = "";
-            if (risks.length > 0) {
-                risks.forEach(r => {
-                    riskBody.innerHTML += `
-                        <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30">
-                            <td class="py-2.5 px-2 font-medium">${getField(r.risk)}</td>
-                            <td class="py-2.5 px-2 text-slate-500">${getField(r.probability)}</td>
-                            <td class="py-2.5 px-2 text-slate-500">${getField(r.impact)}</td>
-                            <td class="py-2.5 px-2 text-slate-500">${getField(r.mitigation)}</td>
-                        </tr>
-                    `;
-                });
-            } else {
-                riskBody.innerHTML = `<tr><td colspan="4" class="py-3 text-center text-slate-400">Tidak tersedia</td></tr>`;
-            }
-
-            // 6. Timeline
-            const timeline = data.timeline || {};
-            document.getElementById("timeline30").textContent = getField(timeline.days_30);
-            document.getElementById("timeline90").textContent = getField(timeline.days_90);
-            document.getElementById("timeline180").textContent = getField(timeline.days_180);
-            document.getElementById("timeline365").textContent = getField(timeline.year_1);
-
-            // 7. Marketing & Checklist
-            const marketing = data.marketing || {};
-            document.getElementById("marketingOffline").textContent = getField(marketing.offline);
-            document.getElementById("marketingOnline").textContent = getField(marketing.online);
-            document.getElementById("marketingDigital").textContent = getField(marketing.digital);
-
-            const checklist = data.checklist || [];
-            const checkContainer = document.getElementById("aiChecklistContainer");
-            checkContainer.innerHTML = "";
-            if (checklist.length > 0) {
-                checklist.forEach((item, idx) => {
-                    checkContainer.innerHTML += `
-                        <label class="flex items-start gap-2.5 p-2 bg-slate-50 dark:bg-slate-800/50 rounded-xl cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-                            <input type="checkbox" class="mt-0.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500">
-                            <span class="text-xs text-slate-700 dark:text-slate-300">${item}</span>
-                        </label>
-                    `;
-                });
-            } else {
-                checkContainer.innerHTML = `<p class="text-xs text-slate-400 italic">Tidak tersedia</p>`;
-            }
         }
 
-        // Render Chart.js Gauge Score
         function renderGaugeChart(score) {
             const ctx = document.getElementById('gaugeChart').getContext('2d');
             if (gaugeChartInstance) gaugeChartInstance.destroy();
-            
             gaugeChartInstance = new Chart(ctx, {
                 type: 'doughnut',
-                data: {
-                    datasets: [{
-                        data: [score, 100 - score],
-                        backgroundColor: ['#3b82f6', '#e2e8f0'],
-                        borderWidth: 0,
-                        circumference: 180,
-                        rotation: 270
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    cutout: '80%',
-                    plugins: { legend: { display: false }, tooltip: { enabled: false } }
-                }
+                data: { datasets: [{ data: [score, 100 - score], backgroundColor: ['#3b82f6', '#e2e8f0'], borderWidth: 0, circumference: 180, rotation: 270 }] },
+                options: { responsive: true, maintainAspectRatio: false, cutout: '80%', plugins: { legend: { display: false }, tooltip: { enabled: false } } }
             });
         }
 
-        // Render Bar Chart Financial
-        function renderBarChart(fin) {
-            const ctx = document.getElementById('barChart').getContext('2d');
-            if (barChartInstance) barChartInstance.destroy();
-
-            // Parsing angka sederhana dari string atau default
-            barChartInstance = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Modal', 'Omzet/Bln', 'Laba/Bln'],
-                    datasets: [{
-                        data: [15, 25, 8], // Nilai representatif visual dari data finansial
-                        backgroundColor: ['#3b82f6', '#10b981', '#6366f1'],
-                        borderRadius: 8
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { grid: { display: false }, ticks: { font: { size: 10 } } },
-                        x: { grid: { display: false }, ticks: { font: { size: 10 } } }
-                    }
-                }
-            });
-        }
-
-        // Render Radar Chart SWOT
-        function renderRadarChart(swot) {
-            const ctx = document.getElementById('radarChart').getContext('2d');
-            if (radarChartInstance) radarChartInstance.destroy();
-
-            radarChartInstance = new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: ['Strength', 'Weakness', 'Opportunity', 'Threat', 'Market Fit'],
-                    datasets: [{
-                        data: [85, 45, 90, 50, 80],
-                        backgroundColor: 'rgba(59, 130, 246, 0.2)',
-                        borderColor: '#3b82f6',
-                        borderWidth: 2,
-                        pointBackgroundColor: '#3b82f6'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: { r: { ticks: { display: false }, grid: { color: 'rgba(150,150,150,0.2)' } } }
-                }
-            });
-        }
-
-        // LocalStorage Management untuk Riwayat
         function saveToLocalStorage(name, data) {
             let history = JSON.parse(localStorage.getItem("miranaya_ai_history") || "[]");
-            const newItem = {
-                id: Date.now(),
-                name: name || "Analisa Bisnis Tanpa Nama",
-                date: new Date().toLocaleDateString("id-ID", { day: 'numeric', month: 'short', year: 'numeric' }),
-                data: data
-            };
-            history.unshift(newItem);
-            if (history.length > 20) history.pop(); // Batasi 20 riwayat terbaru
+            history.unshift({ id: Date.now(), name: name || "Analisa Bisnis", date: new Date().toLocaleDateString("id-ID"), data: data });
+            if (history.length > 20) history.pop();
             localStorage.setItem("miranaya_ai_history", JSON.stringify(history));
         }
 
         function renderHistoryList() {
             const listEl = document.getElementById("historyList");
             let history = JSON.parse(localStorage.getItem("miranaya_ai_history") || "[]");
-            
-            if (history.length === 0) {
-                listEl.innerHTML = `<p class="text-xs text-slate-400 px-2 italic">Belum ada riwayat analisa.</p>`;
-                return;
-            }
-
+            if (history.length === 0) { listEl.innerHTML = `<p class="text-xs text-slate-400 px-2 italic">Belum ada riwayat analisa.</p>`; return; }
             listEl.innerHTML = "";
             history.forEach(item => {
-                listEl.innerHTML += `
-                    <button onclick="loadHistoryItem(${item.id})" class="w-full text-left p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group">
-                        <div class="text-xs font-semibold text-slate-800 dark:text-slate-200 truncate group-hover:text-blue-600">${item.name}</div>
-                        <div class="text-[10px] text-slate-400 mt-0.5">${item.date}</div>
-                    </button>
-                `;
+                listEl.innerHTML += `<button onclick="loadHistoryItem(${item.id})" class="w-full text-left p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group"><div class="text-xs font-semibold text-slate-800 dark:text-slate-200 truncate group-hover:text-blue-600">${item.name}</div><div class="text-[10px] text-slate-400 mt-0.5">${item.date}</div></button>`;
             });
         }
 
@@ -800,7 +370,6 @@
             document.getElementById("formSection").scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Fungsi Export & Download
         function copyResultJSON() {
             if (!currentAnalysisData) return alert("Belum ada data analisa.");
             navigator.clipboard.writeText(JSON.stringify(currentAnalysisData, null, 2));
