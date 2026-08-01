@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Gemini Test</title>
+</head>
+<body>
+
+<h2>Test Gemini API</h2>
+
+<button onclick="testGemini()">Analisa</button>
+
+<pre id="hasil"></pre>
+
+<script>
+
+async function testGemini(){
+
+const data={
+business:"Budidaya Alpukat",
+type:"Perkebunan",
+location:"Kabupaten Semarang",
+target:"Menengah"
+};
+
+const response=await fetch("https://script.google.com/macros/s/AKfycbwXfhxC3oOX9zE6N9aF8vVIqs-ldDXOsIu8iv3Lc8JE2_l25KZUtVFmijK95HRQFoWd/exec",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify(data)
+});
+
+const hasil=await response.text();
+
+document.getElementById("hasil").textContent=hasil;
+
+}
+
+</script>
+
+</body>
+</html>
