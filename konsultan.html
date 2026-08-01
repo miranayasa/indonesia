@@ -3,18 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Executive Business Consultant</title>
+    <title>Minaraya Consulting - Transformation & Business Consultant</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.min.js"></script>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
 
+    <!-- ================= GERBANG PASSWORD ================= -->
+    <div id="authOverlay" class="fixed inset-0 z-50 bg-indigo-900 flex items-center justify-center px-4">
+        <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-sm text-center">
+            <div class="flex justify-center mb-4">
+                <div class="bg-white p-1.5 rounded-full ring-4 ring-white shadow-lg border border-slate-100">
+                    <img src="mconsult.png" alt="Minaraya Consulting" class="h-16 w-16 rounded-full object-contain">
+                </div>
+            </div>
+            <h2 class="text-lg font-bold text-slate-900">Minaraya Consulting</h2>
+            <p class="text-xs text-slate-500 mb-6">Transformation & Business Consultant</p>
+            <form id="authForm" onsubmit="handleAuthSubmit(event)" class="space-y-3">
+                <input type="password" id="authPasswordInput" required placeholder="Masukkan password akses"
+                    class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none text-center">
+                <p id="authError" class="hidden text-xs text-rose-600 font-medium">Password salah, silakan coba lagi.</p>
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-2.5 rounded-xl transition shadow-md">
+                    Masuk
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= KONTEN APLIKASI (tersembunyi sampai password benar) ================= -->
+    <div id="appContent" class="hidden">
+
     <header class="bg-indigo-700 text-white shadow-md">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-3">
-                <i class="fa-solid fa-brain text-2xl"></i>
-                <h1 class="text-xl font-bold tracking-wide">AI Executive Business Consultant</h1>
+                <div class="bg-white p-1 rounded-full ring-2 ring-white shadow-md">
+                    <img src="mconsult.png" alt="Minaraya Consulting" class="h-8 w-8 rounded-full object-contain">
+                </div>
+                <div class="leading-tight">
+                    <h1 class="text-lg font-bold tracking-wide">Minaraya Consulting</h1>
+                    <p class="text-[11px] text-indigo-200">Transformation & Business Consultant</p>
+                </div>
             </div>
             <button onclick="resetForm()" class="bg-indigo-600 hover:bg-indigo-500 text-sm px-4 py-2 rounded-lg font-medium transition flex items-center space-x-2">
                 <i class="fa-solid fa-plus"></i>
@@ -421,7 +450,45 @@
 
     </main>
 
+    </div>
+    <!-- ================= akhir #appContent ================= -->
+
     <script>
+        // ================= GERBANG PASSWORD =================
+        // Catatan: ini hanya proteksi tampilan di sisi browser (front-end gate),
+        // bukan keamanan sesungguhnya, karena kode ini bisa dibaca lewat "View Page Source".
+        // Cocok untuk mencegah akses tidak sengaja/orang awam, bukan untuk data sangat rahasia.
+        const APP_PASSWORD = "CoSe82";
+
+        function checkExistingAuth() {
+            if (sessionStorage.getItem("minaraya_auth") === "true") {
+                unlockApp();
+            }
+        }
+
+        function handleAuthSubmit(event) {
+            event.preventDefault();
+            const inputValue = document.getElementById("authPasswordInput").value;
+            const errorEl = document.getElementById("authError");
+
+            if (inputValue === APP_PASSWORD) {
+                sessionStorage.setItem("minaraya_auth", "true");
+                errorEl.classList.add("hidden");
+                unlockApp();
+            } else {
+                errorEl.classList.remove("hidden");
+                document.getElementById("authPasswordInput").value = "";
+                document.getElementById("authPasswordInput").focus();
+            }
+        }
+
+        function unlockApp() {
+            document.getElementById("authOverlay").classList.add("hidden");
+            document.getElementById("appContent").classList.remove("hidden");
+        }
+
+        window.addEventListener("DOMContentLoaded", checkExistingAuth);
+
         // URL Cloudflare Worker Anda (Aman, tidak ada API key terekspos di sini)
         const API_URL = "https://dawn-dew-b706.miranayasa.workers.dev";
 
