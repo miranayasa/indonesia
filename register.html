@@ -422,16 +422,21 @@
                         </div>
                     </div>
 
-                    <!-- Field: Tanggal Pelatihan -->
-                    <div class="form-group">
-                        <label for="trainingDate"><i class="fa-solid fa-calendar-days"></i> Tanggal Pelatihan</label>
+                    <!-- Field: Jadwal Pelatihan -->
+                    <div class="form-group full-width">
+                        <label for="trainingDate"><i class="fa-solid fa-calendar-days"></i> Pilih Jadwal Pelatihan</label>
                         <div class="input-wrapper">
-                            <input type="date" id="trainingDate" name="trainingDate" class="input-control" required>
+                            <select id="trainingDate" name="trainingDate" class="input-control" required>
+                                <option value="" disabled selected>-- Pilih Jadwal Pelatihan --</option>
+                                <option value="Setiap Sabtu (09:00 - 12:00 WIB)">Setiap Sabtu (09:00 - 12:00 WIB)</option>
+                                <option value="Setiap Selasa (18:30 - 21:30 WIB)">Setiap Selasa (18:30 - 21:30 WIB)</option>
+                                <option value="Request Jadwal Lain via WhatsApp (082290007890)">Request Jadwal Lain via WhatsApp (082290007890)</option>
+                            </select>
                         </div>
                     </div>
 
                     <!-- Field: Sumber Informasi -->
-                    <div class="form-group">
+                    <div class="form-group full-width">
                         <label for="source"><i class="fa-solid fa-bullhorn"></i> Bagaimana mengetahui pelatihan ini?</label>
                         <div class="input-wrapper">
                             <select id="source" name="source" class="input-control" required>
@@ -525,7 +530,7 @@
         let coursesData = [];
 
         document.addEventListener("DOMContentLoaded", function() {
-            // 1. Muat daftar pelatihan dari sheet Courses via Course.gs
+            // 1. Muat daftar pelatihan dari sheet Courses
             loadCoursesData();
 
             // 2. Event listener memilih bank
@@ -550,16 +555,7 @@
                 });
             });
 
-            // 4. Autofill Tanggal ketika Pelatihan Dipilih
-            document.getElementById("course").addEventListener("change", function(e) {
-                const selectedTitle = e.target.value;
-                const foundCourse = coursesData.find(c => c.name === selectedTitle);
-                if (foundCourse && foundCourse.date) {
-                    document.getElementById("trainingDate").value = formatDateForInput(foundCourse.date);
-                }
-            });
-
-            // 5. Submit Form ke Register.gs via Fetch POST (No CORS issue with text/plain or standard cross-origin submission / no-cors if configured, or standard URL-encoded/JSON POST to Apps Script Web App)
+            // 4. Submit Form ke Apps Script
             document.getElementById("registrationForm").addEventListener("submit", handleFormSubmit);
         });
 
@@ -601,7 +597,7 @@
             });
         }
 
-        // Mengirim data pendaftaran ke Apps Script menggunakan Fetch API (POST) untuk GitHub Pages
+        // Mengirim data pendaftaran & mengarahkan konfirmasi ke WhatsApp admin
         async function handleFormSubmit(e) {
             e.preventDefault();
             const btnSubmit = document.getElementById("btnSubmit");
@@ -623,18 +619,37 @@
             };
 
             try {
-                // Menggunakan mode 'no-cors' atau POST standar untuk menghindari kendala preflight CORS pada Google Apps Script Web App endpoint
-                const response = await fetch(API_URL, {
+                await fetch(API_URL, {
                     method: "POST",
                     mode: "no-cors",
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "text/plain;charset=utf-8",
                     },
                     body: JSON.stringify(formData)
                 });
 
-                // Karena mode 'no-cors' menghasilkan opaque response, kita asumsikan sukses terkirim ke Apps Script
-                alert("Pendaftaran Berhasil! Data pendaftaran Anda telah tersimpan.");
+                // Konfirmasi sukses tersimpan dan arahkan konfirmasi ke WhatsApp admin
+                const confirmWA = confirm("Pendaftaran Berhasil & Data telah tersimpan!\n\nApakah Anda ingin segera mengirimkan konfirmasi data peserta & bukti transfer ke WhatsApp Admin?");
+                
+                if (confirmWA) {
+                    const waAdmin = "6282290007890"; // Format nomor WhatsApp internasional tanpa 0 di depan
+                    const message = `Halo Admin Miranaya Academy, saya telah melakukan pendaftaran pelatihan.\n\n` +
+                                    `*DETAIL PENDAFTARAN*\n` +
+                                    `- Nama: ${formData.fullName}\n` +
+                                    `- Email: ${formData.email}\n` +
+                                    `- WhatsApp: ${formData.whatsapp}\n` +
+                                    `- Instansi: ${formData.organization}\n` +
+                                    `- Jabatan: ${formData.position}\n` +
+                                    `- Kota: ${formData.city}\n` +
+                                    `- Program: ${formData.course}\n` +
+                                    `- Jadwal: ${formData.trainingDate}\n` +
+                                    `- Metode Pembayaran: Transfer ${formData.bankSelect}\n\n` +
+                                    `Berikut saya lampirkan bukti transfer pembayaran saya. Terima kasih!`;
+                    
+                    const waUrl = `https://wa.me/${waAdmin}?text=${encodeURIComponent(message)}`;
+                    window.open(waUrl, '_blank');
+                }
+
                 document.getElementById("registrationForm").reset();
                 document.getElementById("bankInfoCard").classList.remove("active");
             } catch (err) {
@@ -644,17 +659,6 @@
                 btnSubmit.disabled = false;
                 btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Pendaftaran';
             }
-        }
-
-        // Helper format tanggal untuk input type="date" (YYYY-MM-DD)
-        function formatDateForInput(dateStr) {
-            if (!dateStr) return "";
-            const d = new Date(dateStr);
-            if (isNaN(d.getTime())) return dateStr; 
-            const year = d.getFullYear();
-            const month = String(d.getMonth() + 1).padStart(2, '0');
-            const day = String(d.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
         }
     </script>
 </body>
