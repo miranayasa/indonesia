@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Business Consultant - Miranaya Academy</title>
-    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
-    <script src="[https://cdn.jsdelivr.net/npm/chart.js](https://cdn.jsdelivr.net/npm/chart.js)"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         tailwind.config = {
             darkMode: 'media',
@@ -19,27 +19,23 @@
         }
     </script>
     <style>
-        @import url('[https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap](https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap)');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); }
-        @media (prefers-color-scheme: dark) {
-            .glass { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(12px); }
-        }
         @media print {
             body { background: white !important; color: black !important; }
-            no-print { display: none !important; }
+            .no-print { display: none !important; }
         }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(156, 163, 175, 0.5); border-radius: 3px; }
     </style>
 </head>
-<body class="h-full bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col md:flex-row antialiased transition-colors duration-300">
+<body class="h-full bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col md:flex-row antialiased">
 
     <!-- SIDEBAR -->
     <aside class="no-print w-full md:w-80 bg-white dark:bg-slate-900 border-b md:border-r border-slate-200 dark:border-slate-800 flex flex-col h-auto md:h-screen shrink-0">
         <div class="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center gap-3">
-            <img src="mdemy.png" alt="Logo" class="w-10 h-10 object-contain rounded-xl shadow-sm bg-slate-100 dark:bg-slate-800 p-1" onerror="this.src='[https://via.placeholder.com/40?text=MA](https://via.placeholder.com/40?text=MA)'">
+            <img src="mdemy.png" alt="Logo" class="w-10 h-10 object-contain rounded-xl shadow-sm bg-slate-100 dark:bg-slate-800 p-1" onerror="this.src='https://via.placeholder.com/40?text=MA'">
             <div>
                 <h1 class="font-bold text-sm tracking-wide text-blue-600 dark:text-blue-400">Miranaya Academy</h1>
                 <p class="text-xs text-slate-500 font-medium">AI Business Consultant</p>
@@ -61,7 +57,7 @@
         </div>
 
         <div class="p-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
-            <a href="[https://miranaya.online](https://miranaya.online)" target="_blank" class="flex items-center gap-2 text-xs text-slate-500 hover:text-blue-600 font-medium">
+            <a href="https://miranaya.online" target="_blank" class="flex items-center gap-2 text-xs text-slate-500 hover:text-blue-600 font-medium">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
                 miranaya.online
             </a>
@@ -76,9 +72,9 @@
                 <p class="text-xs text-slate-500">Konsultan Bisnis Berbasis Artificial Intelligence</p>
             </div>
             <div id="exportActionButtons" class="hidden items-center gap-2">
-                <button onclick="window.print()" class="px-3 py-1.5 text-xs font-medium border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-1.5">Print / PDF</button>
-                <button onclick="copyResultJSON()" class="px-3 py-1.5 text-xs font-medium border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-1.5">Copy JSON</button>
-                <button onclick="downloadJSON()" class="px-3 py-1.5 text-xs font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center gap-1.5">Download JSON</button>
+                <button onclick="window.print()" class="px-3 py-1.5 text-xs font-medium border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">Print / PDF</button>
+                <button onclick="copyResultJSON()" class="px-3 py-1.5 text-xs font-medium border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">Copy JSON</button>
+                <button onclick="downloadJSON()" class="px-3 py-1.5 text-xs font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700">Download JSON</button>
             </div>
         </header>
 
@@ -99,35 +95,35 @@
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Kategori Usaha *</label>
-                            <input type="text" id="busCategory" required placeholder="Contoh: Kuliner / F&B / Coffee Shop" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <input type="text" id="busCategory" required placeholder="Contoh: Kuliner / F&B" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
                             <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Lokasi *</label>
-                            <input type="text" id="busLocation" required placeholder="Contoh: Jakarta Selatan, DKI Jakarta" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <input type="text" id="busLocation" required placeholder="Contoh: Jakarta Selatan" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Target Pasar *</label>
-                            <input type="text" id="busMarket" required placeholder="Contoh: Mahasiswa & Pekerja Kantoran Usia 18-35 Tahun" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <input type="text" id="busMarket" required placeholder="Contoh: Mahasiswa & Pekerja" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
-                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Modal yang Tersedia (Opsional)</label>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Modal Tersedia (Opsional)</label>
                             <input type="text" id="busCapital" placeholder="Contoh: Rp 15.000.000" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Pengalaman Usaha (Opsional)</label>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Pengalaman (Opsional)</label>
                             <input type="text" id="busExperience" placeholder="Contoh: Pemula" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Keterangan Tambahan (Opsional)</label>
-                        <textarea id="busDescription" rows="3" placeholder="Ceritakan detail produk atau keunggulan unik..." class="w-full px-3.5 py-2.5 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Keterangan Tambahan</label>
+                        <textarea id="busDescription" rows="3" placeholder="Ceritakan detail produk..." class="w-full px-3.5 py-2.5 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
                     </div>
 
                     <div>
@@ -145,8 +141,8 @@
                     <div class="absolute inset-0 border-4 border-blue-600 rounded-full animate-spin border-t-transparent"></div>
                 </div>
                 <div class="space-y-2">
-                    <h3 id="loadingStatusText" class="text-base font-semibold text-slate-800 dark:text-slate-200">Mengumpulkan data...</h3>
-                    <p class="text-xs text-slate-400">Sistem AI sedang memproses model bisnis Anda secara mendalam.</p>
+                    <h3 id="loadingStatusText" class="text-base font-semibold">Mengumpulkan data...</h3>
+                    <p class="text-xs text-slate-400">Sistem AI sedang memproses model bisnis Anda...</p>
                 </div>
             </section>
 
@@ -164,7 +160,7 @@
                         </div>
                     </div>
                     <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm flex flex-col items-center justify-center text-center">
-                        <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Skor Kelayakan Bisnis</h4>
+                        <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Skor Kelayakan</h4>
                         <div class="relative w-32 h-32 flex items-center justify-center my-2">
                             <canvas id="gaugeChart"></canvas>
                             <div class="absolute inset-0 flex flex-col items-center justify-center">
@@ -188,21 +184,17 @@
                     <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm">
                         <h4 class="font-semibold text-sm mb-3">Analisis SWOT</h4>
                         <div class="grid grid-cols-2 gap-3 text-xs">
-                            <div class="p-3 bg-emerald-50/50 rounded-xl"><strong class="text-emerald-600 block mb-1">Strength</strong><p id="swotS">-</p></div>
-                            <div class="p-3 bg-rose-50/50 rounded-xl"><strong class="text-rose-600 block mb-1">Weakness</strong><p id="swotW">-</p></div>
-                            <div class="p-3 bg-blue-50/50 rounded-xl"><strong class="text-blue-600 block mb-1">Opportunity</strong><p id="swotO">-</p></div>
-                            <div class="p-3 bg-amber-50/50 rounded-xl"><strong class="text-amber-600 block mb-1">Threat</strong><p id="swotT">-</p></div>
+                            <div class="p-3 bg-emerald-50/50 dark:bg-emerald-950/20 rounded-xl"><strong class="text-emerald-600 block mb-1">Strength</strong><p id="swotS">-</p></div>
+                            <div class="p-3 bg-rose-50/50 dark:bg-rose-950/20 rounded-xl"><strong class="text-rose-600 block mb-1">Weakness</strong><p id="swotW">-</p></div>
+                            <div class="p-3 bg-blue-50/50 dark:bg-blue-950/20 rounded-xl"><strong class="text-blue-600 block mb-1">Opportunity</strong><p id="swotO">-</p></div>
+                            <div class="p-3 bg-amber-50/50 dark:bg-amber-950/20 rounded-xl"><strong class="text-amber-600 block mb-1">Threat</strong><p id="swotT">-</p></div>
                         </div>
                     </div>
                 </section>
             </div>
 
             <!-- FOOTER -->
-            <footer class="no-print pt-10 pb-6 border-t border-slate-200 dark:border-slate-800 text-center space-y-4">
-                <div class="flex items-center justify-center gap-2">
-                    <img src="mdemy.png" alt="Logo" class="w-6 h-6 object-contain rounded-md" onerror="this.src='[https://via.placeholder.com/24?text=MA](https://via.placeholder.com/24?text=MA)'">
-                    <span class="text-xs font-bold text-slate-700 dark:text-slate-300">Miranaya Academy</span>
-                </div>
+            <footer class="no-print pt-10 pb-6 border-t border-slate-200 dark:border-slate-800 text-center space-y-2">
                 <p class="text-[11px] text-slate-400">&copy; 2026 Miranaya Academy. All rights reserved.</p>
             </footer>
 
@@ -210,7 +202,7 @@
     </main>
 
     <script>
-        const API_URL = "[https://dawn-dew-b706.miranayasa.workers.dev](https://dawn-dew-b706.miranayasa.workers.dev)";
+        const API_URL = "https://dawn-dew-b706.miranayasa.workers.dev";
         let gaugeChartInstance = null;
         let currentAnalysisData = null;
 
@@ -262,130 +254,4 @@
                 try {
                     if (rawData.candidates && rawData.candidates[0]?.content?.parts?.[0]?.text) {
                         let textResp = rawData.candidates[0].content.parts[0].text;
-                        textResp = textResp.replace(/```json/g, "").replace(/```/g, "").trim();
-                        parsedData = JSON.parse(textResp);
-                    } else if (rawData.error) {
-                        throw new Error(rawData.error.message || JSON.stringify(rawData.error));
-                    }
-                } catch (e) {
-                    throw new Error("Gagal memproses struktur data dari AI.");
-                }
-
-                currentAnalysisData = parsedData;
-                displayAnalysisResult(parsedData, payload.data);
-                saveToLocalStorage(payload.data.name, parsedData);
-                renderHistoryList();
-
-                document.getElementById("exportActionButtons").classList.remove("hidden");
-                document.getElementById("resultDashboard").classList.remove("hidden");
-                document.getElementById("resultDashboard").scrollIntoView({ behavior: 'smooth' });
-
-            } catch (err) {
-                clearInterval(loadingInterval);
-                document.getElementById("loadingSection").classList.add("hidden");
-                document.getElementById("formSection").classList.remove("hidden");
-                alert("Terjadi kesalahan: " + err.message);
-            }
-        }
-
-        function displayAnalysisResult(data, inputData) {
-            const getField = (val, def = "Tidak tersedia") => (val !== undefined && val !== null && val !== "") ? val : def;
-
-            document.getElementById("resName").textContent = getField(data.name || inputData.name);
-            document.getElementById("resCategory").textContent = getField(data.category || inputData.category);
-            document.getElementById("resConclusion").textContent = getField(data.conclusion);
-
-            const score = typeof data.score === 'number' ? data.score : 75;
-            document.getElementById("scoreNumber").textContent = score;
-
-            const badgeEl = document.getElementById("feasibilityBadge");
-            if (score >= 75) {
-                badgeEl.textContent = "Layak";
-                badgeEl.className = "text-xs font-bold px-3 py-1 rounded-full bg-emerald-50 text-emerald-600";
-            } else {
-                badgeEl.textContent = "Cukup Layak";
-                badgeEl.className = "text-xs font-bold px-3 py-1 rounded-full bg-amber-50 text-amber-600";
-            }
-
-            renderGaugeChart(score);
-
-            const fin = data.financial || {};
-            document.getElementById("finCapital").textContent = getField(fin.capital);
-            document.getElementById("finRevenue").textContent = getField(fin.revenue);
-            document.getElementById("finProfit").textContent = getField(fin.profit);
-            document.getElementById("finBep").textContent = getField(fin.bep);
-
-            const swot = data.swot || {};
-            document.getElementById("swotS").textContent = getField(swot.strength);
-            document.getElementById("swotW").textContent = getField(swot.weakness);
-            document.getElementById("swotO").textContent = getField(swot.opportunity);
-            document.getElementById("swotT").textContent = getField(swot.threat);
-        }
-
-        function renderGaugeChart(score) {
-            const ctx = document.getElementById('gaugeChart').getContext('2d');
-            if (gaugeChartInstance) gaugeChartInstance.destroy();
-            gaugeChartInstance = new Chart(ctx, {
-                type: 'doughnut',
-                data: { datasets: [{ data: [score, 100 - score], backgroundColor: ['#3b82f6', '#e2e8f0'], borderWidth: 0, circumference: 180, rotation: 270 }] },
-                options: { responsive: true, maintainAspectRatio: false, cutout: '80%', plugins: { legend: { display: false }, tooltip: { enabled: false } } }
-            });
-        }
-
-        function saveToLocalStorage(name, data) {
-            let history = JSON.parse(localStorage.getItem("miranaya_ai_history") || "[]");
-            history.unshift({ id: Date.now(), name: name || "Analisa Bisnis", date: new Date().toLocaleDateString("id-ID"), data: data });
-            if (history.length > 20) history.pop();
-            localStorage.setItem("miranaya_ai_history", JSON.stringify(history));
-        }
-
-        function renderHistoryList() {
-            const listEl = document.getElementById("historyList");
-            let history = JSON.parse(localStorage.getItem("miranaya_ai_history") || "[]");
-            if (history.length === 0) { listEl.innerHTML = `<p class="text-xs text-slate-400 px-2 italic">Belum ada riwayat analisa.</p>`; return; }
-            listEl.innerHTML = "";
-            history.forEach(item => {
-                listEl.innerHTML += `<button onclick="loadHistoryItem(${item.id})" class="w-full text-left p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group"><div class="text-xs font-semibold text-slate-800 dark:text-slate-200 truncate group-hover:text-blue-600">${item.name}</div><div class="text-[10px] text-slate-400 mt-0.5">${item.date}</div></button>`;
-            });
-        }
-
-        function loadHistoryItem(id) {
-            let history = JSON.parse(localStorage.getItem("miranaya_ai_history") || "[]");
-            const found = history.find(item => item.id === id);
-            if (found) {
-                currentAnalysisData = found.data;
-                displayAnalysisResult(found.data, { name: found.name });
-                document.getElementById("formSection").classList.add("hidden");
-                document.getElementById("exportActionButtons").classList.remove("hidden");
-                document.getElementById("resultDashboard").classList.remove("hidden");
-                document.getElementById("resultDashboard").scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-
-        function resetFormToNew() {
-            document.getElementById("consultantForm").reset();
-            document.getElementById("resultDashboard").classList.add("hidden");
-            document.getElementById("exportActionButtons").classList.add("hidden");
-            document.getElementById("formSection").classList.remove("hidden");
-            document.getElementById("formSection").scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function copyResultJSON() {
-            if (!currentAnalysisData) return alert("Belum ada data analisa.");
-            navigator.clipboard.writeText(JSON.stringify(currentAnalysisData, null, 2));
-            alert("Data JSON berhasil disalin ke clipboard!");
-        }
-
-        function downloadJSON() {
-            if (!currentAnalysisData) return alert("Belum ada data analisa.");
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(currentAnalysisData, null, 2));
-            const downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", "analisa_bisnis_miranaya.json");
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
-        }
-    </script>
-</body>
-</html>
+                        textResp = textResp.replace(/```json/g, "").replace(/
