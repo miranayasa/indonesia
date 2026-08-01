@@ -4,14 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Business Consultant Dashboard</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
 
-    <!-- Header / Navbar -->
     <header class="bg-indigo-700 text-white shadow-md">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-3">
@@ -27,7 +24,6 @@
 
     <main class="max-w-7xl mx-auto px-4 py-8">
         
-        <!-- Form Section -->
         <section id="formSection" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 mb-8">
             <div class="mb-6">
                 <h2 class="text-2xl font-bold text-slate-900">Form Parameter Bisnis</h2>
@@ -79,7 +75,6 @@
             </form>
         </section>
 
-        <!-- Loading Section -->
         <section id="loadingSection" class="hidden py-20 text-center bg-white rounded-2xl shadow-sm border border-slate-200 mb-8">
             <div class="inline-block animate-spin text-indigo-600 text-4xl mb-4">
                 <i class="fa-solid fa-spinner"></i>
@@ -88,10 +83,8 @@
             <p id="loadingStatusText" class="text-sm text-slate-500 mt-1">Menganalisa data parameter usaha Anda...</p>
         </section>
 
-        <!-- Result Dashboard Section -->
         <section id="resultDashboard" class="hidden space-y-6">
             
-            <!-- Top Summary & Verdict Card -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="lg:col-span-2 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
                     <div>
@@ -124,7 +117,6 @@
                 </div>
             </div>
 
-            <!-- Business Model Canvas (BMC) Grid -->
             <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
                 <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
                     <i class="fa-solid fa-table-cells text-indigo-600"></i>
@@ -168,7 +160,6 @@
                 </div>
             </div>
 
-            <!-- Analisis Kelayakan, Pasar, & Kompetitor -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
                     <h4 class="font-bold text-slate-900 mb-2 flex items-center space-x-2">
@@ -193,9 +184,7 @@
                 </div>
             </div>
 
-            <!-- SWOT & PESTEL Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- SWOT -->
                 <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
                     <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
                         <i class="fa-solid fa-compass text-indigo-600"></i>
@@ -221,7 +210,6 @@
                     </div>
                 </div>
 
-                <!-- PESTEL -->
                 <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
                     <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
                         <i class="fa-solid fa-globe text-indigo-600"></i>
@@ -238,7 +226,6 @@
                 </div>
             </div>
 
-            <!-- Proyeksi Finansial & Strategi -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
                     <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
@@ -279,7 +266,6 @@
                 </div>
             </div>
 
-            <!-- Roadmap & Risiko -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
                     <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center space-x-2">
@@ -311,10 +297,8 @@
 
     </main>
 
-    <!-- Script Utama Frontend -->
     <script>
-        // Ganti dengan URL Cloudflare Worker Anda yang aktif
-        const API_URL = "https://dawn-dew-b706.miranayasa.workers.dev/";
+        const API_URL = "https://dawn-dew-b706.miranayanasa.workers.dev";
 
         function resetForm() {
             document.getElementById("businessForm").reset();
@@ -407,12 +391,12 @@
             document.getElementById("resCategory").textContent = data.category || "Umum";
             document.getElementById("resExecSummary").textContent = data.executiveSummary || "";
             
-            document.getElementById("resVerdict").textContent = data.businessDecisionCard?.verdict || "CONDITIONAL GO";
-            document.getElementById("resCoreRationale").textContent = data.businessDecisionCard?.coreRationale || "";
+            const decisionCard = data.businessDecisionCard || {};
+            document.getElementById("resVerdict").textContent = decisionCard.verdict || "CONDITIONAL GO";
+            document.getElementById("resCoreRationale").textContent = decisionCard.coreRationale || "";
             document.getElementById("resOpportunityScore").textContent = data.businessOpportunityScore || "85";
             document.getElementById("resReadynessIndex").textContent = data.businessReadynessIndex || "78";
 
-            // BMC
             const bmc = data.bmc || {};
             populateList("bmcKeyPartners", bmc.keyPartners);
             populateList("bmcKeyActivities", bmc.keyActivities);
@@ -428,14 +412,12 @@
             document.getElementById("resMarket").textContent = data.marketAnalysis || "";
             document.getElementById("resCompetitor").textContent = data.competitorAnalysis || "";
 
-            // SWOT
             const swot = data.swot || {};
             populateList("swotStrength", swot.strength);
             populateList("swotWeakness", swot.weakness);
             populateList("swotOpportunity", swot.opportunity);
             populateList("swotThreat", swot.threat);
 
-            // PESTEL
             const pestel = data.pestel || {};
             document.getElementById("pestelPolitical").textContent = pestel.political || "";
             document.getElementById("pestelEconomic").textContent = pestel.economic || "";
@@ -444,21 +426,18 @@
             document.getElementById("pestelEnvironmental").textContent = pestel.environmental || "";
             document.getElementById("pestelLegal").textContent = pestel.legal || "";
 
-            // Financial
             const fin = data.financialProjection || {};
             document.getElementById("finInitialCapital").textContent = fin.initialCapital || "";
             document.getElementById("finMonthlyRevenue").textContent = fin.monthlyRevenue || "";
             document.getElementById("finMonthlyProfit").textContent = fin.monthlyProfit || "";
             document.getElementById("finBepMonths").textContent = fin.bepMonths || "";
 
-            // Strategies
             const strat = data.strategies || {};
             document.getElementById("stratMarketing").textContent = strat.marketing || "";
             document.getElementById("stratGrowth").textContent = strat.growth || "";
             document.getElementById("stratOperational").textContent = strat.operational || "";
             document.getElementById("stratHr").textContent = strat.hr || "";
 
-            // Roadmap
             populateList("businessRoadmapList", data.businessRoadmap);
 
             document.getElementById("resRiskAnalysis").textContent = data.riskAnalysis || "";
