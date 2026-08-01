@@ -36,7 +36,7 @@
     <!-- SIDEBAR -->
     <aside class="no-print w-full md:w-80 bg-white dark:bg-slate-900 border-b md:border-r border-slate-200 dark:border-slate-800 flex flex-col h-auto md:h-screen shrink-0">
         <div class="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center gap-3">
-            <img src="mdemy.png" alt="Logo" class="w-10 h-10 object-contain rounded-xl shadow-sm bg-slate-100 dark:bg-slate-800 p-1" onerror="this.src='https://via.placeholder.com/40?text=MA'">
+            <div class="w-10 h-10 object-contain rounded-xl shadow-sm bg-blue-600 text-white flex items-center justify-center font-bold text-lg">MA</div>
             <div>
                 <h1 class="font-bold text-sm tracking-wide text-blue-600 dark:text-blue-400">Miranaya Academy</h1>
                 <p class="text-xs text-slate-500 font-medium">AI Business Consultant</p>
@@ -378,21 +378,10 @@
                 if (!response.ok) throw new Error("Gagal terhubung ke AI Gateway server.");
 
                 const rawData = await response.json();
-                let parsedData = rawData;
-                
-                try {
-                    if (rawData.candidates && rawData.candidates[0]?.content?.parts?.[0]?.text) {
-                        let textResp = rawData.candidates[0].content.parts[0].text;
-                        textResp = textResp.replace(/```json/g, "").replace(/```/g, "").trim();
-                        parsedData = JSON.parse(textResp);
-                    }
-                } catch (e) {
-                    console.error("Gagal parsing JSON dari AI:", e);
-                }
+                currentAnalysisData = rawData;
 
-                currentAnalysisData = parsedData;
-                displayResults(parsedData);
-                saveToHistory(parsedData);
+                displayResults(rawData);
+                saveToHistory(rawData);
 
                 document.getElementById("resultDashboard").classList.remove("hidden");
                 document.getElementById("exportActionButtons").classList.remove("hidden");
@@ -413,13 +402,15 @@
             
             document.getElementById("cardVerdict").textContent = data.businessDecisionCard?.verdict || "CONDITIONAL GO";
             document.getElementById("cardRationale").textContent = data.businessDecisionCard?.coreRationale || "-";
-            document.getElementById("scoreOpp").textContent = data.businessOpportunityScore || 80;
-            document.getElementById("scoreReady").textContent = data.businessReadynessIndex || 75;
+            document.getElementById("scoreOpp").textContent = data.businessOpportunityScore || 85;
+            document.getElementById("scoreReady").textContent = data.businessReadynessIndex || 78;
 
             // BMC
             const fillList = (elId, arr) => {
                 const el = document.getElementById(elId);
-                el.innerHTML = (arr && arr.length) ? arr.map(i => `<li>${i}</li>`).join('') : '<li>-</li>';
+                if (el) {
+                    el.innerHTML = (arr && arr.length) ? arr.map(i => `<li>${i}</li>`).join('') : '<li>-</li>';
+                }
             };
             fillList("bmcPartners", data.bmc?.keyPartners);
             fillList("bmcActivities", [...(data.bmc?.keyActivities || []), ...(data.bmc?.keyResources || [])]);
@@ -434,7 +425,9 @@
             // SWOT
             const fillSwot = (elId, arr) => {
                 const el = document.getElementById(elId);
-                el.innerHTML = (arr && arr.length) ? arr.map(i => `<li>${i}</li>`).join('') : '<li>-</li>';
+                if (el) {
+                    el.innerHTML = (arr && arr.length) ? arr.map(i => `<li>${i}</li>`).join('') : '<li>-</li>';
+                }
             };
             fillSwot("swotS", data.swot?.strength);
             fillSwot("swotW", data.swot?.weakness);
@@ -449,7 +442,7 @@
             document.getElementById("pestelEnv").textContent = data.pestel?.environmental || "-";
             document.getElementById("pestelL").textContent = data.pestel?.legal || "-";
 
-            // Porter
+            // Porter's Five Forces
             document.getElementById("porterEntrants").textContent = data.portersFiveForces?.threatOfNewEntrants || "-";
             document.getElementById("porterBuyers").textContent = data.portersFiveForces?.bargainingPowerOfBuyers || "-";
             document.getElementById("porterSuppliers").textContent = data.portersFiveForces?.bargainingPowerOfSuppliers || "-";
@@ -462,7 +455,7 @@
             document.getElementById("finProf").textContent = data.financialProjection?.monthlyProfit || "-";
             document.getElementById("finBep").textContent = data.financialProjection?.bepMonths || "-";
 
-            // Strategy
+            // Strategies
             document.getElementById("stratMarketing").textContent = data.strategies?.marketing || "-";
             document.getElementById("stratGrowth").textContent = data.strategies?.growth || "-";
             document.getElementById("stratOperational").textContent = data.strategies?.operational || "-";
@@ -477,7 +470,6 @@
         }
 
         function renderCharts(data) {
-            // Radar Chart
             if (radarChartInst) radarChartInst.destroy();
             const ctxRadar = document.getElementById("radarChart").getContext("2d");
             radarChartInst = new Chart(ctxRadar, {
@@ -495,7 +487,6 @@
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
             });
 
-            // Pie Chart
             if (pieChartInst) pieChartInst.destroy();
             const ctxPie = document.getElementById("pieChart").getContext("2d");
             pieChartInst = new Chart(ctxPie, {
@@ -510,7 +501,6 @@
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } } }
             });
 
-            // Bar Chart
             if (barChartInst) barChartInst.destroy();
             const ctxBar = document.getElementById("barChart").getContext("2d");
             barChartInst = new Chart(ctxBar, {
@@ -526,7 +516,6 @@
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
             });
 
-            // Line Chart
             if (lineChartInst) lineChartInst.destroy();
             const ctxLine = document.getElementById("lineChart").getContext("2d");
             lineChartInst = new Chart(ctxLine, {
