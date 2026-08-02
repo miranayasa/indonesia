@@ -202,12 +202,14 @@
   .copilot-visual{background:var(--navy-2); border-radius:20px; padding:36px; border:1px solid rgba(255,255,255,.08);}
   .quote-number{font-family:var(--display); font-size:50px; font-weight:700; color:var(--amber); line-height:1;}
   .quote-number span{font-size:19px; color:#C4CCE6; display:block; font-weight:500; margin-top:6px;}
-  .copilot ul.checklist{margin-top:22px;}
-  .copilot ul.checklist li{
-    display:flex; gap:12px; padding:12px 0; border-bottom:1px solid rgba(255,255,255,.08); color:#C9D1EC; font-size:15px;
+  .checklist{margin-top:22px;}
+  .checklist li{
+    display:flex; gap:12px; padding:12px 0; border-bottom:1px solid var(--line); color:var(--ink); font-size:15px; align-items:flex-start;
   }
-  .copilot ul.checklist li:last-child{border-bottom:none;}
-  .copilot ul.checklist svg{width:19px; height:19px; color:var(--amber); flex-shrink:0; margin-top:2px;}
+  .checklist li:last-child{border-bottom:none;}
+  .checklist svg{width:19px; height:19px; color:var(--blue); flex-shrink:0; margin-top:2px;}
+  .copilot ul.checklist li{border-bottom-color:rgba(255,255,255,.08); color:#C9D1EC;}
+  .copilot ul.checklist svg{color:var(--amber);}
 
   /* ---------- Curriculum path ---------- */
   .path-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:18px;}
@@ -227,6 +229,31 @@
   .why-card{background:linear-gradient(160deg,#fff, var(--paper-2)); border:1px solid var(--line); border-radius:18px; padding:30px;}
   .quota-box{background:var(--white); border:1.5px dashed var(--amber-deep); border-radius:14px; padding:18px 20px; margin-top:20px; font-size:14.5px;}
   .quota-box b{font-family:var(--display); color:var(--amber-deep);}
+  .prep-list{margin-top:2px;}
+  .prep-item{display:flex; align-items:flex-start; gap:10px; padding:7px 0; font-size:14px; color:var(--ink); line-height:1.45;}
+  .prep-icon{
+    width:19px; height:19px; border-radius:50%; background:var(--blue-soft);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;
+  }
+  .prep-icon svg{width:10px; height:10px; color:var(--blue);}
+
+  /* ---------- Schedule ---------- */
+  .sched-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  .sched-card{background:#fff; border:1px solid var(--line); border-radius:16px; padding:28px 22px; text-align:center;}
+  .sched-icon{
+    width:44px; height:44px; border-radius:11px; background:var(--blue-soft); margin:0 auto 14px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .sched-icon svg{width:22px; height:22px; color:var(--blue);}
+  .sched-day{font-family:var(--display); font-size:19px; font-weight:700; color:var(--navy); margin-bottom:6px;}
+  .sched-time{font-family:var(--mono); font-size:15px; color:var(--blue); font-weight:600; margin-bottom:10px;}
+  .sched-note{font-size:13px; color:var(--ink-soft);}
+  .sched-card.custom{background:var(--navy); border:none;}
+  .sched-card.custom .sched-icon{background:rgba(242,166,63,.18);}
+  .sched-card.custom .sched-icon svg{color:var(--amber);}
+  .sched-card.custom .sched-day{color:#fff;}
+  .sched-card.custom .sched-note{color:#AEB8DA; margin-bottom:18px;}
+  @media (max-width:760px){ .sched-grid{grid-template-columns:1fr;} }
 
   /* ---------- Pricing ---------- */
   .price-wrap{display:grid; grid-template-columns:1.15fr .85fr; gap:26px; align-items:stretch;}
@@ -248,6 +275,8 @@
   .price-card.simple{display:flex; flex-direction:column; justify-content:center; background:var(--navy); color:#fff;}
   .price-card.simple h3{color:#fff;}
   .price-card.simple .price-desc{color:#AEB8DA;}
+  .price-card.simple .price-feat li{color:#E4E9F8;}
+  .price-card.simple .price-feat svg{color:var(--amber);}
   .price-note{font-size:12px; color:#98A0B5; margin-top:16px; text-align:center;}
 
   /* ---------- Trainer ---------- */
@@ -362,6 +391,7 @@
     <div class="nav-links">
       <a href="#kurikulum">Materi</a>
       <a href="#kenapa">Keunggulan</a>
+      <a href="#jadwal">Jadwal</a>
       <a href="#harga">Investasi</a>
       <a href="#trainer">Trainer</a>
       <a href="#faq">FAQ</a>
@@ -477,9 +507,9 @@
         <h2 style="font-size:29px; font-weight:700; margin-bottom:16px;">AI Sebagai Rekan Kerja, Bukan Pengganti Anda</h2>
         <p style="color:#AEB8DA; font-size:15.5px;">Kami mengajarkan cara memandang AI yang tepat sejak awal: AI adalah rekan kerja yang cepat membaca dan menulis, tapi belum mengenal kebijakan internal perusahaan Anda. AI mengerjakan bagian yang bisa dipercepat, Anda tetap yang mengarahkan dan memutuskan.</p>
         <ul class="checklist">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> AI mempercepat tugas berulang, bukan menggantikan penilaian profesional Anda</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Anda akan belajar cara memberi konteks yang tepat supaya hasil AI lebih akurat</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Setiap insight tetap divalidasi dengan pengetahuan &amp; pengalaman lapangan Anda</li>
+          <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> AI mempercepat tugas berulang, bukan menggantikan penilaian profesional Anda</li>
+          <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Anda akan belajar cara memberi konteks yang tepat supaya hasil AI lebih akurat</li>
+          <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Setiap insight tetap divalidasi dengan pengetahuan &amp; pengalaman lapangan Anda</li>
         </ul>
       </div>
       <div class="copilot-visual reveal">
@@ -521,7 +551,7 @@
         <div class="path-num">03</div>
         <h4>Praktik untuk Pekerjaan Harian</h4>
         <ul>
-          <li>percepat membalas email, notulen, ringkasan dokumen, laporan &amp; presentasi ke atasan</li>
+          <li>Menyusun email, notulen, ringkasan dokumen, laporan &amp; presentasi ke atasan lebih cepat</li>
           <li>Membaca data, menemukan akar masalah, dan mengambil keputusan lebih percaya diri</li>
         </ul>
       </div>
@@ -554,21 +584,52 @@
         <h2 style="font-size:29px; margin-bottom:16px;">Kenapa Kami Membatasi Kuota Setiap Batch?</h2>
         <p style="color:var(--ink-soft); font-size:15.5px; margin-bottom:20px;">Kemampuan memakai AI dengan baik hanya bisa didapat lewat latihan langsung dengan tugas nyata Anda. Itu sebabnya kami sengaja menjaga kelas tetap kecil, dengan dua pilihan format:</p>
         <ul class="checklist" style="color:var(--ink);">
-          <li style="border-color:var(--line);"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Private</strong> — sesi 1-on-1 langsung dengan trainer, materi &amp; jadwal bisa disesuaikan sepenuhnya dengan kebutuhan Anda.</span></li>
-          <li style="border-color:var(--line);"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Semi Private</strong> — kelas kecil maksimal beberapa peserta, tetap mendapat bimbingan personal dari trainer di setiap sesi praktik.</span></li>
+          <li style="border-color:var(--line);"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--blue)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Private</strong> — sesi 1-on-1 langsung dengan trainer, materi &amp; jadwal bisa disesuaikan sepenuhnya dengan kebutuhan Anda.</span></li>
+          <li style="border-color:var(--line);"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--blue)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Semi Private</strong> — kelas kecil maksimal beberapa peserta, tetap mendapat bimbingan personal dari trainer di setiap sesi praktik.</span></li>
         </ul>
         <div class="quota-box">
           🔥 Kami membatasi <b>maksimal 5–8 peserta</b> per batch Semi Private, supaya suasana belajar tetap personal dan setiap peserta benar-benar praktik — bukan sekadar menonton slide.
         </div>
       </div>
       <div class="why-card reveal">
-        <h3 style="font-size:18px; margin-bottom:18px;">Yang Perlu Anda Siapkan</h3>
-        <ul class="checklist" style="color:var(--ink);">
-          <li style="border-color:var(--line);"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><span>Laptop/HP dengan akses AI chat (ChatGPT, Claude, Gemini, atau tools kantor Anda)</span></li>
-          <li style="border-color:var(--line);"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><span>1 contoh tugas nyata dari pekerjaan Anda: laporan, data, atau masalah yang sedang dihadapi</span></li>
-          <li style="border-color:var(--line);"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><span>Waktu 3 jam tanpa gangguan, karena hampir seluruh sesi adalah praktik langsung</span></li>
-          <li style="border-color:transparent;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><span>Tidak perlu latar belakang atau kemampuan coding sama sekali</span></li>
+        <h3 style="font-size:18px; margin-bottom:14px;">Yang Perlu Anda Siapkan</h3>
+        <ul class="prep-list">
+          <li class="prep-item"><span class="prep-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span><span>Laptop/HP dengan akses AI chat (ChatGPT, Claude, Gemini, atau tools kantor Anda)</span></li>
+          <li class="prep-item"><span class="prep-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span><span>1 contoh tugas nyata dari pekerjaan Anda: laporan, data, atau masalah yang sedang dihadapi</span></li>
+          <li class="prep-item"><span class="prep-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span><span>Waktu 3 jam tanpa gangguan, karena hampir seluruh sesi adalah praktik langsung</span></li>
+          <li class="prep-item"><span class="prep-icon"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span><span>Tidak perlu latar belakang atau kemampuan coding sama sekali</span></li>
         </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ JADWAL ============ -->
+<section class="section" id="jadwal">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <div class="eyebrow" style="justify-content:center;">Pilih yang Paling Pas</div>
+      <h2>Jadwal Batch Semi Private</h2>
+      <p>Dua pilihan jadwal reguler setiap minggu. Butuh waktu lain? Bisa diatur khusus untuk Anda.</p>
+    </div>
+    <div class="sched-grid reveal">
+      <div class="sched-card">
+        <div class="sched-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg></div>
+        <div class="sched-day">Selasa Malam</div>
+        <div class="sched-time">18.30 – 21.30 WIB</div>
+        <div class="sched-note">Cocok buat yang ingin belajar sepulang kerja tanpa mengganggu jadwal akhir pekan.</div>
+      </div>
+      <div class="sched-card">
+        <div class="sched-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg></div>
+        <div class="sched-day">Sabtu Pagi</div>
+        <div class="sched-time">09.00 – 12.00 WIB</div>
+        <div class="sched-note">Cocok buat yang ingin fokus belajar santai di akhir pekan, badan &amp; pikiran masih segar.</div>
+      </div>
+      <div class="sched-card custom">
+        <div class="sched-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg></div>
+        <div class="sched-day">Butuh Waktu Khusus?</div>
+        <div class="sched-note">Jadwal di luar dua pilihan di atas bisa diatur sesuai kebutuhan Anda atau tim — terutama untuk kelas Private/Instansi.</div>
+        <a class="btn btn-wa btn-block" href="https://wa.me/6282290007890?text=Halo%20Admin%20Miranaya%20Academy%2C%20saya%20ingin%20request%20jadwal%20khusus%20untuk%20pelatihan%20AI%20Fundamentals%20for%20Professionals" target="_blank" rel="noopener">Request via WhatsApp</a>
       </div>
     </div>
   </div>
@@ -593,10 +654,10 @@
         </div>
         <span class="price-save">Anda hemat Rp101.000</span>
         <ul class="price-feat">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Pelatihan intensif 3 jam, live via Zoom</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>70–80% waktu untuk praktik langsung</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Materi &amp; lembar referensi untuk dipakai setelah pelatihan</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Sesi tanya jawab langsung dengan trainer</li>
+          <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Pelatihan intensif 3 jam, live via Zoom</li>
+          <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>70–80% waktu untuk praktik langsung</li>
+          <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Materi &amp; lembar referensi untuk dipakai setelah pelatihan</li>
+          <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Sesi tanya jawab langsung dengan trainer</li>
         </ul>
         <a class="btn btn-primary btn-block" href="https://miranaya.online/register.html">Daftar &amp; Kunci Harga Promo</a>
       </div>
@@ -604,9 +665,9 @@
         <h3>Private / Kelompok Instansi</h3>
         <p class="price-desc">Sesi khusus untuk Anda atau tim internal — jadwal, studi kasus, dan harga menyesuaikan kebutuhan Anda.</p>
         <ul class="price-feat" style="margin:20px 0 26px;">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Jadwal fleksibel, bisa custom hari &amp; jam</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Materi bisa disesuaikan tugas nyata tim Anda</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Cocok untuk in-house training kantor/instansi</li>
+          <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Jadwal fleksibel, bisa custom hari &amp; jam</li>
+          <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Materi bisa disesuaikan tugas nyata tim Anda</li>
+          <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Cocok untuk in-house training kantor/instansi</li>
         </ul>
         <a class="btn btn-outline btn-block" href="https://wa.me/6282290007890?text=Halo%20Admin%20Miranaya%20Academy%2C%20saya%20ingin%20tanya%20harga%20kelas%20Private%2FInstansi%20untuk%20AI%20Fundamentals%20for%20Professionals" target="_blank" rel="noopener">Tanya Harga via WhatsApp</a>
       </div>
