@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Fundamentals for Professionals — Kelas Private & Semi Private | Mdemy Miranaya Academy</title>
+<meta name="description" content="Pelatihan AI Fundamentals for Professionals: praktik langsung, kelas Private & Semi Private, harga mulai Rp149.000. Daftar sekarang, kuota terbatas.">
+<link rel="icon" href="mdemy.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0F1B3D;
+    --navy-2:#152650;
+    --navy-3:#1C3163;
+    --blue:#2F6FED;
+    --blue-soft:#E8EFFE;
+    --amber:#F2A63F;
+    --amber-deep:#B9741F;
+    --paper:#F7F8FB;
+    --paper-2:#EEF2FA;
+    --ink:#111527;
+    --ink-soft:#4A5268;
+    --line:#E1E6F0;
+    --white:#FFFFFF;
+    --mono: 'JetBrains Mono', 'Courier New', monospace;
+    --display: 'Space Grotesk', 'Inter', sans-serif;
+    --body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--body);
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%; display:block;}
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+  section{position:relative;}
+  h1,h2,h3,h4{font-family:var(--display); letter-spacing:-0.01em; color:var(--navy);}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--blue);
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:14px;
+  }
+  .eyebrow::before{content:"";width:18px;height:2px;background:var(--amber);display:inline-block;border-radius:2px;}
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:10px;
+    padding:15px 28px; border-radius:12px; font-weight:700; font-size:15.5px;
+    font-family:var(--body); cursor:pointer; border:none; white-space:nowrap;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+  }
+  .btn-primary{background:var(--amber); color:#2B1704; box-shadow:0 10px 24px -8px rgba(242,166,63,.55);}
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 14px 30px -8px rgba(242,166,63,.65);}
+  .btn-outline{background:rgba(255,255,255,.06); color:var(--white); border:1.5px solid rgba(255,255,255,.35);}
+  .btn-outline:hover{background:rgba(255,255,255,.14); transform:translateY(-2px);}
+  .btn-outline.dark{color:var(--navy); border-color:var(--line); background:#fff;}
+  .btn-wa{background:#1F9D55; color:#fff; box-shadow:0 10px 24px -8px rgba(31,157,85,.5);}
+  .btn-wa:hover{transform:translateY(-2px);}
+  .btn-block{width:100%;}
+  .btn svg{width:18px; height:18px; flex-shrink:0;}
+
+  /* ---------- Nav ---------- */
+  .nav{
+    position:sticky; top:0; z-index:100;
+    background:rgba(15,27,61,.9);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .nav-inner{display:flex; align-items:center; justify-content:space-between; padding:14px 24px;}
+  .brand{display:flex; align-items:center; gap:12px;}
+  .brand-badge{
+    width:46px; height:46px; border-radius:11px; background:var(--white);
+    display:flex; align-items:center; justify-content:center; overflow:hidden;
+    box-shadow:0 4px 14px rgba(0,0,0,.25); flex-shrink:0;
+  }
+  .brand-badge img{width:100%; height:100%; object-fit:contain; padding:3px;}
+  .brand-text{color:var(--white); line-height:1.15;}
+  .brand-text b{font-family:var(--display); font-size:16.5px; font-weight:700; display:block;}
+  .brand-text span{font-size:11.5px; color:#B9C4E6; letter-spacing:.04em;}
+  .nav-links{display:flex; align-items:center; gap:28px;}
+  .nav-links a{color:#D3DAF0; font-size:14.5px; font-weight:500;}
+  .nav-links a:hover{color:var(--white);}
+  .nav-cta{display:flex; align-items:center; gap:12px;}
+  .nav-toggle{display:none; background:none; border:none; color:var(--white); font-size:24px; cursor:pointer; line-height:1;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:radial-gradient(ellipse 120% 90% at 15% -10%, #223b7a 0%, var(--navy) 55%), var(--navy);
+    padding:72px 0 84px;
+    overflow:hidden;
+  }
+  .hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:56px; align-items:center;}
+  .hero-badges{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:22px;}
+  .pill{
+    font-size:12.5px; font-weight:600; color:var(--white); padding:7px 14px;
+    border-radius:100px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18);
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .pill.amber{background:rgba(242,166,63,.16); border-color:rgba(242,166,63,.4); color:#FFD79A;}
+  .hero h1{
+    font-size:44px; font-weight:700; color:var(--white); line-height:1.14; margin-bottom:18px;
+  }
+  .hero h1 em{font-style:normal; color:var(--amber);}
+  .hero p.lead{color:#C4CCE6; font-size:17px; max-width:540px; margin-bottom:28px;}
+  .hero-cta{display:flex; flex-wrap:wrap; gap:14px; margin-bottom:30px;}
+  .hero-note{display:flex; align-items:center; gap:9px; color:#93A0C4; font-size:13.5px;}
+  .hero-note svg{width:16px;height:16px; color:var(--amber); flex-shrink:0;}
+
+  /* Before / after signature card */
+  .compare-card{
+    background:#0A1330; border:1px solid rgba(255,255,255,.1); border-radius:18px;
+    box-shadow:0 40px 80px -30px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03) inset;
+    overflow:hidden;
+  }
+  .compare-bar{
+    display:flex; align-items:center; gap:8px; padding:13px 16px;
+    background:#101B3E; border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .compare-dot{width:10px; height:10px; border-radius:50%;}
+  .compare-bar .compare-dot:nth-child(1){background:#FF6259;}
+  .compare-bar .compare-dot:nth-child(2){background:#FFBD2E;}
+  .compare-bar .compare-dot:nth-child(3){background:#28C93F;}
+  .compare-bar span.label{margin-left:auto; font-family:var(--mono); font-size:11px; color:#5C6690;}
+  .compare-body{padding:24px 22px 26px;}
+  .c-row{margin-bottom:18px;}
+  .c-tag{
+    display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.06em;
+    padding:3px 9px; border-radius:5px; margin-bottom:9px; font-family:var(--mono);
+  }
+  .c-tag.bad{background:rgba(255,98,89,.15); color:#FF9990;}
+  .c-tag.good{background:rgba(47,111,237,.18); color:#8FB3FF;}
+  .c-line{
+    font-family:var(--mono); font-size:13px; color:#7C86AC; background:#111B3D;
+    border:1px solid rgba(255,255,255,.06); border-radius:10px; padding:12px 14px;
+  }
+  .c-line.strike{text-decoration:line-through; text-decoration-color:#4a5170;}
+  .c-frame{
+    background:#0F1B3D; border:1px solid rgba(47,111,237,.3); border-radius:10px; padding:14px 16px;
+    font-family:var(--mono); font-size:13px; color:#C7D2F5; line-height:1.55;
+  }
+  .c-out{
+    margin-top:16px; padding-top:16px; border-top:1px dashed rgba(255,255,255,.12);
+    color:#7CE3A6; display:flex; align-items:center; gap:8px; font-family:var(--mono); font-size:13px;
+  }
+  .c-big{font-family:var(--display); font-size:34px; font-weight:700; line-height:1;}
+  .c-big.muted{color:#5C6690; text-decoration:line-through; text-decoration-color:#3d4568;}
+  .c-big.pop{color:var(--amber);}
+  .c-sub{font-size:12.5px; color:#8A93B8; margin-top:6px;}
+  .c-arrow{display:flex; align-items:center; gap:10px; margin:14px 0; color:#5C6690; font-size:12px; font-family:var(--mono);}
+  .c-arrow svg{width:16px; height:16px; flex-shrink:0;}
+  .c-arrow::before, .c-arrow::after{content:""; flex:1; height:1px; background:rgba(255,255,255,.08);}
+  .c-cursor{display:inline-block; width:7px; height:14px; background:var(--amber); animation:blink 1s step-end infinite; vertical-align:middle;}
+  @keyframes blink{50%{opacity:0;}}
+  @media (prefers-reduced-motion: reduce){.c-cursor{animation:none;}}
+
+  /* ---------- Stat strip ---------- */
+  .stats{background:var(--blue);}
+  .stats-inner{display:grid; grid-template-columns:repeat(4,1fr);}
+  .stat{padding:26px 20px; text-align:center; border-right:1px solid rgba(255,255,255,.16);}
+  .stat:last-child{border-right:none;}
+  .stat b{display:block; font-family:var(--display); font-size:27px; color:#fff; font-weight:700;}
+  .stat span{font-size:12.5px; color:#DCE6FF; font-weight:500;}
+
+  /* ---------- Section generic ---------- */
+  .section{padding:84px 0;}
+  .section-head{max-width:640px; margin-bottom:46px;}
+  .section-head.center{margin-left:auto; margin-right:auto; text-align:center;}
+  .section-head h2{font-size:32px; font-weight:700; margin-bottom:14px;}
+  .section-head p{color:var(--ink-soft); font-size:16px;}
+  .bg-navy{background:var(--navy);}
+  .bg-navy .section-head h2, .bg-navy h3{color:#fff;}
+  .bg-navy .section-head p{color:#AEB8DA;}
+
+  /* ---------- Pain points ---------- */
+  .pain-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
+  .pain-card{background:#fff; border:1px solid var(--line); border-radius:16px; padding:26px 22px;}
+  .pain-icon{
+    width:44px; height:44px; border-radius:11px; background:var(--blue-soft);
+    display:flex; align-items:center; justify-content:center; margin-bottom:16px;
+  }
+  .pain-icon svg{width:22px; height:22px; color:var(--blue);}
+  .pain-card h4{font-size:16px; font-weight:700; margin-bottom:8px; color:var(--navy);}
+  .pain-card p{font-size:14px; color:var(--ink-soft);}
+
+  /* ---------- Co-pilot / trust section ---------- */
+  .copilot{display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;}
+  .copilot-visual{background:var(--navy-2); border-radius:20px; padding:36px; border:1px solid rgba(255,255,255,.08);}
+  .quote-number{font-family:var(--display); font-size:50px; font-weight:700; color:var(--amber); line-height:1;}
+  .quote-number span{font-size:19px; color:#C4CCE6; display:block; font-weight:500; margin-top:6px;}
+  .copilot ul.checklist{margin-top:22px;}
+  .copilot ul.checklist li{
+    display:flex; gap:12px; padding:12px 0; border-bottom:1px solid rgba(255,255,255,.08); color:#C9D1EC; font-size:15px;
+  }
+  .copilot ul.checklist li:last-child{border-bottom:none;}
+  .copilot ul.checklist svg{width:19px; height:19px; color:var(--amber); flex-shrink:0; margin-top:2px;}
+
+  /* ---------- Curriculum path ---------- */
+  .path-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:18px;}
+  .path-card{
+    background:#fff; border:1px solid var(--line); border-radius:16px; padding:22px 20px; position:relative;
+  }
+  .path-num{
+    width:34px; height:34px; border-radius:9px; background:var(--navy); color:#fff; font-family:var(--display);
+    font-weight:700; font-size:15px; display:flex; align-items:center; justify-content:center; margin-bottom:14px;
+  }
+  .path-card h4{font-size:15.5px; margin-bottom:10px; line-height:1.3;}
+  .path-card ul li{font-size:12.8px; color:var(--ink-soft); padding:5px 0; display:flex; gap:6px;}
+  .path-card ul li::before{content:"\2013"; color:var(--blue); flex-shrink:0;}
+
+  /* ---------- Why private ---------- */
+  .why-grid{display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:center;}
+  .why-card{background:linear-gradient(160deg,#fff, var(--paper-2)); border:1px solid var(--line); border-radius:18px; padding:30px;}
+  .quota-box{background:var(--white); border:1.5px dashed var(--amber-deep); border-radius:14px; padding:18px 20px; margin-top:20px; font-size:14.5px;}
+  .quota-box b{font-family:var(--display); color:var(--amber-deep);}
+
+  /* ---------- Pricing ---------- */
+  .price-wrap{display:grid; grid-template-columns:1.15fr .85fr; gap:26px; align-items:stretch;}
+  .price-card{background:#fff; border:1px solid var(--line); border-radius:20px; padding:36px 34px; position:relative;}
+  .price-card.featured{border:2px solid var(--blue); box-shadow:0 24px 50px -20px rgba(47,111,237,.35);}
+  .price-tag{
+    position:absolute; top:-13px; left:32px; background:#DC3D3D; color:#fff; font-size:12px; font-weight:700;
+    padding:6px 16px; border-radius:100px; letter-spacing:.03em;
+  }
+  .price-card h3{font-size:22px; margin-bottom:6px;}
+  .price-card .price-desc{color:var(--ink-soft); font-size:14.5px; margin-bottom:22px;}
+  .price-row{display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin-bottom:6px;}
+  .price-old{font-size:19px; color:#A6ADC2; text-decoration:line-through; font-weight:600;}
+  .price-amount{font-family:var(--display); font-size:44px; font-weight:700; color:var(--navy);}
+  .price-amount span{font-size:14px; color:var(--ink-soft); font-weight:500;}
+  .price-save{display:inline-block; background:#E9F9EF; color:#1F9D55; font-size:12.5px; font-weight:700; padding:5px 12px; border-radius:100px; margin:14px 0 22px;}
+  .price-feat li{display:flex; gap:10px; font-size:14.5px; color:var(--ink); padding:8px 0;}
+  .price-feat svg{width:18px; height:18px; color:var(--blue); flex-shrink:0; margin-top:1px;}
+  .price-card.simple{display:flex; flex-direction:column; justify-content:center; background:var(--navy); color:#fff;}
+  .price-card.simple h3{color:#fff;}
+  .price-card.simple .price-desc{color:#AEB8DA;}
+  .price-note{font-size:12px; color:#98A0B5; margin-top:16px; text-align:center;}
+
+  /* ---------- Trainer ---------- */
+  .trainer-card{
+    display:grid; grid-template-columns:200px 1fr; gap:36px; align-items:center;
+    background:var(--navy); border-radius:22px; padding:38px; color:#fff;
+  }
+  .trainer-avatar{
+    width:100%; aspect-ratio:1/1; border-radius:18px; background:linear-gradient(150deg,var(--blue),#173a86);
+    display:flex; align-items:center; justify-content:center; font-family:var(--display); font-size:52px; font-weight:700; color:#fff;
+    border:1px solid rgba(255,255,255,.15); overflow:hidden;
+  }
+  .trainer-avatar img{width:100%; height:100%; object-fit:cover; object-position:top center;}
+  .trainer-card h3{color:#fff; font-size:24px; margin-bottom:4px;}
+  .trainer-role{color:var(--amber); font-size:14px; font-weight:600; margin-bottom:16px;}
+  .trainer-tags{display:flex; flex-wrap:wrap; gap:9px; margin-bottom:20px;}
+  .trainer-tags span{font-size:12.5px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); padding:6px 12px; border-radius:100px; color:#DCE3F7;}
+  .trainer-card p.bio{color:#B9C2E2; font-size:14.5px; max-width:520px; margin-bottom:20px;}
+
+  /* ---------- FAQ ---------- */
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-q{
+    width:100%; text-align:left; background:none; border:none; padding:22px 0; cursor:pointer;
+    display:flex; justify-content:space-between; align-items:center; gap:20px; font-family:var(--body);
+    font-size:16.5px; font-weight:600; color:var(--navy);
+  }
+  .faq-q svg{width:20px; height:20px; color:var(--blue); flex-shrink:0; transition:transform .25s ease;}
+  .faq-item.open .faq-q svg{transform:rotate(45deg);}
+  .faq-a{max-height:0; overflow:hidden; transition:max-height .3s ease;}
+  .faq-a p{padding-bottom:22px; color:var(--ink-soft); font-size:15px; max-width:760px;}
+
+  /* ---------- Final CTA ---------- */
+  .cta-final{
+    background:linear-gradient(120deg, var(--navy) 0%, var(--navy-3) 100%);
+    border-radius:26px; padding:56px 48px; text-align:center; position:relative; overflow:hidden;
+  }
+  .cta-final::after{
+    content:""; position:absolute; width:340px; height:340px; border-radius:50%; background:radial-gradient(circle, rgba(242,166,63,.35), transparent 70%);
+    top:-140px; right:-100px;
+  }
+  .cta-final h2{color:#fff; font-size:31px; margin-bottom:14px; position:relative;}
+  .cta-final p{color:#C4CCE6; font-size:16px; max-width:520px; margin:0 auto 30px; position:relative;}
+  .cta-final .hero-cta{justify-content:center; position:relative;}
+
+  /* ---------- Footer ---------- */
+  footer{background:#0A1330; padding:56px 0 26px; color:#8B95BC;}
+  .foot-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:40px; padding-bottom:36px; border-bottom:1px solid rgba(255,255,255,.08);}
+  .foot-brand{display:flex; gap:12px; align-items:center; margin-bottom:14px;}
+  .foot-brand .brand-badge{width:42px; height:42px;}
+  .foot-brand b{color:#fff; font-family:var(--display); font-size:16px;}
+  footer h5{color:#fff; font-size:13.5px; letter-spacing:.05em; text-transform:uppercase; margin-bottom:16px;}
+  footer ul li{margin-bottom:11px; font-size:14.5px;}
+  footer ul li a:hover{color:#fff;}
+  .foot-bottom{display:flex; justify-content:space-between; align-items:center; padding-top:24px; font-size:13px; flex-wrap:wrap; gap:10px;}
+
+  /* ---------- Reveal ---------- */
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){.reveal{opacity:1; transform:none; transition:none;}}
+
+  /* ---------- Sticky mobile CTA ---------- */
+  .mobile-cta{
+    display:none; position:fixed; bottom:0; left:0; right:0; z-index:200;
+    background:#fff; border-top:1px solid var(--line); padding:12px 16px; gap:10px;
+    box-shadow:0 -10px 30px rgba(0,0,0,.08);
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:980px){
+    .hero-grid{grid-template-columns:1fr;}
+    .pain-grid{grid-template-columns:repeat(2,1fr);}
+    .copilot{grid-template-columns:1fr;}
+    .why-grid{grid-template-columns:1fr;}
+    .price-wrap{grid-template-columns:1fr;}
+    .path-grid{grid-template-columns:repeat(3,1fr);}
+    .trainer-card{grid-template-columns:130px 1fr; padding:28px;}
+    .trainer-avatar{font-size:36px;}
+    .foot-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:760px){
+    .nav-links{display:none;}
+    .nav-toggle{display:block;}
+    .nav .btn{display:none;}
+    .hero{padding:40px 0 52px;}
+    .hero h1{font-size:31px;}
+    .stats-inner{grid-template-columns:repeat(2,1fr);}
+    .stat{border-right:none; border-bottom:1px solid rgba(255,255,255,.16); padding:20px 10px;}
+    .pain-grid{grid-template-columns:1fr;}
+    .path-grid{grid-template-columns:1fr 1fr;}
+    .section{padding:56px 0;}
+    .section-head h2{font-size:25px;}
+    .trainer-card{grid-template-columns:1fr; text-align:center;}
+    .trainer-avatar{max-width:150px; margin:0 auto;}
+    .trainer-tags{justify-content:center;}
+    .foot-grid{grid-template-columns:1fr;}
+    .cta-final{padding:40px 24px;}
+    .mobile-cta{display:flex;}
+    body{padding-bottom:74px;}
+    .price-amount{font-size:36px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="https://miranaya.online">
+      <span class="brand-badge"><img src="mdemy.png" alt="Mdemy - Miranaya Academy"></span>
+      <span class="brand-text"><b>Mdemy</b><span>Miranaya Academy</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="#kurikulum">Materi</a>
+      <a href="#kenapa">Keunggulan</a>
+      <a href="#harga">Investasi</a>
+      <a href="#trainer">Trainer</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-primary" href="https://miranaya.online/register.html">Daftar Pelatihan</a>
+      <button class="nav-toggle" aria-label="Menu">&#9776;</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="hero-badges">
+        <span class="pill amber">⭐ Kelas Private &amp; Semi Private</span>
+        <span class="pill">Lebih Banyak Praktik daripada Teori</span>
+      </div>
+      <h1>Kuasai AI untuk Kerja Lebih Cepat, Rapi, dan Percaya Diri</h1>
+      <p class="lead">AI Fundamentals for Professionals: pelatihan intensif 3 jam yang dirancang untuk karyawan, ASN, guru, dosen, hingga pelaku UMKM. Anda tidak sekadar dengar teori — Anda praktik langsung memakai tugas nyata dari pekerjaan Anda sendiri, ditemani trainer dalam kelas Private atau Semi Private yang benar-benar personal.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="https://miranaya.online/register.html">🚀 Daftar Sekarang, Mulai Rp149.000</a>
+        <a class="btn btn-wa" href="https://wa.me/6282290007890?text=Halo%20Admin%20Miranaya%20Academy%2C%20saya%20ingin%20tanya%20info%20pelatihan%20AI%20Fundamentals%20for%20Professionals" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.45 1.32 4.95L2 22l5.2-1.36a9.9 9.9 0 0 0 4.84 1.24h.01c5.5 0 9.96-4.46 9.96-9.96S17.54 2 12.04 2zm5.8 14.24c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.13.11-1.82-.11-.42-.13-.96-.3-1.65-.6-2.9-1.25-4.79-4.17-4.94-4.36-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.27-.29.58-.36.78-.36l.56.01c.18 0 .42-.07.65.5.24.58.82 2 .89 2.15.07.15.12.32.02.51-.1.2-.15.32-.3.5-.14.17-.3.38-.43.51-.14.14-.29.3-.13.58.17.29.75 1.24 1.61 2 1.11 1 2.04 1.3 2.33 1.45.29.14.46.12.63-.07.17-.2.72-.84.91-1.13.19-.29.38-.24.63-.14.26.1 1.65.78 1.93.92.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/></svg>
+          Tanya via WhatsApp
+        </a>
+      </div>
+      <div class="hero-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4.5 8-11V5l-8-3-8 3v6c0 6.5 8 11 8 11z"/></svg>
+        Tanpa perlu bisa coding — cukup bawa laptop/HP &amp; satu tugas nyata dari pekerjaan Anda
+      </div>
+    </div>
+
+    <div class="compare-card reveal">
+      <div class="compare-bar">
+        <span class="compare-dot"></span><span class="compare-dot"></span><span class="compare-dot"></span>
+        <span class="label">sebelum vs sesudah pelatihan</span>
+      </div>
+      <div class="compare-body">
+        <div class="c-row">
+          <span class="c-tag bad">SEBELUM</span>
+          <div class="c-big muted">± 2 Jam</div>
+          <div class="c-sub">waktu rata-rata menyelesaikan satu laporan kerja</div>
+        </div>
+        <div class="c-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14m0 0 6-6m-6 6-6-6"/></svg>
+          setelah menerapkan hasil pelatihan
+        </div>
+        <div class="c-row" style="margin-bottom:0;">
+          <span class="c-tag good">SETELAH</span>
+          <div class="c-big pop">± 20 Menit</div>
+          <div class="c-sub">pekerjaan yang sama, selesai jauh lebih cepat</div>
+        </div>
+        <div class="c-out">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
+          Hemat hingga 80% waktu — sisa waktunya bisa dipakai untuk pekerjaan lain<span class="c-cursor"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ STAT STRIP ============ -->
+<div class="stats">
+  <div class="wrap stats-inner">
+    <div class="stat"><b>10</b><span>Sesi Materi &amp; Praktik</span></div>
+    <div class="stat"><b>70–80%</b><span>Porsi Waktu untuk Praktik</span></div>
+    <div class="stat"><b>3 Jam</b><span>Kelas Intensif Live</span></div>
+    <div class="stat"><b>Maks. 5</b><span>Peserta / Batch Semi-Private</span></div>
+  </div>
+</div>
+
+<!-- ============ PAIN POINTS ============ -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Sering mengalami ini?</div>
+      <h2>Kerja Menumpuk, Waktu Tidak Pernah Cukup</h2>
+      <p>Kalau salah satu di bawah ini terasa familiar, pelatihan ini disusun khusus untuk Anda.</p>
+    </div>
+    <div class="pain-grid">
+      <div class="pain-card reveal">
+        <div class="pain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg></div>
+        <h4>Tugas Rutin Menyita Banyak Waktu</h4>
+        <p>Email, notulen, ringkasan dokumen, dan pekerjaan administratif lain dikerjakan manual berulang setiap minggu.</p>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5m6 14V9m6 10V13"/></svg></div>
+        <h4>Laporan &amp; Presentasi Mepet Deadline</h4>
+        <p>Data mentah harus diubah jadi laporan rapi lalu slide presentasi — sering dikerjakan begadang semalam suntuk.</p>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18M7 14l3-3 3 3 5-6"/></svg></div>
+        <h4>Data Ada, Insight Tidak Kunjung Muncul</h4>
+        <p>Angka dan tren tersedia, tapi menyimpulkan insight yang bisa dipertanggungjawabkan masih terasa berat.</p>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg></div>
+        <h4>Keputusan &amp; Ide Baru Mandek</h4>
+        <p>Sulit membandingkan opsi secara objektif, dan tim kehabisan ide segar untuk masalah yang itu-itu saja.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CO-PILOT / WHY IT WORKS ============ -->
+<section class="section bg-navy">
+  <div class="wrap">
+    <div class="copilot">
+      <div class="reveal">
+        <div class="eyebrow">Cara pandang yang tepat</div>
+        <h2 style="font-size:29px; font-weight:700; margin-bottom:16px;">AI Sebagai Rekan Kerja, Bukan Pengganti Anda</h2>
+        <p style="color:#AEB8DA; font-size:15.5px;">Kami mengajarkan cara memandang AI yang tepat sejak awal: AI adalah rekan kerja yang cepat membaca dan menulis, tapi belum mengenal kebijakan internal perusahaan Anda. AI mengerjakan bagian yang bisa dipercepat, Anda tetap yang mengarahkan dan memutuskan.</p>
+        <ul class="checklist">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> AI mempercepat tugas berulang, bukan menggantikan penilaian profesional Anda</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Anda akan belajar cara memberi konteks yang tepat supaya hasil AI lebih akurat</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Setiap insight tetap divalidasi dengan pengetahuan &amp; pengalaman lapangan Anda</li>
+        </ul>
+      </div>
+      <div class="copilot-visual reveal">
+        <div class="quote-number">3 Hari <span>menjadi</span></div>
+        <div class="quote-number" style="color:#fff; font-size:62px; margin:6px 0;">Hitungan Jam</div>
+        <p style="color:#9BAAD6; font-size:14px; margin-bottom:22px;">Ilustrasi nyata: peserta yang menjadikan AI sebagai rekan berpikir mampu menyelesaikan pekerjaan yang biasanya memakan waktu berhari-hari, dengan kualitas yang setara atau lebih baik.</p>
+        <p style="color:#7889B8; font-size:12.5px; font-family:var(--mono);">— Ilustrasi hasil penerapan materi, bukan jaminan hasil yang sama untuk semua kasus.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KURIKULUM (GENERAL, NO SPOILERS) ============ -->
+<section class="section" id="kurikulum">
+  <div class="wrap">
+    <div class="section-head center reveal" style="margin-left:auto; margin-right:auto;">
+      <div class="eyebrow" style="justify-content:center;">Perjalanan Belajar 3 Jam</div>
+      <h2>Apa yang Akan Anda Kuasai</h2>
+      <p>Lima tahapan besar yang membawa Anda dari sekadar tahu AI, menjadi benar-benar bisa memakainya untuk pekerjaan sehari-hari.</p>
+    </div>
+    <div class="path-grid reveal">
+      <div class="path-card">
+        <div class="path-num">01</div>
+        <h4>Mindset &amp; Peta Tools AI</h4>
+        <ul>
+          <li>Cara pandang yang tepat supaya AI benar-benar membantu, bukan malah membingungkan</li>
+          <li>Kenali tools AI populer &amp; kapan sebaiknya masing-masing dipakai</li>
+        </ul>
+      </div>
+      <div class="path-card">
+        <div class="path-num">02</div>
+        <h4>Seni Memberi Instruksi ke AI</h4>
+        <ul>
+          <li>Rumus praktis supaya permintaan Anda ke AI dipahami dengan tepat sejak percobaan pertama</li>
+          <li>Latihan langsung membandingkan hasil sebelum &amp; sesudah</li>
+        </ul>
+      </div>
+      <div class="path-card">
+        <div class="path-num">03</div>
+        <h4>Praktik untuk Pekerjaan Harian</h4>
+        <ul>
+          <li>Otomatisasi email, notulen, ringkasan dokumen, laporan &amp; presentasi ke atasan</li>
+          <li>Membaca data, menemukan akar masalah, dan mengambil keputusan lebih percaya diri</li>
+        </ul>
+      </div>
+      <div class="path-card">
+        <div class="path-num">04</div>
+        <h4>AI Terintegrasi di Tools Kerja</h4>
+        <ul>
+          <li>Praktik memakai AI langsung di Excel, Word, dan PowerPoint</li>
+          <li>Membuat presentasi otomatis yang rapi hanya dalam hitungan menit</li>
+        </ul>
+      </div>
+      <div class="path-card">
+        <div class="path-num">05</div>
+        <h4>Etika &amp; Kebiasaan Profesional</h4>
+        <ul>
+          <li>Cara memverifikasi hasil AI supaya tidak salah ambil keputusan</li>
+          <li>Menjaga keamanan data perusahaan &amp; pelanggan saat menggunakan AI</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KENAPA PRIVATE & SEMI PRIVATE ============ -->
+<section class="section" style="background:var(--paper-2);" id="kenapa">
+  <div class="wrap">
+    <div class="why-grid">
+      <div class="reveal">
+        <div class="eyebrow">Bukan kelas masal</div>
+        <h2 style="font-size:29px; margin-bottom:16px;">Kenapa Kami Membatasi Kuota Setiap Batch?</h2>
+        <p style="color:var(--ink-soft); font-size:15.5px; margin-bottom:20px;">Kemampuan memakai AI dengan baik hanya bisa didapat lewat latihan langsung dengan tugas nyata Anda. Itu sebabnya kami sengaja menjaga kelas tetap kecil, dengan dua pilihan format:</p>
+        <ul class="checklist" style="color:var(--ink);">
+          <li style="border-color:var(--line);"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Private</strong> — sesi 1-on-1 langsung dengan trainer, materi &amp; jadwal bisa disesuaikan sepenuhnya dengan kebutuhan Anda.</span></li>
+          <li style="border-color:var(--line);"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Semi Private</strong> — kelas kecil maksimal beberapa peserta, tetap mendapat bimbingan personal dari trainer di setiap sesi praktik.</span></li>
+        </ul>
+        <div class="quota-box">
+          🔥 Kami membatasi <b>maksimal 5–8 peserta</b> per batch Semi Private, supaya suasana belajar tetap personal dan setiap peserta benar-benar praktik — bukan sekadar menonton slide.
+        </div>
+      </div>
+      <div class="why-card reveal">
+        <h3 style="font-size:18px; margin-bottom:18px;">Yang Perlu Anda Siapkan</h3>
+        <ul class="checklist" style="color:var(--ink);">
+          <li style="border-color:var(--line);"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><span>Laptop/HP dengan akses AI chat (ChatGPT, Claude, Gemini, atau tools kantor Anda)</span></li>
+          <li style="border-color:var(--line);"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><span>1 contoh tugas nyata dari pekerjaan Anda: laporan, data, atau masalah yang sedang dihadapi</span></li>
+          <li style="border-color:var(--line);"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><span>Waktu 3 jam tanpa gangguan, karena hampir seluruh sesi adalah praktik langsung</span></li>
+          <li style="border-color:transparent;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><span>Tidak perlu latar belakang atau kemampuan coding sama sekali</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HARGA ============ -->
+<section class="section" id="harga">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <div class="eyebrow" style="justify-content:center;">Promo Terbatas</div>
+      <h2>Investasi Belajar yang Sangat Terjangkau</h2>
+      <p>Harga khusus untuk batch yang sedang berjalan. Kuota terbatas, amankan tempat Anda sebelum promo berakhir.</p>
+    </div>
+    <div class="price-wrap reveal">
+      <div class="price-card featured">
+        <span class="price-tag">HEMAT 40%</span>
+        <h3>Kelas Semi Private</h3>
+        <p class="price-desc">Kelas kecil maksimal 5–8 peserta, tetap dapat perhatian personal dari trainer di setiap sesi praktik.</p>
+        <div class="price-row">
+          <span class="price-old">Rp250.000</span>
+          <span class="price-amount">Rp149.000<span> / peserta</span></span>
+        </div>
+        <span class="price-save">Anda hemat Rp101.000</span>
+        <ul class="price-feat">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Pelatihan intensif 3 jam, live via Zoom</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>70–80% waktu untuk praktik langsung</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Materi &amp; lembar referensi untuk dipakai setelah pelatihan</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Sesi tanya jawab langsung dengan trainer</li>
+        </ul>
+        <a class="btn btn-primary btn-block" href="https://miranaya.online/register.html">Daftar &amp; Kunci Harga Promo</a>
+      </div>
+      <div class="price-card simple">
+        <h3>Private / Kelompok Instansi</h3>
+        <p class="price-desc">Sesi khusus untuk Anda atau tim internal — jadwal, studi kasus, dan harga menyesuaikan kebutuhan Anda.</p>
+        <ul class="price-feat" style="margin:20px 0 26px;">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Jadwal fleksibel, bisa custom hari &amp; jam</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Materi bisa disesuaikan tugas nyata tim Anda</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Cocok untuk in-house training kantor/instansi</li>
+        </ul>
+        <a class="btn btn-outline btn-block" href="https://wa.me/6282290007890?text=Halo%20Admin%20Miranaya%20Academy%2C%20saya%20ingin%20tanya%20harga%20kelas%20Private%2FInstansi%20untuk%20AI%20Fundamentals%20for%20Professionals" target="_blank" rel="noopener">Tanya Harga via WhatsApp</a>
+      </div>
+    </div>
+    <p class="price-note reveal">*Harga promo mengikuti periode &amp; kuota batch berjalan — konfirmasi ke admin WhatsApp sebelum mendaftar untuk memastikan harga &amp; jadwal terbaru.</p>
+  </div>
+</section>
+
+<!-- ============ TRAINER ============ -->
+<section class="section bg-navy" id="trainer">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Belajar langsung dari ahlinya</div>
+      <h2 style="font-size:29px;">Trainer Anda</h2>
+    </div>
+    <div class="trainer-card reveal">
+      <div class="trainer-avatar"><img src="photo.jpeg" alt="Muhamad Fatoni, S.T., CBMP., CAIP"></div>
+      <div>
+        <h3>Muhamad Fatoni, S.T., CBMP., CAIP</h3>
+        <div class="trainer-role">Professional Trainer | AI &amp; Business Transformation Expert</div>
+        <div class="trainer-tags">
+          <span>Certified Business Management Professional</span>
+          <span>Certified Artificial Intelligence Professional</span>
+          <span>Praktisi AI &amp; Automation Specialist</span>
+        </div>
+        <p class="bio">Membimbing karyawan, ASN, guru, dosen, mahasiswa, dan pelaku UMKM dari berbagai daerah untuk memanfaatkan AI secara praktis — dengan pendekatan mudah, terjangkau, dan langsung bisa dipraktikkan di pekerjaan sehari-hari.</p>
+        <a class="btn btn-outline" href="https://miranaya.online/profil.html">Lihat Profil Lengkap Trainer</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq">
+  <div class="wrap" style="max-width:820px;">
+    <div class="section-head reveal">
+      <div class="eyebrow">Masih ragu?</div>
+      <h2>Pertanyaan yang Sering Diajukan</h2>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-q">Apakah pelatihan ini butuh kemampuan coding? <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a"><p>Tidak sama sekali. Pelatihan ini 100% non-teknis — cukup bisa mengetik ke AI chat seperti ChatGPT, Claude, atau Gemini. Tidak ada materi coding, API, atau hal teknis lainnya.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Apa bedanya kelas Private dan Semi Private? <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a"><p>Private adalah sesi 1-on-1 khusus untuk Anda atau tim, dengan jadwal dan materi yang bisa disesuaikan sepenuhnya. Semi Private adalah kelas kecil (maksimal 5–8 peserta) sehingga trainer tetap bisa membimbing setiap peserta secara personal.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Benarkah pelatihannya lebih banyak praktik daripada teori? <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a"><p>Ya. Sekitar 70–80% waktu sesi digunakan untuk praktik langsung memakai tugas nyata Anda sendiri — mulai dari pekerjaan administratif harian sampai pengambilan keputusan — bukan hanya membaca slide teori.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Apa yang perlu saya siapkan sebelum sesi? <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a"><p>Siapkan laptop atau HP dengan akses ke AI chat (ChatGPT, Claude, Gemini, atau tools kantor Anda), serta satu contoh tugas nyata dari pekerjaan — misalnya laporan, data, atau masalah yang sedang Anda hadapi.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Bagaimana jika jadwal yang tersedia tidak cocok? <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a"><p>Anda bisa request jadwal khusus (hari &amp; jam custom) langsung via WhatsApp admin kami, terutama untuk kelas Private atau kelompok/instansi.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Apakah bisa untuk pelatihan tim/instansi (in-house training)? <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+        <div class="faq-a"><p>Bisa. Format Private sangat cocok untuk in-house training kantor, sekolah, atau instansi pemerintah. Hubungi admin kami via WhatsApp untuk penawaran khusus kelompok.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="section" style="padding-top:0;">
+  <div class="wrap">
+    <div class="cta-final reveal">
+      <h2>Siap Ubah Cara Kerja Anda dengan AI?</h2>
+      <p>Kuota Semi Private terbatas setiap batch dan harga promo Rp149.000 hanya berlaku selama periode berjalan. Amankan kursi Anda sekarang.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="https://miranaya.online/register.html">🚀 Daftar Pelatihan Sekarang</a>
+        <a class="btn btn-outline" href="https://wa.me/6282290007890?text=Halo%20Admin%20Miranaya%20Academy%2C%20saya%20ingin%20tanya%20info%20pelatihan%20AI%20Fundamentals%20for%20Professionals" target="_blank" rel="noopener">💬 Chat Admin WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">
+          <span class="brand-badge"><img src="mdemy.png" alt="Mdemy - Miranaya Academy"></span>
+          <b>Mdemy — Miranaya Academy</b>
+        </div>
+        <p style="font-size:14px; max-width:320px; margin-bottom:14px;">Lembaga pelatihan yang membantu masyarakat umum belajar AI, Leadership, Management Bisnis, Engineering &amp; Corporate Training secara mudah, terjangkau, dan praktis.</p>
+        <p style="font-size:12.5px; font-style:italic; color:#6C77A0;">"Learn. Innovate. Apply. Impact."</p>
+      </div>
+      <div>
+        <h5>Jelajahi</h5>
+        <ul>
+          <li><a href="#kurikulum">Yang Akan Anda Kuasai</a></li>
+          <li><a href="#harga">Investasi Belajar</a></li>
+          <li><a href="#trainer">Profil Trainer</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Kontak</h5>
+        <ul>
+          <li><a href="https://miranaya.online">miranaya.online</a></li>
+          <li><a href="https://wa.me/6282290007890">WhatsApp 0822-9000-7890</a></li>
+          <li><a href="https://miranaya.online/register.html">Formulir Pendaftaran</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; 2026 Mdemy — Miranaya Academy. All Rights Reserved.</span>
+      <span>Dibuat untuk profesional Indonesia yang ingin naik level bersama AI.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ MOBILE STICKY CTA ============ -->
+<div class="mobile-cta">
+  <a class="btn btn-primary" style="flex:1;" href="https://miranaya.online/register.html">Daftar Rp149.000</a>
+  <a class="btn btn-wa" href="https://wa.me/6282290007890?text=Halo%20Admin%20Miranaya%20Academy%2C%20saya%20ingin%20tanya%20info%20pelatihan%20AI%20Fundamentals%20for%20Professionals" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.45 1.32 4.95L2 22l5.2-1.36a9.9 9.9 0 0 0 4.84 1.24h.01c5.5 0 9.96-4.46 9.96-9.96S17.54 2 12.04 2zm5.8 14.24c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.13.11-1.82-.11-.42-.13-.96-.3-1.65-.6-2.9-1.25-4.79-4.17-4.94-4.36-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.27-.29.58-.36.78-.36l.56.01c.18 0 .42-.07.65.5.24.58.82 2 .89 2.15.07.15.12.32.02.51-.1.2-.15.32-.3.5-.14.17-.3.38-.43.51-.14.14-.29.3-.13.58.17.29.75 1.24 1.61 2 1.11 1 2.04 1.3 2.33 1.45.29.14.46.12.63-.07.17-.2.72-.84.91-1.13.19-.29.38-.24.63-.14.26.1 1.65.78 1.93.92.29.14.48.21.55.33.07.12.07.68-.17 1.36z"/></svg>
+  </a>
+</div>
+
+<script>
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach(function(item){
+    var q = item.querySelector('.faq-q');
+    var a = item.querySelector('.faq-a');
+    q.addEventListener('click', function(){
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function(other){
+        if(other!==item){ other.classList.remove('open'); other.querySelector('.faq-a').style.maxHeight=null; }
+      });
+      if(isOpen){ item.classList.remove('open'); a.style.maxHeight=null; }
+      else{ item.classList.add('open'); a.style.maxHeight = a.scrollHeight+'px'; }
+    });
+  });
+
+  // Mobile nav toggle
+  var toggle = document.querySelector('.nav-toggle');
+  var links = document.querySelector('.nav-links');
+  if(toggle){
+    toggle.addEventListener('click', function(){
+      var open = links.style.display === 'flex';
+      links.style.display = open ? 'none' : 'flex';
+      links.style.cssText += open ? '' : 'position:absolute; top:74px; left:0; right:0; background:#0F1B3D; flex-direction:column; padding:20px 24px; gap:18px; border-bottom:1px solid rgba(255,255,255,.08);';
+    });
+  }
+
+  // Reveal on scroll
+  var reveals = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+    }, {threshold:.12});
+    reveals.forEach(function(r){ io.observe(r); });
+  } else {
+    reveals.forEach(function(r){ r.classList.add('in'); });
+  }
+</script>
+</body>
+</html>
