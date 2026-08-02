@@ -24,7 +24,7 @@
                             800: '#182842', 900: '#0f1b30', 950: '#0a1220',
                         },
                         gold: {
-                            300: '#ecd9a0', 400: '#e0c473', 500: '#c9a227',
+                            50: '#fbf6e9', 200: '#f2e3b0', 300: '#ecd9a0', 400: '#e0c473', 500: '#c9a227',
                             600: '#a9861f', 700: '#8a6c18',
                         },
                     },
@@ -599,20 +599,40 @@
                     </table>
                 </div>
 
-                <!-- Chart perbandingan Sebelum vs Sesudah -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                        <h5 class="text-xs font-bold text-slate-700 mb-3 text-center">Radar Aspek Bisnis: Sebelum vs Sesudah</h5>
-                        <div class="relative" style="height: 280px;">
-                            <canvas id="chartRadarComparison"></canvas>
+                <!-- Proyeksi Setelah Rekomendasi (berupa rentang angka, tanpa chart) -->
+                <div>
+                    <h5 class="text-xs font-bold text-slate-700 mb-3">Estimasi Setelah Rekomendasi Dijalankan</h5>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+                        <div class="bg-gold-50 p-3 rounded-xl border border-gold-200">
+                            <span class="text-slate-500 block">Opportunity Score</span>
+                            <strong id="projOpportunityRange" class="text-sm font-bold text-indigo-800"></strong>
+                        </div>
+                        <div class="bg-gold-50 p-3 rounded-xl border border-gold-200">
+                            <span class="text-slate-500 block">Readiness Index</span>
+                            <strong id="projReadinessRange" class="text-sm font-bold text-indigo-800"></strong>
+                        </div>
+                        <div class="bg-gold-50 p-3 rounded-xl border border-gold-200">
+                            <span class="text-slate-500 block">Payback Period</span>
+                            <strong id="projPaybackRange" class="text-sm font-bold text-indigo-800"></strong>
+                        </div>
+                        <div class="bg-gold-50 p-3 rounded-xl border border-gold-200">
+                            <span class="text-slate-500 block">BEP</span>
+                            <strong id="projBepRange" class="text-sm font-bold text-indigo-800"></strong>
+                        </div>
+                        <div class="bg-gold-50 p-3 rounded-xl border border-gold-200">
+                            <span class="text-slate-500 block">NPV</span>
+                            <strong id="projNpvRange" class="text-sm font-bold text-indigo-800"></strong>
+                        </div>
+                        <div class="bg-gold-50 p-3 rounded-xl border border-gold-200">
+                            <span class="text-slate-500 block">IRR</span>
+                            <strong id="projIrrRange" class="text-sm font-bold text-indigo-800"></strong>
+                        </div>
+                        <div class="col-span-2 bg-gold-50 p-3 rounded-xl border border-gold-200">
+                            <span class="text-slate-500 block">ROI Tahunan</span>
+                            <strong id="projRoiRange" class="text-sm font-bold text-indigo-800"></strong>
                         </div>
                     </div>
-                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                        <h5 class="text-xs font-bold text-slate-700 mb-3 text-center">Proyeksi Pendapatan: Sebelum vs Sesudah</h5>
-                        <div class="relative" style="height: 280px;">
-                            <canvas id="chartRevenueComparison"></canvas>
-                        </div>
-                    </div>
+                    <p class="text-[10px] text-slate-400 mt-2 italic">*Angka di atas adalah estimasi rentang, bukan jaminan hasil pasti — tetap tergantung eksekusi nyata rekomendasi.</p>
                 </div>
             </div>
 
@@ -668,8 +688,6 @@
             marketGrowth: null,
             radar: null,
             allocation: null,
-            radarComparison: null,
-            revenueComparison: null,
         };
 
         function resetForm() {
@@ -976,93 +994,16 @@
             });
         }
 
-        // ---- Chart perbandingan Sebelum vs Sesudah Rekomendasi ----
-        function renderComparisonCharts(currentChartData, improvementPlan) {
-            if (!currentChartData || !improvementPlan || !improvementPlan.projectedAfter) return;
-            if (typeof Chart === "undefined") {
-                console.error("Chart.js gagal dimuat dari CDN — chart perbandingan dilewati.");
-                return;
-            }
-
-            const before = currentChartData;
-            const after = improvementPlan.projectedAfter;
-
-            // ---- Radar: Sebelum vs Sesudah ----
-            destroyChart("radarComparison");
-            const radarCmpCtx = document.getElementById("chartRadarComparison").getContext("2d");
-            const radarBefore = before.businessAspectRadar || { labels: [], values: [] };
-            const radarAfter = after.businessAspectRadar || { labels: radarBefore.labels, values: [] };
-            chartInstances.radarComparison = new Chart(radarCmpCtx, {
-                type: "radar",
-                data: {
-                    labels: radarBefore.labels || [],
-                    datasets: [
-                        {
-                            label: "Sebelum",
-                            data: radarBefore.values || [],
-                            backgroundColor: "rgba(148, 163, 184, 0.25)",
-                            borderColor: "rgb(100, 116, 139)",
-                            pointBackgroundColor: "rgb(100, 116, 139)",
-                        },
-                        {
-                            label: "Sesudah Rekomendasi",
-                            data: radarAfter.values || [],
-                            backgroundColor: "rgba(201, 162, 39, 0.25)",
-                            borderColor: "rgb(201, 162, 39)",
-                            pointBackgroundColor: "rgb(201, 162, 39)",
-                        },
-                    ],
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        r: { min: 0, max: 100, ticks: { stepSize: 20, backdropColor: "transparent" } },
-                    },
-                    plugins: { legend: { position: "bottom", labels: { font: { size: 10 } } } },
-                },
-            });
-
-            // ---- Bar: Proyeksi Pendapatan Sebelum vs Sesudah ----
-            destroyChart("revenueComparison");
-            const revCmpCtx = document.getElementById("chartRevenueComparison").getContext("2d");
-            const revBefore = before.revenueProjection || { labels: [], values: [] };
-            const revAfter = after.revenueProjection || { labels: revBefore.labels, values: [] };
-            chartInstances.revenueComparison = new Chart(revCmpCtx, {
-                type: "bar",
-                data: {
-                    labels: revBefore.labels || [],
-                    datasets: [
-                        {
-                            label: "Sebelum",
-                            data: revBefore.values || [],
-                            backgroundColor: "rgba(100, 116, 139, 0.75)",
-                            borderRadius: 4,
-                        },
-                        {
-                            label: "Sesudah Rekomendasi",
-                            data: revAfter.values || [],
-                            backgroundColor: "rgba(201, 162, 39, 0.85)",
-                            borderRadius: 4,
-                        },
-                    ],
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: "bottom", labels: { font: { size: 10 } } },
-                        tooltip: {
-                            callbacks: {
-                                label: (ctx) => ctx.dataset.label + ": Rp " + Number(ctx.raw).toLocaleString("id-ID"),
-                            },
-                        },
-                    },
-                    scales: {
-                        y: { ticks: { callback: (val) => formatRupiahShort(val) } },
-                    },
-                },
-            });
+        // ---- Mengisi Proyeksi Setelah Rekomendasi (berupa teks rentang, tanpa chart) ----
+        function fillProjectedRanges(projectedAfter) {
+            const p = projectedAfter || {};
+            document.getElementById("projOpportunityRange").textContent = p.opportunityScoreRange || "--";
+            document.getElementById("projReadinessRange").textContent = p.readinessIndexRange || "--";
+            document.getElementById("projPaybackRange").textContent = p.paybackPeriodRange || "--";
+            document.getElementById("projBepRange").textContent = p.bepRange || "--";
+            document.getElementById("projNpvRange").textContent = p.npvRange || "--";
+            document.getElementById("projIrrRange").textContent = p.irrRange || "--";
+            document.getElementById("projRoiRange").textContent = p.annualRoiRange || "--";
         }
 
         function displayResults(data) {
@@ -1227,7 +1168,7 @@
             }
 
             // Chart perbandingan sebelum vs sesudah
-            renderComparisonCharts(data.chartData, improvement);
+            fillProjectedRanges(projected);
         }
     </script>
 </body>
