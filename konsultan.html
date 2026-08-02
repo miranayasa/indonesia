@@ -39,6 +39,23 @@
         body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
         .premium-card { transition: box-shadow .25s ease, transform .25s ease; }
         .premium-card:hover { box-shadow: 0 12px 32px -12px rgba(15,27,48,0.18); }
+
+        /* ================= MODE CETAK / SIMPAN SEBAGAI PDF ================= */
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+            body { background: #ffffff !important; }
+            #authOverlay, #formSection, #loadingSection { display: none !important; }
+            main { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+            section, .premium-card, .grid > div, canvas {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            .shadow-md, .shadow-lg, .shadow-sm, .shadow-xl { box-shadow: none !important; }
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
@@ -67,7 +84,7 @@
     <!-- ================= KONTEN APLIKASI (tersembunyi sampai password benar) ================= -->
     <div id="appContent" class="hidden">
 
-    <header class="bg-gradient-to-r from-indigo-950 via-indigo-900 to-indigo-800 text-white shadow-lg border-b-2 border-gold-500">
+    <header class="bg-gradient-to-r from-indigo-950 via-indigo-900 to-indigo-800 text-white shadow-lg border-b-2 border-gold-500 print:hidden">
         <div class="max-w-7xl mx-auto px-4 py-5 flex justify-between items-center">
             <div class="flex items-center space-x-4">
                 <div class="bg-white p-1.5 rounded-full ring-2 ring-gold-400/60 shadow-md">
@@ -78,10 +95,16 @@
                     <p class="text-[11px] uppercase tracking-[0.2em] text-gold-400 font-bold mt-0.5">Transformation & Business Consultant</p>
                 </div>
             </div>
-            <button onclick="resetForm()" class="bg-white/10 hover:bg-white/20 border border-white/20 text-sm px-4 py-2.5 rounded-xl font-medium transition flex items-center space-x-2 backdrop-blur-sm">
-                <i class="fa-solid fa-plus"></i>
-                <span>Analisis Baru</span>
-            </button>
+            <div class="flex items-center space-x-2 print:hidden">
+                <button id="downloadReportBtn" onclick="downloadReport()" class="hidden bg-gold-500 hover:bg-gold-600 text-indigo-950 text-sm px-4 py-2.5 rounded-xl font-bold transition items-center space-x-2 shadow-md" style="display:none;">
+                    <i class="fa-solid fa-download"></i>
+                    <span>Unduh Laporan</span>
+                </button>
+                <button onclick="resetForm()" class="bg-white/10 hover:bg-white/20 border border-white/20 text-sm px-4 py-2.5 rounded-xl font-medium transition flex items-center space-x-2 backdrop-blur-sm">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Analisis Baru</span>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -174,6 +197,21 @@
 
         <!-- Result Dashboard -->
         <section id="resultDashboard" class="hidden space-y-6">
+
+            <!-- Header khusus untuk versi cetak/PDF, tidak tampil di layar -->
+            <div class="hidden print:flex items-center justify-between border-b-2 border-gold-500 pb-4 mb-2">
+                <div class="flex items-center space-x-3">
+                    <img src="mconsult.png" alt="Minaraya Consulting" class="h-14 w-14 rounded-full object-contain">
+                    <div>
+                        <div class="text-lg font-extrabold text-indigo-900">Minaraya Consulting</div>
+                        <div class="text-[10px] uppercase tracking-widest text-gold-600 font-bold">Transformation & Business Consultant</div>
+                    </div>
+                </div>
+                <div class="text-right text-xs text-slate-500">
+                    <div class="font-semibold text-slate-700">Laporan Analisis Bisnis Eksekutif</div>
+                    <div id="printDate"></div>
+                </div>
+            </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="lg:col-span-2 bg-white rounded-3xl p-6 border border-slate-200/70 shadow-md premium-card flex flex-col justify-between">
@@ -565,7 +603,19 @@
             document.getElementById("busCategoryOther").required = false;
             document.getElementById("resultDashboard").classList.add("hidden");
             document.getElementById("formSection").classList.remove("hidden");
+            document.getElementById("downloadReportBtn").style.display = "none";
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Memicu dialog cetak/simpan-sebagai-PDF bawaan browser, dengan nama file
+        // otomatis mengikuti nama bisnis yang dianalisis (khusus browser Chrome/Edge).
+        function downloadReport() {
+            const bizName = document.getElementById("resName").textContent || "Laporan";
+            const safeName = bizName.replace(/[^a-zA-Z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+            const originalTitle = document.title;
+            document.title = "Laporan-Analisis-Bisnis-" + safeName;
+            window.print();
+            document.title = originalTitle;
         }
 
         // Menampilkan/menyembunyikan kolom isian manual saat opsi "Lainnya" dipilih
@@ -855,6 +905,13 @@
             document.getElementById("resName").textContent = data.name || "Analisis Bisnis";
             document.getElementById("resCategory").textContent = data.category || "Umum";
             document.getElementById("resExecSummary").textContent = data.executiveSummary || "";
+
+            // Tampilkan tombol unduh laporan & isi tanggal untuk versi cetak/PDF
+            document.getElementById("downloadReportBtn").style.display = "flex";
+            const printDateEl = document.getElementById("printDate");
+            if (printDateEl) {
+                printDateEl.textContent = new Date().toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
+            }
 
             const decisionCard = data.businessDecisionCard || {};
             const verdictText = decisionCard.verdict || "CONDITIONAL GO";
