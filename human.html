@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Academic Humanizer (S2 Standard)</title>
+    <!-- Tailwind CSS untuk Desain Rapi -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 min-h-screen py-10 px-4">
+    <div class="max-w-4xl mx-auto bg-white p-6 md:p-10 rounded-2xl shadow-sm border border-slate-200">
+        <h1 class="text-2xl font-bold text-slate-800 mb-1">AI Academic Humanizer (Standar S2/Magister)</h1>
+        <p class="text-slate-500 text-sm mb-6">Ubah tulisan kaku AI menjadi gaya bahasa riset akademik tingkat lanjut dengan struktur format yang presisi.</p>
+
+        <!-- Input API Key Gemini -->
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-slate-700 mb-1">Google Gemini API Key</label>
+            <input type="password" id="apiKey" placeholder="AIzaSy..." class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none text-sm">
+            <p class="text-xs text-slate-400 mt-1">Masukkan API Key dari Google AI Studio milikmu.</p>
+        </div>
+
+        <!-- Input Teks AI -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-slate-700 mb-1">Teks Buatan AI (Yang Mau Diubah)</label>
+            <textarea id="inputText" rows="6" placeholder="Tempel teks atau draf tulisan di sini..." class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none text-sm leading-relaxed"></textarea>
+        </div>
+
+        <!-- Tombol Proses -->
+        <button onclick="humanizeText()" id="submitBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 rounded-xl transition-colors text-sm shadow-sm">
+            Humanisasi ke Gaya Bahasa S2
+        </button>
+
+        <!-- Hasil Output -->
+        <div class="mt-8 pt-6 border-t border-slate-200">
+            <div class="flex justify-between items-center mb-2">
+                <label class="block text-sm font-medium text-slate-700">Hasil Penulisan Akademik (S2)</label>
+                <button type="button" onclick="copyResult()" id="copyBtn" class="bg-slate-200 hover:bg-indigo-100 hover:text-indigo-700 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors flex items-center gap-1">
+                    📋 Salin Teks
+                </button>
+            </div>
+            <!-- Output menggunakan pre-wrap agar nomor, spasi, dan struktur paragraf tetap rapi persis aslinya -->
+            <div id="outputText" class="w-full min-h-[180px] p-5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm whitespace-pre-wrap leading-relaxed select-all">Hasil humanisasi akan muncul di sini...</div>
+        </div>
+    </div>
+
+    <script>
+        async function humanizeText() {
+            const apiKey = document.getElementById('apiKey').value.trim();
+            const inputText = document.getElementById('inputText').value.trim();
+            const outputDiv = document.getElementById('outputText');
+            const btn = document.getElementById('submitBtn');
+
+            if (!apiKey || !inputText) {
+                alert('Mohon masukkan Google Gemini API Key dan teks terlebih dahulu!');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerText = 'Sedang menyusun ulang gaya bahasa magister...';
+            outputDiv.innerText = 'Menganalisis argumen dan menyelaraskan diksi ilmiah...';
+
+            // System instruction yang diperketat untuk standar S2 & konsistensi format
+            const systemInstruction = `Bertindaklah sebagai Peneliti Senior, Dosen Penguji, dan Editor Akademik tingkat Magister (S2). 
+Tugasmu adalah menulis ulang teks masukan agar memiliki kualitas retorika ilmiah tingkat lanjut yang biasa ditemukan pada tesis atau jurnal bereputasi.
+
+Aturan ketat yang harus dipatuhi:
+1. **Gaya Bahasa S2/Magister:** Gunakan diksi akademik yang matang, objektif, analitis, kritis, dan bernas. Hindari nada bahasa yang terlalu menggurui, bombastis, atau kaku seperti robot.
+2. **Pertahankan Format Asli:** Jika teks asli menggunakan penomoran (1, 2, 3), poin-poin (bullet points), atau sub-bab tertentu, pertahankan struktur format tersebut dengan presisi tanpa menghilangkan susunannya.
+3. **Variasi Alami (Burstiness):** Kombinasikan kalimat pendek yang tegas dengan kalimat kompleks beralur logis agar ritme bacaannya natural dan organik.
+4. **Hindari Klise AI:** Dilarang keras menggunakan kata-kata klise khas AI yang membosankan seperti "delve", "testament", "furthermore", "in conclusion", "it is important to note", "crucial", atau "tapestry".
+5. **Kemandirian Makna:** Pastikan seluruh argumen, data, dan substansi teks asli tidak ada yang dikurangi atau diselewengkan maknanya.`;
+
+            // Gunakan model yang stabil (gemini-1.5-flash)
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        system_instruction: {
+                            parts: [{ text: systemInstruction }]
+                        },
+                        contents: [
+                            {
+                                parts: [{ text: inputText }]
+                            }
+                        ],
+                        generationConfig: {
+                            temperature: 0.7
+                        }
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.error) {
+                    outputDiv.innerText = 'Error dari API Gemini: ' + data.error.message;
+                } else {
+                    const resultText = data.candidates[0].content.parts[0].text;
+                    outputDiv.innerText = resultText;
+                }
+            } catch (error) {
+                outputDiv.innerText = 'Terjadi kesalahan koneksi: ' + error.message;
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'Humanisasi ke Gaya Bahasa S2';
+            }
+        }
+
+        function copyResult() {
+            const text = document.getElementById('outputText').innerText;
+            const copyBtn = document.getElementById('copyBtn');
+
+            if (text.startsWith('Hasil humanisasi') || text.startsWith('Error') || text.startsWith('Sedang')) {
+                alert('Belum ada hasil teks valid yang bisa disalin!');
+                return;
+            }
+
+            navigator.clipboard.writeText(text).then(() => {
+                copyBtn.innerText = '✅ Berhasil Disalin!';
+                copyBtn.classList.remove('bg-slate-200', 'text-slate-700');
+                copyBtn.classList.add('bg-emerald-600', 'text-white');
+
+                setTimeout(() => {
+                    copyBtn.innerText = '📋 Salin Teks';
+                    copyBtn.classList.remove('bg-emerald-600', 'text-white');
+                    copyBtn.classList.add('bg-slate-200', 'text-slate-700');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
