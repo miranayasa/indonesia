@@ -636,6 +636,45 @@
                 </div>
             </div>
 
+            <!-- ================= AI ASISTEN (TANYA JAWAB LANJUTAN) ================= -->
+            <div class="bg-white rounded-3xl border border-slate-200/70 shadow-md premium-card overflow-hidden print:hidden">
+                <div class="bg-gradient-to-r from-indigo-950 to-indigo-800 px-6 py-4 flex items-center space-x-3">
+                    <div class="bg-white/10 rounded-full p-2">
+                        <i class="fa-solid fa-comments text-gold-400"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold text-white">Tanya AI Asisten</h3>
+                        <p class="text-[11px] text-indigo-200">Tanyakan apa saja seputar hasil analisis di atas — misalnya skenario modal berbeda, strategi alternatif, atau penjelasan lebih lanjut.</p>
+                    </div>
+                </div>
+
+                <div id="chatMessages" class="p-6 space-y-4 max-h-96 overflow-y-auto bg-slate-50">
+                    <div class="flex items-start space-x-2">
+                        <div class="bg-indigo-900 text-gold-400 rounded-full w-7 h-7 flex items-center justify-center flex-shrink-0 text-xs">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+                        <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-sm px-4 py-2.5 text-xs text-slate-700 max-w-[85%] shadow-sm">
+                            Halo! Saya sudah membaca laporan analisis bisnis Anda di atas. Silakan tanyakan apa saja — misalnya "kalau modal saya hanya separuh, gimana?" atau "kenapa skornya segitu?".
+                        </div>
+                    </div>
+                </div>
+
+                <div id="chatTypingIndicator" class="hidden px-6 pb-2 -mt-2">
+                    <div class="flex items-center space-x-2 text-[11px] text-slate-400">
+                        <i class="fa-solid fa-circle-notch animate-spin"></i>
+                        <span>AI Asisten sedang mengetik...</span>
+                    </div>
+                </div>
+
+                <form id="chatForm" onsubmit="handleChatSubmit(event)" class="border-t border-slate-200 p-4 flex items-center space-x-2 bg-white">
+                    <input type="text" id="chatInput" placeholder="Tulis pertanyaan Anda di sini..." required
+                        class="flex-1 px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none text-sm">
+                    <button type="submit" id="chatSendBtn" class="bg-indigo-800 hover:bg-indigo-900 text-white w-10 h-10 rounded-xl flex items-center justify-center transition flex-shrink-0">
+                        <i class="fa-solid fa-paper-plane text-sm"></i>
+                    </button>
+                </form>
+            </div>
+
         </section>
 
     </main>
@@ -690,6 +729,10 @@
             allocation: null,
         };
 
+        // Menyimpan hasil analisis terakhir (jadi konteks untuk AI Asisten) dan riwayat chat
+        let currentAnalysisData = null;
+        let chatHistory = [];
+
         function resetForm() {
             document.getElementById("businessForm").reset();
             document.getElementById("busCategoryOther").classList.add("hidden");
@@ -697,6 +740,20 @@
             document.getElementById("resultDashboard").classList.add("hidden");
             document.getElementById("formSection").classList.remove("hidden");
             document.getElementById("downloadReportBtn").style.display = "none";
+
+            // Reset konteks & tampilan chat AI Asisten untuk sesi analisis baru
+            currentAnalysisData = null;
+            chatHistory = [];
+            const chatMessagesEl = document.getElementById("chatMessages");
+            if (chatMessagesEl) {
+                chatMessagesEl.innerHTML =
+                    '<div class="flex items-start space-x-2">' +
+                    '<div class="bg-indigo-900 text-gold-400 rounded-full w-7 h-7 flex items-center justify-center flex-shrink-0 text-xs"><i class="fa-solid fa-robot"></i></div>' +
+                    '<div class="bg-white border border-slate-200 rounded-2xl rounded-tl-sm px-4 py-2.5 text-xs text-slate-700 max-w-[85%] shadow-sm">' +
+                    'Halo! Saya sudah membaca laporan analisis bisnis Anda di atas. Silakan tanyakan apa saja — misalnya "kalau modal saya hanya separuh, gimana?" atau "kenapa skornya segitu?".' +
+                    '</div></div>';
+            }
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -1007,6 +1064,10 @@
         }
 
         function displayResults(data) {
+            // Simpan hasil analisis ini sebagai konteks untuk AI Asisten (tanya jawab lanjutan)
+            currentAnalysisData = data;
+            chatHistory = [];
+
             document.getElementById("resName").textContent = data.name || "Analisis Bisnis";
             document.getElementById("resCategory").textContent = data.category || "Umum";
             document.getElementById("resExecSummary").textContent = data.executiveSummary || "";
@@ -1143,10 +1204,10 @@
             // Perbandingan verdict & skor: sebelum vs sesudah
             document.getElementById("compVerdictBefore").textContent = verdictText;
             document.getElementById("compVerdictAfter").textContent = projected.verdict || "--";
-            document.getElementById("compOppBefore").textContent = data.businessOpportunityScore ?? "--";
-            document.getElementById("compOppAfter").textContent = projected.opportunityScore ?? "--";
-            document.getElementById("compReadyBefore").textContent = data.businessReadynessIndex ?? "--";
-            document.getElementById("compReadyAfter").textContent = projected.readinessIndex ?? "--";
+            document.getElementById("compOppBefore").textContent = (data.businessOpportunityScore ?? "--") + (data.businessOpportunityScore ? "/100" : "");
+            document.getElementById("compOppAfter").textContent = projected.opportunityScoreRange || "--";
+            document.getElementById("compReadyBefore").textContent = (data.businessReadynessIndex ?? "--") + (data.businessReadynessIndex ? "/100" : "");
+            document.getElementById("compReadyAfter").textContent = projected.readinessIndexRange || "--";
 
             // Tabel rekomendasi aksi
             const actionTableBody = document.getElementById("improvementActionTable");
@@ -1169,6 +1230,83 @@
 
             // Chart perbandingan sebelum vs sesudah
             fillProjectedRanges(projected);
+        }
+
+        // ================= AI ASISTEN (TANYA JAWAB LANJUTAN) =================
+
+        // Menambahkan satu bubble pesan ke jendela chat
+        function appendChatBubble(role, text) {
+            const chatMessagesEl = document.getElementById("chatMessages");
+            const wrapper = document.createElement("div");
+
+            if (role === "user") {
+                wrapper.className = "flex items-start justify-end space-x-2";
+                wrapper.innerHTML =
+                    '<div class="bg-indigo-800 text-white rounded-2xl rounded-tr-sm px-4 py-2.5 text-xs max-w-[85%] shadow-sm"></div>' +
+                    '<div class="bg-slate-200 text-slate-600 rounded-full w-7 h-7 flex items-center justify-center flex-shrink-0 text-xs"><i class="fa-solid fa-user"></i></div>';
+                wrapper.querySelector("div").textContent = text;
+            } else {
+                wrapper.className = "flex items-start space-x-2";
+                wrapper.innerHTML =
+                    '<div class="bg-indigo-900 text-gold-400 rounded-full w-7 h-7 flex items-center justify-center flex-shrink-0 text-xs"><i class="fa-solid fa-robot"></i></div>' +
+                    '<div class="bg-white border border-slate-200 rounded-2xl rounded-tl-sm px-4 py-2.5 text-xs text-slate-700 max-w-[85%] shadow-sm"></div>';
+                wrapper.querySelector("div.bg-white").textContent = text;
+            }
+
+            chatMessagesEl.appendChild(wrapper);
+            chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
+        }
+
+        async function handleChatSubmit(event) {
+            event.preventDefault();
+
+            if (!currentAnalysisData) {
+                alert("Belum ada hasil analisis untuk ditanyakan. Silakan buat analisis terlebih dahulu.");
+                return;
+            }
+
+            const inputEl = document.getElementById("chatInput");
+            const question = inputEl.value.trim();
+            if (!question) return;
+
+            appendChatBubble("user", question);
+            inputEl.value = "";
+            inputEl.disabled = true;
+            document.getElementById("chatSendBtn").disabled = true;
+            document.getElementById("chatTypingIndicator").classList.remove("hidden");
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        mode: "chat_followup",
+                        question: question,
+                        analysisContext: currentAnalysisData,
+                        history: chatHistory,
+                    }),
+                });
+
+                const result = await response.json();
+
+                if (!response.ok || result.error) {
+                    throw new Error(result.error || "Gagal mendapatkan jawaban dari AI Asisten.");
+                }
+
+                appendChatBubble("model", result.answer);
+
+                // Simpan ke riwayat supaya percakapan berikutnya tetap nyambung konteksnya
+                chatHistory.push({ role: "user", text: question });
+                chatHistory.push({ role: "model", text: result.answer });
+
+            } catch (error) {
+                appendChatBubble("model", "Maaf, terjadi kesalahan: " + error.message);
+            } finally {
+                document.getElementById("chatTypingIndicator").classList.add("hidden");
+                inputEl.disabled = false;
+                document.getElementById("chatSendBtn").disabled = false;
+                inputEl.focus();
+            }
         }
     </script>
 </body>
