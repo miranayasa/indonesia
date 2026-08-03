@@ -16,7 +16,7 @@
         <div class="mb-4">
             <label class="block text-sm font-medium text-slate-700 mb-1">Google Gemini API Key</label>
             <input type="password" id="apiKey" placeholder="AIzaSy..." oninput="saveApiKey()" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none text-sm">
-            <p class="text-xs text-emerald-600 mt-1">✨ API Key akan tersimpan otomatis di browser ini, jadi kamu tidak perlu mengetiknya ulang.</p>
+            <p class="text-xs text-emerald-600 mt-1">✨ API Key tersimpan otomatis di browser ini.</p>
         </div>
 
         <!-- Input Teks AI -->
@@ -38,13 +38,13 @@
                     📋 Salin Teks
                 </button>
             </div>
-            <!-- Output menggunakan pre-wrap agar nomor, spasi, dan struktur paragraf tetap rapi persis aslinya -->
+            <!-- Output menggunakan pre-wrap agar nomor, spasi, dan struktur paragraf tetap rapi -->
             <div id="outputText" class="w-full min-h-[180px] p-5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm whitespace-pre-wrap leading-relaxed select-all">Hasil humanisasi akan muncul di sini...</div>
         </div>
     </div>
 
     <script>
-        // Jalankan saat halaman pertama kali dibuka untuk memuat API Key yang tersimpan
+        // Memuat API Key yang tersimpan
         window.addEventListener('DOMContentLoaded', () => {
             const savedKey = localStorage.getItem('gemini_api_key');
             if (savedKey) {
@@ -52,7 +52,7 @@
             }
         });
 
-        // Fungsi untuk menyimpan API Key secara otomatis saat diketik
+        // Menyimpan API Key otomatis
         function saveApiKey() {
             const apiKey = document.getElementById('apiKey').value.trim();
             localStorage.setItem('gemini_api_key', apiKey);
@@ -73,17 +73,19 @@
             btn.innerText = 'Sedang menyusun ulang gaya bahasa magister...';
             outputDiv.innerText = 'Menganalisis argumen dan menyelaraskan diksi ilmiah...';
 
-            // System instruction standar S2 & konsistensi format
+            // System instruction diperketat untuk melarang em-dash dan kata klise AI
             const systemInstruction = `Bertindaklah sebagai Peneliti Senior, Dosen Penguji, dan Editor Akademik tingkat Magister (S2). 
 Tugasmu adalah menulis ulang teks masukan agar memiliki kualitas retorika ilmiah tingkat lanjut yang biasa ditemukan pada tesis atau jurnal bereputasi.
 
-Aturan ketat yang harus dipatuhi:
-1. **Gaya Bahasa S2/Magister:** Gunakan diksi akademik yang matang, objektif, analitis, kritis, dan bernas. Hindari nada bahasa yang terlalu menggurui, bombastis, atau kaku seperti robot.
-2. **Pertahankan Format Asli:** Jika teks asli menggunakan penomoran (1, 2, 3), poin-poin (bullet points), atau sub-bab tertentu, pertahankan struktur format tersebut dengan presisi tanpa menghilangkan susunannya.
-3. **Variasi Alami (Burstiness):** Kombinasikan kalimat pendek yang tegas dengan kalimat kompleks beralur logis agar ritme bacaannya natural dan organik.
-4. **Hindari Klise AI:** Dilarang keras menggunakan kata-kata klise khas AI yang membosankan seperti "delve", "testament", "furthermore", "in conclusion", "it is important to note", "crucial", atau "tapestry".
-5. **Kemandirian Makna:** Pastikan seluruh argumen, data, dan substansi teks asli tidak ada yang dikurangi atau diselewengkan maknanya.`;
+Aturan mutlak yang harus dipatuhi:
+1. **Gaya Bahasa S2/Magister:** Gunakan diksi akademik yang matang, objektif, analitis, kritis, dan bernas. Hindari nada bahasa yang terlalu menggurui atau bombastis.
+2. **LARANGAN KERAS TANDA BACA AI:** Dilarang keras menggunakan tanda *em-dash* atau tanda hubung panjang (—) di seluruh bagian teks. Gunakan tanda baca standar seperti koma, titik, atau ubah struktur kalimatnya agar mengalir alami tanpa tanda tersebut.
+3. **Pertahankan Format Asli:** Jika teks asli menggunakan penomoran (1, 2, 3) atau poin-poin, pertahankan struktur format tersebut dengan presisi.
+4. **Variasi Alami (Burstiness):** Kombinasikan kalimat pendek yang tegas dengan kalimat kompleks beralur logis agar ritme bacaannya natural dan organik.
+5. **Hindari Klise AI:** Dilarang keras menggunakan kata-kata klise khas AI seperti "delve", "testament", "furthermore", "in conclusion", "it is important to note", "crucial", atau "tapestry".
+6. **Kemandirian Makna:** Pastikan seluruh argumen, data, dan substansi teks asli tidak ada yang dikurangi atau diselewengkan maknanya.`;
 
+            // Menggunakan model Gemini 3.5 Flash
             const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${apiKey}`;
 
             try {
