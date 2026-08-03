@@ -12,11 +12,11 @@
         <h1 class="text-2xl font-bold text-slate-800 mb-1">AI Academic Humanizer (Standar S2/Magister)</h1>
         <p class="text-slate-500 text-sm mb-6">Ubah tulisan kaku AI menjadi gaya bahasa riset akademik tingkat lanjut dengan struktur format yang presisi.</p>
 
-        <!-- Input API Key Gemini -->
+        <!-- Input API Key Gemini (Tersimpan Otomatis) -->
         <div class="mb-4">
             <label class="block text-sm font-medium text-slate-700 mb-1">Google Gemini API Key</label>
-            <input type="password" id="apiKey" placeholder="AIzaSy..." class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none text-sm">
-            <p class="text-xs text-slate-400 mt-1">Masukkan API Key dari Google AI Studio milikmu.</p>
+            <input type="password" id="apiKey" placeholder="AIzaSy..." oninput="saveApiKey()" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none text-sm">
+            <p class="text-xs text-emerald-600 mt-1">✨ API Key akan tersimpan otomatis di browser ini, jadi kamu tidak perlu mengetiknya ulang.</p>
         </div>
 
         <!-- Input Teks AI -->
@@ -44,6 +44,20 @@
     </div>
 
     <script>
+        // Jalankan saat halaman pertama kali dibuka untuk memuat API Key yang tersimpan
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedKey = localStorage.getItem('gemini_api_key');
+            if (savedKey) {
+                document.getElementById('apiKey').value = savedKey;
+            }
+        });
+
+        // Fungsi untuk menyimpan API Key secara otomatis saat diketik
+        function saveApiKey() {
+            const apiKey = document.getElementById('apiKey').value.trim();
+            localStorage.setItem('gemini_api_key', apiKey);
+        }
+
         async function humanizeText() {
             const apiKey = document.getElementById('apiKey').value.trim();
             const inputText = document.getElementById('inputText').value.trim();
@@ -59,7 +73,7 @@
             btn.innerText = 'Sedang menyusun ulang gaya bahasa magister...';
             outputDiv.innerText = 'Menganalisis argumen dan menyelaraskan diksi ilmiah...';
 
-            // System instruction yang diperketat untuk standar S2 & konsistensi format
+            // System instruction standar S2 & konsistensi format
             const systemInstruction = `Bertindaklah sebagai Peneliti Senior, Dosen Penguji, dan Editor Akademik tingkat Magister (S2). 
 Tugasmu adalah menulis ulang teks masukan agar memiliki kualitas retorika ilmiah tingkat lanjut yang biasa ditemukan pada tesis atau jurnal bereputasi.
 
@@ -70,7 +84,6 @@ Aturan ketat yang harus dipatuhi:
 4. **Hindari Klise AI:** Dilarang keras menggunakan kata-kata klise khas AI yang membosankan seperti "delve", "testament", "furthermore", "in conclusion", "it is important to note", "crucial", atau "tapestry".
 5. **Kemandirian Makna:** Pastikan seluruh argumen, data, dan substansi teks asli tidak ada yang dikurangi atau diselewengkan maknanya.`;
 
-            // Gunakan model yang stabil (gemini-1.5-flash)
             const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
             try {
