@@ -86,7 +86,7 @@
                     Arsitektur Finansial Jangka Panjang & Ketahanan Aset Pensiun
                 </h2>
                 <p class="text-slate-600 text-sm leading-relaxed">
-                    Kalkulasi presisi berbasis parameter ekonomi makro. Evaluasi ketahanan portofolio, mitigasi risiko inflasi, pemetaan kesenjangan modal, dan optimalisasi struktur portofolio gabungan institusional.
+                    Kalkulasi presisi berbasis parameter ekonomi makro. Evaluasi ketahanan portofolio, mitigasi risiko inflasi, pemetaan kesenjangan modal, dan rekomendasi kuantitatif eksak.
                 </p>
             </div>
         </div>
@@ -99,35 +99,30 @@
 
             <form id="retirementForm" onsubmit="handleFormSubmit(event)" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 
-                <!-- Nama -->
                 <div>
                     <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Nama Klien / Entitas</label>
                     <input type="text" id="nama" placeholder="Contoh: Budi Santoso"
                         class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition">
                 </div>
 
-                <!-- Umur Saat Ini -->
                 <div>
                     <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Usia Kronologis Saat Ini</label>
                     <input type="number" id="usia" required min="15" max="100" placeholder="Contoh: 55"
                         class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition">
                 </div>
 
-                <!-- Target Usia Hidup -->
                 <div>
-                    <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Proyeksi Usia Horizon</label>
+                    <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Proyeksi Usia Horizon Target</label>
                     <input type="number" id="targetUsia" required min="40" max="120" placeholder="Contoh: 80"
                         class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition">
                 </div>
 
-                <!-- Kota Tempat Tinggal -->
                 <div>
                     <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Domisili Domestik</label>
                     <input type="text" id="kota" required placeholder="Contoh: Jakarta"
                         class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition">
                 </div>
 
-                <!-- Status -->
                 <div>
                     <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Status Demografi</label>
                     <select id="status" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition">
@@ -136,7 +131,6 @@
                     </select>
                 </div>
 
-                <!-- Rumah -->
                 <div>
                     <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Status Kepemilikan Hunian</label>
                     <select id="rumah" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition">
@@ -146,56 +140,48 @@
                     </select>
                 </div>
 
-                <!-- Dana Pensiun -->
                 <div>
                     <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Portofolio Kas & Investasi (Rp)</label>
                     <input type="number" id="dana" required min="0" placeholder="Contoh: 1000000000"
                         class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition">
                 </div>
 
-                <!-- Penghasilan Bulanan Lain -->
                 <div>
                     <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Inflow Pasif Bulanan (Rp)</label>
                     <input type="number" id="penghasilan" min="0" placeholder="Contoh: 1500000"
                         class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition">
                 </div>
 
-                <!-- Pengeluaran Bulanan -->
                 <div>
                     <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Burn Rate Pengeluaran / Bln (Rp)</label>
                     <input type="number" id="pengeluaran" required min="0" placeholder="Contoh: 8000000"
                         class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition">
                 </div>
 
-                <!-- Target Warisan -->
                 <div>
                     <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Target Warisan / Estate (Rp)</label>
                     <input type="number" id="warisan" min="0" placeholder="Contoh: 300000000"
                         class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition">
                 </div>
 
-                <!-- Dana Darurat -->
                 <div>
                     <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Cadangan Kas Likuid (Rp)</label>
                     <input type="number" id="danaDarurat" min="0" placeholder="Contoh: 100000000"
                         class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition">
                 </div>
 
-                <!-- Aset Lain -->
                 <div>
                     <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Valuasi Aset Lain (Rp)</label>
                     <input type="number" id="asetLain" min="0" placeholder="Contoh: 0"
                         class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition">
                 </div>
 
-                <!-- Catatan Tambahan -->
                 <div class="md:col-span-2 lg:col-span-3">
                     <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Catatan Khusus / Mandat Konsultasi</label>
                     <textarea id="catatan" rows="2" placeholder="Contoh: Fokus pada instrumen bebas riba dan alokasi defensif..."
                         class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition"></textarea>
                 </div>
 
-                <!-- Submit Button -->
                 <div class="md:col-span-2 lg:col-span-3 flex justify-end pt-2">
                     <button type="submit" class="bg-slate-900 hover:bg-slate-800 text-white font-bold px-8 py-4 rounded-xl transition shadow-lg shadow-slate-900/10 flex items-center space-x-2 text-sm tracking-wide">
                         <i class="fa-solid fa-compass-drafting"></i>
@@ -224,9 +210,7 @@
         <!-- RESULT DASHBOARD -->
         <div id="resultSection" class="hidden space-y-8">
             
-            <!-- Top Summary & Health Score Grid -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Ringkasan Eksekutif -->
                 <div class="lg:col-span-2 bg-white border border-slate-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between">
                     <div>
                         <div class="flex items-center justify-between mb-4">
@@ -251,7 +235,6 @@
                     </div>
                 </div>
 
-                <!-- Financial Health Score Card -->
                 <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm flex flex-col items-center justify-center text-center">
                     <span class="bg-slate-100 text-slate-800 text-[11px] font-bold px-3 py-1 rounded-full border border-slate-200 mb-6 uppercase tracking-wider">
                         Health Score Index
@@ -265,7 +248,60 @@
                 </div>
             </div>
 
-            <!-- Inflation & Lifetime Expense -->
+            <!-- KONTROL SOLUSI EKSAK REKOMENDASI TARGET USIA -->
+            <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-8 md:p-10 shadow-xl text-white">
+                <div class="flex items-center space-x-3 mb-4">
+                    <span class="bg-blue-600/30 text-blue-400 text-[11px] font-extrabold px-3 py-1 rounded-full border border-blue-500/30 uppercase tracking-widest">
+                        Prescription Engine
+                    </span>
+                    <h4 class="text-lg font-black tracking-tight" id="prescriptionTitle">Rekomendasi Presisi Target Usia</h4>
+                </div>
+                <p class="text-xs text-slate-300 mb-8 leading-relaxed">
+                    Berdasarkan tingkat burn-rate pengeluaran bulanan yang Anda input, berikut adalah 3 jalur eksekusi kuantitatif agar aset bertahan mulus hingga target usia yang ditentukan:
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Opsi X: Tambahan Modal -->
+                    <div class="bg-slate-800/90 border border-slate-700 p-6 rounded-2xl flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="text-[10px] uppercase font-bold text-blue-400 tracking-wider mb-1">Opsi A (Injeksi Modal)</div>
+                            <h5 class="text-sm font-black text-white mb-2">Tambahan Dana Pensiun (X)</h5>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">Total suntikan modal likuid atau portofolio investasi saat ini untuk menutupi defisit.</p>
+                        </div>
+                        <div class="bg-slate-900/80 border border-slate-700/80 p-4 rounded-xl">
+                            <span class="text-[10px] text-slate-400 block mb-0.5 uppercase tracking-wider">Nilai Estimasi (X):</span>
+                            <span class="text-base font-black text-blue-400" id="recCapitalX">Rp --</span>
+                        </div>
+                    </div>
+
+                    <!-- Opsi Y: Tambahan Penghasilan Bulanan -->
+                    <div class="bg-slate-800/90 border border-slate-700 p-6 rounded-2xl flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="text-[10px] uppercase font-bold text-emerald-400 tracking-wider mb-1">Opsi B (Passive Income)</div>
+                            <h5 class="text-sm font-black text-white mb-2">Penghasilan Per Bulan (Y)</h5>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">Tambahan pemasukan rutin bulanan dari bisnis sampingan, dividen, atau sewa aset.</p>
+                        </div>
+                        <div class="bg-slate-900/80 border border-slate-700/80 p-4 rounded-xl">
+                            <span class="text-[10px] text-slate-400 block mb-0.5 uppercase tracking-wider">Nilai Estimasi (Y):</span>
+                            <span class="text-base font-black text-emerald-400" id="recIncomeY">Rp -- / bln</span>
+                        </div>
+                    </div>
+
+                    <!-- Opsi Z: Batas Maksimum Pengeluaran -->
+                    <div class="bg-slate-800/90 border border-slate-700 p-6 rounded-2xl flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="text-[10px] uppercase font-bold text-amber-400 tracking-wider mb-1">Opsi C (Austerity Budget)</div>
+                            <h5 class="text-sm font-black text-white mb-2">Batas Pengeluaran (Z)</h5>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">Koreksi plafon maksimal pengeluaran bulanan agar akumulasi dana seimbang dengan usia target.</p>
+                        </div>
+                        <div class="bg-slate-900/80 border border-slate-700/80 p-4 rounded-xl">
+                            <span class="text-[10px] text-slate-400 block mb-0.5 uppercase tracking-wider">Nilai Estimasi (Z):</span>
+                            <span class="text-base font-black text-amber-400" id="recExpenseZ">Rp -- / bln</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between">
                     <div>
@@ -280,7 +316,6 @@
                     </div>
                 </div>
 
-                <!-- Grafik Sederhana Ketahanan Dana -->
                 <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between">
                     <div>
                         <h4 class="text-sm font-black text-slate-900 mb-3 flex items-center uppercase tracking-wider">
@@ -301,30 +336,22 @@
                 </div>
             </div>
 
-            <!-- Gap Analysis -->
             <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm">
                 <h4 class="text-base font-black text-slate-900 mb-2 flex items-center tracking-tight">
                     <i class="fa-solid fa-bullseye text-blue-600 mr-2.5"></i> Gap Analysis & Solusi Penyeimbang Usia
                 </h4>
-                <p class="text-xs text-slate-500 mb-6">Koreksi variabel finansial yang diperlukan untuk menjembatani jurang defisit hingga target usia terpenuhi:</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" id="resGapContainer">
-                    <!-- Populated dynamically -->
-                </div>
+                <p class="text-xs text-slate-500 mb-6">Koreksi variabel finansial mendalam untuk menjembatani jurang defisit:</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" id="resGapContainer"></div>
             </div>
 
-            <!-- Investment Scenarios / Portofolio Gabungan -->
             <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm">
                 <h4 class="text-base font-black text-slate-900 mb-6 flex items-center tracking-tight">
                     <i class="fa-solid fa-layer-group text-blue-600 mr-2.5"></i> Alokasi Strategis Portofolio Gabungan Lintas Instrumen
                 </h4>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="resScenariosContainer">
-                    <!-- Populated dynamically -->
-                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="resScenariosContainer"></div>
             </div>
 
-            <!-- Strategic Recommendation & Action Plan -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Rekomendasi Strategi Terbaik -->
                 <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between">
                     <div>
                         <h4 class="text-sm font-black text-slate-900 mb-3 flex items-center uppercase tracking-wider">
@@ -334,18 +361,14 @@
                     </div>
                 </div>
 
-                <!-- Action Plan -->
                 <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm">
                     <h4 class="text-sm font-black text-slate-900 mb-4 flex items-center uppercase tracking-wider">
                         <i class="fa-solid fa-list-check text-blue-600 mr-2"></i> Rencana Aksi Implementasi (*Action Plan*)
                     </h4>
-                    <div class="space-y-3" id="resActionPlan">
-                        <!-- Populated dynamically -->
-                    </div>
+                    <div class="space-y-3" id="resActionPlan"></div>
                 </div>
             </div>
 
-            <!-- Kesimpulan -->
             <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-sm text-white">
                 <h4 class="text-sm font-black mb-2 flex items-center uppercase tracking-wider text-blue-400">
                     <i class="fa-solid fa-circle-info mr-2"></i> Kesimpulan Eksekutif Final
@@ -353,7 +376,6 @@
                 <p id="resConclusion" class="text-xs text-slate-300 leading-relaxed"></p>
             </div>
 
-            <!-- ADVANCED CHAT SECTION -->
             <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm space-y-6">
                 <div class="flex items-center justify-between border-b border-slate-100 pb-4">
                     <div>
@@ -364,16 +386,13 @@
                     </div>
                 </div>
 
-                <!-- Chat Messages Area -->
                 <div id="chatHistory" class="space-y-4 max-h-[400px] overflow-y-auto pr-2">
                     <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs text-slate-700 leading-relaxed">
                         👋 Selamat datang di panel diskusi klien. Anda dapat mengajukan pertanyaan terkait strategi portofolio, contoh: 
-                        <span class="text-blue-600 font-semibold block mt-1">"Bagaimana jika porsi SBN ritel dinaikkan menjadi 50% untuk mitigasi volatilitas?"</span> atau 
-                        <span class="text-blue-600 font-semibold block">"Berapa tambahan akumulasi modal tahunan agar dana aman hingga usia 85 tahun?"</span>
+                        <span class="text-blue-600 font-semibold block mt-1">"Bagaimana jika porsi SBN ritel dinaikkan menjadi 50% untuk mitigasi volatilitas?"</span>
                     </div>
                 </div>
 
-                <!-- Chat Input Form -->
                 <form onsubmit="handleChatSubmit(event)" class="flex gap-3 pt-2">
                     <input type="text" id="chatInput" placeholder="Ketik pertanyaan skenario lanjutan..." required
                         class="flex-grow bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm text-slate-900 focus:outline-none focus:border-blue-600 focus:bg-white transition">
@@ -491,28 +510,49 @@
             const percent = Math.min(Math.max(((estAge - curAge) / (maxScale - curAge)) * 100, 10), 100);
             document.getElementById('graphBar').style.width = `${percent}%`;
 
-            // Gap Analysis & Solusi Gap Usia
-            const gapContainer = document.getElementById('resGapContainer');
-            gapContainer.innerHTML = '';
+            // Pengisian Rekomendasi Presisi X, Y, Z
+            document.getElementById('prescriptionTitle').innerText = `Rekomendasi Presisi Target Usia ${targetAge} Tahun`;
+            
+            let valX = 0;
+            let valY = 0;
+            let valZ = currentFormInput.pengeluaran;
+
             if (data.gapAnalysis) {
-                const gaps = [
-                    { label: "Tambahan Modal Defisit", val: `Rp ${(data.gapAnalysis.additionalCapital || 0).toLocaleString('id-ID')}` },
-                    { label: "Target Passive Income / Bln", val: `Rp ${(data.gapAnalysis.additionalMonthlyIncome || 0).toLocaleString('id-ID')}` },
-                    { label: "Batas Max Pengeluaran / Bln", val: `Rp ${(data.gapAnalysis.maximumMonthlyExpense || 0).toLocaleString('id-ID')}` },
-                    { label: `Solusi Jeda Usia (${estAge} -> ${targetAge} Thn)`, val: data.gapAnalysis.ageGapSolution || "Implementasikan Portofolio Gabungan Seimbang." }
-                ];
-                gaps.forEach(g => {
-                    const card = document.createElement('div');
-                    card.className = 'bg-slate-50 border border-slate-200 p-5 rounded-2xl flex flex-col justify-between';
-                    card.innerHTML = `
-                        <div class="text-[11px] text-slate-500 font-bold uppercase tracking-wider mb-2">${g.label}</div>
-                        <div class="text-sm font-black text-slate-900 leading-snug">${g.val}</div>
-                    `;
-                    gapContainer.appendChild(card);
-                });
+                valX = data.gapAnalysis.additionalCapital || 0;
+                valY = data.gapAnalysis.additionalMonthlyIncome || 0;
+                valZ = data.gapAnalysis.maximumMonthlyExpense || currentFormInput.pengeluaran;
+            } else {
+                // Fallback kalkulasi mandiri jika struktur backend menyesuaikan
+                const remainingMonths = Math.max((targetAge - curAge) * 12, 12);
+                const netMonthlyBurn = currentFormInput.pengeluaran - currentFormInput.penghasilan;
+                const totalTargetNeeded = netMonthlyBurn * remainingMonths;
+                valX = Math.max(totalTargetNeeded - currentFormInput.dana, 0);
+                valY = Math.max(netMonthlyBurn - (currentFormInput.dana / remainingMonths), 0);
+                valZ = Math.max(currentFormInput.dana / remainingMonths + currentFormInput.penghasilan, 500000);
             }
 
-            // Simulasi Portofolio Gabungan & Instrumen
+            document.getElementById('recCapitalX').innerText = `Rp ${valX.toLocaleString('id-ID')}`;
+            document.getElementById('recIncomeY').innerText = `Rp ${valY.toLocaleString('id-ID')} / bln`;
+            document.getElementById('recExpenseZ').innerText = `Rp ${valZ.toLocaleString('id-ID')} / bln`;
+
+            const gapContainer = document.getElementById('resGapContainer');
+            gapContainer.innerHTML = '';
+            const gaps = [
+                { label: "Tambahan Modal Defisit (X)", val: `Rp ${valX.toLocaleString('id-ID')}` },
+                { label: "Target Passive Income (Y)", val: `Rp ${valY.toLocaleString('id-ID')} / bln` },
+                { label: "Batas Max Pengeluaran (Z)", val: `Rp ${valZ.toLocaleString('id-ID')} / bln` },
+                { label: `Solusi Jeda Usia (${estAge} -> ${targetAge} Thn)`, val: data.gapAnalysis?.ageGapSolution || "Implementasikan Portofolio Gabungan Seimbang." }
+            ];
+            gaps.forEach(g => {
+                const card = document.createElement('div');
+                card.className = 'bg-slate-50 border border-slate-200 p-5 rounded-2xl flex flex-col justify-between';
+                card.innerHTML = `
+                    <div class="text-[11px] text-slate-500 font-bold uppercase tracking-wider mb-2">${g.label}</div>
+                    <div class="text-sm font-black text-slate-900 leading-snug">${g.val}</div>
+                `;
+                gapContainer.appendChild(card);
+            });
+
             const scenariosContainer = document.getElementById('resScenariosContainer');
             scenariosContainer.innerHTML = '';
             
@@ -551,10 +591,8 @@
                 data.scenarios.forEach(scen => {
                     const card = document.createElement('div');
                     card.className = 'bg-slate-50 border border-slate-200 p-6 rounded-2xl flex flex-col justify-between space-y-3';
-                    
                     let prosHtml = (scen.pros || []).map(p => `<li class="text-emerald-700 flex items-center"><i class="fa-solid fa-plus mr-1.5 text-[9px]"></i>${p}</li>`).join('');
                     let consHtml = (scen.cons || []).map(c => `<li class="text-rose-700 flex items-center"><i class="fa-solid fa-minus mr-1.5 text-[9px]"></i>${c}</li>`).join('');
-
                     card.innerHTML = `
                         <div>
                             <div class="flex items-center justify-between mb-2">
