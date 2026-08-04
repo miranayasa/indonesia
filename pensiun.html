@@ -1,380 +1,8 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Miranaya Consulting - Retirement Planning & Financial Advisor</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+<!-- JAVASCRIPT LOGIC -->
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                            900: '#1e3a8a',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
-        .spinner { animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    </style>
-</head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased">
-
-    <!-- HEADER -->
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="bg-brand-600 text-white p-2.5 rounded-xl font-black text-lg flex items-center justify-center shadow-md shadow-brand-500/20">
-                    <i class="fa-solid fa-chart-line"></i>
-                </div>
-                <div>
-                    <h1 class="text-lg font-bold tracking-tight text-slate-900">Miranaya Retirement Analisys</h1>
-                    <p class="text-xs text-brand-600 font-semibold"> Retirement Planning & Financial Advisor</p>
-                </div>
-            </div>
-            <div class="text-xs text-slate-500 bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-full font-medium">
-                <i class="fa-solid fa-shield-halved text-brand-600 mr-1.5"></i> Cloudflare Secure AI
-            </div>
-        </div>
-    </header>
-
-    <!-- MAIN CONTAINER -->
-    <main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full space-y-8">
-
-        <!-- INTRO HERO -->
-        <div class="bg-gradient-to-r from-white via-brand-50/50 to-white border border-slate-200 rounded-3xl p-6 md:p-8 shadow-sm relative overflow-hidden">
-            <div class="max-w-2xl relative z-10">
-                <span class="bg-brand-100 text-brand-700 text-xs font-bold px-3 py-1 rounded-full border border-brand-200 inline-block mb-3">
-                    ✨ Perencanaan Keuangan Cerdas Berbasis AI
-                </span>
-                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight mb-2">
-                    Rancang Masa Pensiun Ideal Anda Secara Komprehensif
-                </h2>
-                <p class="text-slate-600 text-sm leading-relaxed">
-                    Masukkan profil keuangan Anda. kami akan mensimulasikan ketahanan dana, dampak inflasi, analisis kesenjangan (gap), serta strategi instrumen investasi terbaik.
-                </p>
-            </div>
-        </div>
-
-        <!-- FORM INPUT SECTION -->
-        <section class="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 shadow-sm">
-            <h3 class="text-lg font-bold text-slate-900 mb-6 flex items-center">
-                <i class="fa-solid fa-user-gear text-brand-600 mr-2.5"></i> Profil & Kondisi Keuangan
-            </h3>
-
-            <form id="retirementForm" onsubmit="handleFormSubmit(event)" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                
-                <!-- Nama -->
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Nama Lengkap (Opsional)</label>
-                    <input type="text" id="nama" placeholder="Contoh: Budi Santoso"
-                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-brand-500 focus:bg-white transition">
-                </div>
-
-                <!-- Umur Saat Ini -->
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Umur Saat Ini (Tahun)</label>
-                    <input type="number" id="usia" required min="15" max="100" placeholder="Contoh: 55"
-                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-brand-500 focus:bg-white transition">
-                </div>
-
-                <!-- Target Usia Hidup -->
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Target Usia Hidup</label>
-                    <input type="number" id="targetUsia" required min="40" max="120" placeholder="Contoh: 90"
-                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-brand-500 focus:bg-white transition">
-                </div>
-
-                <!-- Kota Tempat Tinggal -->
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Kota Tempat Tinggal</label>
-                    <input type="text" id="kota" required placeholder="Contoh: Sragen"
-                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-brand-500 focus:bg-white transition">
-                </div>
-
-                <!-- Status -->
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Status Pernikahan</label>
-                    <select id="status" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-brand-500 focus:bg-white transition">
-                        <option value="Single">Single</option>
-                        <option value="Menikah">Menikah</option>
-                    </select>
-                </div>
-
-                <!-- Rumah -->
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Status Tempat Tinggal</label>
-                    <select id="rumah" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-brand-500 focus:bg-white transition">
-                        <option value="Milik Sendiri">Milik Sendiri</option>
-                        <option value="Kontrak">Kontrak</option>
-                        <option value="Tinggal dengan keluarga">Tinggal dengan Keluarga</option>
-                    </select>
-                </div>
-
-                <!-- Dana Pensiun -->
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Dana Pensiun Saat Ini (Rp)</label>
-                    <input type="number" id="dana" required min="0" placeholder="Contoh: 1000000000"
-                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-brand-500 focus:bg-white transition">
-                </div>
-
-                <!-- Penghasilan Bulanan Lain -->
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Penghasilan Bulanan Lain (Rp)</label>
-                    <input type="number" id="penghasilan" min="0" placeholder="Contoh: 1500000"
-                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-brand-500 focus:bg-white transition">
-                </div>
-
-                <!-- Pengeluaran Bulanan -->
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Pengeluaran Bulanan (Rp)</label>
-                    <input type="number" id="pengeluaran" required min="0" placeholder="Contoh: 8000000"
-                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-brand-500 focus:bg-white transition">
-                </div>
-
-                <!-- Target Warisan -->
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Target Warisan (Rp)</label>
-                    <input type="number" id="warisan" min="0" placeholder="Contoh: 300000000"
-                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-brand-500 focus:bg-white transition">
-                </div>
-
-                <!-- Dana Darurat -->
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Dana Darurat (Rp)</label>
-                    <input type="number" id="danaDarurat" min="0" placeholder="Contoh: 100000000"
-                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-brand-500 focus:bg-white transition">
-                </div>
-
-                <!-- Aset Lain -->
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Nilai Aset Lain (Opsional) (Rp)</label>
-                    <input type="number" id="asetLain" min="0" placeholder="Contoh: 0"
-                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-brand-500 focus:bg-white transition">
-                </div>
-
-                <!-- Catatan Tambahan -->
-                <div class="md:col-span-2 lg:col-span-3">
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Catatan Tambahan / Preferensi Khusus</label>
-                    <textarea id="catatan" rows="2" placeholder="Contoh: Ingin fokus investasi yang stabil, bebas riba, atau rencana bisnis kecil..."
-                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-brand-500 focus:bg-white transition"></textarea>
-                </div>
-
-                <!-- Submit Button -->
-                <div class="md:col-span-2 lg:col-span-3 flex justify-end">
-                    <button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white font-bold px-8 py-3.5 rounded-xl transition shadow-md shadow-brand-500/20 flex items-center space-x-2">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i>
-                        <span>Analisa !</span>
-                    </button>
-                </div>
-            </form>
-        </section>
-
-        <!-- LOADING STATE -->
-        <div id="loadingSection" class="hidden bg-white border border-slate-200 rounded-3xl p-12 text-center shadow-sm">
-            <div class="inline-block spinner text-brand-600 text-4xl mb-4">
-                <i class="fa-solid fa-circle-notch"></i>
-            </div>
-            <h4 class="text-lg font-bold text-slate-900">AI sedang menganalisis strategi pensiun terbaik untuk Anda...</h4>
-            <p class="text-xs text-slate-500 mt-1">Memperhitungkan inflasi, proyeksi umur dana, gap analysis, dan instrumen investasi.</p>
-        </div>
-
-        <!-- ERROR STATE -->
-        <div id="errorSection" class="hidden bg-red-50 border border-red-200 rounded-3xl p-6 text-center text-red-700 shadow-sm">
-            <i class="fa-solid fa-triangle-exclamation text-2xl mb-2 text-red-500"></i>
-            <h4 class="font-bold text-base">Gagal Melakukan Analisis</h4>
-            <p id="errorMessage" class="text-xs mt-1 text-red-600">Terjadi kesalahan pada sistem atau jaringan Anda.</p>
-        </div>
-
-        <!-- RESULT DASHBOARD -->
-        <div id="resultSection" class="hidden space-y-6">
-            
-            <!-- Top Summary & Health Score Grid -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Ringkasan Eksekutif -->
-                <div class="lg:col-span-2 bg-white border border-slate-200 rounded-3xl p-6 md:p-8 shadow-sm flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="bg-brand-50 text-brand-700 text-xs font-bold px-3 py-1 rounded-full border border-brand-200">
-                                ✅ Ringkasan Analisis
-                            </span>
-                            <span class="text-xs text-slate-400" id="resultTimestamp"></span>
-                        </div>
-                        <h3 class="text-xl font-bold text-slate-900 mb-3">Gambaran Kondisi Keuangan</h3>
-                        <p id="resSummary" class="text-slate-600 text-sm leading-relaxed mb-6"></p>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6 border-t border-slate-100">
-                        <div class="bg-slate-50 border border-slate-200 p-4 rounded-2xl">
-                            <div class="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-1">Estimasi Dana Bertahan</div>
-                            <div class="text-2xl font-black text-brand-600" id="resEstimatedYears">-- Tahun</div>
-                        </div>
-                        <div class="bg-slate-50 border border-slate-200 p-4 rounded-2xl">
-                            <div class="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-1">Estimasi Umur Dana Habis</div>
-                            <div class="text-2xl font-black text-slate-900" id="resEstimatedAge">Usia -- Tahun</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Financial Health Score Card -->
-                <div class="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 shadow-sm flex flex-col items-center justify-center text-center">
-                    <span class="bg-slate-100 text-slate-700 text-xs font-bold px-3 py-1 rounded-full border border-slate-200 mb-4">
-                        📊 Financial Health Score
-                    </span>
-                    <div class="relative flex items-center justify-center mb-4">
-                        <div class="w-32 h-32 rounded-full border-8 border-slate-100 flex items-center justify-center shadow-inner">
-                            <span class="text-4xl font-black text-brand-600" id="resHealthScore">--</span>
-                        </div>
-                    </div>
-                    <p class="text-xs text-slate-500">Skor kesehatan finansial pensiun Anda berdasarkan likuiditas, diversifikasi, dan risiko.</p>
-                </div>
-            </div>
-
-            <!-- Inflation & Lifetime Expense -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
-                    <h4 class="text-base font-bold text-slate-900 mb-3 flex items-center">
-                        <i class="fa-solid fa-chart-line text-brand-600 mr-2"></i> Dampak Inflasi & Biaya Hidup
-                    </h4>
-                    <p id="resInflationImpact" class="text-xs text-slate-600 leading-relaxed mb-4"></p>
-                    <div class="bg-slate-50 border border-slate-200 p-3.5 rounded-xl text-xs flex justify-between items-center">
-                        <span class="text-slate-500 font-medium">Total Pengeluaran Seumur Hidup:</span>
-                        <span class="font-bold text-slate-900" id="resLifetimeExpense">Rp --</span>
-                    </div>
-                </div>
-
-                <!-- Grafik Sederhana Ketahanan Dana -->
-                <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
-                    <div>
-                        <h4 class="text-base font-bold text-slate-900 mb-3 flex items-center">
-                            <i class="fa-solid fa-hourglass-half text-brand-600 mr-2"></i> Grafik Ketahanan Dana
-                        </h4>
-                        <p class="text-xs text-slate-500 mb-4">Visualisasi proporsi umur saat ini hingga target usia habis dana.</p>
-                    </div>
-                    <div>
-                        <div class="flex justify-between text-xs font-bold text-slate-600 mb-1">
-                            <span id="labelCurrentAge">Umur 55</span>
-                            <span id="labelEstimatedAge">Umur 75</span>
-                            <span id="labelTargetAge">Target 90</span>
-                        </div>
-                        <div class="w-full bg-slate-100 h-4 rounded-full overflow-hidden flex border border-slate-200">
-                            <div id="graphBar" class="bg-brand-600 h-full transition-all duration-500 rounded-full" style="width: 0%"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Gap Analysis -->
-            <div class="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 shadow-sm">
-                <h4 class="text-lg font-bold text-slate-900 mb-2 flex items-center">
-                    <i class="fa-solid fa-bullseye text-brand-600 mr-2"></i> Gap Analysis (Analisis Kesenjangan)
-                </h4>
-                <p class="text-xs text-slate-500 mb-6">Jika target usia Anda belum tercapai, berikut adalah estimasi koreksi finansial yang diperlukan:</p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="resGapContainer">
-                    <!-- Populated dynamically -->
-                </div>
-            </div>
-
-            <!-- Investment Scenarios Table -->
-            <div class="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 shadow-sm">
-                <h4 class="text-lg font-bold text-slate-900 mb-4 flex items-center">
-                    <i class="fa-solid fa-scale-balanced text-brand-600 mr-2"></i> Simulasi Perbandingan Instrumen Investasi
-                </h4>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="resScenariosContainer">
-                    <!-- Populated dynamically -->
-                </div>
-            </div>
-
-            <!-- Strategic Recommendation & Action Plan -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Rekomendasi Strategi Terbaik -->
-                <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
-                    <div>
-                        <h4 class="text-base font-bold text-slate-900 mb-3 flex items-center">
-                            <i class="fa-solid fa-star text-brand-600 mr-2"></i> Rekomendasi Strategi Terbaik AI
-                        </h4>
-                        <p id="resRecommendation" class="text-xs text-slate-600 leading-relaxed"></p>
-                    </div>
-                </div>
-
-                <!-- Action Plan -->
-                <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm">
-                    <h4 class="text-base font-bold text-slate-900 mb-3 flex items-center">
-                        <i class="fa-solid fa-list-check text-brand-600 mr-2"></i> Langkah Implementasi Bertahap
-                    </h4>
-                    <div class="space-y-2.5" id="resActionPlan">
-                        <!-- Populated dynamically -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Kesimpulan -->
-            <div class="bg-brand-50 border border-brand-200 rounded-3xl p-6 shadow-sm">
-                <h4 class="text-base font-bold text-brand-900 mb-2 flex items-center">
-                    <i class="fa-solid fa-circle-info text-brand-600 mr-2"></i> Kesimpulan Akhir
-                </h4>
-                <p id="resConclusion" class="text-xs text-brand-800 leading-relaxed"></p>
-            </div>
-
-            <!-- ADVANCED CHAT SECTION -->
-            <div class="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 shadow-sm space-y-4">
-                <div class="flex items-center justify-between border-b border-slate-100 pb-4">
-                    <div>
-                        <h4 class="text-lg font-bold text-slate-900 flex items-center">
-                            <i class="fa-solid fa-comments text-brand-600 mr-2"></i> Tanya Skenario Lain (AI Chat)
-                        </h4>
-                        <p class="text-xs text-slate-500 mt-0.5">Diskusikan skenario alternatif, seperti pindah kota, beli kos, atau ubah pengeluaran.</p>
-                    </div>
-                </div>
-
-                <!-- Chat Messages Area -->
-                <div id="chatHistory" class="space-y-4 max-h-[400px] overflow-y-auto pr-2">
-                    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs text-slate-700">
-                        👋 Halo! Anda bisa menanyakan skenario lain seperti: 
-                        <span class="text-brand-600 italic block mt-1">"Bagaimana jika saya membeli kos 10 kamar?"</span> atau 
-                        <span class="text-brand-600 italic block">"Bagaimana jika saya pindah ke Yogyakarta?"</span>
-                    </div>
-                </div>
-
-                <!-- Chat Input Form -->
-                <form onsubmit="handleChatSubmit(event)" class="flex gap-2 pt-2">
-                    <input type="text" id="chatInput" placeholder="Tanyakan skenario lain..." required
-                        class="flex-grow bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-brand-500 focus:bg-white transition">
-                    <button type="submit" id="chatSubmitBtn" class="bg-brand-600 hover:bg-brand-700 text-white font-bold px-6 py-3 rounded-xl transition flex items-center justify-center">
-                        <i class="fa-solid fa-paper-plane"></i>
-                    </button>
-                </form>
-            </div>
-
-        </div>
-
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="bg-white border-t border-slate-200 py-6 mt-12 text-center text-xs text-slate-500">
-        <p>&copy; 2026 Miranaya Retirement AI. All rights reserved. Didukung oleh Cloudflare & OpenAI Responses API.</p>
-    </footer>
-
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
-        // Endpoint Cloudflare Worker (Ganti URL ini dengan URL Worker Anda setelah deploy)
+        // Endpoint Cloudflare Worker Anda
         const API_URL = "https://pensiun.miranayasa.workers.dev/";
 
-        // Menyimpan konteks analisis terakhir untuk chat lanjutan
         let lastAnalysisContext = null;
         let currentFormInput = null;
 
@@ -398,7 +26,6 @@
                 catatan: document.getElementById('catatan').value
             };
 
-            // Tampilkan Loading
             document.getElementById('loadingSection').classList.remove('hidden');
             document.getElementById('errorSection').classList.add('hidden');
             document.getElementById('resultSection').classList.add('hidden');
@@ -411,11 +38,19 @@
                     body: JSON.stringify(currentFormInput)
                 });
 
-                if (!response.ok) throw new Error(`Server error: ${response.statusText}`);
+                const responseText = await response.text();
+                let data;
+                try {
+                    data = JSON.parse(responseText);
+                } catch (e) {
+                    throw new Error(`Respon bukan JSON valid: ${responseText}`);
+                }
 
-                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.error || `Server error: ${response.status}`);
+                }
+
                 lastAnalysisContext = { input: currentFormInput, result: data };
-
                 renderResults(data);
 
                 document.getElementById('loadingSection').classList.add('hidden');
@@ -426,7 +61,7 @@
                 console.error(error);
                 document.getElementById('loadingSection').classList.add('hidden');
                 document.getElementById('errorSection').classList.remove('hidden');
-                document.getElementById('errorMessage').innerText = "Gagal terhubung ke  Worker atau terjadi kesalahan parsing JSON. Pastikan URL worker sudah benar dan internet aktif.";
+                document.getElementById('errorMessage').innerText = error.message;
             }
         }
 
@@ -442,7 +77,6 @@
             document.getElementById('resRecommendation').innerText = data.recommendation || "Belum ada rekomendasi.";
             document.getElementById('resConclusion').innerText = data.conclusion || data.summary || "Analisis selesai.";
 
-            // Grafik Bar Ketahanan Dana
             const curAge = currentFormInput.usia;
             const estAge = data.estimatedAge;
             const targetAge = currentFormInput.targetUsia;
@@ -475,7 +109,7 @@
                 });
             }
 
-            // Scenarios / Instrumen Investasi
+            // Scenarios
             const scenariosContainer = document.getElementById('resScenariosContainer');
             scenariosContainer.innerHTML = '';
             if (data.scenarios && Array.isArray(data.scenarios)) {
@@ -524,43 +158,29 @@
             if (!question) return;
 
             const chatHistory = document.getElementById('chatHistory');
-
-            const userMsg = document.createElement('div');
-            userMsg.className = 'bg-brand-50 border border-brand-200 rounded-2xl p-4 text-xs text-slate-900 ml-8';
-            userMsg.innerHTML = `<strong class="text-brand-700 block mb-1">Anda:</strong> ${question}`;
-            chatHistory.appendChild(userMsg);
+            
+            // Tambah pesan user ke chat box
+            chatHistory.innerHTML += `<div class="bg-brand-50 border border-brand-200 rounded-2xl p-4 text-xs text-brand-900 ml-8"><b>Anda:</b> ${question}</div>`;
             inputField.value = '';
-            chatHistory.scrollTop = chatHistory.scrollHeight;
-
-            const aiMsgId = 'ai-loading-' + Date.now();
-            const aiMsg = document.createElement('div');
-            aiMsg.id = aiMsgId;
-            aiMsg.className = 'bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs text-slate-700 mr-8';
-            aiMsg.innerHTML = `<strong class="text-brand-700 block mb-1">Miranaya AI:</strong> <span class="animate-pulse">Menganalisis skenario tambahan...</span>`;
-            chatHistory.appendChild(aiMsg);
             chatHistory.scrollTop = chatHistory.scrollHeight;
 
             try {
                 const response = await fetch(API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        previousContext: lastAnalysisContext,
-                        chatQuery: question
-                    })
+                    body: JSON.stringify({ chatQuery: question, previousContext: lastAnalysisContext })
                 });
 
-                if (!response.ok) throw new Error("Gagal memproses chat.");
+                const resText = await response.text();
+                const resData = JSON.parse(resText);
 
-                const data = await response.json();
-                const aiElement = document.getElementById(aiMsgId);
-                aiElement.innerHTML = `<strong class="text-brand-700 block mb-1">Miranaya AI:</strong> <p class="leading-relaxed">${data.answer || data.summary || JSON.stringify(data)}</p>`;
+                if (!response.ok) throw new Error(resData.error || "Gagal memproses chat");
+
+                chatHistory.innerHTML += `<div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs text-slate-700 mr-8"><b>AI Advisor:</b> ${resData.answer}</div>`;
                 chatHistory.scrollTop = chatHistory.scrollHeight;
 
-            } catch (error) {
-                console.error(error);
-                const aiElement = document.getElementById(aiMsgId);
-                aiElement.innerHTML = `<strong class="text-red-600 block mb-1">Miranaya AI:</strong> Maaf, terjadi kesalahan saat memproses pertanyaan Anda.`;
+            } catch (err) {
+                chatHistory.innerHTML += `<div class="bg-red-50 border border-red-200 rounded-2xl p-4 text-xs text-red-700 mr-8"><b>Error:</b> ${err.message}</div>`;
             }
         }
     </script>
