@@ -541,7 +541,7 @@
             const percent = Math.min(Math.max(((estAge - curAge) / (maxScale - curAge)) * 100, 10), 100);
             document.getElementById('graphBar').style.width = `${percent}%`;
 
-            // Pengisian Rekomendasi Presisi X, Y, Z
+            // Pengisian Rekomendasi Presisi X, Y, Z dengan Logika Akurat
             document.getElementById('prescriptionTitle').innerText = `Rekomendasi Presisi Target Usia ${targetAge} Tahun`;
             
             const remainingMonths = Math.max((targetAge - curAge) * 12, 12);
@@ -556,11 +556,11 @@
                 valY = data.gapAnalysis.additionalMonthlyIncome;
                 valZ = data.gapAnalysis.maximumMonthlyExpense;
             } else {
-                // Kalkulasi Aktuaria Presisi Menggantikan Fallback Keliru Sebelumnya
                 const totalTargetNeeded = netMonthlyBurn * remainingMonths;
                 valX = Math.max(totalTargetNeeded - currentFormInput.dana, 0);
                 valY = Math.max(netMonthlyBurn - (currentFormInput.dana / remainingMonths), 0);
-                valZ = Math.round((currentFormInput.dana / remainingMonths) + currentFormInput.penghasilan);
+                // Opsi C (Batas Pengeluaran Z): Murni pembagian total dana dengan sisa bulan horizon
+                valZ = Math.round(currentFormInput.dana / remainingMonths);
             }
 
             document.getElementById('recCapitalX').innerText = `Rp ${valX.toLocaleString('id-ID')}`;
