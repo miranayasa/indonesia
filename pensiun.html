@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Miranaya Retirement AI - Retirement Planning & Financial Advisor</title>
+    <title>Miranaya Consulting - Retirement Planning & Financial Advisor</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -42,8 +42,8 @@
                     <i class="fa-solid fa-chart-line"></i>
                 </div>
                 <div>
-                    <h1 class="text-lg font-bold tracking-tight text-slate-900">Miranaya Retirement AI</h1>
-                    <p class="text-xs text-brand-600 font-semibold">AI Retirement Planning & Financial Advisor</p>
+                    <h1 class="text-lg font-bold tracking-tight text-slate-900">Miranaya Retirement Analisys</h1>
+                    <p class="text-xs text-brand-600 font-semibold"> Retirement Planning & Financial Advisor</p>
                 </div>
             </div>
             <div class="text-xs text-slate-500 bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-full font-medium">
@@ -65,7 +65,7 @@
                     Rancang Masa Pensiun Ideal Anda Secara Komprehensif
                 </h2>
                 <p class="text-slate-600 text-sm leading-relaxed">
-                    Masukkan profil keuangan Anda. AI kami akan mensimulasikan ketahanan dana, dampak inflasi, analisis kesenjangan (gap), serta strategi instrumen investasi terbaik.
+                    Masukkan profil keuangan Anda. kami akan mensimulasikan ketahanan dana, dampak inflasi, analisis kesenjangan (gap), serta strategi instrumen investasi terbaik.
                 </p>
             </div>
         </div>
@@ -372,7 +372,7 @@
     <!-- JAVASCRIPT LOGIC -->
     <script>
         // Endpoint Cloudflare Worker (Ganti URL ini dengan URL Worker Anda setelah deploy)
-        const API_URL = "https://your-worker-subdomain.workers.dev";
+        const API_URL = "https://pensiun.miranayasa.workers.dev/";
 
         // Menyimpan konteks analisis terakhir untuk chat lanjutan
         let lastAnalysisContext = null;
@@ -426,7 +426,7 @@
                 console.error(error);
                 document.getElementById('loadingSection').classList.add('hidden');
                 document.getElementById('errorSection').classList.remove('hidden');
-                document.getElementById('errorMessage').innerText = "Gagal terhubung ke Cloudflare Worker atau terjadi kesalahan parsing JSON. Pastikan URL worker sudah benar dan internet aktif.";
+                document.getElementById('errorMessage').innerText = "Gagal terhubung ke  Worker atau terjadi kesalahan parsing JSON. Pastikan URL worker sudah benar dan internet aktif.";
             }
         }
 
