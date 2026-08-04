@@ -31,6 +31,20 @@
         body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
         .spinner { animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Pengaturan Cetak / Print Styling */
+        @media print {
+            body { background: white !important; color: black !important; }
+            #loginModal, header, form#retirementForm, #loadingSection, #errorSection, form#chatInput, .no-print {
+                display: none !important;
+            }
+            #resultSection {
+                display: block !important;
+            }
+            .print-break-inside {
+                break-inside: avoid;
+            }
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white">
@@ -210,7 +224,24 @@
         <!-- RESULT DASHBOARD -->
         <div id="resultSection" class="hidden space-y-8">
             
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- TOMBOL CETAK LAPORAN PROFESIONAL -->
+            <div class="flex justify-between items-center bg-white border border-slate-200 p-5 rounded-2xl shadow-sm no-print">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-file-pdf"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Dokumen Hasil Siap Cetak</h4>
+                        <p class="text-[11px] text-slate-500">Cetak lembar laporan eksekutif ini ke format fisik atau PDF.</p>
+                    </div>
+                </div>
+                <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl transition text-xs flex items-center space-x-2 shadow-sm">
+                    <i class="fa-solid fa-print"></i>
+                    <span>Cetak Laporan / PDF</span>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 print-break-inside">
                 <div class="lg:col-span-2 bg-white border border-slate-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between">
                     <div>
                         <div class="flex items-center justify-between mb-4">
@@ -249,7 +280,7 @@
             </div>
 
             <!-- KONTROL SOLUSI EKSAK REKOMENDASI TARGET USIA -->
-            <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-8 md:p-10 shadow-xl text-white">
+            <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-8 md:p-10 shadow-xl text-white print-break-inside">
                 <div class="flex items-center space-x-3 mb-4">
                     <span class="bg-blue-600/30 text-blue-400 text-[11px] font-extrabold px-3 py-1 rounded-full border border-blue-500/30 uppercase tracking-widest">
                         Prescription Engine
@@ -302,7 +333,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 print-break-inside">
                 <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between">
                     <div>
                         <h4 class="text-sm font-black text-slate-900 mb-3 flex items-center uppercase tracking-wider">
@@ -336,7 +367,7 @@
                 </div>
             </div>
 
-            <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm">
+            <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm print-break-inside">
                 <h4 class="text-base font-black text-slate-900 mb-2 flex items-center tracking-tight">
                     <i class="fa-solid fa-bullseye text-blue-600 mr-2.5"></i> Gap Analysis & Solusi Penyeimbang Usia
                 </h4>
@@ -344,14 +375,14 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" id="resGapContainer"></div>
             </div>
 
-            <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm">
+            <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm print-break-inside">
                 <h4 class="text-base font-black text-slate-900 mb-6 flex items-center tracking-tight">
                     <i class="fa-solid fa-layer-group text-blue-600 mr-2.5"></i> Alokasi Strategis Portofolio Gabungan Lintas Instrumen
                 </h4>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="resScenariosContainer"></div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 print-break-inside">
                 <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between">
                     <div>
                         <h4 class="text-sm font-black text-slate-900 mb-3 flex items-center uppercase tracking-wider">
@@ -369,14 +400,14 @@
                 </div>
             </div>
 
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-sm text-white">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-sm text-white print-break-inside">
                 <h4 class="text-sm font-black mb-2 flex items-center uppercase tracking-wider text-blue-400">
                     <i class="fa-solid fa-circle-info mr-2"></i> Kesimpulan Eksekutif Final
                 </h4>
                 <p id="resConclusion" class="text-xs text-slate-300 leading-relaxed"></p>
             </div>
 
-            <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm space-y-6">
+            <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm space-y-6 no-print">
                 <div class="flex items-center justify-between border-b border-slate-100 pb-4">
                     <div>
                         <h4 class="text-base font-black text-slate-900 flex items-center tracking-tight">
@@ -407,7 +438,7 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="bg-white border-t border-slate-200 py-8 mt-12 text-center text-xs text-slate-500">
+    <footer class="bg-white border-t border-slate-200 py-8 mt-12 text-center text-xs text-slate-500 no-print">
         <p>&copy; 2026 Miranaya Consulting. All rights reserved. Powered by Enterprise Cloud Architecture & Gemini Intelligence.</p>
     </footer>
 
@@ -513,22 +544,23 @@
             // Pengisian Rekomendasi Presisi X, Y, Z
             document.getElementById('prescriptionTitle').innerText = `Rekomendasi Presisi Target Usia ${targetAge} Tahun`;
             
+            const remainingMonths = Math.max((targetAge - curAge) * 12, 12);
+            const netMonthlyBurn = currentFormInput.pengeluaran - currentFormInput.penghasilan;
+            
             let valX = 0;
             let valY = 0;
-            let valZ = currentFormInput.pengeluaran;
+            let valZ = 0;
 
-            if (data.gapAnalysis) {
-                valX = data.gapAnalysis.additionalCapital || 0;
-                valY = data.gapAnalysis.additionalMonthlyIncome || 0;
-                valZ = data.gapAnalysis.maximumMonthlyExpense || currentFormInput.pengeluaran;
+            if (data.gapAnalysis && data.gapAnalysis.additionalCapital !== undefined) {
+                valX = data.gapAnalysis.additionalCapital;
+                valY = data.gapAnalysis.additionalMonthlyIncome;
+                valZ = data.gapAnalysis.maximumMonthlyExpense;
             } else {
-                // Fallback kalkulasi mandiri jika struktur backend menyesuaikan
-                const remainingMonths = Math.max((targetAge - curAge) * 12, 12);
-                const netMonthlyBurn = currentFormInput.pengeluaran - currentFormInput.penghasilan;
+                // Kalkulasi Aktuaria Presisi Menggantikan Fallback Keliru Sebelumnya
                 const totalTargetNeeded = netMonthlyBurn * remainingMonths;
                 valX = Math.max(totalTargetNeeded - currentFormInput.dana, 0);
                 valY = Math.max(netMonthlyBurn - (currentFormInput.dana / remainingMonths), 0);
-                valZ = Math.max(currentFormInput.dana / remainingMonths + currentFormInput.penghasilan, 500000);
+                valZ = Math.round((currentFormInput.dana / remainingMonths) + currentFormInput.penghasilan);
             }
 
             document.getElementById('recCapitalX').innerText = `Rp ${valX.toLocaleString('id-ID')}`;
