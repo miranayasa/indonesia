@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minaraya Consulting - Transformation & Business Consultant</title>
+    <title>miranaya Consulting - Transformation & Business Consultant</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -65,10 +65,10 @@
         <div class="bg-white rounded-3xl shadow-2xl p-10 w-full max-w-sm text-center border-t-4 border-gold-500">
             <div class="flex justify-center mb-5">
                 <div class="bg-white p-2 rounded-full ring-4 ring-gold-400/50 shadow-lg">
-                    <img src="mconsult.png" alt="Minaraya Consulting" class="h-28 w-28 rounded-full object-contain">
+                    <img src="mconsult.png" alt="Miranaya Consulting" class="h-28 w-28 rounded-full object-contain">
                 </div>
             </div>
-            <h2 class="text-xl font-extrabold text-indigo-900 tracking-tight">Minaraya Consulting</h2>
+            <h2 class="text-xl font-extrabold text-indigo-900 tracking-tight">Miranaya Consulting</h2>
             <p class="text-[11px] uppercase tracking-[0.2em] text-gold-600 font-bold mb-7">Transformation & Business Consultant</p>
             <form id="authForm" onsubmit="handleAuthSubmit(event)" class="space-y-3">
                 <input type="password" id="authPasswordInput" required placeholder="Masukkan password akses"
@@ -88,10 +88,10 @@
         <div class="max-w-7xl mx-auto px-4 py-5 flex justify-between items-center">
             <div class="flex items-center space-x-4">
                 <div class="bg-white p-1.5 rounded-full ring-2 ring-gold-400/60 shadow-md">
-                    <img src="mconsult.png" alt="Minaraya Consulting" class="h-14 w-14 rounded-full object-contain">
+                    <img src="mconsult.png" alt="miranaya Consulting" class="h-14 w-14 rounded-full object-contain">
                 </div>
                 <div class="leading-tight">
-                    <h1 class="text-xl font-extrabold tracking-tight">Minaraya Consulting</h1>
+                    <h1 class="text-xl font-extrabold tracking-tight">miranaya Consulting</h1>
                     <p class="text-[11px] uppercase tracking-[0.2em] text-gold-400 font-bold mt-0.5">Transformation & Business Consultant</p>
                 </div>
             </div>
@@ -201,9 +201,9 @@
             <!-- Header khusus untuk versi cetak/PDF, tidak tampil di layar -->
             <div class="hidden print:flex items-center justify-between border-b-2 border-gold-500 pb-4 mb-2">
                 <div class="flex items-center space-x-3">
-                    <img src="mconsult.png" alt="Minaraya Consulting" class="h-14 w-14 rounded-full object-contain">
+                    <img src="mconsult.png" alt="miranaya Consulting" class="h-14 w-14 rounded-full object-contain">
                     <div>
-                        <div class="text-lg font-extrabold text-indigo-900">Minaraya Consulting</div>
+                        <div class="text-lg font-extrabold text-indigo-900">miranaya Consulting</div>
                         <div class="text-[10px] uppercase tracking-widest text-gold-600 font-bold">Transformation & Business Consultant</div>
                     </div>
                 </div>
@@ -690,7 +690,7 @@
         const APP_PASSWORD = "CoSe82";
 
         function checkExistingAuth() {
-            if (sessionStorage.getItem("minaraya_auth") === "true") {
+            if (sessionStorage.getItem("miranaya_auth") === "true") {
                 unlockApp();
             }
         }
@@ -701,7 +701,7 @@
             const errorEl = document.getElementById("authError");
 
             if (inputValue === APP_PASSWORD) {
-                sessionStorage.setItem("minaraya_auth", "true");
+                sessionStorage.setItem("miranaya_auth", "true");
                 errorEl.classList.add("hidden");
                 unlockApp();
             } else {
