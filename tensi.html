@@ -52,28 +52,12 @@
             border-radius: 12px;
             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
             margin-bottom: 1.5rem;
-            transition: box-shadow 0.2s ease;
-        }
-
-        .card:hover {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
         }
 
         .summary-card {
             border-left: 4px solid var(--bs-primary);
             position: relative;
             overflow: hidden;
-        }
-
-        .summary-card::after {
-            content: "";
-            position: absolute;
-            right: -10px;
-            bottom: -10px;
-            width: 60px;
-            height: 60px;
-            background: rgba(37, 99, 235, 0.03);
-            border-radius: 50%;
         }
 
         .spinner-overlay {
@@ -87,7 +71,7 @@
         }
 
         .badge-status {
-            font-size: 0.75rem; padding: 0.4em 0.8em; border-radius: 30px; font-weight: 600; letter-spacing: 0.3px;
+            font-size: 0.75rem; padding: 0.4em 0.8em; border-radius: 30px; font-weight: 600;
         }
 
         .status-optimal, .status-normal { background-color: #dcfce7; color: #166534; }
@@ -102,17 +86,11 @@
             border-radius: 8px;
         }
 
-        .form-control:focus, .form-select:focus {
-            border-color: var(--bs-primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
-        }
-
         .btn {
             font-weight: 500;
             padding: 0.5rem 1rem;
             border-radius: 8px;
             font-size: 0.875rem;
-            transition: all 0.2s;
         }
 
         .chart-container {
@@ -122,10 +100,6 @@
         .chart-scroll-wrapper {
             width: 100%; overflow-x: auto;
         }
-
-        table.dataTable {
-            border-collapse: collapse !important;
-        }
     </style>
 </head>
 <body>
@@ -134,7 +108,7 @@
     <div id="loadingSpinner" class="spinner-overlay">
         <div class="text-center">
             <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status"></div>
-            <h6 class="mt-3 text-secondary fw-semibold">Memuat Data Dashboard...</h6>
+            <h6 class="mt-3 text-secondary fw-semibold">Menarik Data dari Google Sheet...</h6>
         </div>
     </div>
 
@@ -147,15 +121,15 @@
                     <i class="bi bi-heart-pulse-fill me-2 text-danger"></i>Monitoring Tekanan Darah & Nadi
                 </h1>
                 <p class="text-white-50 mb-0 small">
-                    <i class="bi bi-shield-check me-1"></i> Data terakhir diperbarui: <span id="lastUpdateDate" class="fw-semibold text-white">-</span>
+                    <i class="bi bi-shield-check me-1"></i> Terakhir diperbarui: <span id="lastUpdateDate" class="fw-semibold text-white">-</span>
                 </p>
             </div>
             <div class="mt-3 mt-md-0">
                 <div class="btn-group bg-white p-1 rounded-3 shadow-sm" role="group">
-                    <button type="button" class="btn btn-sm text-secondary border-0" onclick="exportPDF()" title="Ekspor PDF"><i class="bi bi-file-earmark-pdf text-danger me-1"></i> PDF</button>
-                    <button type="button" class="btn btn-sm text-secondary border-0" onclick="exportExcel()" title="Ekspor Excel"><i class="bi bi-file-earmark-excel text-success me-1"></i> Excel</button>
-                    <button type="button" class="btn btn-sm text-secondary border-0" onclick="exportPNG()" title="Ekspor Gambar"><i class="bi bi-file-earmark-image text-primary me-1"></i> PNG</button>
-                    <button type="button" class="btn btn-sm text-danger border-0 fw-semibold" onclick="resetData()" title="Reset Data"><i class="bi bi-arrow-counterclockwise me-1"></i> Reset</button>
+                    <button type="button" class="btn btn-sm text-secondary border-0" onclick="exportPDF()"><i class="bi bi-file-earmark-pdf text-danger me-1"></i> PDF</button>
+                    <button type="button" class="btn btn-sm text-secondary border-0" onclick="exportExcel()"><i class="bi bi-file-earmark-excel text-success me-1"></i> Excel</button>
+                    <button type="button" class="btn btn-sm text-secondary border-0" onclick="exportPNG()"><i class="bi bi-file-earmark-image text-primary me-1"></i> PNG</button>
+                    <button type="button" class="btn btn-sm text-danger border-0 fw-semibold" onclick="fetchDataFromSheet()"><i class="bi bi-arrow-clockwise me-1"></i> Muat Ulang</button>
                 </div>
             </div>
         </div>
@@ -164,7 +138,6 @@
         <div class="card mb-4 border-0 shadow-sm">
             <div class="card-header bg-transparent border-0 pt-4 px-4 pb-0">
                 <h5 class="fw-bold text-dark m-0"><i class="bi bi-plus-circle-fill text-primary me-2"></i>Catat Pengukuran Baru</h5>
-                <p class="text-muted small mt-1">Masukkan hasil pemeriksaan tekanan darah dan detak jantung Anda saat ini.</p>
             </div>
             <div class="card-body px-4 pb-4">
                 <form id="inputForm" onsubmit="handleFormSubmit(event)" class="row g-3">
@@ -190,11 +163,11 @@
                     </div>
                     <div class="col-md-12">
                         <label for="inputCatatan" class="form-label small fw-semibold text-muted">Catatan Klinis (Opsional)</label>
-                        <input type="text" class="form-control" id="inputCatatan" placeholder="Contoh: Setelah minum obat / Sebelum sarapan / Merasa pusing ringan">
+                        <input type="text" class="form-control" id="inputCatatan" placeholder="Contoh: Setelah minum obat / Sebelum sarapan">
                     </div>
                     <div class="col-md-12 text-end mt-3">
                         <button type="submit" class="btn btn-primary px-4 fw-semibold shadow-sm">
-                            <i class="bi bi-cloud-arrow-up-fill me-1"></i> Simpan ke Google Sheet & Update Grafik
+                            <i class="bi bi-cloud-arrow-up-fill me-1"></i> Simpan ke Google Sheet & Perbarui Grafik
                         </button>
                     </div>
                 </form>
@@ -208,8 +181,8 @@
                     <div class="col-md-4">
                         <label class="form-label small fw-semibold text-muted mb-2">Preset Periode Analisis</label>
                         <div class="btn-group w-100 shadow-sm" role="group">
-                            <button type="button" class="btn btn-outline-secondary btn-sm active" onclick="setPresetFilter(7, this)">7 Hari</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setPresetFilter(30, this)">30 Hari</button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setPresetFilter(7, this)">7 Hari</button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm active" onclick="setPresetFilter(30, this)">30 Hari</button>
                             <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setPresetFilter(90, this)">3 Bulan</button>
                             <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setPresetFilter('all', this)">Semua</button>
                         </div>
@@ -269,11 +242,8 @@
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4 border-0 shadow-sm">
-                    <div class="card-header bg-transparent border-0 pt-4 px-4 pb-0 d-flex justify-content-between align-items-center">
-                        <div>
-                            <h5 class="fw-bold text-dark m-0"><i class="bi bi-graph-up-arrow text-primary me-2"></i>Tren Tekanan Darah & Nadi</h5>
-                            <p class="text-muted small mt-1">Grafik kronologis perkembangan parameter kardiovaskular.</p>
-                        </div>
+                    <div class="card-header bg-transparent border-0 pt-4 px-4 pb-0">
+                        <h5 class="fw-bold text-dark m-0"><i class="bi bi-graph-up-arrow text-primary me-2"></i>Tren Tekanan Darah & Nadi</h5>
                     </div>
                     <div class="card-body px-4 pb-4">
                         <div class="chart-scroll-wrapper">
@@ -290,7 +260,6 @@
         <div class="card mb-4 border-0 shadow-sm">
             <div class="card-header bg-transparent border-0 pt-4 px-4 pb-0">
                 <h5 class="fw-bold text-dark m-0"><i class="bi bi-table text-primary me-2"></i>Log Riwayat Pengukuran</h5>
-                <p class="text-muted small mt-1">Arsip lengkap data tekanan darah dan catatan medis.</p>
             </div>
             <div class="card-body px-4 pb-4">
                 <div class="table-responsive">
@@ -324,36 +293,53 @@
         let dataTableInstance = null;
         let mainChartObj = null;
 
-        const defaultMockData = [
-            { Tanggal: "2026-06-01", Jam: "08:00", Sistol: 120, Diastol: 80, Nadi: 72, Catatan: "Pagi hari" },
-            { Tanggal: "2026-06-02", Jam: "08:30", Sistol: 125, Diastol: 82, Nadi: 75, Catatan: "Sebelum sarapan" }
-        ];
+        // MASUKKAN URL WEB APP GOOGLE SCRIPT ANDA DI SINI
+        const scriptURL = 'MASUKKAN_URL_WEB_APP_GOOGLE_SCRIPT_ANDA_DISINI';
 
         document.addEventListener("DOMContentLoaded", () => {
             const now = new Date();
             document.getElementById('inputTanggal').value = formatDateISO(now);
             document.getElementById('inputJam').value = now.toTimeString().slice(0,5);
 
-            loadDataFromStorage();
+            // Ambil data langsung dari Google Sheet saat halaman dibuka pertama kali
+            fetchDataFromSheet();
         });
 
-        function loadDataFromStorage() {
+        function fetchDataFromSheet() {
             showSpinner(true);
+            fetch(scriptURL)
+                .then(response => response.json())
+                .then(data => {
+                    if (Array.isArray(data) && data.length > 0) {
+                        rawData = data;
+                        saveDataToStorage();
+                    } else {
+                        loadDataFromStorage();
+                    }
+                    processRawData();
+                    setPresetFilter(30, document.querySelector('.btn-group button:nth-child(2)'));
+                    showSpinner(false);
+                })
+                .catch(error => {
+                    console.warn('Gagal memuat dari server, menggunakan cache lokal:', error);
+                    loadDataFromStorage();
+                    showSpinner(false);
+                });
+        }
+
+        function loadDataFromStorage() {
             const savedData = localStorage.getItem('tensi_data');
             if (savedData) {
                 try {
                     rawData = JSON.parse(savedData);
                 } catch (e) {
-                    rawData = defaultMockData;
+                    rawData = [];
                 }
             } else {
-                rawData = defaultMockData;
-                saveDataToStorage();
+                rawData = [];
             }
-
             processRawData();
             setPresetFilter(30, document.querySelector('.btn-group button:nth-child(2)'));
-            showSpinner(false);
         }
 
         function saveDataToStorage() {
@@ -380,9 +366,6 @@
 
             showSpinner(true);
 
-            // Ganti URL di bawah dengan Web App URL dari Google Apps Script Anda
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbwXdZ43IAZHKarfmwQFeYy3I0rsUiZlstI2fTmh0F9F1Di_sueL99WQbAGALvkeo-mD/exec';
-
             fetch(scriptURL, { method: 'POST', body: formData })
                 .then(response => response.json())
                 .then(result => {
@@ -396,7 +379,7 @@
                     document.getElementById('inputCatatan').value = '';
                     document.getElementById('inputSistol').focus();
                     showSpinner(false);
-                    alert('Data berhasil disimpan ke Google Sheet & diperbarui!');
+                    alert('Data berhasil disimpan ke Google Sheet & grafik diperbarui!');
                 })
                 .catch(error => {
                     console.error('Error!', error.message);
@@ -408,15 +391,8 @@
                     applyCustomFilter();
 
                     showSpinner(false);
-                    alert('Data tersimpan lokal (Gagal terhubung ke Google Sheet, cek URL Apps Script Anda).');
+                    alert('Data tersimpan lokal (Gagal terhubung ke Google Sheet).');
                 });
-        }
-
-        function resetData() {
-            if (confirm("Reset seluruh data kembali ke kondisi awal?")) {
-                localStorage.removeItem('tensi_data');
-                loadDataFromStorage();
-            }
         }
 
         function processRawData() {
@@ -424,7 +400,7 @@
                 const sistol = Number(item.Sistol || 0);
                 const diastol = Number(item.Diastol || 0);
                 const nadi = Number(item.Nadi || 0);
-                const tanggal = item.Tanggal || '';
+                const tanggal = item.Tanggal ? String(item.Tanggal).split('T')[0] : '';
                 const jam = item.Jam || '00:00';
                 const catatan = item.Catatan || '-';
 
@@ -442,7 +418,7 @@
                     statusClass: statusObj.className,
                     catatan: catatan
                 };
-            }).filter(item => !isNaN(item.rawDate.getTime()));
+            }).filter(item => !isNaN(item.rawDate.getTime()) && item.sistol > 0);
 
             rawData.sort((a, b) => a.rawDate - b.rawDate);
         }
@@ -540,95 +516,21 @@
 
             if (mainChartObj) mainChartObj.destroy();
 
-            const gradientSistol = ctx.createLinearGradient(0, 0, 0, 350);
-            gradientSistol.addColorStop(0, 'rgba(239, 68, 68, 0.25)');
-            gradientSistol.addColorStop(1, 'rgba(239, 68, 68, 0.0)');
-
-            const gradientDiastol = ctx.createLinearGradient(0, 0, 0, 350);
-            gradientDiastol.addColorStop(0, 'rgba(37, 99, 235, 0.25)');
-            gradientDiastol.addColorStop(1, 'rgba(37, 99, 235, 0.0)');
-
-            const gradientNadi = ctx.createLinearGradient(0, 0, 0, 350);
-            gradientNadi.addColorStop(0, 'rgba(16, 185, 129, 0.2)');
-            gradientNadi.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
-
             mainChartObj = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,
                     datasets: [
-                        {
-                            label: 'Sistol (mmHg)',
-                            data: sistolData,
-                            borderColor: '#ef4444',
-                            backgroundColor: gradientSistol,
-                            borderWidth: 2.5,
-                            fill: true,
-                            tension: 0.35,
-                            pointRadius: 4,
-                            pointBackgroundColor: '#ef4444',
-                            pointHoverRadius: 6
-                        },
-                        {
-                            label: 'Diastol (mmHg)',
-                            data: diastolData,
-                            borderColor: '#2563eb',
-                            backgroundColor: gradientDiastol,
-                            borderWidth: 2.5,
-                            fill: true,
-                            tension: 0.35,
-                            pointRadius: 4,
-                            pointBackgroundColor: '#2563eb',
-                            pointHoverRadius: 6
-                        },
-                        {
-                            label: 'Nadi (bpm)',
-                            data: nadiData,
-                            borderColor: '#10b981',
-                            backgroundColor: gradientNadi,
-                            borderWidth: 2,
-                            borderDash: [4, 4],
-                            fill: true,
-                            tension: 0.35,
-                            pointRadius: 3,
-                            pointBackgroundColor: '#10b981',
-                            pointHoverRadius: 5
-                        }
+                        { label: 'Sistol (mmHg)', data: sistolData, borderColor: '#ef4444', borderWidth: 2.5, tension: 0.35, fill: true },
+                        { label: 'Diastol (mmHg)', data: diastolData, borderColor: '#2563eb', borderWidth: 2.5, tension: 0.35, fill: true },
+                        { label: 'Nadi (bpm)', data: nadiData, borderColor: '#10b981', borderWidth: 2, borderDash: [4, 4], tension: 0.35, fill: true }
                     ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                            labels: {
-                                boxWidth: 14,
-                                font: { family: 'Inter', weight: 500, size: 12 },
-                                color: '#475569'
-                            }
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
-                            titleFont: { family: 'Inter', size: 13, weight: 600 },
-                            bodyFont: { family: 'Inter', size: 12 },
-                            padding: 12,
-                            cornerRadius: 8,
-                            usePointStyle: true
-                        }
-                    },
                     scales: {
-                        x: {
-                            grid: { display: false },
-                            ticks: { font: { family: 'Inter', size: 11 }, color: '#64748b' }
-                        },
-                        y: {
-                            beginAtZero: false,
-                            min: 40,
-                            max: 190,
-                            grid: { color: '#f1f5f9' },
-                            ticks: { font: { family: 'Inter', size: 11 }, color: '#64748b' }
-                        }
+                        y: { min: 40, max: 190 }
                     }
                 }
             });
@@ -698,17 +600,13 @@
             }
         }
 
-        function exportPDF() {
-            html2pdf().from(document.getElementById('dashboardContent')).save();
-        }
-
+        function exportPDF() { html2pdf().from(document.getElementById('dashboardContent')).save(); }
         function exportExcel() {
             const worksheet = XLSX.utils.json_to_sheet(filteredData);
             const workbook = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(workbook, worksheet, "Riwayat Tensi");
             XLSX.writeFile(workbook, `Data_Tensi_Klinis.xlsx`);
         }
-
         function exportPNG() {
             html2canvas(document.getElementById('dashboardContent')).then(canvas => {
                 const link = document.createElement('a');
