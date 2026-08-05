@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leadership Assessment - Miranaya Academy</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Google Font: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --bg-color: #ffffff;
+            --card-bg: #ffffff;
+            --text-color: #212529;
+            --text-muted: #6c757d;
+            --border-color: #dee2e6;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .assessment-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            max-width: 750px;
+            width: 100%;
+            margin: auto;
+        }
+
+        .option-card {
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            background-color: #fff;
+        }
+
+        .option-card:hover {
+            border-color: var(--primary-color);
+            background-color: #f8f9fa;
+            transform: translateY(-2px);
+        }
+
+        .option-card.selected {
+            border-color: var(--primary-color);
+            background-color: #eff6ff;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .spinner-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999;
+        }
+
+        .progress {
+            height: 8px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="spinner-overlay">
+        <div class="text-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status"></div>
+            <h6 class="mt-3 text-secondary fw-semibold">Memuat Assessment...</h6>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container py-4">
+        <div class="card assessment-card p-4 p-md-5">
+            
+            <!-- Error Alert Container -->
+            <div id="errorAlert" class="alert alert-danger d-none" role="alert">
+                Gagal mengambil data assessment.
+            </div>
+
+            <!-- Header Section -->
+            <div class="text-center mb-4">
+                <span class="badge bg-primary-subtle text-primary mb-2 px-3 py-1 rounded-pill fw-semibold" style="font-size: 0.75rem;">Miranaya Academy</span>
+                <h2 class="fw-bold mb-1">Leadership Assessment</h2>
+                <p class="text-muted small mb-0">Jawablah sesuai kondisi Anda saat ini.</p>
+            </div>
+
+            <!-- Progress Section -->
+            <div id="progressSection" class="mb-4 d-none">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span id="progressText" class="small fw-semibold text-muted">Question 0 of 0</span>
+                    <span id="progressPercentage" class="small fw-semibold text-primary">0%</span>
+                </div>
+                <div class="progress">
+                    <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+
+            <hr class="text-muted mb-4">
+
+            <!-- Question Area -->
+            <div id="questionArea" class="d-none">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span id="competencyBadge" class="badge bg-secondary-subtle text-secondary px-2 py-1 rounded-2 small">Kompetensi</span>
+                    <span id="questionNumberLabel" class="small fw-bold text-muted">Question 1</span>
+                </div>
+                <h4 id="questionText" class="fw-semibold mb-4 text-dark" style="font-size: 1.15rem; line-height: 1.6;">
+                    Pertanyaan akan muncul di sini...
+                </h4>
+
+                <!-- Options List -->
+                <div id="optionsContainer" class="d-flex flex-column gap-3 mb-4">
+                    <!-- Options injected via JS -->
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div id="navigationArea" class="d-flex justify-content-between align-items-center mt-3 d-none">
+                <button id="prevBtn" class="btn btn-outline-secondary px-4 fw-semibold" onclick="previousQuestion()">
+                    <i class="bi bi-arrow-left me-1"></i> Previous
+                </button>
+                <button id="nextBtn" class="btn btn-primary px-4 fw-semibold" onclick="nextQuestion()">
+                    Next <i class="bi bi-arrow-right ms-1"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Konfigurasi Endpoint API
+        const API_URL = "https://script.google.com/macros/s/AKfycbynOQMP7WEjWWOOu3fq2RHUTtPsBRi1pxDgEwl37-blWzx1iA6yD8hXdbWCMgmo8lfdaw/exec";
+
+        // Variabel Global Sesuai Ketentuan
+        let questions = [];
+        let currentQuestion = 0;
+        let answers = {};
+
+        // Skala Penilaian Pilihan Ganda
+        const optionsList = [
+            { value: 1, label: "Sangat Tidak Setuju" },
+            { value: 2, label: "Tidak Setuju" },
+            { value: 3, label: "Netral" },
+            { value: 4, label: "Setuju" },
+            { value: 5, label: "Sangat Setuju" }
+        ];
+
+        // Jalankan loadQuestions saat halaman selesai dimuat
+        document.addEventListener("DOMContentLoaded", () => {
+            loadQuestions();
+        });
+
+        /**
+         * Mengambil data soal dari Google Apps Script menggunakan fetch()
+         */
+        function loadQuestions() {
+            showSpinner(true);
+            hideError(false);
+
+            fetch(`${API_URL}?action=getQuestions`)
+                .then(response => {
+                    if (!response.ok) throw new Error("Network response was not ok");
+                    return response.json();
+                })
+                .then(result => {
+                    if (result && result.status && Array.isArray(result.data)) {
+                        questions = result.data;
+                        currentQuestion = 0;
+                        
+                        // Tampilkan komponen UI setelah data siap
+                        document.getElementById('progressSection').classList.remove('d-none');
+                        document.getElementById('questionArea').classList.remove('d-none');
+                        document.getElementById('navigationArea').classList.remove('d-none');
+
+                        renderQuestion();
+                    } else {
+                        throw new Error("Format data tidak valid");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error loading questions:", error);
+                    showError(true);
+                })
+                .finally(() => {
+                    showSpinner(false);
+                });
+        }
+
+        /**
+         * Merender pertanyaan dan opsi jawaban aktif ke UI
+         */
+        function renderQuestion() {
+            if (questions.length === 0) return;
+
+            const q = questions[currentQuestion];
+            
+            // Set Kompetensi & Label Nomor Soal
+            document.getElementById('competencyBadge').innerText = q.competency || q.Kompetensi || 'Leadership';
+            document.getElementById('questionNumberLabel').innerText = `Question ${currentQuestion + 1}`;
+            
+            // Set Teks Pertanyaan
+            document.getElementById('questionText').innerText = `"${q.question || q.Pertanyaan}"`;
+
+            // Render Pilihan Jawaban (Card Button)
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+
+            const currentAnswer = answers[currentQuestion];
+
+            optionsList.forEach(opt => {
+                const isSelected = currentAnswer === opt.value;
+                
+                const cardDiv = document.createElement('div');
+                cardDiv.className = `option-card p-3 d-flex align-items-center justify-content-between ${isSelected ? 'selected' : ''}`;
+                cardDiv.innerHTML = `
+                    <div class="d-flex align-items-center gap-3">
+                        <span class="badge ${isSelected ? 'bg-primary text-white' : 'bg-light text-dark border'} rounded-circle d-flex align-items-center justify-content-center" style="width: 28px; height: 28px; font-size: 0.85rem;">${opt.value}</span>
+                        <span class="fw-medium">${opt.label}</span>
+                    </div>
+                    <i class="bi ${isSelected ? 'bi-check-circle-fill text-primary' : 'bi-circle text-muted'} fs-5"></i>
+                `;
+
+                // Event listener untuk memilih jawaban
+                cardDiv.addEventListener('click', () => {
+                    selectAnswer(opt.value);
+                });
+
+                optionsContainer.appendChild(cardDiv);
+            });
+
+            updateProgress();
+            updateNavigationButtons();
+        }
+
+        /**
+         * Menyimpan jawaban peserta ke variabel JavaScript dan memicu auto-save
+         */
+        function selectAnswer(value) {
+            answers[currentQuestion] = value;
+            saveAnswer(currentQuestion, value);
+            renderQuestion(); // Re-render untuk memperbarui status visual pilihan
+        }
+
+        /**
+         * Auto-save function sesuai ketentuan
+         */
+        function saveAnswer(questionIndex, answerValue) {
+            console.log(`Auto-saving: Question ${questionIndex + 1} answered with ${answerValue}`);
+            // Integrasi ke Apps Script dapat ditambahkan di sini pada tahap berikutnya
+        }
+
+        /**
+         * Navigasi ke soal berikutnya
+         */
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                renderQuestion();
+            } else {
+                finishAssessment();
+            }
+        }
+
+        /**
+         * Navigasi ke soal sebelumnya
+         */
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                renderQuestion();
+            }
+        }
+
+        /**
+         * Memperbarui Progress Bar dan teks informasi progres
+         */
+        function updateProgress() {
+            const total = questions.length;
+            const current = currentQuestion + 1;
+            const percentage = Math.round((current / total) * 100);
+
+            document.getElementById('progressText').innerText = `Question ${current} of ${total}`;
+            document.getElementById('progressPercentage').innerText = `${percentage}%`;
+            
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = `${percentage}%`;
+            progressBar.setAttribute('aria-valuenow', percentage);
+        }
+
+        /**
+         * Mengatur status tombol navigasi (Disabled pada awal, teks berubah pada akhir)
+         */
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            // Atur tombol Previous
+            if (currentQuestion === 0) {
+                prevBtn.setAttribute('disabled', 'true');
+            } else {
+                prevBtn.removeAttribute('disabled');
+            }
+
+            // Atur tombol Next / Selesai Assessment
+            if (currentQuestion === questions.length - 1) {
+                nextBtn.innerHTML = `Selesai Assessment <i class="bi bi-check-lg ms-1"></i>`;
+                nextBtn.className = `btn btn-success px-4 fw-semibold`;
+            } else {
+                nextBtn.innerHTML = `Next <i class="bi bi-arrow-right ms-1"></i>`;
+                nextBtn.className = `btn btn-primary px-4 fw-semibold`;
+            }
+        }
+
+        /**
+         * Fungsi saat assessment selesai
+         */
+        function finishAssessment() {
+            alert("Assessment selesai! Terima kasih telah berpartisipasi.");
+            console.log("Final Answers:", answers);
+        }
+
+        /**
+         * Kontrol visibilitas spinner loading
+         */
+        function showSpinner(show) {
+            const spinner = document.getElementById('loadingSpinner');
+            if (show) {
+                spinner.classList.remove('d-none');
+            } else {
+                spinner.classList.add('d-none');
+            }
+        }
+
+        /**
+         * Kontrol visibilitas alert error
+         */
+        function showError(show) {
+            const alertBox = document.getElementById('errorAlert');
+            if (show) {
+                alertBox.classList.remove('d-none');
+            } else {
+                alertBox.classList.add('d-none');
+            }
+        }
+    </script>
+</body>
+</html>
