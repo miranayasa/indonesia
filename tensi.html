@@ -60,6 +60,13 @@
             overflow: hidden;
         }
 
+        .analysis-box {
+            background-color: #f1f5f9;
+            border-left: 4px solid #2563eb;
+            border-radius: 8px;
+            padding: 1.25rem;
+        }
+
         .spinner-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -245,7 +252,7 @@
                     <div class="card-header bg-transparent border-0 pt-4 px-4 pb-0 d-flex justify-content-between align-items-center flex-wrap">
                         <div>
                             <h5 class="fw-bold text-dark m-0"><i class="bi bi-graph-up-arrow text-primary me-2"></i>Tren Tekanan Darah & Nadi</h5>
-                            <p class="text-muted small mt-1 mb-2">Garis putus-putus menunjukkan ambang batas batas atas normal/hipertensi medis.</p>
+                            <p class="text-muted small mt-1 mb-2">Garis putus-putus menunjukkan ambang batas atas normal/hipertensi medis (Sistol 140 / Diastol 90).</p>
                         </div>
                     </div>
                     <div class="card-body px-4 pb-4">
@@ -253,6 +260,14 @@
                             <div id="mainChartWrapper" class="chart-container" style="min-width: 650px;">
                                 <canvas id="mainChart"></canvas>
                             </div>
+                        </div>
+
+                        <!-- KOTAK ANALISIS DAN KESIMPULAN PERIODE -->
+                        <div class="analysis-box mt-4">
+                            <h6 class="fw-bold text-primary mb-2"><i class="bi bi-clipboard2-pulse-fill me-2"></i>Analisis & Kesimpulan Periode Terpilih</h6>
+                            <p id="analysisContent" class="mb-0 text-secondary small" style="line-height: 1.6;">
+                                Memproses analisis data...
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -461,10 +476,11 @@
             refreshDashboard();
         }
 
-        function refreshDashboard() {
+            function refreshDashboard() {
             updateLastUpdateLabel();
             updateSummary();
             drawMainChart();
+            generatePeriodAnalysis(); // Generate teks kesimpulan otomatis
             renderTable();
         }
 
@@ -501,6 +517,55 @@
             document.getElementById('sumAvgPulse').innerHTML = `${avgPulse} <span class="small fw-normal text-muted">bpm</span>`;
         }
 
+        // FUNGSI UNTUK MEMBUAT KESIMPULAN & ANALISIS OTOMATIS BERDASARKAN PERIODE
+        function generatePeriodAnalysis() {
+            const analysisEl = document.getElementById('analysisContent');
+            if (filteredData.length === 0) {
+                analysisEl.innerHTML = "Belum ada data pengukuran yang tersedia dalam rentang periode yang dipilih untuk dianalisis.";
+                return;
+            }
+
+            const totalRecord = filteredData.length;
+            const avgSistol = Math.round(filteredData.reduce((acc, cur) => acc + cur.sistol, 0) / totalRecord);
+            const avgDiastol = Math.round(filteredData.reduce((acc, cur) => acc + cur.diastol, 0) / totalRecord);
+            const avgNadi = Math.round(filteredData.reduce((acc, cur) => acc + cur.nadi, 0) / totalRecord);
+
+            const avgStatus = classifyBloodPressure(avgSistol, avgDiastol);
+
+            let highCount = filteredData.filter(d => d.sistol >= 140 || d.diastol >= 90).length;
+            let percentageHigh = Math.round((highCount / totalRecord) * 100);
+
+            let trendText = "stabil";
+            if (totalRecord >= 2) {
+                const firstHalf = filteredData.slice(0, Math.floor(totalRecord / 2));
+                const secondHalf = filteredData.slice(Math.floor(totalRecord / 2));
+                const avgSistolFirst = firstHalf.reduce((acc, cur) => acc + cur.sistol, 0) / firstHalf.length;
+                const avgSistolSecond = secondHalf.reduce((acc, cur) => acc + cur.sistol, 0) / secondHalf.length;
+
+                if (avgSistolSecond - avgSistolFirst > 5) {
+                    trendText = "menunjukkan tren kenaikan (cenderung meningkat)";
+                } else if (avgSistolFirst - avgSistolSecond > 5) {
+                    trendText = "menunjukkan tren perbaikan (cenderung menurun)";
+                }
+            }
+
+            let summaryHtml = `Berdasarkan total <b>${totalRecord} data pengukuran</b> dalam periode terpilih, rata-rata tekanan darah Anda adalah <b>${avgSistol}/${avgDiastol} mmHg</b> dengan klasifikasi umum <b>"${avgStatus.text}"</b> dan rerata denyut nadi <b>${avgNadi} bpm</b>. `;
+            summaryHtml += `Secara keseluruhan, pola grafik Anda <b>${trendText}</b>. `;
+
+            if (percentageHigh > 0) {
+                summaryHtml += `Terdapat <b>${highCount} dari ${totalRecord} (${percentageHigh}%)</b> catatan yang melampaui batas atas standar medis (≥ 140/90 mmHg). `;
+                if (percentageHigh > 50) {
+                    summaryHtml += `<b>Perhatian:</b> Mayoritas hasil pengukuran Anda berada di atas batas normal. Disarankan untuk berkonsultasi dengan dokter untuk evaluasi lebih lanjut.`;
+                } else {
+                    summaryHtml += `Sebagian besar catatan Anda terkontrol dengan baik.`;
+                }
+            } else {
+                summaryHtml += `<b>Kabar Baik:</b> Seluruh catatan dalam rentang ini berada di bawah batas ambang atas hipertensi. Pertahankan gaya hidup sehat Anda!`;
+            }
+
+            analysisEl.innerHTML = summaryHtml;
+        }
+
         function drawMainChart() {
             const ctx = document.getElementById('mainChart').getContext('2d');
             const wrapper = document.getElementById('mainChartWrapper');
@@ -533,7 +598,6 @@
                     maintainAspectRatio: false,
                     plugins: {
                         legend: { position: 'top' },
-                        // PENGATURAN GARIS BATAS KETENTUAN MEDIS / STANDAR
                         annotation: {
                             annotations: {
                                 lineSistolMax: {
