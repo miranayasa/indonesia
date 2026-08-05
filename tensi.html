@@ -155,7 +155,7 @@
                     <button type="button" class="btn btn-sm text-secondary border-0" onclick="exportPDF()" title="Ekspor PDF"><i class="bi bi-file-earmark-pdf text-danger me-1"></i> PDF</button>
                     <button type="button" class="btn btn-sm text-secondary border-0" onclick="exportExcel()" title="Ekspor Excel"><i class="bi bi-file-earmark-excel text-success me-1"></i> Excel</button>
                     <button type="button" class="btn btn-sm text-secondary border-0" onclick="exportPNG()" title="Ekspor Gambar"><i class="bi bi-file-earmark-image text-primary me-1"></i> PNG</button>
-                    
+                    <button type="button" class="btn btn-sm text-danger border-0 fw-semibold" onclick="resetData()" title="Reset Data"><i class="bi bi-arrow-counterclockwise me-1"></i> Reset</button>
                 </div>
             </div>
         </div>
@@ -403,6 +403,7 @@
                     const newDataItem = { Tanggal: tanggal, Jam: jam, Sistol: sistol, Diastol: diastol, Nadi: nadi, Catatan: catatan };
                     rawData.push(newDataItem);
                     saveDataToStorage();
+                    
                     processRawData();
                     applyCustomFilter();
 
@@ -539,7 +540,6 @@
 
             if (mainChartObj) mainChartObj.destroy();
 
-            // Membuat Gradient warna halus untuk area bawah garis grafik
             const gradientSistol = ctx.createLinearGradient(0, 0, 0, 350);
             gradientSistol.addColorStop(0, 'rgba(239, 68, 68, 0.25)');
             gradientSistol.addColorStop(1, 'rgba(239, 68, 68, 0.0)');
