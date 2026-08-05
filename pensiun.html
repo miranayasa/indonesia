@@ -27,10 +27,18 @@
     </script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- html2pdf.js CDN untuk Ekspor Laporan PDF Profesional -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
         .spinner { animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        /* Styling khusus cetak / PDF */
+        @media print {
+            body { background-color: #ffffff !important; }
+            #loginModal, header, form, #chatHistory, footer { display: none !important; }
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white">
@@ -210,166 +218,185 @@
         <!-- RESULT DASHBOARD -->
         <div id="resultSection" class="hidden space-y-8">
             
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div class="lg:col-span-2 bg-white border border-slate-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="bg-slate-100 text-slate-800 text-[11px] font-bold px-3 py-1 rounded-full border border-slate-200 uppercase tracking-wider">
-                                Executive Summary
-                            </span>
-                            <span class="text-xs text-slate-400 font-medium" id="resultTimestamp"></span>
-                        </div>
-                        <h3 class="text-xl font-black text-slate-900 mb-3 tracking-tight">Tinjauan Holistik Struktur Modal</h3>
-                        <p id="resSummary" class="text-slate-600 text-sm leading-relaxed mb-6"></p>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6 border-t border-slate-100">
-                        <div class="bg-slate-50 border border-slate-200/80 p-5 rounded-2xl">
-                            <div class="text-[11px] text-slate-500 font-bold uppercase tracking-wider mb-1">Horizon Dana Bertahan</div>
-                            <div class="text-2xl font-black text-blue-600" id="resEstimatedYears">-- Tahun</div>
-                        </div>
-                        <div class="bg-slate-50 border border-slate-200/80 p-5 rounded-2xl">
-                            <div class="text-[11px] text-slate-500 font-bold uppercase tracking-wider mb-1">Ambang Usia Kehabisan Dana</div>
-                            <div class="text-2xl font-black text-slate-900" id="resEstimatedAge">Usia -- Tahun</div>
-                        </div>
-                    </div>
+            <!-- TOMBOL DOWNLOAD PDF EKSEKUTIF -->
+            <div class="flex justify-between items-center bg-blue-50/70 border border-blue-200 px-6 py-4 rounded-2xl">
+                <div>
+                    <h4 class="text-sm font-black text-blue-900 flex items-center">
+                        <i class="fa-solid fa-file-pdf text-blue-600 mr-2 text-base"></i> Laporan Analisis Siap Diunduh
+                    </h4>
+                    <p class="text-xs text-blue-700/80 mt-0.5">Simpan ringkasan eksekutif dan rekomendasi portofolio dalam dokumen PDF formal.</p>
                 </div>
-
-                <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm flex flex-col items-center justify-center text-center">
-                    <span class="bg-slate-100 text-slate-800 text-[11px] font-bold px-3 py-1 rounded-full border border-slate-200 mb-6 uppercase tracking-wider">
-                        Health Score Index
-                    </span>
-                    <div class="relative flex items-center justify-center mb-6">
-                        <div class="w-36 h-36 rounded-full border-8 border-slate-100 flex items-center justify-center shadow-inner">
-                            <span class="text-5xl font-black text-slate-900" id="resHealthScore">--</span>
-                        </div>
-                    </div>
-                    <p class="text-xs text-slate-500 leading-relaxed">Indikator kesehatan struktur kekayaan bersih dan ketahanan terhadap risiko sistemik.</p>
-                </div>
+                <button onclick="downloadPDF()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl transition shadow-md text-xs flex items-center space-x-2">
+                    <i class="fa-solid fa-download"></i>
+                    <span>Download Laporan PDF</span>
+                </button>
             </div>
 
-            <!-- KONTROL SOLUSI EKSAK REKOMENDASI TARGET USIA -->
-            <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-8 md:p-10 shadow-xl text-white">
-                <div class="flex items-center space-x-3 mb-4">
-                    <span class="bg-blue-600/30 text-blue-400 text-[11px] font-extrabold px-3 py-1 rounded-full border border-blue-500/30 uppercase tracking-widest">
-                        Prescription Engine
-                    </span>
-                    <h4 class="text-lg font-black tracking-tight" id="prescriptionTitle">Rekomendasi Presisi Target Usia</h4>
-                </div>
-                <p class="text-xs text-slate-300 mb-8 leading-relaxed">
-                    Berdasarkan tingkat burn-rate pengeluaran bulanan yang Anda input, berikut adalah 3 jalur eksekusi kuantitatif agar aset bertahan mulus hingga target usia yang ditentukan, lengkap dengan penjelasan solutif penjembatan defisit:
-                </p>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- Opsi X: Tambahan Modal -->
-                    <div class="bg-slate-800/90 border border-slate-700 p-6 rounded-2xl flex flex-col justify-between space-y-4">
+            <!-- KONTEN UTAMA YANG AKAN DICETAK KE PDF -->
+            <div id="pdfExportContainer" class="space-y-8 bg-white p-2 rounded-3xl">
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 bg-white border border-slate-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between">
                         <div>
-                            <div class="text-[10px] uppercase font-bold text-blue-400 tracking-wider mb-1">Opsi A (Injeksi Modal)</div>
-                            <h5 class="text-sm font-black text-white mb-2">Tambahan Dana Pensiun (X)</h5>
-                            <p class="text-[11px] text-slate-400 leading-relaxed">Total suntikan modal likuid atau portofolio investasi saat ini untuk menutupi defisit secara langsung agar dana tidak habis sebelum usia target.</p>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="bg-slate-100 text-slate-800 text-[11px] font-bold px-3 py-1 rounded-full border border-slate-200 uppercase tracking-wider">
+                                    Executive Summary
+                                </span>
+                                <span class="text-xs text-slate-400 font-medium" id="resultTimestamp"></span>
+                            </div>
+                            <h3 class="text-xl font-black text-slate-900 mb-3 tracking-tight">Tinjauan Holistik Struktur Modal</h3>
+                            <p id="resSummary" class="text-slate-600 text-sm leading-relaxed mb-6"></p>
                         </div>
-                        <div class="bg-slate-900/80 border border-slate-700/80 p-4 rounded-xl">
-                            <span class="text-[10px] text-slate-400 block mb-0.5 uppercase tracking-wider">Nilai Estimasi (X):</span>
-                            <span class="text-base font-black text-blue-400" id="recCapitalX">Rp --</span>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6 border-t border-slate-100">
+                            <div class="bg-slate-50 border border-slate-200/80 p-5 rounded-2xl">
+                                <div class="text-[11px] text-slate-500 font-bold uppercase tracking-wider mb-1">Horizon Dana Bertahan</div>
+                                <div class="text-2xl font-black text-blue-600" id="resEstimatedYears">-- Tahun</div>
+                            </div>
+                            <div class="bg-slate-50 border border-slate-200/80 p-5 rounded-2xl">
+                                <div class="text-[11px] text-slate-500 font-bold uppercase tracking-wider mb-1">Ambang Usia Kehabisan Dana</div>
+                                <div class="text-2xl font-black text-slate-900" id="resEstimatedAge">Usia -- Tahun</div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Opsi Y: Tambahan Penghasilan Bulanan -->
-                    <div class="bg-slate-800/90 border border-slate-700 p-6 rounded-2xl flex flex-col justify-between space-y-4">
+                    <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm flex flex-col items-center justify-center text-center">
+                        <span class="bg-slate-100 text-slate-800 text-[11px] font-bold px-3 py-1 rounded-full border border-slate-200 mb-6 uppercase tracking-wider">
+                            Health Score Index
+                        </span>
+                        <div class="relative flex items-center justify-center mb-6">
+                            <div class="w-36 h-36 rounded-full border-8 border-slate-100 flex items-center justify-center shadow-inner">
+                                <span class="text-5xl font-black text-slate-900" id="resHealthScore">--</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-500 leading-relaxed">Indikator kesehatan struktur kekayaan bersih dan ketahanan terhadap risiko sistemik.</p>
+                    </div>
+                </div>
+
+                <!-- KONTROL SOLUSI EKSAK REKOMENDASI TARGET USIA -->
+                <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-8 md:p-10 shadow-xl text-white">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <span class="bg-blue-600/30 text-blue-400 text-[11px] font-extrabold px-3 py-1 rounded-full border border-blue-500/30 uppercase tracking-widest">
+                            Prescription Engine
+                        </span>
+                        <h4 class="text-lg font-black tracking-tight" id="prescriptionTitle">Rekomendasi Presisi Target Usia</h4>
+                    </div>
+                    <p class="text-xs text-slate-300 mb-8 leading-relaxed">
+                        Berdasarkan tingkat burn-rate pengeluaran bulanan yang Anda input, berikut adalah 3 jalur eksekusi kuantitatif agar aset bertahan mulus hingga target usia yang ditentukan, lengkap dengan penjelasan solutif penjembatan defisit:
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Opsi X: Tambahan Modal -->
+                        <div class="bg-slate-800/90 border border-slate-700 p-6 rounded-2xl flex flex-col justify-between space-y-4">
+                            <div>
+                                <div class="text-[10px] uppercase font-bold text-blue-400 tracking-wider mb-1">Opsi A (Injeksi Modal)</div>
+                                <h5 class="text-sm font-black text-white mb-2">Tambahan Dana Pensiun (X)</h5>
+                                <p class="text-[11px] text-slate-400 leading-relaxed">Total suntikan modal likuid atau portofolio investasi saat ini untuk menutupi defisit secara langsung agar dana tidak habis sebelum usia target.</p>
+                            </div>
+                            <div class="bg-slate-900/80 border border-slate-700/80 p-4 rounded-xl">
+                                <span class="text-[10px] text-slate-400 block mb-0.5 uppercase tracking-wider">Nilai Estimasi (X):</span>
+                                <span class="text-base font-black text-blue-400" id="recCapitalX">Rp --</span>
+                            </div>
+                        </div>
+
+                        <!-- Opsi Y: Tambahan Penghasilan Bulanan -->
+                        <div class="bg-slate-800/90 border border-slate-700 p-6 rounded-2xl flex flex-col justify-between space-y-4">
+                            <div>
+                                <div class="text-[10px] uppercase font-bold text-emerald-400 tracking-wider mb-1">Opsi B (Passive Income)</div>
+                                <h5 class="text-sm font-black text-white mb-2">Penghasilan Per Bulan (Y)</h5>
+                                <p class="text-[11px] text-slate-400 leading-relaxed">Mengupayakan tambahan pemasukan rutin bulanan dari bisnis sampingan, dividen instrumen, atau sewa aset untuk menutupi selisih *burn rate*.</p>
+                            </div>
+                            <div class="bg-slate-900/80 border border-slate-700/80 p-4 rounded-xl">
+                                <span class="text-[10px] text-slate-400 block mb-0.5 uppercase tracking-wider">Nilai Estimasi (Y):</span>
+                                <span class="text-base font-black text-emerald-400" id="recIncomeY">Rp -- / bln</span>
+                            </div>
+                        </div>
+
+                        <!-- Opsi Z: Batas Maksimum Pengeluaran -->
+                        <div class="bg-slate-800/90 border border-slate-700 p-6 rounded-2xl flex flex-col justify-between space-y-4">
+                            <div>
+                                <div class="text-[10px] uppercase font-bold text-amber-400 tracking-wider mb-1">Opsi C (Austerity Budget)</div>
+                                <h5 class="text-sm font-black text-white mb-2">Batas Pengeluaran (Z)</h5>
+                                <p class="text-[11px] text-slate-400 leading-relaxed">Koreksi plafon maksimal pengeluaran bulanan melalui pengetatan anggaran agar akumulasi kas seimbang dengan usia target.</p>
+                            </div>
+                            <div class="bg-slate-900/80 border border-slate-700/80 p-4 rounded-xl">
+                                <span class="text-[10px] text-slate-400 block mb-0.5 uppercase tracking-wider">Nilai Estimasi (Z):</span>
+                                <span class="text-base font-black text-amber-400" id="recExpenseZ">Rp -- / bln</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between">
                         <div>
-                            <div class="text-[10px] uppercase font-bold text-emerald-400 tracking-wider mb-1">Opsi B (Passive Income)</div>
-                            <h5 class="text-sm font-black text-white mb-2">Penghasilan Per Bulan (Y)</h5>
-                            <p class="text-[11px] text-slate-400 leading-relaxed">Mengupayakan tambahan pemasukan rutin bulanan dari bisnis sampingan, dividen instrumen, atau sewa aset untuk menutupi selisih *burn rate*.</p>
+                            <h4 class="text-sm font-black text-slate-900 mb-3 flex items-center uppercase tracking-wider">
+                                <i class="fa-solid fa-chart-line text-blue-600 mr-2"></i> Tekanan Inflasi Makro
+                            </h4>
+                            <p id="resInflationImpact" class="text-xs text-slate-600 leading-relaxed mb-6"></p>
                         </div>
-                        <div class="bg-slate-900/80 border border-slate-700/80 p-4 rounded-xl">
-                            <span class="text-[10px] text-slate-400 block mb-0.5 uppercase tracking-wider">Nilai Estimasi (Y):</span>
-                            <span class="text-base font-black text-emerald-400" id="recIncomeY">Rp -- / bln</span>
+                        <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl text-xs flex justify-between items-center">
+                            <span class="text-slate-500 font-semibold">Proyeksi Akumulasi Biaya Hidup:</span>
+                            <span class="font-bold text-slate-900" id="resLifetimeExpense">Rp --</span>
                         </div>
                     </div>
 
-                    <!-- Opsi Z: Batas Maksimum Pengeluaran -->
-                    <div class="bg-slate-800/90 border border-slate-700 p-6 rounded-2xl flex flex-col justify-between space-y-4">
+                    <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between">
                         <div>
-                            <div class="text-[10px] uppercase font-bold text-amber-400 tracking-wider mb-1">Opsi C (Austerity Budget)</div>
-                            <h5 class="text-sm font-black text-white mb-2">Batas Pengeluaran (Z)</h5>
-                            <p class="text-[11px] text-slate-400 leading-relaxed">Koreksi plafon maksimal pengeluaran bulanan melalui pengetatan anggaran agar akumulasi kas seimbang dengan usia target.</p>
+                            <h4 class="text-sm font-black text-slate-900 mb-3 flex items-center uppercase tracking-wider">
+                                <i class="fa-solid fa-hourglass-half text-blue-600 mr-2"></i> Timeline Keberlanjutan Portofolio
+                            </h4>
+                            <p class="text-xs text-slate-500 mb-6">Pemetaan titik kritis antara usia berjalan dan target usia horizon.</p>
                         </div>
-                        <div class="bg-slate-900/80 border border-slate-700/80 p-4 rounded-xl">
-                            <span class="text-[10px] text-slate-400 block mb-0.5 uppercase tracking-wider">Nilai Estimasi (Z):</span>
-                            <span class="text-base font-black text-amber-400" id="recExpenseZ">Rp -- / bln</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between">
-                    <div>
-                        <h4 class="text-sm font-black text-slate-900 mb-3 flex items-center uppercase tracking-wider">
-                            <i class="fa-solid fa-chart-line text-blue-600 mr-2"></i> Tekanan Inflasi Makro
-                        </h4>
-                        <p id="resInflationImpact" class="text-xs text-slate-600 leading-relaxed mb-6"></p>
-                    </div>
-                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl text-xs flex justify-between items-center">
-                        <span class="text-slate-500 font-semibold">Proyeksi Akumulasi Biaya Hidup:</span>
-                        <span class="font-bold text-slate-900" id="resLifetimeExpense">Rp --</span>
-                    </div>
-                </div>
-
-                <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between">
-                    <div>
-                        <h4 class="text-sm font-black text-slate-900 mb-3 flex items-center uppercase tracking-wider">
-                            <i class="fa-solid fa-hourglass-half text-blue-600 mr-2"></i> Timeline Keberlanjutan Portofolio
-                        </h4>
-                        <p class="text-xs text-slate-500 mb-6">Pemetaan titik kritis antara usia berjalan dan target usia horizon.</p>
-                    </div>
-                    <div class="space-y-2">
-                        <div class="flex justify-between text-xs font-bold text-slate-700">
-                            <span id="labelCurrentAge">Umur --</span>
-                            <span id="labelEstimatedAge">Estimasi --</span>
-                            <span id="labelTargetAge">Target --</span>
-                        </div>
-                        <div class="w-full bg-slate-100 h-3.5 rounded-full overflow-hidden flex border border-slate-200">
-                            <div id="graphBar" class="bg-slate-900 h-full transition-all duration-500 rounded-full" style="width: 0%"></div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-xs font-bold text-slate-700">
+                                <span id="labelCurrentAge">Umur --</span>
+                                <span id="labelEstimatedAge">Estimasi --</span>
+                                <span id="labelTargetAge">Target --</span>
+                            </div>
+                            <div class="w-full bg-slate-100 h-3.5 rounded-full overflow-hidden flex border border-slate-200">
+                                <div id="graphBar" class="bg-slate-900 h-full transition-all duration-500 rounded-full" style="width: 0%"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Bagian Gap Analysis tersembunyi karena sudah dilebur ke Rekomendasi Presisi di atas -->
-            <div id="resGapContainer" class="hidden"></div>
-
-            <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm">
-                <h4 class="text-base font-black text-slate-900 mb-6 flex items-center tracking-tight">
-                    <i class="fa-solid fa-layer-group text-blue-600 mr-2.5"></i> Alokasi Strategis Portofolio Gabungan Lintas Instrumen & Proyeksi Dampak
-                </h4>
-                <div class="grid grid-cols-1 gap-5" id="resScenariosContainer"></div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between">
-                    <div>
-                        <h4 class="text-sm font-black text-slate-900 mb-3 flex items-center uppercase tracking-wider">
-                            <i class="fa-solid fa-chess text-blue-600 mr-2"></i> Arahan Strategis Konsultan
-                        </h4>
-                        <p id="resRecommendation" class="text-xs text-slate-600 leading-relaxed"></p>
-                    </div>
-                </div>
+                <!-- Bagian Gap Analysis tersembunyi karena sudah dilebur ke Rekomendasi Presisi di atas -->
+                <div id="resGapContainer" class="hidden"></div>
 
                 <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm">
-                    <h4 class="text-sm font-black text-slate-900 mb-4 flex items-center uppercase tracking-wider">
-                        <i class="fa-solid fa-list-check text-blue-600 mr-2"></i> Rencana Aksi Implementasi (*Action Plan*)
+                    <h4 class="text-base font-black text-slate-900 mb-6 flex items-center tracking-tight">
+                        <i class="fa-solid fa-layer-group text-blue-600 mr-2.5"></i> Alokasi Strategis Portofolio Gabungan Lintas Instrumen & Proyeksi Dampak
                     </h4>
-                    <div class="space-y-3" id="resActionPlan"></div>
+                    <div class="grid grid-cols-1 gap-5" id="resScenariosContainer"></div>
                 </div>
-            </div>
 
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-sm text-white">
-                <h4 class="text-sm font-black mb-2 flex items-center uppercase tracking-wider text-blue-400">
-                    <i class="fa-solid fa-circle-info mr-2"></i> Kesimpulan Eksekutif Final
-                </h4>
-                <p id="resConclusion" class="text-xs text-slate-300 leading-relaxed"></p>
-            </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <h4 class="text-sm font-black text-slate-900 mb-3 flex items-center uppercase tracking-wider">
+                                <i class="fa-solid fa-chess text-blue-600 mr-2"></i> Arahan Strategis Konsultan
+                            </h4>
+                            <p id="resRecommendation" class="text-xs text-slate-600 leading-relaxed"></p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm">
+                        <h4 class="text-sm font-black text-slate-900 mb-4 flex items-center uppercase tracking-wider">
+                            <i class="fa-solid fa-list-check text-blue-600 mr-2"></i> Rencana Aksi Implementasi (*Action Plan*)
+                        </h4>
+                        <div class="space-y-3" id="resActionPlan"></div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-sm text-white">
+                    <h4 class="text-sm font-black mb-2 flex items-center uppercase tracking-wider text-blue-400">
+                        <i class="fa-solid fa-circle-info mr-2"></i> Kesimpulan Eksekutif Final
+                    </h4>
+                    <p id="resConclusion" class="text-xs text-slate-300 leading-relaxed"></p>
+                </div>
+
+            </div> <!-- End of PDF Container -->
 
             <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm space-y-6">
                 <div class="flex items-center justify-between border-b border-slate-100 pb-4">
@@ -529,7 +556,7 @@
             document.getElementById('recIncomeY').innerText = `Rp ${valY.toLocaleString('id-ID')} / bln`;
             document.getElementById('recExpenseZ').innerText = `Rp ${valZ.toLocaleString('id-ID')} / bln`;
 
-            // 2. Render Rekomendasi Portofolio Gabungan & Proyeksi Dampak (Menggantikan Gap Analysis terpisah)
+            // 2. Render Rekomendasi Portofolio Gabungan & Catatan Strategi
             const scenariosContainer = document.getElementById('resScenariosContainer');
             scenariosContainer.innerHTML = '';
             
@@ -562,7 +589,6 @@
                         </div>
                     </div>
 
-                    <!-- KOTAK CATATAN STRATEGI (bukan klaim proyeksi kuantitatif) -->
                     <div class="bg-blue-950/70 border border-blue-500/40 p-6 rounded-2xl space-y-3 text-xs">
                         <div class="text-blue-400 font-extrabold uppercase tracking-wider flex items-center text-sm">
                             <i class="fa-solid fa-circle-info mr-2.5"></i> Catatan Strategi Alokasi:
@@ -571,7 +597,7 @@
                             Perhitungan Health Score dan opsi X/Y/Z di atas mengasumsikan dana <b>diam di kas tanpa imbal hasil (konservatif)</b>, sedangkan pengeluaran & pemasukan pasif naik mengikuti inflasi. Ini adalah baseline yang sengaja dibuat ketat agar tidak melebih-lebihkan ketahanan portofolio.
                         </p>
                         <p class="text-slate-300 leading-relaxed text-[11px] pt-1 border-t border-blue-900/60">
-                            Menempatkan sebagian dana pada instrumen di atas <b>berpotensi</b> memperpanjang ketahanan portofolio dan/atau mengurangi kebutuhan opsi X/Y/Z secara nyata — namun besarannya bergantung pada return riil yang benar-benar tercapai, yang tidak dijamin. Gunakan tetap X = <span id="noteValX">Rp --</span>, Y = <span id="noteValY">Rp --</span>/bln, atau Z = <span id="noteValZ">Rp --</span>/bln sebagai patokan konservatif Anda, dan diskusikan dengan konsultan sebelum mengandalkan proyeksi investasi sebagai satu-satunya solusi.
+                            Menempatkan sebagian dana pada instrumen di atas <b>berpotensi</b> memperpanjang ketahanan portofolio dan/atau mengurangi kebutuhan opsi X/Y/Z secara nyata — namun besarannya bergantung pada return riil yang benar-benar tercapai. Gunakan tetap X = <span id="noteValX">Rp --</span>, Y = <span id="noteValY">Rp --</span>/bln, atau Z = <span id="noteValZ">Rp --</span>/bln sebagai patokan konservatif Anda.
                         </p>
                     </div>
                 </div>
@@ -614,6 +640,35 @@
                     actionPlanContainer.appendChild(div);
                 });
             }
+        }
+
+        // Fungsi Eksekusi Download PDF menggunakan html2pdf.js
+        function downloadPDF() {
+            const element = document.getElementById('pdfExportContainer');
+            const clientName = (currentFormInput && currentFormInput.nama) ? currentFormInput.nama.replace(/[^a-zA-Z0-9]/g, '_') : 'Klien';
+            const opt = {
+                margin:       10,
+                filename:     `Laporan_Pensiun_${clientName}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Berikan indikator visual proses unduh
+            const btn = event.currentTarget;
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i><span>Menyiapkan PDF...</span>`;
+            btn.disabled = true;
+
+            html2pdf().from(element).set(opt).save().then(() => {
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+            }).catch(err => {
+                console.error("Gagal mendownload PDF:", err);
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+                alert("Terjadi kesalahan saat mengunduh laporan PDF.");
+            });
         }
 
         async function handleChatSubmit(event) {
