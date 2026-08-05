@@ -184,10 +184,10 @@
         <!-- FILTER SECTION -->
         <div class="card mb-4 border-0 shadow-sm">
             <div class="card-body px-4 py-3">
-                <form id="filterForm" class="row g-3 align-items-end" onsubmit="event.preventDefault(); applyCustomFilter();">
+                <form id="filterForm" class="row g-3 align-items-end" onsubmit="event.preventDefault(); applyCustomFilter(true);">
                     <div class="col-md-4">
                         <label class="form-label small fw-semibold text-muted mb-2">Preset Periode Analisis</label>
-                        <div class="btn-group w-100 shadow-sm" role="group">
+                        <div id="presetBtnGroup" class="btn-group w-100 shadow-sm" role="group">
                             <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setPresetFilter(7, this)">7 Hari</button>
                             <button type="button" class="btn btn-outline-secondary btn-sm active" onclick="setPresetFilter(30, this)">30 Hari</button>
                             <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setPresetFilter(90, this)">3 Bulan</button>
@@ -310,6 +310,7 @@
         let filteredData = [];
         let dataTableInstance = null;
         let mainChartObj = null;
+        let currentPresetLabel = '30 hari terakhir'; // Melacak label periode preset yang sedang aktif
 
         // MASUKKAN URL WEB APP GOOGLE SCRIPT ANDA DI SINI
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwXdZ43IAZHKarfmwQFeYy3I0rsUiZlstI2fTmh0F9F1Di_sueL99WQbAGALvkeo-mD/exec';
@@ -334,7 +335,7 @@
                         loadDataFromStorage();
                     }
                     processRawData();
-                    setPresetFilter(30, document.querySelector('.btn-group button:nth-child(2)'));
+                    setPresetFilter(30, document.querySelector('#presetBtnGroup button:nth-child(2)'));
                     showSpinner(false);
                 })
                 .catch(error => {
@@ -356,7 +357,7 @@
                 rawData = [];
             }
             processRawData();
-            setPresetFilter(30, document.querySelector('.btn-group button:nth-child(2)'));
+            setPresetFilter(30, document.querySelector('#presetBtnGroup button:nth-child(2)'));
         }
 
         function saveDataToStorage() {
@@ -447,6 +448,11 @@
                 buttons.forEach(b => b.classList.add('btn-outline-secondary'));
                 btnElement.classList.add('active', 'btn-primary');
                 btnElement.classList.remove('btn-outline-secondary');
+                currentPresetLabel = btnElement.innerText.trim();
+            } else if (days === 'all') {
+                currentPresetLabel = 'Semua';
+            } else {
+                currentPresetLabel = `${days} hari terakhir`;
             }
 
             const today = new Date();
@@ -464,7 +470,17 @@
             applyCustomFilter();
         }
 
-        function applyCustomFilter() {
+        function applyCustomFilter(fromManualDate) {
+            // Jika filter dijalankan lewat input tanggal manual (bukan tombol preset),
+            // pastikan tidak ada preset yang tampil aktif agar tidak membingungkan.
+            if (fromManualDate) {
+                currentPresetLabel = 'periode tanggal kustom yang Anda pilih';
+                document.querySelectorAll('#presetBtnGroup button').forEach(b => {
+                    b.classList.remove('active', 'btn-primary');
+                    b.classList.add('btn-outline-secondary');
+                });
+            }
+
             const startStr = document.getElementById('startDate').value;
             const endStr = document.getElementById('endDate').value;
 
@@ -549,7 +565,7 @@
                 }
             }
 
-            let summaryHtml = `Berdasarkan total <b>${totalRecord} data pengukuran</b> dalam periode terpilih, rata-rata tekanan darah Anda adalah <b>${avgSistol}/${avgDiastol} mmHg</b> dengan klasifikasi umum <b>"${avgStatus.text}"</b> dan rerata denyut nadi <b>${avgNadi} bpm</b>. `;
+            let summaryHtml = `Berdasarkan total <b>${totalRecord} data pengukuran</b> dalam periode <b>${currentPresetLabel}</b>, rata-rata tekanan darah Anda adalah <b>${avgSistol}/${avgDiastol} mmHg</b> dengan klasifikasi umum <b>"${avgStatus.text}"</b> dan rerata denyut nadi <b>${avgNadi} bpm</b>. `;
             summaryHtml += `Secara keseluruhan, pola grafik Anda <b>${trendText}</b>. `;
 
             if (percentageHigh > 0) {
