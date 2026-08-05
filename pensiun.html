@@ -562,21 +562,24 @@
                         </div>
                     </div>
 
-                    <!-- KOTAK PROYEKSI DAMPAK INVESTASI -->
+                    <!-- KOTAK CATATAN STRATEGI (bukan klaim proyeksi kuantitatif) -->
                     <div class="bg-blue-950/70 border border-blue-500/40 p-6 rounded-2xl space-y-3 text-xs">
                         <div class="text-blue-400 font-extrabold uppercase tracking-wider flex items-center text-sm">
-                            <i class="fa-solid fa-chart-line-up mr-2.5"></i> Proyeksi Dampak Jika Portofolio Ini Dijalankan:
+                            <i class="fa-solid fa-circle-info mr-2.5"></i> Catatan Strategi Alokasi:
                         </div>
                         <p class="text-slate-200 leading-relaxed text-xs">
-                            Dengan mengalihkan struktur portofolio kas murni ke instrumen gabungan optimal di atas (estimasi imbal hasil 7-8% per tahun), dana pensiun Anda diproyeksikan **tidak akan habis di usia ${estAge} tahun**, melainkan mampu **bertahan mulus melampaui target usia ${targetAge} tahun bahkan hingga akhir masa pensiun**. 
+                            Perhitungan Health Score dan opsi X/Y/Z di atas mengasumsikan dana <b>diam di kas tanpa imbal hasil (konservatif)</b>, sedangkan pengeluaran & pemasukan pasif naik mengikuti inflasi. Ini adalah baseline yang sengaja dibuat ketat agar tidak melebih-lebihkan ketahanan portofolio.
                         </p>
                         <p class="text-slate-300 leading-relaxed text-[11px] pt-1 border-t border-blue-900/60">
-                            <b>Analisis Tambahan:</b> Anda <b>tidak memerlukan</b> tambahan setoran modal masif (Rp 1,49 Miliar) atau pemangkasan ekstrem, karena pertumbuhan aset dari kupon SBN dan potensi *capital gain* saham sudah secara otomatis menutupi celah inflasi dan burn-rate bulanan.
+                            Menempatkan sebagian dana pada instrumen di atas <b>berpotensi</b> memperpanjang ketahanan portofolio dan/atau mengurangi kebutuhan opsi X/Y/Z secara nyata — namun besarannya bergantung pada return riil yang benar-benar tercapai, yang tidak dijamin. Gunakan tetap X = <span id="noteValX">Rp --</span>, Y = <span id="noteValY">Rp --</span>/bln, atau Z = <span id="noteValZ">Rp --</span>/bln sebagai patokan konservatif Anda, dan diskusikan dengan konsultan sebelum mengandalkan proyeksi investasi sebagai satu-satunya solusi.
                         </p>
                     </div>
                 </div>
             `;
             scenariosContainer.appendChild(portfolioCard);
+            document.getElementById('noteValX').innerText = `Rp ${valX.toLocaleString('id-ID')}`;
+            document.getElementById('noteValY').innerText = `Rp ${valY.toLocaleString('id-ID')}`;
+            document.getElementById('noteValZ').innerText = `Rp ${valZ.toLocaleString('id-ID')}`;
 
             if (data.scenarios && Array.isArray(data.scenarios)) {
                 data.scenarios.forEach(scen => {
