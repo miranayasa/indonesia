@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- DataTables CSS -->
     <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-    <!-- Chart.js -->
+    <!-- Chart.js & Annotation Plugin -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
     <!-- Export Libraries -->
@@ -94,7 +94,7 @@
         }
 
         .chart-container {
-            position: relative; width: 100%; height: 380px;
+            position: relative; width: 100%; height: 400px;
         }
 
         .chart-scroll-wrapper {
@@ -242,8 +242,11 @@
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4 border-0 shadow-sm">
-                    <div class="card-header bg-transparent border-0 pt-4 px-4 pb-0">
-                        <h5 class="fw-bold text-dark m-0"><i class="bi bi-graph-up-arrow text-primary me-2"></i>Tren Tekanan Darah & Nadi</h5>
+                    <div class="card-header bg-transparent border-0 pt-4 px-4 pb-0 d-flex justify-content-between align-items-center flex-wrap">
+                        <div>
+                            <h5 class="fw-bold text-dark m-0"><i class="bi bi-graph-up-arrow text-primary me-2"></i>Tren Tekanan Darah & Nadi</h5>
+                            <p class="text-muted small mt-1 mb-2">Garis putus-putus menunjukkan ambang batas batas atas normal/hipertensi medis.</p>
+                        </div>
                     </div>
                     <div class="card-body px-4 pb-4">
                         <div class="chart-scroll-wrapper">
@@ -294,14 +297,13 @@
         let mainChartObj = null;
 
         // MASUKKAN URL WEB APP GOOGLE SCRIPT ANDA DI SINI
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbwXdZ43IAZHKarfmwQFeYy3I0rsUiZlstI2fTmh0F9F1Di_sueL99WQbAGALvkeo-mD/exec';
+        const scriptURL = 'MASUKKAN_URL_WEB_APP_GOOGLE_SCRIPT_ANDA_DISINI';
 
         document.addEventListener("DOMContentLoaded", () => {
             const now = new Date();
             document.getElementById('inputTanggal').value = formatDateISO(now);
             document.getElementById('inputJam').value = now.toTimeString().slice(0,5);
 
-            // Ambil data langsung dari Google Sheet saat halaman dibuka pertama kali
             fetchDataFromSheet();
         });
 
@@ -521,16 +523,61 @@
                 data: {
                     labels: labels,
                     datasets: [
-                        { label: 'Sistol (mmHg)', data: sistolData, borderColor: '#ef4444', borderWidth: 2.5, tension: 0.35, fill: true },
-                        { label: 'Diastol (mmHg)', data: diastolData, borderColor: '#2563eb', borderWidth: 2.5, tension: 0.35, fill: true },
-                        { label: 'Nadi (bpm)', data: nadiData, borderColor: '#10b981', borderWidth: 2, borderDash: [4, 4], tension: 0.35, fill: true }
+                        { label: 'Sistol (mmHg)', data: sistolData, borderColor: '#ef4444', borderWidth: 2.5, tension: 0.35, fill: false },
+                        { label: 'Diastol (mmHg)', data: diastolData, borderColor: '#2563eb', borderWidth: 2.5, tension: 0.35, fill: false },
+                        { label: 'Nadi (bpm)', data: nadiData, borderColor: '#10b981', borderWidth: 2, borderDash: [4, 4], tension: 0.35, fill: false }
                     ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top' },
+                        // PENGATURAN GARIS BATAS KETENTUAN MEDIS / STANDAR
+                        annotation: {
+                            annotations: {
+                                lineSistolMax: {
+                                    type: 'line',
+                                    yMin: 140,
+                                    yMax: 140,
+                                    borderColor: 'rgba(239, 68, 68, 0.6)',
+                                    borderWidth: 2,
+                                    borderDash: [6, 6],
+                                    label: {
+                                        content: 'Batas Atas Sistol (140 mmHg)',
+                                        enabled: true,
+                                        position: 'start',
+                                        backgroundColor: 'rgba(239, 68, 68, 0.8)',
+                                        font: { size: 10, family: 'Inter' }
+                                    }
+                                },
+                                lineDiastolMax: {
+                                    type: 'line',
+                                    yMin: 90,
+                                    yMax: 90,
+                                    borderColor: 'rgba(37, 99, 235, 0.6)',
+                                    borderWidth: 2,
+                                    borderDash: [6, 6],
+                                    label: {
+                                        content: 'Batas Atas Diastol (90 mmHg)',
+                                        enabled: true,
+                                        position: 'end',
+                                        backgroundColor: 'rgba(37, 99, 235, 0.8)',
+                                        font: { size: 10, family: 'Inter' }
+                                    }
+                                }
+                            }
+                        }
+                    },
                     scales: {
-                        y: { min: 40, max: 190 }
+                        y: { 
+                            min: 40, 
+                            max: 190,
+                            grid: { color: '#f1f5f9' }
+                        },
+                        x: {
+                            grid: { display: false }
+                        }
                     }
                 }
             });
