@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Blood Pressure Monitoring Dashboard</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+    <!-- Export Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/html2canvas.min.js"></script>
+
+    <style>
+        :root {
+            --bs-primary: #2563eb;
+            --bs-primary-rgb: 37, 99, 235;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .navbar-brand-box {
+            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.15);
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+            margin-bottom: 1.5rem;
+            transition: box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+
+        .summary-card {
+            border-left: 4px solid var(--bs-primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .summary-card::after {
+            content: "";
+            position: absolute;
+            right: -10px;
+            bottom: -10px;
+            width: 60px;
+            height: 60px;
+            background: rgba(37, 99, 235, 0.03);
+            border-radius: 50%;
+        }
+
+        .spinner-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(4px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999;
+            transition: opacity 0.3s ease;
+        }
+
+        .badge-status {
+            font-size: 0.75rem; padding: 0.4em 0.8em; border-radius: 30px; font-weight: 600; letter-spacing: 0.3px;
+        }
+
+        .status-optimal, .status-normal { background-color: #dcfce7; color: #166534; }
+        .status-normal-tinggi { background-color: #fef9c3; color: #854d0e; }
+        .status-hipertensi-1 { background-color: #ffedd5; color: #9a3412; }
+        .status-hipertensi-2 { background-color: #fee2e2; color: #991b1b; }
+
+        .form-control, .form-select {
+            border-color: var(--border-color);
+            padding: 0.6rem 0.9rem;
+            font-size: 0.875rem;
+            border-radius: 8px;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--bs-primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        .btn {
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+
+        .chart-container {
+            position: relative; width: 100%; height: 380px;
+        }
+
+        .chart-scroll-wrapper {
+            width: 100%; overflow-x: auto;
+        }
+
+        table.dataTable {
+            border-collapse: collapse !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Spinner Overlay -->
+    <div id="loadingSpinner" class="spinner-overlay">
+        <div class="text-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status"></div>
+            <h6 class="mt-3 text-secondary fw-semibold">Memuat Data Dashboard...</h6>
+        </div>
+    </div>
+
+    <div class="container py-4" id="dashboardContent">
+        <!-- HEADER / NAVBAR SECTION -->
+        <div class="navbar-brand-box mb-4 d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+            <div>
+                <span class="badge bg-white text-primary mb-2 fw-bold px-2 py-1 rounded-pill" style="font-size: 0.7rem;">SISTEM KLINIS PRIBADI</span>
+                <h1 class="h3 fw-bold mb-1 text-white">
+                    <i class="bi bi-heart-pulse-fill me-2 text-danger"></i>Monitoring Tekanan Darah & Nadi
+                </h1>
+                <p class="text-white-50 mb-0 small">
+                    <i class="bi bi-shield-check me-1"></i> Data terakhir diperbarui: <span id="lastUpdateDate" class="fw-semibold text-white">-</span>
+                </p>
+            </div>
+            <div class="mt-3 mt-md-0">
+                <div class="btn-group bg-white p-1 rounded-3 shadow-sm" role="group">
+                    <button type="button" class="btn btn-sm text-secondary border-0" onclick="exportPDF()" title="Ekspor PDF"><i class="bi bi-file-earmark-pdf text-danger me-1"></i> PDF</button>
+                    <button type="button" class="btn btn-sm text-secondary border-0" onclick="exportExcel()" title="Ekspor Excel"><i class="bi bi-file-earmark-excel text-success me-1"></i> Excel</button>
+                    <button type="button" class="btn btn-sm text-secondary border-0" onclick="exportPNG()" title="Ekspor Gambar"><i class="bi bi-file-earmark-image text-primary me-1"></i> PNG</button>
+                    <button type="button" class="btn btn-sm text-danger border-0 fw-semibold" onclick="resetData()" title="Reset Data"><i class="bi bi-arrow-counterclockwise me-1"></i> Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- FORM INPUT DATA -->
+        <div class="card mb-4 border-0 shadow-sm">
+            <div class="card-header bg-transparent border-0 pt-4 px-4 pb-0">
+                <h5 class="fw-bold text-dark m-0"><i class="bi bi-plus-circle-fill text-primary me-2"></i>Catat Pengukuran Baru</h5>
+                <p class="text-muted small mt-1">Masukkan hasil pemeriksaan tekanan darah dan detak jantung Anda saat ini.</p>
+            </div>
+            <div class="card-body px-4 pb-4">
+                <form id="inputForm" onsubmit="handleFormSubmit(event)" class="row g-3">
+                    <div class="col-md-2">
+                        <label for="inputTanggal" class="form-label small fw-semibold text-muted">Tanggal</label>
+                        <input type="date" class="form-control" id="inputTanggal" required>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="inputJam" class="form-label small fw-semibold text-muted">Jam</label>
+                        <input type="time" class="form-control" id="inputJam" required>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="inputSistol" class="form-label small fw-semibold text-muted">Sistol (mmHg)</label>
+                        <input type="number" class="form-control" id="inputSistol" placeholder="Cth: 120" min="60" max="250" required>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="inputDiastol" class="form-label small fw-semibold text-muted">Diastol (mmHg)</label>
+                        <input type="number" class="form-control" id="inputDiastol" placeholder="Cth: 80" min="40" max="150" required>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="inputNadi" class="form-label small fw-semibold text-muted">Nadi (bpm)</label>
+                        <input type="number" class="form-control" id="inputNadi" placeholder="Cth: 72" min="30" max="200" required>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="inputCatatan" class="form-label small fw-semibold text-muted">Catatan Klinis (Opsional)</label>
+                        <input type="text" class="form-control" id="inputCatatan" placeholder="Contoh: Setelah minum obat / Sebelum sarapan / Merasa pusing ringan">
+                    </div>
+                    <div class="col-md-12 text-end mt-3">
+                        <button type="submit" class="btn btn-primary px-4 fw-semibold shadow-sm">
+                            <i class="bi bi-cloud-arrow-up-fill me-1"></i> Simpan ke Google Sheet & Update Grafik
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- FILTER SECTION -->
+        <div class="card mb-4 border-0 shadow-sm">
+            <div class="card-body px-4 py-3">
+                <form id="filterForm" class="row g-3 align-items-end" onsubmit="event.preventDefault(); applyCustomFilter();">
+                    <div class="col-md-4">
+                        <label class="form-label small fw-semibold text-muted mb-2">Preset Periode Analisis</label>
+                        <div class="btn-group w-100 shadow-sm" role="group">
+                            <button type="button" class="btn btn-outline-secondary btn-sm active" onclick="setPresetFilter(7, this)">7 Hari</button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setPresetFilter(30, this)">30 Hari</button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setPresetFilter(90, this)">3 Bulan</button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setPresetFilter('all', this)">Semua</button>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="startDate" class="form-label small fw-semibold text-muted">Tanggal Awal</label>
+                        <input type="date" class="form-control" id="startDate">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="endDate" class="form-label small fw-semibold text-muted">Tanggal Akhir</label>
+                        <input type="date" class="form-control" id="endDate">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-outline-primary w-100 fw-semibold"><i class="bi bi-funnel me-1"></i> Filter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- SUMMARY CARDS -->
+        <div class="row g-3 mb-4">
+            <div class="col-xl-3 col-md-6">
+                <div class="card summary-card h-100 py-3 border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="text-xs fw-bold text-muted text-uppercase mb-1" style="font-size: 0.75rem;">Pengukuran Terakhir</div>
+                        <div class="h4 mb-0 fw-bold text-dark" id="sumLastReading">- / - <span class="small fw-normal text-muted">mmHg</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="card summary-card h-100 py-3 border-0 shadow-sm" style="border-left-color: #10b981;">
+                    <div class="card-body">
+                        <div class="text-xs fw-bold text-muted text-uppercase mb-1" style="font-size: 0.75rem;">Status Klinis Terakhir</div>
+                        <div class="h6 mb-0 mt-2"><span id="sumStatus" class="badge badge-status status-normal">-</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="card summary-card h-100 py-3 border-0 shadow-sm" style="border-left-color: #6366f1;">
+                    <div class="card-body">
+                        <div class="text-xs fw-bold text-muted text-uppercase mb-1" style="font-size: 0.75rem;">Rata-rata Sistol / Diastol</div>
+                        <div class="h4 mb-0 fw-bold text-dark" id="sumAvgBP">- / - <span class="small fw-normal text-muted">mmHg</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+                <div class="card summary-card h-100 py-3 border-0 shadow-sm" style="border-left-color: #f59e0b;">
+                    <div class="card-body">
+                        <div class="text-xs fw-bold text-muted text-uppercase mb-1" style="font-size: 0.75rem;">Rata-rata Denyut Nadi</div>
+                        <div class="h4 mb-0 fw-bold text-dark" id="sumAvgPulse">- <span class="small fw-normal text-muted">bpm</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHARTS SECTION -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-4 border-0 shadow-sm">
+                    <div class="card-header bg-transparent border-0 pt-4 px-4 pb-0 d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="fw-bold text-dark m-0"><i class="bi bi-graph-up-arrow text-primary me-2"></i>Tren Tekanan Darah & Nadi</h5>
+                            <p class="text-muted small mt-1">Grafik kronologis perkembangan parameter kardiovaskular.</p>
+                        </div>
+                    </div>
+                    <div class="card-body px-4 pb-4">
+                        <div class="chart-scroll-wrapper">
+                            <div id="mainChartWrapper" class="chart-container" style="min-width: 650px;">
+                                <canvas id="mainChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HISTORY TABLE -->
+        <div class="card mb-4 border-0 shadow-sm">
+            <div class="card-header bg-transparent border-0 pt-4 px-4 pb-0">
+                <h5 class="fw-bold text-dark m-0"><i class="bi bi-table text-primary me-2"></i>Log Riwayat Pengukuran</h5>
+                <p class="text-muted small mt-1">Arsip lengkap data tekanan darah dan catatan medis.</p>
+            </div>
+            <div class="card-body px-4 pb-4">
+                <div class="table-responsive">
+                    <table id="historyTable" class="table table-hover align-middle w-100">
+                        <thead class="table-light text-uppercase" style="font-size: 0.75rem; letter-spacing: 0.5px;">
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Jam</th>
+                                <th>Sistol (mmHg)</th>
+                                <th>Diastol (mmHg)</th>
+                                <th>Nadi (bpm)</th>
+                                <th>Status</th>
+                                <th>Catatan</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody" style="font-size: 0.875rem;"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery & DataTables JS -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        let rawData = [];
+        let filteredData = [];
+        let dataTableInstance = null;
+        let mainChartObj = null;
+
+        const defaultMockData = [
+            { Tanggal: "2026-06-01", Jam: "08:00", Sistol: 120, Diastol: 80, Nadi: 72, Catatan: "Pagi hari" },
+            { Tanggal: "2026-06-02", Jam: "08:30", Sistol: 125, Diastol: 82, Nadi: 75, Catatan: "Sebelum sarapan" }
+        ];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const now = new Date();
+            document.getElementById('inputTanggal').value = formatDateISO(now);
+            document.getElementById('inputJam').value = now.toTimeString().slice(0,5);
+
+            loadDataFromStorage();
+        });
+
+        function loadDataFromStorage() {
+            showSpinner(true);
+            const savedData = localStorage.getItem('tensi_data');
+            if (savedData) {
+                try {
+                    rawData = JSON.parse(savedData);
+                } catch (e) {
+                    rawData = defaultMockData;
+                }
+            } else {
+                rawData = defaultMockData;
+                saveDataToStorage();
+            }
+
+            processRawData();
+            setPresetFilter(30, document.querySelector('.btn-group button:nth-child(2)'));
+            showSpinner(false);
+        }
+
+        function saveDataToStorage() {
+            localStorage.setItem('tensi_data', JSON.stringify(rawData));
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            const tanggal = document.getElementById('inputTanggal').value;
+            const jam = document.getElementById('inputJam').value;
+            const sistol = Number(document.getElementById('inputSistol').value);
+            const diastol = Number(document.getElementById('inputDiastol').value);
+            const nadi = Number(document.getElementById('inputNadi').value);
+            const catatan = document.getElementById('inputCatatan').value || '-';
+
+            const formData = new URLSearchParams();
+            formData.append('Tanggal', tanggal);
+            formData.append('Jam', jam);
+            formData.append('Sistol', sistol);
+            formData.append('Diastol', diastol);
+            formData.append('Nadi', nadi);
+            formData.append('Catatan', catatan);
+
+            showSpinner(true);
+
+            // Ganti URL di bawah dengan Web App URL dari Google Apps Script Anda
+            const scriptURL = 'MASUKKAN_URL_WEB_APP_GOOGLE_SCRIPT_ANDA_DISINI';
+
+            fetch(scriptURL, { method: 'POST', body: formData })
+                .then(response => response.json())
+                .then(result => {
+                    const newDataItem = { Tanggal: tanggal, Jam: jam, Sistol: sistol, Diastol: diastol, Nadi: nadi, Catatan: catatan };
+                    rawData.push(newDataItem);
+                    saveDataToStorage();
+                    
+                    processRawData();
+                    applyCustomFilter();
+
+                    document.getElementById('inputCatatan').value = '';
+                    document.getElementById('inputSistol').focus();
+                    showSpinner(false);
+                    alert('Data berhasil disimpan ke Google Sheet & diperbarui!');
+                })
+                .catch(error => {
+                    console.error('Error!', error.message);
+                    const newDataItem = { Tanggal: tanggal, Jam: jam, Sistol: sistol, Diastol: diastol, Nadi: nadi, Catatan: catatan };
+                    rawData.push(newDataItem);
+                    saveDataToStorage();
+                    processRawData();
+                    applyCustomFilter();
+
+                    showSpinner(false);
+                    alert('Data tersimpan lokal (Gagal terhubung ke Google Sheet, cek URL Apps Script Anda).');
+                });
+        }
+
+        function resetData() {
+            if (confirm("Reset seluruh data kembali ke kondisi awal?")) {
+                localStorage.removeItem('tensi_data');
+                loadDataFromStorage();
+            }
+        }
+
+        function processRawData() {
+            rawData = rawData.map(item => {
+                const sistol = Number(item.Sistol || 0);
+                const diastol = Number(item.Diastol || 0);
+                const nadi = Number(item.Nadi || 0);
+                const tanggal = item.Tanggal || '';
+                const jam = item.Jam || '00:00';
+                const catatan = item.Catatan || '-';
+
+                const statusObj = classifyBloodPressure(sistol, diastol);
+
+                return {
+                    rawDate: new Date(tanggal),
+                    tanggal: formatDateID(tanggal),
+                    originalDateStr: tanggal,
+                    jam: jam,
+                    sistol: sistol,
+                    diastol: diastol,
+                    nadi: nadi,
+                    statusText: statusObj.text,
+                    statusClass: statusObj.className,
+                    catatan: catatan
+                };
+            }).filter(item => !isNaN(item.rawDate.getTime()));
+
+            rawData.sort((a, b) => a.rawDate - b.rawDate);
+        }
+
+        function setPresetFilter(days, btnElement) {
+            if (btnElement) {
+                const buttons = btnElement.parentElement.querySelectorAll('button');
+                buttons.forEach(b => b.classList.remove('active', 'btn-primary', 'btn-outline-secondary'));
+                buttons.forEach(b => b.classList.add('btn-outline-secondary'));
+                btnElement.classList.add('active', 'btn-primary');
+                btnElement.classList.remove('btn-outline-secondary');
+            }
+
+            const today = new Date();
+            let startDate = new Date();
+
+            if (days === 'all') {
+                startDate = new Date(0);
+            } else {
+                startDate.setDate(today.getDate() - days);
+            }
+
+            document.getElementById('startDate').value = formatDateISO(startDate);
+            document.getElementById('endDate').value = formatDateISO(today);
+
+            applyCustomFilter();
+        }
+
+        function applyCustomFilter() {
+            const startStr = document.getElementById('startDate').value;
+            const endStr = document.getElementById('endDate').value;
+
+            const startDate = startStr ? new Date(startStr) : new Date(0);
+            const endDate = endStr ? new Date(endStr) : new Date();
+            endDate.setHours(23, 59, 59, 999);
+
+            filteredData = rawData.filter(item => item.rawDate >= startDate && item.rawDate <= endDate);
+            refreshDashboard();
+        }
+
+        function refreshDashboard() {
+            updateLastUpdateLabel();
+            updateSummary();
+            drawMainChart();
+            renderTable();
+        }
+
+        function updateLastUpdateLabel() {
+            if (rawData.length > 0) {
+                const latest = rawData[rawData.length - 1];
+                document.getElementById('lastUpdateDate').innerText = `${latest.tanggal} pukul ${latest.jam}`;
+            } else {
+                document.getElementById('lastUpdateDate').innerText = 'Tidak ada data';
+            }
+        }
+
+        function updateSummary() {
+            if (filteredData.length === 0) {
+                document.getElementById('sumLastReading').innerText = "- / - mmHg";
+                document.getElementById('sumStatus').innerText = "Tidak ada data";
+                document.getElementById('sumAvgBP').innerText = "- / - mmHg";
+                document.getElementById('sumAvgPulse').innerText = "- bpm";
+                return;
+            }
+
+            const last = filteredData[filteredData.length - 1];
+            document.getElementById('sumLastReading').innerHTML = `${last.sistol} / ${last.diastol} <span class="small fw-normal text-muted">mmHg</span>`;
+
+            const statusBadge = document.getElementById('sumStatus');
+            statusBadge.innerText = last.statusText;
+            statusBadge.className = `badge badge-status ${last.statusClass}`;
+
+            const avgSistol = Math.round(filteredData.reduce((acc, cur) => acc + cur.sistol, 0) / filteredData.length);
+            const avgDiastol = Math.round(filteredData.reduce((acc, cur) => acc + cur.diastol, 0) / filteredData.length);
+            document.getElementById('sumAvgBP').innerHTML = `${avgSistol} / ${avgDiastol} <span class="small fw-normal text-muted">mmHg</span>`;
+
+            const avgPulse = Math.round(filteredData.reduce((acc, cur) => acc + cur.nadi, 0) / filteredData.length);
+            document.getElementById('sumAvgPulse').innerHTML = `${avgPulse} <span class="small fw-normal text-muted">bpm</span>`;
+        }
+
+        function drawMainChart() {
+            const ctx = document.getElementById('mainChart').getContext('2d');
+            const wrapper = document.getElementById('mainChartWrapper');
+            
+            if (filteredData.length > 15) {
+                wrapper.style.width = `${filteredData.length * 55}px`;
+            } else {
+                wrapper.style.width = '100%';
+            }
+
+            const labels = filteredData.map(d => `${d.tanggal} ${d.jam}`);
+            const sistolData = filteredData.map(d => d.sistol);
+            const diastolData = filteredData.map(d => d.diastol);
+            const nadiData = filteredData.map(d => d.nadi);
+
+            if (mainChartObj) mainChartObj.destroy();
+
+            // Membuat Gradient warna halus untuk area bawah garis grafik
+            const gradientSistol = ctx.createLinearGradient(0, 0, 0, 350);
+            gradientSistol.addColorStop(0, 'rgba(239, 68, 68, 0.25)');
+            gradientSistol.addColorStop(1, 'rgba(239, 68, 68, 0.0)');
+
+            const gradientDiastol = ctx.createLinearGradient(0, 0, 0, 350);
+            gradientDiastol.addColorStop(0, 'rgba(37, 99, 235, 0.25)');
+            gradientDiastol.addColorStop(1, 'rgba(37, 99, 235, 0.0)');
+
+            const gradientNadi = ctx.createLinearGradient(0, 0, 0, 350);
+            gradientNadi.addColorStop(0, 'rgba(16, 185, 129, 0.2)');
+            gradientNadi.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
+
+            mainChartObj = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Sistol (mmHg)',
+                            data: sistolData,
+                            borderColor: '#ef4444',
+                            backgroundColor: gradientSistol,
+                            borderWidth: 2.5,
+                            fill: true,
+                            tension: 0.35,
+                            pointRadius: 4,
+                            pointBackgroundColor: '#ef4444',
+                            pointHoverRadius: 6
+                        },
+                        {
+                            label: 'Diastol (mmHg)',
+                            data: diastolData,
+                            borderColor: '#2563eb',
+                            backgroundColor: gradientDiastol,
+                            borderWidth: 2.5,
+                            fill: true,
+                            tension: 0.35,
+                            pointRadius: 4,
+                            pointBackgroundColor: '#2563eb',
+                            pointHoverRadius: 6
+                        },
+                        {
+                            label: 'Nadi (bpm)',
+                            data: nadiData,
+                            borderColor: '#10b981',
+                            backgroundColor: gradientNadi,
+                            borderWidth: 2,
+                            borderDash: [4, 4],
+                            fill: true,
+                            tension: 0.35,
+                            pointRadius: 3,
+                            pointBackgroundColor: '#10b981',
+                            pointHoverRadius: 5
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                boxWidth: 14,
+                                font: { family: 'Inter', weight: 500, size: 12 },
+                                color: '#475569'
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            titleFont: { family: 'Inter', size: 13, weight: 600 },
+                            bodyFont: { family: 'Inter', size: 12 },
+                            padding: 12,
+                            cornerRadius: 8,
+                            usePointStyle: true
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { font: { family: 'Inter', size: 11 }, color: '#64748b' }
+                        },
+                        y: {
+                            beginAtZero: false,
+                            min: 40,
+                            max: 190,
+                            grid: { color: '#f1f5f9' },
+                            ticks: { font: { family: 'Inter', size: 11 }, color: '#64748b' }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderTable() {
+            if (dataTableInstance) dataTableInstance.destroy();
+
+            const tbody = document.getElementById('historyTableBody');
+            tbody.innerHTML = '';
+
+            filteredData.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="fw-medium">${item.tanggal}</td>
+                    <td class="text-muted">${item.jam}</td>
+                    <td class="fw-bold text-danger">${item.sistol}</td>
+                    <td class="fw-bold text-primary">${item.diastol}</td>
+                    <td class="fw-medium text-success">${item.nadi}</td>
+                    <td><span class="badge badge-status ${item.statusClass}">${item.statusText}</span></td>
+                    <td class="text-muted small">${item.catatan}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            dataTableInstance = $('#historyTable').DataTable({
+                language: { url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/id.json' },
+                order: [[0, 'desc'], [1, 'desc']],
+                pageLength: 10,
+                responsive: true
+            });
+        }
+
+        function classifyBloodPressure(sistol, diastol) {
+            if (sistol < 120 && diastol < 80) return { text: "Optimal", className: "status-optimal" };
+            if (sistol <= 129 && diastol <= 84) return { text: "Normal", className: "status-normal" };
+            if (sistol <= 139 || diastol <= 89) return { text: "Normal Tinggi", className: "status-normal-tinggi" };
+            if (sistol <= 159 || diastol <= 99) return { text: "Hipertensi Stage 1", className: "status-hipertensi-1" };
+            return { text: "Hipertensi Stage 2", className: "status-hipertensi-2" };
+        }
+
+        function formatDateID(dateString) {
+            if (!dateString) return '-';
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return dateString;
+            return date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+        }
+
+        function formatDateISO(date) {
+            const d = new Date(date);
+            let month = '' + (d.getMonth() + 1);
+            let day = '' + d.getDate();
+            let year = d.getFullYear();
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+            return [year, month, day].join('-');
+        }
+
+        function showSpinner(show) {
+            const spinner = document.getElementById('loadingSpinner');
+            if (show) {
+                spinner.style.display = 'flex';
+                spinner.style.opacity = '1';
+            } else {
+                spinner.style.opacity = '0';
+                setTimeout(() => spinner.style.display = 'none', 300);
+            }
+        }
+
+        function exportPDF() {
+            html2pdf().from(document.getElementById('dashboardContent')).save();
+        }
+
+        function exportExcel() {
+            const worksheet = XLSX.utils.json_to_sheet(filteredData);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Riwayat Tensi");
+            XLSX.writeFile(workbook, `Data_Tensi_Klinis.xlsx`);
+        }
+
+        function exportPNG() {
+            html2canvas(document.getElementById('dashboardContent')).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `Dashboard_Kardiovaskular.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+    </script>
+</body>
+</html>
