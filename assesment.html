@@ -79,10 +79,10 @@
 <body>
 
     <!-- Loading Spinner -->
-    <div id="loadingSpinner" class="spinner-overlay">
+    <div id="loadingSpinner" class="spinner-overlay d-none">
         <div class="text-center">
             <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status"></div>
-            <h6 class="mt-3 text-secondary fw-semibold">Memuat Assessment...</h6>
+            <h6 class="mt-3 text-secondary fw-semibold">Memuat Assessment dari Server...</h6>
         </div>
     </div>
 
@@ -92,7 +92,7 @@
             
             <!-- Error Alert Container -->
             <div id="errorAlert" class="alert alert-danger d-none mb-4" role="alert">
-                Gagal mengambil data assessment.
+                Gagal mengambil data assessment. Pastikan deploy Google Apps Script sudah diatur ke <strong>"Anyone"</strong> dan URL API benar.
             </div>
 
             <!-- Header Section -->
@@ -102,7 +102,27 @@
                 <p class="text-muted small mb-0">Jawablah sesuai kondisi Anda saat ini.</p>
             </div>
 
-            <!-- Progress Section -->
+            <hr class="text-muted mb-4">
+
+            <!-- STEP 1: FORM REGISTRASI PESERTA -->
+            <div id="registrationSection">
+                <h5 class="fw-semibold mb-3">Lengkapi Data Diri Anda</h5>
+                <form id="registrationForm" onsubmit="startAssessment(event)">
+                    <div class="mb-3">
+                        <label for="participantName" class="form-label small fw-semibold text-muted">Nama Lengkap</label>
+                        <input type="text" class="form-control" id="participantName" placeholder="Masukkan nama lengkap Anda" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="participantEmail" class="form-label small fw-semibold text-muted">Email</label>
+                        <input type="email" class="form-control" id="participantEmail" placeholder="nama@email.com" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold">
+                        Mulai Assessment <i class="bi bi-arrow-right ms-1"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- STEP 2: PROGRESS SECTION -->
             <div id="progressSection" class="mb-4 d-none">
                 <div class="d-flex justify-content-between align-items-center mb-1">
                     <span id="progressText" class="small fw-semibold text-muted">Question 0 of 0</span>
@@ -113,9 +133,7 @@
                 </div>
             </div>
 
-            <hr class="text-muted mb-4">
-
-            <!-- Question Area -->
+            <!-- STEP 3: QUESTION AREA -->
             <div id="questionArea" class="d-none">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <span id="competencyBadge" class="badge bg-secondary-subtle text-secondary px-2 py-1 rounded-2 small">Kompetensi</span>
@@ -131,7 +149,7 @@
                 </div>
             </div>
 
-            <!-- Navigation Buttons -->
+            <!-- STEP 4: NAVIGATION BUTTONS -->
             <div id="navigationArea" class="d-flex justify-content-between align-items-center mt-3 d-none">
                 <button id="prevBtn" class="btn btn-outline-secondary px-4 fw-semibold" onclick="previousQuestion()">
                     <i class="bi bi-arrow-left me-1"></i> Previous
@@ -153,6 +171,7 @@
         let questions = [];
         let currentQuestion = 0;
         let answers = {};
+        let participant = { name: "", email: "" };
 
         // Skala Penilaian Pilihan Ganda
         const optionsList = [
@@ -163,17 +182,24 @@
             { value: 5, label: "Sangat Setuju" }
         ];
 
-        // Jalankan loadQuestions saat halaman selesai dimuat
-        document.addEventListener("DOMContentLoaded", () => {
+        /**
+         * Saat peserta mengisi form dan klik Mulai
+         */
+        function startAssessment(event) {
+            event.preventDefault();
+            participant.name = document.getElementById('participantName').value;
+            participant.email = document.getElementById('participantEmail').value;
+
+            document.getElementById('registrationSection').classList.add('d-none');
             loadQuestions();
-        });
+        }
 
         /**
          * Mengambil data soal dari Google Apps Script menggunakan fetch()
          */
         function loadQuestions() {
             showSpinner(true);
-            showError(false); // Diperbaiki dari hideError menjadi showError
+            showError(false);
 
             fetch(`${API_URL}?action=getQuestions`)
                 .then(response => {
@@ -182,24 +208,16 @@
                 })
                 .then(result => {
                     if (result && result.status && Array.isArray(result.data)) {
-                        questions = result.data;
+                        questions = result.data; // Mengambil seluruh 60 soal asli dari Google Sheets
                         initAssessmentUI();
                     } else {
                         throw new Error("Format data tidak valid");
                     }
                 })
                 .catch(error => {
-                    console.warn("API gagal diakses, menggunakan data simulasi lokal. Error:", error);
-                    
-                    // Fallback data agar halaman tetap bisa dibuka & diuji
-                    questions = [
-                        { competency: "Communication", question: "Saya mampu memberikan feedback yang membangun kepada anggota tim." },
-                        { competency: "Decision Making", question: "Saya dapat mengambil keputusan dengan tenang dalam situasi penuh tekanan." },
-                        { competency: "Team Building", question: "Saya aktif mendorong kolaborasi antar divisi dalam perusahaan." },
-                        { competency: "Problem Solving", question: "Saya selalu mencari akar masalah sebelum mengusulkan sebuah solusi." }
-                    ];
-
-                    initAssessmentUI();
+                    console.error("Error loading questions:", error);
+                    showError(true);
+                    document.getElementById('registrationSection').classList.remove('d-none');
                 })
                 .finally(() => {
                     showSpinner(false);
@@ -227,7 +245,7 @@
             
             // Set Kompetensi & Label Nomor Soal
             document.getElementById('competencyBadge').innerText = q.competency || q.Kompetensi || 'Leadership';
-            document.getElementById('questionNumberLabel').innerText = `Question ${currentQuestion + 1}`;
+            document.getElementById('questionNumberLabel').innerText = `Question ${currentQuestion + 1} of ${questions.length}`;
             
             // Set Teks Pertanyaan
             document.getElementById('questionText').innerText = `"${q.question || q.Pertanyaan}"`;
@@ -251,7 +269,6 @@
                     <i class="bi ${isSelected ? 'bi-check-circle-fill text-primary' : 'bi-circle text-muted'} fs-5"></i>
                 `;
 
-                // Event listener untuk memilih jawaban
                 cardDiv.addEventListener('click', () => {
                     selectAnswer(opt.value);
                 });
@@ -269,14 +286,14 @@
         function selectAnswer(value) {
             answers[currentQuestion] = value;
             saveAnswer(currentQuestion, value);
-            renderQuestion(); // Re-render untuk memperbarui status visual pilihan
+            renderQuestion(); 
         }
 
         /**
          * Auto-save function sesuai ketentuan
          */
         function saveAnswer(questionIndex, answerValue) {
-            console.log(`Auto-saving: Question ${questionIndex + 1} answered with ${answerValue}`);
+            console.log(`Auto-saving: [${participant.email}] Question ${questionIndex + 1} answered with ${answerValue}`);
         }
 
         /**
@@ -318,20 +335,18 @@
         }
 
         /**
-         * Mengatur status tombol navigasi (Disabled pada awal, teks berubah pada akhir)
+         * Mengatur status tombol navigasi
          */
         function updateNavigationButtons() {
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
 
-            // Atur tombol Previous
             if (currentQuestion === 0) {
                 prevBtn.setAttribute('disabled', 'true');
             } else {
                 prevBtn.removeAttribute('disabled');
             }
 
-            // Atur tombol Next / Selesai Assessment
             if (currentQuestion === questions.length - 1) {
                 nextBtn.innerHTML = `Selesai Assessment <i class="bi bi-check-lg ms-1"></i>`;
                 nextBtn.className = `btn btn-success px-4 fw-semibold`;
@@ -345,8 +360,9 @@
          * Fungsi saat assessment selesai
          */
         function finishAssessment() {
-            alert("Assessment selesai! Terima kasih telah berpartisipasi.");
-            console.log("Final Answers:", answers);
+            alert(`Terima kasih, ${participant.name}! Assessment Anda telah selesai.`);
+            console.log("Data Peserta:", participant);
+            console.log("Rekap Jawaban Final:", answers);
         }
 
         /**
