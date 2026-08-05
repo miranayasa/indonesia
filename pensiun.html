@@ -761,7 +761,7 @@
                 `;
                 chatHistory.scrollTop = chatHistory.scrollHeight;
 
-            } kode => {
+            } catch (error) {
                 console.error(error);
                 document.getElementById(loadingId).remove();
                 chatHistory.innerHTML += `
