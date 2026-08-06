@@ -111,11 +111,11 @@
 </head>
 <body>
 
-    <!-- Loading Spinner Overlay -->
-    <div id="loadingSpinner" class="spinner-overlay">
+    <!-- Loading Spinner Overlay (Default disembunyikan agar instan) -->
+    <div id="loadingSpinner" class="spinner-overlay" style="display: none; opacity: 0;">
         <div class="text-center">
             <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status"></div>
-            <h6 class="mt-3 text-secondary fw-semibold">Menarik Data dari Google Sheet...</h6>
+            <h6 class="mt-3 text-secondary fw-semibold">Menyelaraskan Data dari Google Sheet...</h6>
         </div>
     </div>
 
@@ -136,7 +136,7 @@
                     <button type="button" class="btn btn-sm text-secondary border-0" onclick="exportPDF()"><i class="bi bi-file-earmark-pdf text-danger me-1"></i> PDF</button>
                     <button type="button" class="btn btn-sm text-secondary border-0" onclick="exportExcel()"><i class="bi bi-file-earmark-excel text-success me-1"></i> Excel</button>
                     <button type="button" class="btn btn-sm text-secondary border-0" onclick="exportPNG()"><i class="bi bi-file-earmark-image text-primary me-1"></i> PNG</button>
-                    <button type="button" class="btn btn-sm text-danger border-0 fw-semibold" onclick="fetchDataFromSheet()"><i class="bi bi-arrow-clockwise me-1"></i> Muat Ulang</button>
+                    <button type="button" class="btn btn-sm text-danger border-0 fw-semibold" onclick="fetchDataFromSheet(true)"><i class="bi bi-arrow-clockwise me-1"></i> Muat Ulang</button>
                 </div>
             </div>
         </div>
@@ -320,28 +320,33 @@
             document.getElementById('inputTanggal').value = formatDateISO(now);
             document.getElementById('inputJam').value = now.toTimeString().slice(0,5);
 
-            fetchDataFromSheet();
+            // 1. RENDER INSTAN DARI CACHE LOKAL (WAKTU MUAT < 0.1 DETIK)
+            loadDataFromStorage();
+
+            // 2. AMBIL DATA TERBARU DARI GOOGLE SHEET DI LATAR BELAKANG (NON-BLOCKING)
+            fetchDataFromSheet(false);
         });
 
-        function fetchDataFromSheet() {
-            showSpinner(true);
+        function fetchDataFromSheet(showLoadingIndicator = false) {
+            if (showLoadingIndicator) showSpinner(true);
+
             fetch(scriptURL)
                 .then(response => response.json())
                 .then(data => {
                     if (Array.isArray(data) && data.length > 0) {
                         sourceData = data;
                         saveDataToStorage();
-                    } else {
-                        loadDataFromStorage();
+                        processRawData();
+                        setPresetFilter(7, document.querySelector('#presetBtnGroup button:nth-child(1)'));
                     }
-                    processRawData();
-                    setPresetFilter(7, document.querySelector('#presetBtnGroup button:nth-child(1)'));
-                    showSpinner(false);
+                    if (showLoadingIndicator) showSpinner(false);
                 })
                 .catch(error => {
-                    console.warn('Gagal memuat dari server, menggunakan cache lokal:', error);
-                    loadDataFromStorage();
-                    showSpinner(false);
+                    console.warn('Sinkronisasi latar belakang gagal, tetap menggunakan data lokal:', error);
+                    if (showLoadingIndicator) {
+                        showSpinner(false);
+                        alert('Gagal menyinkronkan dengan Google Sheet.');
+                    }
                 });
         }
 
@@ -695,7 +700,6 @@
             });
         }
 
-        // FUNGSI KLASIFIKASI TEKANAN DARAH YANG TELAH DIPERBAIKI (STANDAR MEDIS)
         function classifyBloodPressure(sistol, diastol) {
             if (sistol >= 160 || diastol >= 100) return { text: "Hipertensi Stage 2", className: "status-hipertensi-2" };
             if ((sistol >= 140 && sistol <= 159) || (diastol >= 90 && diastol <= 99)) return { text: "Hipertensi Stage 1", className: "status-hipertensi-1" };
