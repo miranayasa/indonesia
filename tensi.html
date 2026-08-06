@@ -188,8 +188,8 @@
                     <div class="col-md-4">
                         <label class="form-label small fw-semibold text-muted mb-2">Preset Periode Analisis</label>
                         <div id="presetBtnGroup" class="btn-group w-100 shadow-sm" role="group">
-                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setPresetFilter(7, this)">7 Hari</button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm active" onclick="setPresetFilter(30, this)">30 Hari</button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm active" onclick="setPresetFilter(7, this)">7 Hari</button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setPresetFilter(30, this)">30 Hari</button>
                             <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setPresetFilter(90, this)">3 Bulan</button>
                             <button type="button" class="btn btn-outline-secondary btn-sm" onclick="setPresetFilter('all', this)">Semua</button>
                         </div>
@@ -307,10 +307,11 @@
 
     <script>
         let rawData = [];
+        let sourceData = []; // Data mentah asli (key kapital dari Sheet), TIDAK PERNAH dimutasi oleh processRawData()
         let filteredData = [];
         let dataTableInstance = null;
         let mainChartObj = null;
-        let currentPresetLabel = '30 hari terakhir'; // Melacak label periode preset yang sedang aktif
+        let currentPresetLabel = '7 hari terakhir'; // Melacak label periode preset yang sedang aktif
 
         // MASUKKAN URL WEB APP GOOGLE SCRIPT ANDA DI SINI
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwXdZ43IAZHKarfmwQFeYy3I0rsUiZlstI2fTmh0F9F1Di_sueL99WQbAGALvkeo-mD/exec';
@@ -329,13 +330,13 @@
                 .then(response => response.json())
                 .then(data => {
                     if (Array.isArray(data) && data.length > 0) {
-                        rawData = data;
+                        sourceData = data;
                         saveDataToStorage();
                     } else {
                         loadDataFromStorage();
                     }
                     processRawData();
-                    setPresetFilter(30, document.querySelector('#presetBtnGroup button:nth-child(2)'));
+                    setPresetFilter(7, document.querySelector('#presetBtnGroup button:nth-child(1)'));
                     showSpinner(false);
                 })
                 .catch(error => {
@@ -349,19 +350,19 @@
             const savedData = localStorage.getItem('tensi_data');
             if (savedData) {
                 try {
-                    rawData = JSON.parse(savedData);
+                    sourceData = JSON.parse(savedData);
                 } catch (e) {
-                    rawData = [];
+                    sourceData = [];
                 }
             } else {
-                rawData = [];
+                sourceData = [];
             }
             processRawData();
-            setPresetFilter(30, document.querySelector('#presetBtnGroup button:nth-child(2)'));
+            setPresetFilter(7, document.querySelector('#presetBtnGroup button:nth-child(1)'));
         }
 
         function saveDataToStorage() {
-            localStorage.setItem('tensi_data', JSON.stringify(rawData));
+            localStorage.setItem('tensi_data', JSON.stringify(sourceData));
         }
 
         function handleFormSubmit(event) {
@@ -388,11 +389,11 @@
                 .then(response => response.json())
                 .then(result => {
                     const newDataItem = { Tanggal: tanggal, Jam: jam, Sistol: sistol, Diastol: diastol, Nadi: nadi, Catatan: catatan };
-                    rawData.push(newDataItem);
+                    sourceData.push(newDataItem);
                     saveDataToStorage();
                     
                     processRawData();
-                    applyCustomFilter();
+                    setPresetFilter(7, document.querySelector('#presetBtnGroup button:nth-child(1)'));
 
                     document.getElementById('inputCatatan').value = '';
                     document.getElementById('inputSistol').focus();
@@ -402,11 +403,11 @@
                 .catch(error => {
                     console.error('Error!', error.message);
                     const newDataItem = { Tanggal: tanggal, Jam: jam, Sistol: sistol, Diastol: diastol, Nadi: nadi, Catatan: catatan };
-                    rawData.push(newDataItem);
+                    sourceData.push(newDataItem);
                     saveDataToStorage();
                     
                     processRawData();
-                    applyCustomFilter();
+                    setPresetFilter(7, document.querySelector('#presetBtnGroup button:nth-child(1)'));
 
                     showSpinner(false);
                     alert('Data tersimpan lokal (Gagal terhubung ke Google Sheet).');
@@ -414,7 +415,9 @@
         }
 
         function processRawData() {
-            rawData = rawData.map(item => {
+            // Selalu dibangun ulang dari sourceData (data mentah, tidak berubah),
+            // sehingga aman dipanggil berkali-kali tanpa merusak data yang sudah ada.
+            rawData = sourceData.map(item => {
                 const sistol = Number(item.Sistol || 0);
                 const diastol = Number(item.Diastol || 0);
                 const nadi = Number(item.Nadi || 0);
