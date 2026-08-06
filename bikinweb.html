@@ -15,118 +15,137 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* CSS Utama & Penyesuaian Kontras Tinggi */
+        :root {
+            --bg-main: #0b0f19;
+            --bg-surface: #111827;
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --accent-cyan: #38bdf8;
+            --accent-blue: #2563eb;
+        }
+
         html {
             scroll-behavior: smooth;
         }
         body {
-            background-color: #0b1329 !important;
-            color: #f8f9fa !important;
+            background-color: var(--bg-main) !important;
+            color: #f1f5f9 !important;
             font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-        .text-cyan { color: #00f2fe !important; }
-        .text-gray { color: #cbd5e1 !important; }
-        .text-yellow-accent { color: #ffd700 !important; }
-        .bg-dark-navy { background-color: #060b18 !important; }
-        .bg-navy-dark { background-color: #080f23 !important; }
-        
-        .glass-card {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(8px);
-        }
-        .navbar-custom {
-            background-color: rgba(11, 19, 41, 0.95);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            letter-spacing: -0.01em;
         }
 
-        /* MODIFIKASI LOGO NAVBAR */
+        .text-cyan { color: var(--accent-cyan) !important; }
+        .text-gray { color: #94a3b8 !important; }
+        .text-yellow-accent { color: #fbbf24 !important; }
+        .bg-dark-navy { background-color: #080c14 !important; }
+        .bg-navy-dark { background-color: #0e1422 !important; }
+        
+        /* Modern Glass Card without tacky neon glow */
+        .glass-card {
+            background: rgba(17, 24, 39, 0.7);
+            border: 1px solid var(--border-subtle);
+            border-radius: 1rem;
+            backdrop-filter: blur(12px);
+            transition: all 0.25s ease;
+        }
+        .glass-card:hover {
+            border-color: rgba(56, 189, 248, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .navbar-custom {
+            background-color: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
         .logo-wrapper {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 4px;
+            background: #ffffff;
+            padding: 6px;
             border-radius: 8px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid #00f2fe;
-            box-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
         }
         .logo-wrapper img {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             object-fit: contain;
         }
 
-        /* MODIFIKASI HARGA CORET */
         .harga-coret {
             text-decoration: line-through;
-            color: #ff6b6b !important;
-            font-weight: 700;
-            font-size: 1.5rem;
-            background: rgba(255, 107, 107, 0.1);
-            padding: 2px 12px;
+            color: #f87171 !important;
+            font-weight: 600;
+            font-size: 1.25rem;
+            background: rgba(248, 113, 113, 0.1);
+            padding: 4px 12px;
             border-radius: 6px;
-            border: 1px dashed rgba(255, 107, 107, 0.4);
         }
 
         .btn-gradient-primary {
-            background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+            background: linear-gradient(135deg, #38bdf8 0%, #2563eb 100%);
             color: #fff;
             border: none;
-            font-weight: 700;
+            font-weight: 600;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+            transition: opacity 0.2s ease;
         }
         .btn-gradient-primary:hover {
             color: #fff;
-            opacity: 0.9;
+            opacity: 0.92;
         }
-        .border-cyan { border: 1px solid #00f2fe !important; }
-        .border-glow-yellow { border: 1px solid #ffd700 !important; }
-        .border-glow-blue { border: 1px solid #00c6ff !important; }
+
+        section { padding: 90px 0; }
         
-        section { padding: 80px 0; }
         .floating-wa {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #25d366;
+            bottom: 24px;
+            right: 24px;
+            background: #10b981;
             color: white;
             border-radius: 50px;
-            padding: 10px 18px;
-            font-weight: bold;
+            padding: 12px 20px;
+            font-weight: 600;
+            font-size: 0.95rem;
             text-decoration: none;
             z-index: 999;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+            transition: transform 0.2s ease;
+        }
+        .floating-wa:hover {
+            transform: scale(1.05);
+            color: white;
         }
     </style>
 </head>
 <body data-bs-spy="scroll" data-bs-target="#navbar">
 
     <!-- Navbar -->
-    <nav id="navbar" class="navbar navbar-expand-lg fixed-top navbar-custom navbar-dark">
+    <nav id="navbar" class="navbar navbar-expand-lg fixed-top navbar-custom navbar-dark py-3">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center gap-2" href="#">
                 <div class="logo-wrapper">
                     <img src="mdemy.png" alt="Miranaya Academy Logo">
                 </div>
-                <span class="fw-bold text-white ms-1">MIRANAYA <span class="text-cyan">ACADEMY</span></span>
+                <span class="fw-bold text-white tracking-wide">MIRANAYA <span class="text-cyan">ACADEMY</span></span>
             </a>
-            <button class="navbar-toggler border-0 text-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <i class="fa-solid fa-bars fs-3"></i>
+            <button class="navbar-toggler border-0 text-light shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fa-solid fa-bars fs-5"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
-                    <li class="nav-item"><a class="nav-link text-light" href="#jadwal">Jadwal</a></li>
-                    <li class="nav-item"><a class="nav-link text-light" href="#materi">Materi</a></li>
-                    <li class="nav-item"><a class="nav-link text-light" href="#solusi">Keunggulan</a></li>
-                    <li class="nav-item"><a class="nav-link text-light" href="#peluang">Peluang Hasil</a></li>
-                    <li class="nav-item"><a class="nav-link text-light" href="#trainer">Trainer</a></li>
-                    <li class="nav-item"><a class="nav-link text-light" href="#faq">FAQ</a></li>
-                    <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
-                        <a href="https://miranaya.online/register.html" class="btn btn-gradient-primary px-4 py-2 rounded-pill">
-                            🚀 Daftar Sekarang
+                    <li class="nav-item"><a class="nav-link text-gray" href="#jadwal">Jadwal</a></li>
+                    <li class="nav-item"><a class="nav-link text-gray" href="#materi">Materi</a></li>
+                    <li class="nav-item"><a class="nav-link text-gray" href="#solusi">Keunggulan</a></li>
+                    <li class="nav-item"><a class="nav-link text-gray" href="#peluang">Peluang Hasil</a></li>
+                    <li class="nav-item"><a class="nav-link text-gray" href="#trainer">Trainer</a></li>
+                    <li class="nav-item"><a class="nav-link text-gray" href="#faq">FAQ</a></li>
+                    <li class="nav-item ms-lg-2 mt-3 mt-lg-0">
+                        <a href="https://miranaya.online/register.html" class="btn btn-gradient-primary px-4 py-2 rounded-pill text-sm">
+                            Daftar Sekarang
                         </a>
                     </li>
                 </ul>
@@ -135,39 +154,40 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero-section pt-5 mt-5" id="hero">
+    <section class="hero-section pt-5 mt-4" id="hero">
         <div class="container py-4">
             <div class="row align-items-center gy-5">
                 <div class="col-lg-6 text-center text-lg-start">
-                    <div class="badge bg-primary bg-opacity-25 text-cyan border border-info mb-3 px-3 py-2 rounded-pill">
-                        Masterclass AI Website Builder 2026
+                    <div class="d-inline-flex align-items-center gap-2 bg-dark-navy border border-secondary px-3 py-1.5 rounded-pill mb-4">
+                        <span class="badge bg-primary rounded-pill">Baru</span>
+                        <span class="text-xs text-cyan fw-medium">AI Website Builder Masterclass 2026</span>
                     </div>
-                    <h1 class="display-5 fw-bold text-white mb-3">
+                    <h1 class="display-5 fw-bold text-white mb-4 lh-tight">
                         Bangun Website Profesional <span class="text-cyan">Tanpa Coding</span>
                     </h1>
-                    <p class="lead text-gray mb-4">
-                        Belajar menggunakan AI sehingga siapa saja, bahkan yang belum pernah membuat website sama sekali, dapat membuat website profesional yang siap dipublikasikan.
+                    <p class="lead text-gray mb-4 fs-6 lh-base">
+                        Kuasai pemanfaatan AI agar siapa saja, bahkan pemula tanpa latar belakang teknis, mampu merancang dan menerbitkan website fungsional dalam hitungan jam.
                     </p>
 
-                    <div class="row g-2 text-start text-gray mb-4">
-                        <div class="col-sm-6"><i class="fa-solid fa-circle-check text-cyan me-2"></i>Tidak perlu bisa coding</div>
-                        <div class="col-sm-6"><i class="fa-solid fa-circle-check text-cyan me-2"></i>Cukup menggunakan Prompt AI</div>
-                        <div class="col-sm-6"><i class="fa-solid fa-circle-check text-cyan me-2"></i>Selesai dalam hitungan jam</div>
-                        <div class="col-sm-6"><i class="fa-solid fa-circle-check text-cyan me-2"></i>Langsung siap online</div>
+                    <div class="row g-3 text-start text-gray mb-4 fs-14">
+                        <div class="col-sm-6 d-flex align-items-center gap-2"><i class="fa-solid fa-check text-cyan"></i> Tanpa baris kode pemograman</div>
+                        <div class="col-sm-6 d-flex align-items-center gap-2"><i class="fa-solid fa-check text-cyan"></i> Berbasis Prompt & AI Generative</div>
+                        <div class="col-sm-6 d-flex align-items-center gap-2"><i class="fa-solid fa-check text-cyan"></i> Selesai dalam 1 hari praktik</div>
+                        <div class="col-sm-6 d-flex align-items-center gap-2"><i class="fa-solid fa-check text-cyan"></i> Siap online & domain sendiri</div>
                     </div>
 
                     <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center justify-content-lg-start">
-                        <a href="https://miranaya.online/register.html" class="btn btn-gradient-primary btn-lg px-4 py-3 rounded-3">
-                            🚀 Daftar Sekarang
+                        <a href="https://miranaya.online/register.html" class="btn btn-gradient-primary btn-lg px-4 py-3 rounded-3 fs-6">
+                            Mulai Belajar Sekarang
                         </a>
-                        <a href="#materi" class="btn btn-outline-light btn-lg px-4 py-3 rounded-3">
-                            📖 Lihat Materi
+                        <a href="#materi" class="btn btn-outline-light btn-lg px-4 py-3 rounded-3 fs-6 border-secondary">
+                            Pelajari Silabus
                         </a>
                     </div>
                 </div>
 
                 <div class="col-lg-6">
-                    <div class="glass-card p-3 rounded-4 shadow-lg border-cyan">
+                    <div class="glass-card p-2 rounded-4 shadow-lg">
                         <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="Preview Website Profesional" class="img-fluid rounded-3 w-100" loading="lazy">
                     </div>
                 </div>
@@ -175,52 +195,53 @@
         </div>
     </section>
 
-    <!-- SECTION JADWAL PELATIHAN (NEW) -->
+    <!-- SECTION JADWAL PELATIHAN -->
     <section class="jadwal-section bg-navy-dark" id="jadwal">
         <div class="container">
             <div class="text-center mb-5">
-                <span class="badge bg-info text-dark mb-2 px-3 py-2 fw-bold">PILIHAN WAKTU FLEKSIBEL</span>
-                <h2 class="text-white fw-bold display-6">Jadwal Pelatihan Masterclass</h2>
-                <p class="text-gray">Pilih jadwal reguler yang sesuai dengan waktu Anda atau request jadwal custom!</p>
+                <span class="text-cyan text-uppercase tracking-wider fw-semibold fs-13 mb-2 d-block">Waktu Fleksibel</span>
+                <h2 class="text-white fw-bold h3">Pilihan Sesi Pelatihan</h2>
+                <p class="text-gray">Pilih jadwal reguler yang tersedia atau ajukan waktu khusus sesuai kebutuhan Anda.</p>
             </div>
 
             <div class="row g-4 justify-content-center">
-                <!-- Jadwal Selasa -->
                 <div class="col-md-5">
-                    <div class="glass-card p-4 rounded-4 text-center h-100 border-cyan position-relative overflow-hidden">
-                        <div class="badge bg-primary position-absolute top-0 end-0 m-3 px-3 py-1">Sesi Malam</div>
-                        <div class="fs-1 text-cyan mb-2"><i class="fa-solid fa-calendar-day"></i></div>
-                        <h4 class="text-white fw-bold mb-2">Setiap Hari SELASA</h4>
-                        <div class="bg-dark-navy p-3 rounded-3 my-3">
-                            <p class="text-cyan fs-5 fw-bold mb-0"><i class="fa-regular fa-clock me-2"></i>18.30 - 21.30 WIB</p>
-                        </div>
-                        <p class="text-gray mb-0 fs-14">Sangat cocok untuk Anda yang ingin belajar setelah pulang kerja/kuliah.</p>
-                    </div>
-                </div>
-
-                <!-- Jadwal Sabtu -->
-                <div class="col-md-5">
-                    <div class="glass-card p-4 rounded-4 text-center h-100 border-cyan position-relative overflow-hidden">
-                        <div class="badge bg-success position-absolute top-0 end-0 m-3 px-3 py-1">Sesi Weekend</div>
-                        <div class="fs-1 text-cyan mb-2"><i class="fa-solid fa-calendar-week"></i></div>
-                        <h4 class="text-white fw-bold mb-2">Setiap Hari SABTU</h4>
-                        <div class="bg-dark-navy p-3 rounded-3 my-3">
-                            <p class="text-cyan fs-5 fw-bold mb-0"><i class="fa-regular fa-clock me-2"></i>09.00 - 12.00 WIB</p>
-                        </div>
-                        <p class="text-gray mb-0 fs-14">Pilihan pas untuk mengisi akhir pekan dengan upgrade keterampilan baru.</p>
-                    </div>
-                </div>
-
-                <!-- Request Custom Hari -->
-                <div class="col-md-10 mt-4">
-                    <div class="glass-card p-4 rounded-4 text-center border-glow-yellow">
-                        <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 text-start">
-                            <div>
-                                <h5 class="text-yellow-accent fw-bold mb-1"><i class="fa-solid fa-user-gear me-2"></i>Jadwal Bentrok / Butuh Hari Khusus?</h5>
-                                <p class="text-gray mb-0">Anda dapat mengajukan <strong>Custom Schedule (Request Hari & Jam)</strong> khusus untuk sesi Private/Group perusahaan.</p>
+                    <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="badge bg-secondary bg-opacity-25 text-light px-3 py-1">Sesi Malam</span>
+                                <i class="fa-solid fa-moon text-cyan fs-5"></i>
                             </div>
-                            <a href="https://wa.me/6282290007890?text=Halo%20Admin,%20saya%20ingin%20request%20jadwal%20custom%20untuk%20Masterclass%20AI%20Website" target="_blank" class="btn btn-outline-warning rounded-pill px-4 py-2 text-nowrap fw-bold">
-                                💬 Request Jadwal Custom
+                            <h4 class="text-white fw-bold mb-2">Setiap Hari Selasa</h4>
+                            <p class="text-cyan fw-semibold mb-3">18.30 - 21.30 WIB</p>
+                            <p class="text-gray fs-14">Ideal bagi profesional atau mahasiswa yang ingin meningkatkan skill sepulang beraktivitas.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="badge bg-secondary bg-opacity-25 text-light px-3 py-1">Sesi Akhir Pekan</span>
+                                <i class="fa-solid fa-sun text-cyan fs-5"></i>
+                            </div>
+                            <h4 class="text-white fw-bold mb-2">Setiap Hari Sabtu</h4>
+                            <p class="text-cyan fw-semibold mb-3">09.00 - 12.00 WIB</p>
+                            <p class="text-gray fs-14">Pilihan tepat untuk memanfaatkan waktu luang akhir pekan secara produktif.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-10 mt-3">
+                    <div class="glass-card p-4">
+                        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 text-start">
+                            <div>
+                                <h5 class="text-white fw-bold mb-1 fs-6">Butuh Hari atau Jam Khusus?</h5>
+                                <p class="text-gray mb-0 fs-14">Tersedia opsi <strong>Custom Schedule</strong> untuk kelas privat perorangan maupun korporat.</p>
+                            </div>
+                            <a href="https://wa.me/6282290007890?text=Halo%20Admin,%20saya%20ingin%20request%20jadwal%20custom%20untuk%20Masterclass%20AI%20Website" target="_blank" class="btn btn-outline-light btn-sm rounded-pill px-4 py-2 text-nowrap fw-medium border-secondary">
+                                Request Jadwal Custom
                             </a>
                         </div>
                     </div>
@@ -232,23 +253,22 @@
     <!-- Promo Section -->
     <section class="promo-section bg-dark-navy">
         <div class="container">
-            <div class="glass-card p-4 p-md-5 rounded-4 text-center border-glow-yellow">
-                <div class="d-flex flex-wrap justify-content-center gap-2 mb-3">
-                    <span class="badge bg-danger fs-14 py-2 px-3">🔥 Hemat 50%</span>
-                    <span class="badge bg-primary fs-14 py-2 px-3">🔥 Promo Launching</span>
-                    <span class="badge bg-warning text-dark fs-14 py-2 px-3">🔥 Kuota Sangat Terbatas</span>
+            <div class="glass-card p-4 p-md-5 text-center border-secondary">
+                <div class="d-flex justify-content-center gap-2 mb-3">
+                    <span class="badge bg-danger bg-opacity-25 text-danger border border-danger border-opacity-25 fs-13 px-3 py-1">Diskon 50%</span>
+                    <span class="badge bg-primary bg-opacity-25 text-cyan border border-info border-opacity-25 fs-13 px-3 py-1">Pendaftaran Dibuka</span>
                 </div>
                 
-                <h2 class="text-yellow-accent fw-extrabold mb-2">PROMO SPESIAL HARI INI</h2>
-                <p class="text-light fs-5 mb-4">Investasi leher ke atas terbaik untuk menguasai skill masa depan!</p>
+                <h2 class="text-white fw-bold h3 mb-2">Penawaran Khusus Pendaftaran Hari Ini</h2>
+                <p class="text-gray fs-6 mb-4">Investasi sekali untuk skill produktivitas jangka panjang.</p>
 
                 <div class="d-flex flex-wrap justify-content-center align-items-center gap-3 mb-4">
                     <div class="harga-coret">Rp99.000</div>
-                    <div class="fs-1 fw-extrabold text-cyan">Hari Ini Hanya Rp49.900</div>
+                    <div class="fs-2 fw-bold text-cyan">Rp49.900</div>
                 </div>
 
-                <a href="https://miranaya.online/register.html" class="btn btn-gradient-primary btn-lg px-5 py-3 rounded-3">
-                    🚀 Ambil Promo Sekarang Juga
+                <a href="https://miranaya.online/register.html" class="btn btn-gradient-primary btn-lg px-5 py-3 rounded-3 fs-6">
+                    Amankan Kursi Anda Sekarang
                 </a>
             </div>
         </div>
@@ -259,23 +279,17 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
-                    <div class="glass-card p-4 p-md-5 rounded-4 text-center border-cyan">
-                        <h3 class="text-white fw-bold mb-3">Batch Training Sesi Ini</h3>
-                        <p class="fs-5 text-light mb-2">
-                            <span class="fw-bold text-cyan">3</span> / <span class="fw-bold text-light">5</span> Peserta Sudah Terdaftar
+                    <div class="glass-card p-4 p-md-5 text-center">
+                        <h3 class="text-white fw-bold h5 mb-2">Status Kapasitas Kelas Aktif</h3>
+                        <p class="text-gray mb-3">
+                            <strong class="text-cyan">3</strong> dari <span class="text-white">5 kursi</span> telah terisi
                         </p>
-                        <div class="alert alert-warning border-0 bg-warning-subtle text-dark fw-bold fs-5 mb-4 rounded-3 d-inline-block px-4">
-                            ⚠️ Tersisa 2 Kursi Lagi
+                        <div class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 px-3 py-2 mb-4 fw-medium">
+                            Tersisa 2 Kursi Tersedia
                         </div>
-                        <div class="text-start bg-dark-navy p-4 rounded-3 text-gray">
-                            <p class="mb-2">
-                                <i class="fa-solid fa-circle-info text-cyan me-2"></i>
-                                Kami sengaja membatasi maksimal hanya <strong>5 peserta</strong> setiap sesi.
-                            </p>
-                            <p class="mb-0">
-                                Supaya suasana belajar tetap <strong>Private & Semi Private</strong> sehingga setiap peserta memperoleh perhatian penuh dari trainer.
-                            </p>
-                        </div>
+                        <p class="text-gray fs-14 mb-0 lh-base">
+                            Sistem pelatihan dibatasi maksimal 5 peserta per sesi agar proses bimbingan berjalan intensif, interaktif, dan fokus pada penyelesaian proyek website masing-masing peserta.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -287,27 +301,27 @@
         <div class="container">
             <div class="row g-4 text-center">
                 <div class="col-6 col-md-3">
-                    <div class="glass-card p-4 rounded-4 h-100">
-                        <h2 class="display-5 fw-bold text-cyan mb-1">100+</h2>
-                        <p class="text-gray mb-0 mt-2">Prompt AI Productivity</p>
+                    <div class="glass-card p-4 h-100">
+                        <h3 class="fw-bold text-cyan h2 mb-1">100+</h3>
+                        <p class="text-gray text-sm mb-0">Prompt Efisiensi</p>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
-                    <div class="glass-card p-4 rounded-4 h-100">
-                        <h2 class="display-5 fw-bold text-cyan mb-1">0</h2>
-                        <p class="text-gray mb-0 mt-2">Coding (Zero Code)</p>
+                    <div class="glass-card p-4 h-100">
+                        <h3 class="fw-bold text-cyan h2 mb-1">0</h3>
+                        <p class="text-gray text-sm mb-0">Baris Kode</p>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
-                    <div class="glass-card p-4 rounded-4 h-100">
-                        <h2 class="display-5 fw-bold text-cyan mb-1">1 Hari</h2>
-                        <p class="text-gray mb-0 mt-2">Website Langsung Jadi</p>
+                    <div class="glass-card p-4 h-100">
+                        <h3 class="fw-bold text-cyan h2 mb-1">1 Hari</h3>
+                        <p class="text-gray text-sm mb-0">Website Live</p>
                     </div>
                 </div>
                 <div class="col-6 col-md-3">
-                    <div class="glass-card p-4 rounded-4 h-100">
-                        <h2 class="display-5 fw-bold text-cyan mb-1">100%</h2>
-                        <p class="text-gray mb-0 mt-2">Full Praktik</p>
+                    <div class="glass-card p-4 h-100">
+                        <h3 class="fw-bold text-cyan h2 mb-1">100%</h3>
+                        <p class="text-gray text-sm mb-0">Praktis Langsung Jadi</p>
                     </div>
                 </div>
             </div>
@@ -318,49 +332,50 @@
     <section class="masalah-section">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="text-white fw-bold display-6">Masih Kesulitan Membuat Website?</h2>
-                <p class="text-gray">Apakah Anda sering mengalami masalah-masalah berikut ini?</p>
+                <h2 class="text-white fw-bold h3">Kendala Umum Saat Ingin Membuat Website</h2>
+                <p class="text-gray">Apakah hal-hal ini yang sering menghambat Anda?</p>
             </div>
             <div class="row g-4">
-                <div class="col-md-6 col-lg-4">
-                    <div class="glass-card p-4 rounded-4 h-100">
-                        <div class="fs-1 text-danger mb-3"><i class="fa-solid fa-rectangle-xmark"></i></div>
-                        <h5 class="text-white fw-bold">Tidak Bisa Coding</h5>
-                        <p class="text-gray mb-0">Merasa rumit dan pusing ketika melihat ribuan baris kode pemrograman yang asing.</p>
+                <div class="col-md-4">
+                    <div class="glass-card p-4 h-100">
+                        <div class="text-danger fs-4 mb-3"><i class="fa-solid fa-code"></i></div>
+                        <h5 class="text-white fw-bold fs-6">Hambatan Pemrograman</h5>
+                        <p class="text-gray fs-14 mb-0">Merasa kesulitan mempelajari bahasa pemrograman web yang rumit dan menyita waktu.</p>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="glass-card p-4 rounded-4 h-100">
-                        <div class="fs-1 text-danger mb-3"><i class="fa-solid fa-circle-question"></i></div>
-                        <h5 class="text-white fw-bold">Bingung Mulai Dari Mana</h5>
-                        <p class="text-gray mb-0">Terlalu banyak tutorial tersebar di internet hingga bingung alur mana yang paling efisien.</p>
+                <div class="col-md-4">
+                    <div class="glass-card p-4 h-100">
+                        <div class="text-danger fs-4 mb-3"><i class="fa-solid fa-compass"></i></div>
+                        <h5 class="text-white fw-bold fs-6">Kurangnya Panduan Terarah</h5>
+                        <p class="text-gray fs-14 mb-0">Terlalu banyak tutorial terpecah-pecah di internet tanpa alur belajar yang jelas.</p>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="glass-card p-4 rounded-4 h-100">
-                        <div class="fs-1 text-danger mb-3"><i class="fa-solid fa-wallet"></i></div>
-                        <h5 class="text-white fw-bold">Biaya Jasa Website Mahal</h5>
-                        <p class="text-gray mb-0">Menyewa developer mahal, bayar jutaan rupiah padahal ingin buat landing page sederhana.</p>
+                <div class="col-md-4">
+                    <div class="glass-card p-4 h-100">
+                        <div class="text-danger fs-4 mb-3"><i class="fa-solid fa-wallet"></i></div>
+                        <h5 class="text-white fw-bold fs-6">Anggaran Jasa Tinggi</h5>
+                        <p class="text-gray fs-14 mb-0">Biaya sewa developer profesional yang mahal untuk kebutuhan pembuatan landing page sederhana.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Section Solusi / Keunggulan -->
+    <!-- Section Solusi -->
     <section class="solusi-section bg-navy-dark" id="solusi">
         <div class="container">
-            <div class="glass-card p-5 rounded-4 text-center border-cyan">
-                <span class="badge bg-info text-dark mb-3 px-3 py-2 fw-bold">REVOLUSI AI</span>
-                <h2 class="display-5 text-white fw-extrabold mb-4">Sekarang AI Mengubah Segalanya</h2>
-                <div class="row justify-content-center">
-                    <div class="col-lg-10">
-                        <p class="fs-5 text-light mb-4">
-                            Dengan <strong>ChatGPT, Gemini, Claude</strong>, dan <strong>AI Website Builder</strong> modern, sekarang siapa saja dapat membuat website profesional hanya dengan memberikan prompt (instruksi kalimat biasa).
+            <div class="glass-card p-4 p-md-5">
+                <div class="row justify-content-center text-center">
+                    <div class="col-lg-9">
+                        <span class="text-cyan text-uppercase tracking-wider fw-semibold fs-13 mb-2 d-block">Pendekatan Modern</span>
+                        <h2 class="text-white fw-bold h3 mb-4">Transformasi Pembuatan Website dengan AI</h2>
+                        <p class="text-gray lh-base mb-4">
+                            Kehadiran model AI generatif seperti ChatGPT, Claude, dan AI Website Builders mutakhir memungkinkan siapa saja menerjemahkan ide bisnis menjadi bentuk website interaktif hanya melalui instruksi teks terstruktur.
                         </p>
-                        <div class="p-4 rounded-3 bg-dark-navy text-cyan border border-info">
-                            <h4 class="fw-bold mb-2 text-white">Bukan Lagi Mitos!</h4>
-                            <p class="mb-0 text-light">Tidak perlu belajar coding bertahun-tahun. Cukup belajar cara memberikan instruksi yang benar & presisi kepada AI.</p>
+                        <div class="p-3 bg-dark-navy rounded-3 border border-secondary text-start">
+                            <p class="text-light mb-0 fs-14">
+                                <i class="fa-solid fa-circle-info text-cyan me-2"></i> Anda tidak lagi dituntut memahami sintaks kode. Fokus Anda beralih pada penguasaan logika instruksi (*prompt engineering*) yang presisi.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -372,93 +387,93 @@
     <section class="materi-section" id="materi">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="text-white fw-bold display-6">Materi Pelatihan Kurikulum Terbaru</h2>
-                <p class="text-gray">Lengkap, sistematis, dari nol sampai website Anda live!</p>
+                <h2 class="text-white fw-bold h3">Kurikulum Pelatihan</h2>
+                <p class="text-gray">Materi disusun secara terstruktur dari dasar hingga website Anda aktif di internet.</p>
             </div>
 
             <div class="row g-4">
-                <div class="col-md-6 col-lg-4">
-                    <div class="glass-card p-4 rounded-4 h-100 border-glow-blue">
-                        <div class="badge bg-primary mb-2">Modul 01</div>
-                        <h5 class="text-white fw-bold">Prompt Engineering</h5>
-                        <p class="text-gray fs-14">Teknik menyusun prompt instruksi khusus untuk menghasilkan struktur dan desain web akurat.</p>
+                <div class="col-md-4">
+                    <div class="glass-card p-4 h-100">
+                        <span class="text-cyan fw-bold fs-13 mb-2 d-block">Modul 01</span>
+                        <h5 class="text-white fw-bold fs-6 mb-2">Prompt Engineering</h5>
+                        <p class="text-gray fs-14 mb-0">Metode menyusun instruksi teks yang efektif untuk menghasilkan arsitektur dan tata letak web yang akurat.</p>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="glass-card p-4 rounded-4 h-100 border-glow-blue">
-                        <div class="badge bg-primary mb-2">Modul 02</div>
-                        <h5 class="text-white fw-bold">AI Website Builder</h5>
-                        <p class="text-gray fs-14">Pengenalan dan eksekusi platform AI generator otomatis terbaik saat ini.</p>
+                <div class="col-md-4">
+                    <div class="glass-card p-4 h-100">
+                        <span class="text-cyan fw-bold fs-13 mb-2 d-block">Modul 02</span>
+                        <h5 class="text-white fw-bold fs-6 mb-2">AI Website Builder</h5>
+                        <p class="text-gray fs-14 mb-0">Eksplorasi dan pengoperasian platform pembangun situs berbasis AI otomatis terbaik saat ini.</p>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="glass-card p-4 rounded-4 h-100 border-glow-blue">
-                        <div class="badge bg-primary mb-2">Modul 03</div>
-                        <h5 class="text-white fw-bold">Landing Page High Conversion</h5>
-                        <p class="text-gray fs-14">Membuat halaman penawaran produk/jasa yang memikat dan terarah ke penjualan.</p>
+                <div class="col-md-4">
+                    <div class="glass-card p-4 h-100">
+                        <span class="text-cyan fw-bold fs-13 mb-2 d-block">Modul 03</span>
+                        <h5 class="text-white fw-bold fs-6 mb-2">Landing Page Konversi Tinggi</h5>
+                        <p class="text-gray fs-14 mb-0">Merancang halaman penawaran produk atau jasa yang berfokus pada daya tarik audiens dan penjualan.</p>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="glass-card p-4 rounded-4 h-100 border-glow-blue">
-                        <div class="badge bg-primary mb-2">Modul 04</div>
-                        <h5 class="text-white fw-bold">Company Profile & Portfolio</h5>
-                        <p class="text-gray fs-14">Merancang profile bisnis perusahaan atau personal branding yang elegan.</p>
+                <div class="col-md-4">
+                    <div class="glass-card p-4 h-100">
+                        <span class="text-cyan fw-bold fs-13 mb-2 d-block">Modul 04</span>
+                        <h5 class="text-white fw-bold fs-6 mb-2">Company Profile & Portfolio</h5>
+                        <p class="text-gray fs-14 mb-0">Pembuatan profil badan usaha atau portofolio profesional yang elegan dan kredibel.</p>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="glass-card p-4 rounded-4 h-100 border-glow-blue">
-                        <div class="badge bg-primary mb-2">Modul 05</div>
-                        <h5 class="text-white fw-bold">Website UMKM & Responsive</h5>
-                        <p class="text-gray fs-14">Website katalog produk lokal yang tampil sempurna di Smartphone, Tablet, & PC.</p>
+                <div class="col-md-4">
+                    <div class="glass-card p-4 h-100">
+                        <span class="text-cyan fw-bold fs-13 mb-2 d-block">Modul 05</span>
+                        <h5 class="text-white fw-bold fs-6 mb-2">Optimasi UMKM & Responsif</h5>
+                        <p class="text-gray fs-14 mb-0">Memastikan katalog produk tampil optimal dan rapi di berbagai ukuran layar (mobile, tablet, desktop).</p>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="glass-card p-4 rounded-4 h-100 border-glow-blue">
-                        <div class="badge bg-primary mb-2">Modul 06</div>
-                        <h5 class="text-white fw-bold">Publish Website & Custom Domain</h5>
-                        <p class="text-gray fs-14">Cara melakukan deployment ke internet secara gratis dan hubungkan nama domain milik Anda.</p>
+                <div class="col-md-4">
+                    <div class="glass-card p-4 h-100">
+                        <span class="text-cyan fw-bold fs-13 mb-2 d-block">Modul 06</span>
+                        <h5 class="text-white fw-bold fs-6 mb-2">Deployment & Custom Domain</h5>
+                        <p class="text-gray fs-14 mb-0">Tahapan mempublikasikan website ke internet serta menghubungkannya dengan domain pribadi Anda.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Peluang Hasil / Monetisasi Section -->
+    <!-- Peluang Hasil Section -->
     <section class="peluang-section bg-navy-dark" id="peluang">
         <div class="container">
             <div class="text-center mb-5">
-                <span class="badge bg-success text-white mb-2 px-3 py-2">MONETISASI SKILL</span>
-                <h2 class="text-white fw-bold display-6">Skill Yang Bisa Dijual Kembali</h2>
-                <p class="text-gray">Setelah mengikuti training, Anda dapat membuka jasa pembuatan website profesional.</p>
+                <span class="text-cyan text-uppercase tracking-wider fw-semibold fs-13 mb-2 d-block">Monetisasi Keterampilan</span>
+                <h2 class="text-white fw-bold h3">Peluang Nilai Jasa Pembuatan Website</h2>
+                <p class="text-gray">Keahlian baru yang dapat langsung Anda tawarkan sebagai layanan profesional.</p>
             </div>
 
-            <div class="row g-4 mb-4">
-                <div class="col-md-6 col-lg-3">
-                    <div class="glass-card p-4 rounded-4 text-center h-100">
-                        <h6 class="text-light fw-bold">Landing Page</h6>
-                        <h4 class="text-cyan fw-bold my-3">Rp500rb – Rp2 Juta</h4>
-                        <small class="text-muted">Pengerjaan: 1-2 Jam</small>
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="glass-card p-4 text-center h-100">
+                        <h6 class="text-light fw-medium mb-2 fs-14">Landing Page</h6>
+                        <h4 class="text-cyan fw-bold fs-5 my-2">Rp500rb – Rp2 Juta</h4>
+                        <span class="text-gray fs-13">Durasi: 1-2 Jam</span>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="glass-card p-4 rounded-4 text-center h-100">
-                        <h6 class="text-light fw-bold">Website UMKM</h6>
-                        <h4 class="text-cyan fw-bold my-3">Rp2 Juta – Rp5 Juta</h4>
-                        <small class="text-muted">Pengerjaan: 3-5 Jam</small>
+                <div class="col-md-3">
+                    <div class="glass-card p-4 text-center h-100">
+                        <h6 class="text-light fw-medium mb-2 fs-14">Website UMKM</h6>
+                        <h4 class="text-cyan fw-bold fs-5 my-2">Rp2 Juta – Rp5 Juta</h4>
+                        <span class="text-gray fs-13">Durasi: 3-5 Jam</span>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="glass-card p-4 rounded-4 text-center h-100">
-                        <h6 class="text-light fw-bold">Company Profile</h6>
-                        <h4 class="text-cyan fw-bold my-3">Rp3 Juta – Rp10 Juta</h4>
-                        <small class="text-muted">Pengerjaan: 1 Hari</small>
+                <div class="col-md-3">
+                    <div class="glass-card p-4 text-center h-100">
+                        <h6 class="text-light fw-medium mb-2 fs-14">Company Profile</h6>
+                        <h4 class="text-cyan fw-bold fs-5 my-2">Rp3 Juta – Rp10 Juta</h4>
+                        <span class="text-gray fs-13">Durasi: 1 Hari</span>
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="glass-card p-4 rounded-4 text-center h-100">
-                        <h6 class="text-light fw-bold">Website Profesional</h6>
-                        <h4 class="text-cyan fw-bold my-3">Mulai Rp10 Juta+</h4>
-                        <small class="text-muted">Kustomisasi Khusus</small>
+                <div class="col-md-3">
+                    <div class="glass-card p-4 text-center h-100">
+                        <h6 class="text-light fw-medium mb-2 fs-14">Custom Web Pro</h6>
+                        <h4 class="text-cyan fw-bold fs-5 my-2">Mulai Rp10 Juta+</h4>
+                        <span class="text-gray fs-13">Proyek Skala Lanjut</span>
                     </div>
                 </div>
             </div>
@@ -469,21 +484,21 @@
     <section class="trainer-section" id="trainer">
         <div class="container">
             <div class="text-center mb-5">
-                <span class="badge bg-info text-dark mb-2 px-3 py-2 fw-bold">INSTITUTIONAL TRAINER</span>
-                <h2 class="text-white fw-bold display-6">Belajar Langsung Dari Ahlinya</h2>
+                <span class="text-cyan text-uppercase tracking-wider fw-semibold fs-13 mb-2 d-block">Instruktur Utama</span>
+                <h2 class="text-white fw-bold h3">Dibimbing Langsung oleh Praktisi</h2>
             </div>
             <div class="row justify-content-center">
                 <div class="col-lg-8">
-                    <div class="glass-card p-4 p-md-5 rounded-4 text-center border-glow-blue">
-                        <img src="photo.jpeg" alt="Muhamad Fatoni" class="rounded-circle img-thumbnail border-cyan mb-3" width="140" height="140">
-                        <h3 class="text-white fw-bold mb-1">Muhamad Fatoni, S.T., CBMP., CAIP</h3>
-                        <p class="text-cyan mb-4 fw-semibold">Profesional Trainer | AI & Business Transformation Expert</p>
+                    <div class="glass-card p-4 p-md-5 text-center">
+                        <img src="photo.jpeg" alt="Muhamad Fatoni" class="rounded-circle border border-secondary mb-3" width="120" height="120" style="object-fit: cover;">
+                        <h3 class="text-white fw-bold h4 mb-1">Muhamad Fatoni, S.T., CBMP., CAIP</h3>
+                        <p class="text-cyan mb-4 fw-medium fs-14">Professional Trainer | AI & Business Transformation Expert</p>
                         
-                        <div class="row g-2 justify-content-center text-start text-gray">
-                            <div class="col-sm-6"><i class="fa-solid fa-award text-yellow-accent me-2"></i>Certified Business Management Professional</div>
-                            <div class="col-sm-6"><i class="fa-solid fa-award text-yellow-accent me-2"></i>Certified Artificial Intelligence Professional</div>
-                            <div class="col-sm-6"><i class="fa-solid fa-robot text-yellow-accent me-2"></i>Praktisi AI & Automation Specialist</div>
-                            <div class="col-sm-6"><i class="fa-solid fa-code text-yellow-accent me-2"></i>Website Developer</div>
+                        <div class="row g-2 justify-content-center text-start text-gray fs-14">
+                            <div class="col-sm-6 d-flex align-items-center gap-2"><i class="fa-solid fa-award text-yellow-accent"></i> Certified Business Management Professional</div>
+                            <div class="col-sm-6 d-flex align-items-center gap-2"><i class="fa-solid fa-award text-yellow-accent"></i> Certified Artificial Intelligence Professional</div>
+                            <div class="col-sm-6 d-flex align-items-center gap-2"><i class="fa-solid fa-robot text-yellow-accent"></i> Praktisi AI & Automation Specialist</div>
+                            <div class="col-sm-6 d-flex align-items-center gap-2"><i class="fa-solid fa-code text-yellow-accent"></i> Experienced Website Developer</div>
                         </div>
                     </div>
                 </div>
@@ -495,46 +510,46 @@
     <section class="faq-section bg-navy-dark" id="faq">
         <div class="container">
             <div class="text-center mb-5">
-                <h2 class="text-white fw-bold display-6">Frequently Asked Questions (FAQ)</h2>
-                <p class="text-gray">Pertanyaan yang sering diajukan calon peserta.</p>
+                <h2 class="text-white fw-bold h3">Pertanyaan yang Sering Diajukan</h2>
+                <p class="text-gray">Informasi penting seputar pelaksanaan pelatihan.</p>
             </div>
 
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="accordion custom-accordion" id="accordionFaq">
-                        <div class="accordion-item glass-card mb-3 border-0">
+                        <div class="accordion-item glass-card mb-3 border-0 overflow-hidden">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed text-light bg-transparent fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                                    1. Apakah benar-benar tidak membutuhkan pemahaman coding?
+                                <button class="accordion-button collapsed text-light bg-transparent fw-bold shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    1. Apakah benar-benar tidak memerlukan latar belakang coding?
                                 </button>
                             </h2>
                             <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#accordionFaq">
-                                <div class="accordion-body text-gray">
-                                    Ya, 100% benar. Pelatihan ini memanfaatkan teknologi AI modern yang merubah teks instruksi (prompt) menjadi tampilan website utuh.
+                                <div class="accordion-body text-gray fs-14 pt-0">
+                                    Benar. Kelas ini dirancang khusus untuk pemula. Anda akan memanfaatkan sistem AI yang menerjemahkan kalimat instruksi menjadi struktur website secara otomatis.
                                 </div>
                             </div>
                         </div>
-                        <div class="accordion-item glass-card mb-3 border-0">
+                        <div class="accordion-item glass-card mb-3 border-0 overflow-hidden">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed text-light bg-transparent fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                                    2. Mengapa kuota peserta dibatasi hanya 5 orang per sesi?
+                                <button class="accordion-button collapsed text-light bg-transparent fw-bold shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    2. Mengapa kuota peserta dibatasi maksimal 5 orang?
                                 </button>
                             </h2>
                             <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#accordionFaq">
-                                <div class="accordion-body text-gray">
-                                    Kami mengusung konsep Private & Semi-Private untuk menjaga kualitas pembelajaran agar trainer bisa membimbing intensif satu per satu.
+                                <div class="accordion-body text-gray fs-14 pt-0">
+                                    Pembatasan kuota bertujuan menjaga kualitas interaksi agar setiap peserta mendapat bimbingan personal secara langsung dari instruktur saat praktik.
                                 </div>
                             </div>
                         </div>
-                        <div class="accordion-item glass-card mb-3 border-0">
+                        <div class="accordion-item glass-card mb-3 border-0 overflow-hidden">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed text-light bg-transparent fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-                                    3. Bagaimana jika jadwal Selasa/Sabtu saya tidak cocok?
+                                <button class="accordion-button collapsed text-light bg-transparent fw-bold shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    3. Bagaimana jika jadwal reguler yang tersedia berbenturan?
                                 </button>
                             </h2>
                             <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#accordionFaq">
-                                <div class="accordion-body text-gray">
-                                    Anda dapat menghubungi admin WhatsApp kami untuk mengajukan hari dan jam kustom (Custom Schedule) yang bisa disesuaikan dengan kesibukan Anda.
+                                <div class="accordion-body text-gray fs-14 pt-0">
+                                    Anda dapat memilih opsi Custom Schedule dengan menghubungi tim admin melalui WhatsApp untuk menentukan hari dan jam yang fleksibel.
                                 </div>
                             </div>
                         </div>
@@ -546,13 +561,13 @@
 
     <!-- Floating WhatsApp -->
     <a href="https://wa.me/6282290007890?text=Halo%20Admin%20Miranaya%20Academy" target="_blank" class="floating-wa">
-        <i class="fa-brands fa-whatsapp me-2"></i> WhatsApp
+        <i class="fa-brands fa-whatsapp me-1"></i> WhatsApp
     </a>
 
     <!-- Footer -->
     <footer class="py-4 border-top border-secondary bg-dark-navy text-center">
         <div class="container">
-            <p class="text-gray mb-0">Copyright © 2026 Miranaya Academy. All Rights Reserved.</p>
+            <p class="text-gray mb-0 fs-14">Copyright © 2026 Miranaya Academy. All Rights Reserved.</p>
         </div>
     </footer>
 
