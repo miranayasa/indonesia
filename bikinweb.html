@@ -119,6 +119,39 @@
             transform: scale(1.05);
             color: white;
         }
+
+        /* Countdown Timer Styling */
+        .timer-box {
+            background: rgba(8, 12, 20, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 12px;
+            padding: 12px 20px;
+            display: inline-flex;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+        }
+        .timer-unit {
+            text-align: center;
+        }
+        .timer-num {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent-cyan);
+            line-height: 1;
+        }
+        .timer-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+        .timer-sep {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            padding-bottom: 10px;
+        }
     </style>
 </head>
 <body data-bs-spy="scroll" data-bs-target="#navbar">
@@ -159,20 +192,20 @@
             <div class="row align-items-center gy-5">
                 <div class="col-lg-6 text-center text-lg-start">
                     <div class="d-inline-flex align-items-center gap-2 bg-dark-navy border border-secondary px-3 py-1.5 rounded-pill mb-4">
-                        <span class="badge bg-primary rounded-pill">Baru</span>
-                        <span class="text-xs text-cyan fw-medium">AI Website Builder Masterclass 2026</span>
+                        <span class="badge bg-primary rounded-pill">Eksklusif</span>
+                        <span class="text-xs text-cyan fw-medium">Kelas Private & Semi Private</span>
                     </div>
                     <h1 class="display-5 fw-bold text-white mb-4 lh-tight">
                         Bangun Website Profesional <span class="text-cyan">Tanpa Coding</span>
                     </h1>
                     <p class="lead text-gray mb-4 fs-6 lh-base">
-                        Kuasai pemanfaatan AI agar siapa saja, bahkan pemula tanpa latar belakang teknis, mampu merancang dan menerbitkan website fungsional dalam hitungan jam.
+                        Kuasai pemanfaatan AI secara intensif dalam format <strong>Private & Semi Private</strong>, memastikan bimbingan langsung satu-lawan-satu atau kelompok kecil agar Anda lancar merilis website dalam 1 hari.
                     </p>
 
                     <div class="row g-3 text-start text-gray mb-4 fs-14">
-                        <div class="col-sm-6 d-flex align-items-center gap-2"><i class="fa-solid fa-check text-cyan"></i> Tanpa baris kode pemograman</div>
+                        <div class="col-sm-6 d-flex align-items-center gap-2"><i class="fa-solid fa-check text-cyan"></i> Bimbingan Private & Semi Private</div>
                         <div class="col-sm-6 d-flex align-items-center gap-2"><i class="fa-solid fa-check text-cyan"></i> Berbasis Prompt & AI Generative</div>
-                        <div class="col-sm-6 d-flex align-items-center gap-2"><i class="fa-solid fa-check text-cyan"></i> Selesai dalam 1 hari praktik</div>
+                        <div class="col-sm-6 d-flex align-items-center gap-2"><i class="fa-solid fa-check text-cyan"></i> Praktis langsung praktik jadi</div>
                         <div class="col-sm-6 d-flex align-items-center gap-2"><i class="fa-solid fa-check text-cyan"></i> Siap online & domain sendiri</div>
                     </div>
 
@@ -199,9 +232,9 @@
     <section class="jadwal-section bg-navy-dark" id="jadwal">
         <div class="container">
             <div class="text-center mb-5">
-                <span class="text-cyan text-uppercase tracking-wider fw-semibold fs-13 mb-2 d-block">Waktu Fleksibel</span>
-                <h2 class="text-white fw-bold h3">Pilihan Sesi Pelatihan</h2>
-                <p class="text-gray">Pilih jadwal reguler yang tersedia atau ajukan waktu khusus sesuai kebutuhan Anda.</p>
+                <span class="text-cyan text-uppercase tracking-wider fw-semibold fs-13 mb-2 d-block">Format Belajar Fleksibel</span>
+                <h2 class="text-white fw-bold h3">Pilihan Sesi Private & Semi Private</h2>
+                <p class="text-gray">Didesain eksklusif dengan peserta terbatas agar proses bimbingan jauh lebih optimal dan fokus.</p>
             </div>
 
             <div class="row g-4 justify-content-center">
@@ -209,12 +242,12 @@
                     <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between">
                         <div>
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <span class="badge bg-secondary bg-opacity-25 text-light px-3 py-1">Sesi Malam</span>
-                                <i class="fa-solid fa-moon text-cyan fs-5"></i>
+                                <span class="badge bg-primary bg-opacity-25 text-cyan px-3 py-1">Semi Private / Reguler</span>
+                                <i class="fa-solid fa-users text-cyan fs-5"></i>
                             </div>
-                            <h4 class="text-white fw-bold mb-2">Setiap Hari Selasa</h4>
+                            <h4 class="text-white fw-bold mb-2">Setiap Hari Selasa (Malam)</h4>
                             <p class="text-cyan fw-semibold mb-3">18.30 - 21.30 WIB</p>
-                            <p class="text-gray fs-14">Ideal bagi profesional atau mahasiswa yang ingin meningkatkan skill sepulang beraktivitas.</p>
+                            <p class="text-gray fs-14">Kelompok kecil interaktif, ideal bagi profesional atau mahasiswa yang ingin belajar bersama tanpa kehilangan fokus bimbingan.</p>
                         </div>
                     </div>
                 </div>
@@ -223,12 +256,12 @@
                     <div class="glass-card p-4 h-100 d-flex flex-column justify-content-between">
                         <div>
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <span class="badge bg-secondary bg-opacity-25 text-light px-3 py-1">Sesi Akhir Pekan</span>
-                                <i class="fa-solid fa-sun text-cyan fs-5"></i>
+                                <span class="badge bg-primary bg-opacity-25 text-cyan px-3 py-1">Semi Private / Weekend</span>
+                                <i class="fa-solid fa-user-group text-cyan fs-5"></i>
                             </div>
-                            <h4 class="text-white fw-bold mb-2">Setiap Hari Sabtu</h4>
+                            <h4 class="text-white fw-bold mb-2">Setiap Hari Sabtu (Pagi)</h4>
                             <p class="text-cyan fw-semibold mb-3">09.00 - 12.00 WIB</p>
-                            <p class="text-gray fs-14">Pilihan tepat untuk memanfaatkan waktu luang akhir pekan secara produktif.</p>
+                            <p class="text-gray fs-14">Memanfaatkan waktu luang akhir pekan untuk mendalami skill praktis secara langsung bersama instruktur.</p>
                         </div>
                     </div>
                 </div>
@@ -237,11 +270,11 @@
                     <div class="glass-card p-4">
                         <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 text-start">
                             <div>
-                                <h5 class="text-white fw-bold mb-1 fs-6">Butuh Hari atau Jam Khusus?</h5>
-                                <p class="text-gray mb-0 fs-14">Tersedia opsi <strong>Custom Schedule</strong> untuk kelas privat perorangan maupun korporat.</p>
+                                <h5 class="text-white fw-bold mb-1 fs-6"><i class="fa-solid fa-user-shield text-cyan me-2"></i> Ingin Kelas 100% Private (1-on-1)?</h5>
+                                <p class="text-gray mb-0 fs-14">Tersedia opsi <strong>Custom Private Schedule</strong> dengan waktu dan materi yang bisa dispesifikan khusus untuk Anda atau korporat.</p>
                             </div>
-                            <a href="https://wa.me/6282290007890?text=Halo%20Admin,%20saya%20ingin%20request%20jadwal%20custom%20untuk%20Masterclass%20AI%20Website" target="_blank" class="btn btn-outline-light btn-sm rounded-pill px-4 py-2 text-nowrap fw-medium border-secondary">
-                                Request Jadwal Custom
+                            <a href="https://wa.me/6282290007890?text=Halo%20Admin,%20saya%20tertarik%20mengambil%20kelas%20100%25%20Private%20AI%20Website%20Builder" target="_blank" class="btn btn-outline-light btn-sm rounded-pill px-4 py-2 text-nowrap fw-medium border-secondary">
+                                Konsultasi Kelas Private
                             </a>
                         </div>
                     </div>
@@ -256,11 +289,11 @@
             <div class="glass-card p-4 p-md-5 text-center border-secondary">
                 <div class="d-flex justify-content-center gap-2 mb-3">
                     <span class="badge bg-danger bg-opacity-25 text-danger border border-danger border-opacity-25 fs-13 px-3 py-1">Diskon 50%</span>
-                    <span class="badge bg-primary bg-opacity-25 text-cyan border border-info border-opacity-25 fs-13 px-3 py-1">Pendaftaran Dibuka</span>
+                    <span class="badge bg-primary bg-opacity-25 text-cyan border border-info border-opacity-25 fs-13 px-3 py-1">Private & Semi Private</span>
                 </div>
                 
                 <h2 class="text-white fw-bold h3 mb-2">Penawaran Khusus Pendaftaran Hari Ini</h2>
-                <p class="text-gray fs-6 mb-4">Investasi sekali untuk skill produktivitas jangka panjang.</p>
+                <p class="text-gray fs-6 mb-4">Investasi sekali untuk bimbingan eksklusif dan skill produktivitas jangka panjang.</p>
 
                 <div class="d-flex flex-wrap justify-content-center align-items-center gap-3 mb-4">
                     <div class="harga-coret">Rp99.000</div>
@@ -274,21 +307,40 @@
         </div>
     </section>
 
-    <!-- Kuota Progress Section -->
-    <section class="kuota-section">
+    <!-- Countdown Timer Section (Pengganti Kuota Kelas) -->
+    <section class="timer-section">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="glass-card p-4 p-md-5 text-center">
-                        <h3 class="text-white fw-bold h5 mb-2">Status Kapasitas Kelas Aktif</h3>
-                        <p class="text-gray mb-3">
-                            <strong class="text-cyan">3</strong> dari <span class="text-white">5 kursi</span> telah terisi
-                        </p>
-                        <div class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 px-3 py-2 mb-4 fw-medium">
-                            Tersisa 2 Kursi Tersedia
+                        <div class="d-inline-flex align-items-center gap-2 text-danger bg-danger bg-opacity-10 border border-danger border-opacity-25 px-3 py-1 rounded-pill mb-3 fs-13 fw-semibold">
+                            <i class="fa-regular fa-clock"></i> Promo Berakhir Hari Ini
                         </div>
-                        <p class="text-gray fs-14 mb-0 lh-base">
-                            Sistem pelatihan dibatasi maksimal 5 peserta per sesi agar proses bimbingan berjalan intensif, interaktif, dan fokus pada penyelesaian proyek website masing-masing peserta.
+                        <h3 class="text-white fw-bold h5 mb-2">Manfaatkan Potongan Harga Spesial Kelas Eksklusif</h3>
+                        <p class="text-gray mb-4 fs-14">
+                            Waktu tersisa sebelum tarif pendaftaran kembali normal. Dapatkan bimbingan intensif langsung dari ahlinya!
+                        </p>
+                        
+                        <!-- Dynamic Countdown Box -->
+                        <div class="timer-box mb-4">
+                            <div class="timer-unit">
+                                <div id="hours" class="timer-num">08</div>
+                                <div class="timer-label">Jam</div>
+                            </div>
+                            <div class="timer-sep">:</div>
+                            <div class="timer-unit">
+                                <div id="minutes" class="timer-num">45</div>
+                                <div class="timer-label">Menit</div>
+                            </div>
+                            <div class="timer-sep">:</div>
+                            <div class="timer-unit">
+                                <div id="seconds" class="timer-num">30</div>
+                                <div class="timer-label">Detik</div>
+                            </div>
+                        </div>
+
+                        <p class="text-gray fs-13 mb-0">
+                            Segera amankan slot pelatihan Anda sebelum batas waktu berakhir.
                         </p>
                     </div>
                 </div>
@@ -320,8 +372,8 @@
                 </div>
                 <div class="col-6 col-md-3">
                     <div class="glass-card p-4 h-100">
-                        <h3 class="fw-bold text-cyan h2 mb-1">100%</h3>
-                        <p class="text-gray text-sm mb-0">Praktis Langsung Jadi</p>
+                        <h3 class="fw-bold text-cyan h2 mb-1">Intensif</h3>
+                        <p class="text-gray text-sm mb-0">Private & Semi Private</p>
                     </div>
                 </div>
             </div>
@@ -347,7 +399,7 @@
                     <div class="glass-card p-4 h-100">
                         <div class="text-danger fs-4 mb-3"><i class="fa-solid fa-compass"></i></div>
                         <h5 class="text-white fw-bold fs-6">Kurangnya Panduan Terarah</h5>
-                        <p class="text-gray fs-14 mb-0">Terlalu banyak tutorial terpecah-pecah di internet tanpa alur belajar yang jelas.</p>
+                        <p class="text-gray fs-14 mb-0">Terlalu banyak tutorial terpecah-pecah di internet tanpa bimbingan personal yang jelas.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -367,14 +419,14 @@
             <div class="glass-card p-4 p-md-5">
                 <div class="row justify-content-center text-center">
                     <div class="col-lg-9">
-                        <span class="text-cyan text-uppercase tracking-wider fw-semibold fs-13 mb-2 d-block">Pendekatan Modern</span>
-                        <h2 class="text-white fw-bold h3 mb-4">Transformasi Pembuatan Website dengan AI</h2>
+                        <span class="text-cyan text-uppercase tracking-wider fw-semibold fs-13 mb-2 d-block">Pendekatan Eksklusif</span>
+                        <h2 class="text-white fw-bold h3 mb-4">Metode Bimbingan Private & Semi Private</h2>
                         <p class="text-gray lh-base mb-4">
-                            Kehadiran model AI generatif seperti ChatGPT, Claude, dan AI Website Builders mutakhir memungkinkan siapa saja menerjemahkan ide bisnis menjadi bentuk website interaktif hanya melalui instruksi teks terstruktur.
+                            Berbeda dengan kelas massal, kelas ini dirancang khusus dengan kuota sangat terbatas agar setiap kendala teknis maupun desain Anda dapat langsung dibimbing tuntas oleh instruktur berpengalaman.
                         </p>
                         <div class="p-3 bg-dark-navy rounded-3 border border-secondary text-start">
                             <p class="text-light mb-0 fs-14">
-                                <i class="fa-solid fa-circle-info text-cyan me-2"></i> Anda tidak lagi dituntut memahami sintaks kode. Fokus Anda beralih pada penguasaan logika instruksi (*prompt engineering*) yang presisi.
+                                <i class="fa-solid fa-circle-info text-cyan me-2"></i> Fokus pada praktik langsung (*hands-on*) didukung penguasaan logika instruksi (*prompt engineering*) yang presisi.
                             </p>
                         </div>
                     </div>
@@ -532,12 +584,12 @@
                         <div class="accordion-item glass-card mb-3 border-0 overflow-hidden">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed text-light bg-transparent fw-bold shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                                    2. Mengapa kuota peserta dibatasi maksimal 5 orang?
+                                    2. Apa keunggulan format Private & Semi Private?
                                 </button>
                             </h2>
                             <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#accordionFaq">
                                 <div class="accordion-body text-gray fs-14 pt-0">
-                                    Pembatasan kuota bertujuan menjaga kualitas interaksi agar setiap peserta mendapat bimbingan personal secara langsung dari instruktur saat praktik.
+                                    Format ini memastikan jumlah peserta sangat terbatas (atau privat 1-on-1). Dengan begitu, instruktur dapat memberikan bimbingan secara mendalam dan personal sesuai kebutuhan proyek Anda.
                                 </div>
                             </div>
                         </div>
@@ -549,7 +601,7 @@
                             </h2>
                             <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#accordionFaq">
                                 <div class="accordion-body text-gray fs-14 pt-0">
-                                    Anda dapat memilih opsi Custom Schedule dengan menghubungi tim admin melalui WhatsApp untuk menentukan hari dan jam yang fleksibel.
+                                    Anda dapat memilih opsi Custom Private Schedule dengan menghubungi tim admin melalui WhatsApp untuk menentukan hari dan jam yang fleksibel.
                                 </div>
                             </div>
                         </div>
@@ -573,5 +625,33 @@
 
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Simple Countdown Timer Script -->
+    <script>
+        // Set waktu countdown berakhir hari ini pada pukul 23:59:59
+        const now = new Date();
+        const countDownDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59).getTime();
+
+        const x = setInterval(function() {
+            const currentTimestamp = new Date().getTime();
+            const distance = countDownDate - currentTimestamp;
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("hours").innerHTML = "00";
+                document.getElementById("minutes").innerHTML = "00";
+                document.getElementById("seconds").innerHTML = "00";
+                return;
+            }
+
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("hours").innerHTML = String(hours).padStart(2, '0');
+            document.getElementById("minutes").innerHTML = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").innerHTML = String(seconds).padStart(2, '0');
+        }, 1000);
+    </script>
 </body>
 </html>
