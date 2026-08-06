@@ -307,13 +307,12 @@
 
     <script>
         let rawData = [];
-        let sourceData = []; // Data mentah asli (key kapital dari Sheet), TIDAK PERNAH dimutasi oleh processRawData()
+        let sourceData = []; 
         let filteredData = [];
         let dataTableInstance = null;
         let mainChartObj = null;
-        let currentPresetLabel = '7 hari terakhir'; // Melacak label periode preset yang sedang aktif
+        let currentPresetLabel = '7 hari terakhir';
 
-        // MASUKKAN URL WEB APP GOOGLE SCRIPT ANDA DI SINI
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwXdZ43IAZHKarfmwQFeYy3I0rsUiZlstI2fTmh0F9F1Di_sueL99WQbAGALvkeo-mD/exec';
 
         document.addEventListener("DOMContentLoaded", () => {
@@ -415,8 +414,6 @@
         }
 
         function processRawData() {
-            // Selalu dibangun ulang dari sourceData (data mentah, tidak berubah),
-            // sehingga aman dipanggil berkali-kali tanpa merusak data yang sudah ada.
             rawData = sourceData.map(item => {
                 const sistol = Number(item.Sistol || 0);
                 const diastol = Number(item.Diastol || 0);
@@ -474,8 +471,6 @@
         }
 
         function applyCustomFilter(fromManualDate) {
-            // Jika filter dijalankan lewat input tanggal manual (bukan tombol preset),
-            // pastikan tidak ada preset yang tampil aktif agar tidak membingungkan.
             if (fromManualDate) {
                 currentPresetLabel = 'periode tanggal kustom yang Anda pilih';
                 document.querySelectorAll('#presetBtnGroup button').forEach(b => {
@@ -495,11 +490,11 @@
             refreshDashboard();
         }
 
-            function refreshDashboard() {
+        function refreshDashboard() {
             updateLastUpdateLabel();
             updateSummary();
             drawMainChart();
-            generatePeriodAnalysis(); // Generate teks kesimpulan otomatis
+            generatePeriodAnalysis();
             renderTable();
         }
 
@@ -536,7 +531,6 @@
             document.getElementById('sumAvgPulse').innerHTML = `${avgPulse} <span class="small fw-normal text-muted">bpm</span>`;
         }
 
-        // FUNGSI UNTUK MEMBUAT KESIMPULAN & ANALISIS OTOMATIS BERDASARKAN PERIODE
         function generatePeriodAnalysis() {
             const analysisEl = document.getElementById('analysisContent');
             if (filteredData.length === 0) {
@@ -669,8 +663,6 @@
         function renderTable() {
             if (dataTableInstance) dataTableInstance.destroy();
 
-            // Log Riwayat Pengukuran DIKUNCI ke 7 hari terakhir dari HARI INI,
-            // tidak mengikuti preset periode analisis/grafik di atas.
             const today = new Date();
             today.setHours(23, 59, 59, 999);
             const sevenDaysAgo = new Date();
@@ -703,12 +695,13 @@
             });
         }
 
+        // FUNGSI KLASIFIKASI TEKANAN DARAH YANG TELAH DIPERBAIKI (STANDAR MEDIS)
         function classifyBloodPressure(sistol, diastol) {
-            if (sistol < 120 && diastol < 80) return { text: "Optimal", className: "status-optimal" };
-            if (sistol <= 129 && diastol <= 84) return { text: "Normal", className: "status-normal" };
-            if (sistol <= 139 || diastol <= 89) return { text: "Normal Tinggi", className: "status-normal-tinggi" };
-            if (sistol <= 159 || diastol <= 99) return { text: "Hipertensi Stage 1", className: "status-hipertensi-1" };
-            return { text: "Hipertensi Stage 2", className: "status-hipertensi-2" };
+            if (sistol >= 160 || diastol >= 100) return { text: "Hipertensi Stage 2", className: "status-hipertensi-2" };
+            if ((sistol >= 140 && sistol <= 159) || (diastol >= 90 && diastol <= 99)) return { text: "Hipertensi Stage 1", className: "status-hipertensi-1" };
+            if ((sistol >= 130 && sistol <= 139) || (diastol >= 85 && diastol <= 89)) return { text: "Normal Tinggi", className: "status-normal-tinggi" };
+            if ((sistol >= 120 && sistol <= 129) || (diastol >= 80 && diastol <= 84)) return { text: "Normal", className: "status-normal" };
+            return { text: "Optimal", className: "status-optimal" };
         }
 
         function formatDateID(dateString) {
