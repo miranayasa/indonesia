@@ -277,7 +277,7 @@
         <!-- HISTORY TABLE -->
         <div class="card mb-4 border-0 shadow-sm">
             <div class="card-header bg-transparent border-0 pt-4 px-4 pb-0">
-                <h5 class="fw-bold text-dark m-0"><i class="bi bi-table text-primary me-2"></i>Log Riwayat Pengukuran</h5>
+                <h5 class="fw-bold text-dark m-0"><i class="bi bi-table text-primary me-2"></i>Log Riwayat Pengukuran <small class="text-muted fw-normal" style="font-size: 0.8rem;">(7 hari terakhir)</small></h5>
             </div>
             <div class="card-body px-4 pb-4">
                 <div class="table-responsive">
@@ -669,10 +669,19 @@
         function renderTable() {
             if (dataTableInstance) dataTableInstance.destroy();
 
+            // Log Riwayat Pengukuran DIKUNCI ke 7 hari terakhir dari HARI INI,
+            // tidak mengikuti preset periode analisis/grafik di atas.
+            const today = new Date();
+            today.setHours(23, 59, 59, 999);
+            const sevenDaysAgo = new Date();
+            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+            sevenDaysAgo.setHours(0, 0, 0, 0);
+            const tableData = rawData.filter(item => item.rawDate >= sevenDaysAgo && item.rawDate <= today);
+
             const tbody = document.getElementById('historyTableBody');
             tbody.innerHTML = '';
 
-            filteredData.forEach(item => {
+            tableData.forEach(item => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td class="fw-medium">${item.tanggal}</td>
