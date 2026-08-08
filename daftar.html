@@ -175,7 +175,7 @@
     <div id="resultSection" class="result">
       <div class="success-icon">✓</div>
       <h2>Pendaftaran Berhasil</h2>
-      <p style="color: var(--muted);">Data pendaftaran Anda telah berhasil diterima. Silakan simpan nomor antrian berikut.</p>
+      <p style="color: var(--muted);">Data pendaftaran Anda telah berhasil diterima dan diteruskan ke WhatsApp Klinik. Silakan simpan nomor antrian berikut.</p>
       
       <div class="queue-card">
         <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--muted);">Nomor Antrian</div>
@@ -198,9 +198,12 @@
 
 <script>
   /* =====================================================
-     URL GOOGLE APPS SCRIPT ANDA DI SINI
+     PENGATURAN URL & NOMOR WHATSAPP KLINIK
   ===================================================== */
   const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzyKEKZTDlyfg0eiurTD6xW-rNfCqVlz9o5UJQwXAhFL1ggHkZmZQMfNlkXyEOKbp9rYQ/exec";
+  
+  // Ubah nomor di bawah ini dengan nomor WhatsApp tujuan (gunakan kode negara tanpa tanda +, misal: 628123456789)
+  const WHATSAPP_NUMBER = "6281234567890";
 
   const form = document.getElementById("registrationForm");
   const submitButton = document.getElementById("submitButton");
@@ -237,9 +240,38 @@
         throw new Error(result.message || "Pendaftaran gagal.");
       }
 
-      queueNumber.textContent = result.queueNumber || "---";
-      resultDate.textContent = formData.get("visitDate") || "-";
-      resultTime.textContent = formData.get("visitTime") || "-";
+      const assignedQueue = result.queueNumber || "---";
+      const vDate = formData.get("visitDate") || "-";
+      const vTime = formData.get("visitTime") || "-";
+
+      queueNumber.textContent = assignedQueue;
+      resultDate.textContent = vDate;
+      resultTime.textContent = vTime;
+
+      // =====================================================
+      // KIRIM INFORMASI KE WHATSAPP
+      // =====================================================
+      const patientName = formData.get("name") || "-";
+      const patientNik = formData.get("nik") || "-";
+      const patientPhone = formData.get("phone") || "-";
+      const patientPoli = formData.get("poli") || "-";
+      const patientComplaint = formData.get("complaint") || "-";
+
+      const waMessage = 
+        `Halo Admin Klinik Jaya Selalu, Saya ingin mengonfirmasi pendaftaran pasien baru:\n\n` +
+        `*No. Antrian:* *${assignedQueue}*\n` +
+        `*Nama:* ${patientName}\n` +
+        `*NIK:* ${patientNik}\n` +
+        `*No. HP:* ${patientPhone}\n` +
+        `*Layanan (Poli):* ${patientPoli}\n` +
+        `*Keluhan:* ${patientComplaint}\n` +
+        `*Tgl Kunjungan:* ${vDate} (${vTime})\n\n` +
+        `Mohon bantuannya untuk diproses. Terima kasih.`;
+
+      const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMessage)}`;
+      
+      // Membuka WhatsApp di tab/aplikasi baru
+      window.open(waUrl, '_blank');
 
       formSection.style.display = "none";
       resultSection.style.display = "block";
