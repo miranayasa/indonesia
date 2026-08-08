@@ -168,8 +168,23 @@
           <div class="form-group"><label>Terapis (Opsional)</label><input type="text" name="therapist" placeholder="Nama terapis (jika ada)"></div>
           <div class="form-group"><label>Tanggal Kunjungan *</label><input type="date" name="visitDate" required></div>
           <div class="form-group"><label>Jam Kunjungan *</label><input type="time" name="visitTime" required></div>
-          <div class="form-group"><label>BPJS / Asuransi</label><input type="text" name="bpjs" placeholder="Nomor BPJS (opsional)"></div>
-          <div class="form-group"><label>Catatan Tambahan</label><input type="text" name="notes" placeholder="Catatan lain"></div>
+          
+          <!-- Pilihan BPJS Ya/Tidak -->
+          <div class="form-group">
+            <label>Pasien BPJS? *</label>
+            <select name="bpjsStatus" id="bpjsStatus" required onchange="toggleBpjsInput()">
+              <option value="Tidak">Tidak (Umum/Mandiri)</option>
+              <option value="Ya">Ya</option>
+            </select>
+          </div>
+          
+          <!-- Kolom Nomor BPJS (Hidden by default, muncul jika pilih Ya) -->
+          <div class="form-group" id="bpjsNumberGroup" style="display: none;">
+            <label>Nomor BPJS *</label>
+            <input type="text" name="bpjs" id="bpjsInput" placeholder="Masukkan 13 digit No. BPJS">
+          </div>
+
+          <div class="form-group full"><label>Catatan Tambahan</label><input type="text" name="notes" placeholder="Catatan lain"></div>
         </div>
 
         <div id="errorMessage" class="message"></div>
@@ -193,6 +208,7 @@
           <tr><td class="label-col">Tanggal Lahir</td><td>: <span id="resBirthDate">-</span></td></tr>
           <tr><td class="label-col">Email</td><td>: <span id="resEmail">-</span></td></tr>
           <tr><td class="label-col">Layanan</td><td>: <span id="resPoli">-</span></td></tr>
+          <tr><td class="label-col">Status BPJS</td><td>: <span id="resBpjsStatus">-</span></td></tr>
           <tr><td class="label-col">Jadwal</td><td>: <span id="resDate">-</span> (<span id="resTime">-</span>)</td></tr>
           <tr><td class="label-col">Keluhan</td><td>: <span id="resComplaint">-</span></td></tr>
         </table>
@@ -226,10 +242,27 @@
   const resBirthDate = document.getElementById("resBirthDate");
   const resEmail = document.getElementById("resEmail");
   const resPoli = document.getElementById("resPoli");
+  const resBpjsStatus = document.getElementById("resBpjsStatus");
   const resDate = document.getElementById("resDate");
   const resTime = document.getElementById("resTime");
   const resComplaint = document.getElementById("resComplaint");
   const newRegistration = document.getElementById("newRegistration");
+
+  // Fungsi untuk menampilkan/menyembunyikan input No BPJS
+  function toggleBpjsInput() {
+    const status = document.getElementById("bpjsStatus").value;
+    const bpjsGroup = document.getElementById("bpjsNumberGroup");
+    const bpjsInput = document.getElementById("bpjsInput");
+
+    if (status === "Ya") {
+      bpjsGroup.style.display = "block";
+      bpjsInput.required = true;
+    } else {
+      bpjsGroup.style.display = "none";
+      bpjsInput.required = false;
+      bpjsInput.value = ""; // Bersihkan nilai jika memilih Tidak
+    }
+  }
 
   form.addEventListener("submit", async function(event) {
     event.preventDefault();
@@ -245,6 +278,13 @@
 
     try {
       const formData = new FormData(form);
+      
+      // Menggabungkan status dan nomor BPJS agar sesuai dengan kolom database Google Sheet (kolom 'bpjs')
+      const isBpjs = formData.get("bpjsStatus");
+      const noBpjs = formData.get("bpjs");
+      const finalBpjsValue = isBpjs === "Ya" ? `Ya (${noBpjs})` : "Tidak";
+      formData.set("bpjs", finalBpjsValue);
+
       const response = await fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
         body: formData
@@ -273,6 +313,7 @@
       resBirthDate.textContent = pBirthDate ? pBirthDate : "-";
       resEmail.textContent = pEmail ? pEmail : "-";
       resPoli.textContent = pPoli;
+      resBpjsStatus.textContent = finalBpjsValue;
       resDate.textContent = vDate;
       resTime.textContent = vTime;
       resComplaint.textContent = pComplaint;
@@ -286,6 +327,7 @@
         `*Email:* ${pEmail || '-'}\n` +
         `*No. HP:* ${pPhone}\n` +
         `*Layanan:* ${pPoli}\n` +
+        `*Status BPJS:* ${finalBpjsValue}\n` +
         `*Keluhan:* ${pComplaint}\n` +
         `*Jadwal:* ${vDate} (${vTime})\n\n` +
         `Terima kasih.`;
@@ -296,6 +338,7 @@
       formSection.style.display = "none";
       resultSection.style.display = "block";
       form.reset();
+      toggleBpjsInput(); // Reset tampilan input BPJS
       window.scrollTo({ top: 0, behavior: "smooth" });
 
     } catch (error) {
