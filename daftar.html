@@ -32,7 +32,7 @@
       min-height: 100vh;
     }
 
-    .container { max-width: 700px; margin: 0 auto; }
+    .container { max-width: 750px; margin: 0 auto; }
 
     /* Brand Header dengan Logo Diperbesar 2x */
     .brand-header { text-align: center; margin-bottom: 35px; }
@@ -104,7 +104,7 @@
       background: #fdfdfd; margin: 20px 0; text-align: left;
       box-shadow: 0 4px 15px rgba(0,0,0,0.02);
     }
-    .ticket-number { font-size: 40px; font-weight: 800; color: var(--brand); text-align: center; margin: 5px 0 15px 0; letter-spacing: 1px; }
+    .queue-number { font-size: 40px; font-weight: 800; color: var(--brand); text-align: center; margin: 5px 0 15px 0; letter-spacing: 1px; }
     
     .resume-table { width: 100%; font-size: 13px; color: var(--text); border-collapse: collapse; }
     .resume-table td { padding: 6px 0; vertical-align: top; }
@@ -133,7 +133,7 @@
 <body>
 
 <div class="container">
-  <!-- Brand Header dengan Logo Diperbesar -->
+  <!-- Brand Header dengan Logo Diperbesar 2x -->
   <div class="brand-header">
     <div class="logo-wrap">
       <img src="logo.png" alt="Logo Klinik Jaya Selalu" class="logo">
@@ -149,10 +149,10 @@
       <form id="registrationForm">
         <h2>01. Data Pasien</h2>
         <div class="form-grid">
-          <div class="form-group"><label>Nama Lengkap *</label><input type="text" name="name" required placeholder="Masukkan nama"></div>
+          <div class="form-group"><label>Nama Lengkap *</label><input type="text" name="name" required placeholder="Masukkan nama lengkap"></div>
           <div class="form-group"><label>NIK *</label><input type="text" name="nik" required maxlength="16" placeholder="16 digit NIK"></div>
           <div class="form-group"><label>Kelamin *</label><select name="gender" required><option value="">Pilih Kelamin</option><option value="Laki-laki">Laki-laki</option><option value="Perempuan">Perempuan</option></select></div>
-          <div class="form-group"><label>Tanggal Lahir *</label><input type="date" name="birthDate" required></div>
+          <div class="form-group"><label>Tanggal Lahir</label><input type="date" name="birthDate"></div>
           <div class="form-group"><label>Nomor HP *</label><input type="tel" name="phone" required placeholder="08xxxxxxxxxx"></div>
           <div class="form-group"><label>Email</label><input type="email" name="email" placeholder="nama@email.com"></div>
           <div class="form-group full"><label>Alamat</label><textarea name="address" placeholder="Masukkan alamat lengkap"></textarea></div>
@@ -161,10 +161,15 @@
         <h2>02. Keluhan & Layanan</h2>
         <div class="form-grid">
           <div class="form-group full"><label>Keluhan Utama *</label><textarea name="complaint" required placeholder="Jelaskan keluhan Anda"></textarea></div>
-          <div class="form-group"><label>Layanan *</label><select name="poli" required><option value="">Pilih Layanan</option><option value="Fisioterapi">Fisioterapi</option><option value="Pilates">Pilates</option></select></div>
           <div class="form-group"><label>Bagian Tubuh *</label><input type="text" name="bodyPart" required placeholder="Contoh: Pinggang"></div>
+          <div class="form-group"><label>Lama Keluhan</label><input type="text" name="complaintDuration" placeholder="Contoh: 3 hari / 1 minggu"></div>
+          <div class="form-group full"><label>Riwayat Cedera</label><input type="text" name="injuryHistory" placeholder="Pernah cedera sebelumnya? (Jika ada)"></div>
+          <div class="form-group"><label>Poli *</label><select name="poli" required><option value="">Pilih Layanan</option><option value="Fisioterapi">Fisioterapi</option><option value="Pilates">Pilates</option></select></div>
+          <div class="form-group"><label>Terapis (Opsional)</label><input type="text" name="therapist" placeholder="Nama terapis (jika ada)"></div>
           <div class="form-group"><label>Tanggal Kunjungan *</label><input type="date" name="visitDate" required></div>
           <div class="form-group"><label>Jam Kunjungan *</label><input type="time" name="visitTime" required></div>
+          <div class="form-group"><label>BPJS / Asuransi</label><input type="text" name="bpjs" placeholder="Nomor BPJS (opsional)"></div>
+          <div class="form-group"><label>Catatan Tambahan</label><input type="text" name="notes" placeholder="Catatan lain"></div>
         </div>
 
         <div id="errorMessage" class="message"></div>
@@ -176,7 +181,7 @@
     <div id="resultSection">
       <div class="success-badge">✓</div>
       <h2 style="border:none; text-align:center; margin-bottom:0;">Pendaftaran Berhasil</h2>
-      <p style="color: var(--secondary); font-size: 13px; margin-top: 5px;">Data Anda telah tersimpan dan terkirim ke WhatsApp Klinik[cite: 1].</p>
+      <p style="color: var(--secondary); font-size: 13px; margin-top: 5px;">Data Anda telah tersimpan dan terkirim ke WhatsApp Klinik.</p>
       
       <div class="ticket">
         <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: var(--brand); text-align: center;">Nomor Antrian Anda</div>
@@ -206,8 +211,8 @@
   /* =====================================================
      PENGATURAN URL GOOGLE APPS SCRIPT & NOMOR WHATSAPP
   ===================================================== */
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzyKEKZTDlyfg0eiurTD6xW-rNfCqVlz9o5UJQwXAhFL1ggHkZmZQMfNlkXyEOKbp9rYQ/execI";
-  const WHATSAPP_NUMBER = "622290007890"; // Ganti dengan nomor WhatsApp tujuan (tanpa tanda +)[cite: 1]
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzyKEKZTDlyfg0eiurTD6xW-rNfCqVlz9o5UJQwXAhFL1ggHkZmZQMfNlkXyEOKbp9rYQ/exec";
+  const WHATSAPP_NUMBER = "6282290007890"; // Ganti dengan nomor WhatsApp tujuan (tanpa tanda +)
 
   const form = document.getElementById("registrationForm");
   const submitButton = document.getElementById("submitButton");
@@ -251,7 +256,7 @@
         throw new Error(result.message || "Pendaftaran gagal.");
       }
 
-      const assignedQueue = result.queueNumber || "A-001";
+      const assignedQueue = result.queueNumber || "001";
       const vDate = formData.get("visitDate") || "-";
       const vTime = formData.get("visitTime") || "-";
       const pName = formData.get("name") || "-";
@@ -265,7 +270,7 @@
       queueNumber.textContent = assignedQueue;
       resName.textContent = pName;
       resNik.textContent = pNik;
-      resBirthDate.textContent = pBirthDate;
+      resBirthDate.textContent = pBirthDate ? pBirthDate : "-";
       resEmail.textContent = pEmail ? pEmail : "-";
       resPoli.textContent = pPoli;
       resDate.textContent = vDate;
@@ -277,7 +282,7 @@
         `*No. Antrian:* *${assignedQueue}*\n` +
         `*Nama:* ${pName}\n` +
         `*NIK:* ${pNik}\n` +
-        `*Tanggal Lahir:* ${pBirthDate}\n` +
+        `*Tanggal Lahir:* ${pBirthDate || '-'}\n` +
         `*Email:* ${pEmail || '-'}\n` +
         `*No. HP:* ${pPhone}\n` +
         `*Layanan:* ${pPoli}\n` +
@@ -286,12 +291,12 @@
         `Terima kasih.`;
 
       const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMessage)}`;
-      window.open(waUrl, '_blank');[cite: 1]
+      window.open(waUrl, '_blank');
 
       formSection.style.display = "none";
       resultSection.style.display = "block";
       form.reset();
-      window.scrollTo({ top: 0, behavior: "smooth" });[cite: 1]
+      window.scrollTo({ top: 0, behavior: "smooth" });
 
     } catch (error) {
       console.error(error);
@@ -306,7 +311,7 @@
     resultSection.style.display = "none";
     formSection.style.display = "block";
     hideError();
-    window.scrollTo({ top: 0, behavior: "smooth" });[cite: 1]
+    window.scrollTo({ top: 0, behavior: "smooth" });
   });
 
   function showError(msg) {
