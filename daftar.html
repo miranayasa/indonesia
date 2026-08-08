@@ -97,17 +97,42 @@
       border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 700;
     }
     .queue-card {
-      max-width: 300px; margin: 25px auto; padding: 20px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px;
+      max-width: 400px; margin: 25px auto; padding: 20px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; text-align: left;
     }
-    .queue-number { font-size: 42px; font-weight: 800; color: var(--primary); margin: 10px 0; }
-    .new-registration {
-      margin-top: 20px; padding: 12px 24px; background: #fff; border: 1px solid var(--primary);
-      color: var(--primary); font-weight: 700; border-radius: 8px; cursor: pointer;
+    .queue-number { font-size: 42px; font-weight: 800; color: var(--primary); margin: 10px 0; text-align: center; }
+    
+    /* Resume Detail Table dalam Card */
+    .resume-table { width: 100%; font-size: 13px; color: var(--text); border-collapse: collapse; margin-top: 10px; }
+    .resume-table td { padding: 6px 0; vertical-align: top; }
+    .resume-table td.label-col { width: 35%; color: var(--muted); font-weight: 600; }
+
+    .action-buttons { display: flex; gap: 10px; justify-content: center; margin-top: 25px; flex-wrap: wrap; }
+    .action-btn {
+      padding: 12px 24px; font-weight: 700; border-radius: 8px; cursor: pointer; font-size: 14px; border: none; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
     }
+    .btn-print { background: var(--accent); color: #fff; }
+    .btn-print:hover { opacity: 0.9; }
+    .new-registration { background: #fff; border: 1px solid var(--primary); color: var(--primary); }
+    .new-registration:hover { background: #f0f4f8; }
 
     @media (max-width: 600px) {
       .main-card { padding: 30px; }
       .form-grid { grid-template-columns: 1fr; }
+    }
+
+    /* =====================================================
+       PENGATURAN CETAK / PDF (PRINT STYLESHEET)
+    ===================================================== */
+    @media print {
+      body { background: #fff; padding: 0; color: #000; }
+      .container { max-width: 100%; margin: 0; }
+      .main-card { box-shadow: none; padding: 10px; border: none; }
+      .brand { margin-bottom: 20px; }
+      /* Sembunyikan elemen yang tidak perlu dicetak */
+      .action-buttons, .page-description, .brand-line, footer { display: none !important; }
+      .queue-card { max-width: 100%; border: 2px solid #0a2647; background: #fff; }
+      .success-icon { display: none; }
+      .result h2 { font-size: 20px; margin-bottom: 5px; }
     }
   </style>
 </head>
@@ -175,18 +200,27 @@
     <div id="resultSection" class="result">
       <div class="success-icon">✓</div>
       <h2>Pendaftaran Berhasil</h2>
-      <p style="color: var(--muted);">Data pendaftaran Anda telah berhasil diterima dan diteruskan ke WhatsApp Klinik. Silakan simpan nomor antrian berikut.</p>
+      <p style="color: var(--muted);">Data pendaftaran Anda telah berhasil diterima. Silakan simpan nomor antrian dan resume di bawah ini.</p>
       
       <div class="queue-card">
-        <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--muted);">Nomor Antrian</div>
+        <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--muted); text-align: center;">Nomor Antrian Anda</div>
         <div id="queueNumber" class="queue-number">---</div>
-        <div style="font-size: 13px; color: var(--muted); border-top: 1px solid #e2e8f0; padding-top: 10px;">
-          <div><strong>Tanggal:</strong> <span id="resultDate">-</span></div>
-          <div><strong>Jam:</strong> <span id="resultTime">-</span></div>
+        
+        <div style="border-top: 1px solid #e2e8f0; padding-top: 12px; margin-top: 10px;">
+          <table class="resume-table">
+            <tr><td class="label-col">Nama</td><td>: <span id="resName">-</span></td></tr>
+            <tr><td class="label-col">NIK</td><td>: <span id="resNik">-</span></td></tr>
+            <tr><td class="label-col">Layanan</td><td>: <span id="resPoli">-</span></td></tr>
+            <tr><td class="label-col">Jadwal</td><td>: <span id="resDate">-</span> (<span id="resTime">-</span>)</td></tr>
+            <tr><td class="label-col">Keluhan</td><td>: <span id="resComplaint">-</span></td></tr>
+          </table>
         </div>
       </div>
 
-      <button type="button" id="newRegistration" class="new-registration">Pendaftaran Baru</button>
+      <div class="action-buttons">
+        <button type="button" id="printBtn" class="action-btn btn-print">🖨️ Download / Cetak PDF</button>
+        <button type="button" id="newRegistration" class="action-btn new-registration">Pendaftaran Baru</button>
+      </div>
     </div>
 
   </main>
@@ -201,9 +235,7 @@
      PENGATURAN URL & NOMOR WHATSAPP KLINIK
   ===================================================== */
   const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzyKEKZTDlyfg0eiurTD6xW-rNfCqVlz9o5UJQwXAhFL1ggHkZmZQMfNlkXyEOKbp9rYQ/exec";
-  
-  // Ubah nomor di bawah ini dengan nomor WhatsApp tujuan (gunakan kode negara tanpa tanda +, misal: 628123456789)
-  const WHATSAPP_NUMBER = "6281234567890";
+  const WHATSAPP_NUMBER = "6282290007890";
 
   const form = document.getElementById("registrationForm");
   const submitButton = document.getElementById("submitButton");
@@ -211,8 +243,16 @@
   const formSection = document.getElementById("formSection");
   const resultSection = document.getElementById("resultSection");
   const queueNumber = document.getElementById("queueNumber");
-  const resultDate = document.getElementById("resultDate");
-  const resultTime = document.getElementById("resultTime");
+  
+  // Elemen Resume
+  const resName = document.getElementById("resName");
+  const resNik = document.getElementById("resNik");
+  const resPoli = document.getElementById("resPoli");
+  const resDate = document.getElementById("resDate");
+  const resTime = document.getElementById("resTime");
+  const resComplaint = document.getElementById("resComplaint");
+
+  const printBtn = document.getElementById("printBtn");
   const newRegistration = document.getElementById("newRegistration");
 
   form.addEventListener("submit", async function(event) {
@@ -243,20 +283,24 @@
       const assignedQueue = result.queueNumber || "---";
       const vDate = formData.get("visitDate") || "-";
       const vTime = formData.get("visitTime") || "-";
-
-      queueNumber.textContent = assignedQueue;
-      resultDate.textContent = vDate;
-      resultTime.textContent = vTime;
-
-      // =====================================================
-      // KIRIM INFORMASI KE WHATSAPP
-      // =====================================================
       const patientName = formData.get("name") || "-";
       const patientNik = formData.get("nik") || "-";
       const patientPhone = formData.get("phone") || "-";
       const patientPoli = formData.get("poli") || "-";
       const patientComplaint = formData.get("complaint") || "-";
 
+      // Tampilkan ke kartu hasil (resume)
+      queueNumber.textContent = assignedQueue;
+      resName.textContent = patientName;
+      resNik.textContent = patientNik;
+      resPoli.textContent = patientPoli;
+      resDate.textContent = vDate;
+      resTime.textContent = vTime;
+      resComplaint.textContent = patientComplaint;
+
+      // =====================================================
+      // KIRIM INFORMASI KE WHATSAPP
+      // =====================================================
       const waMessage = 
         `Halo Admin Klinik Jaya Selalu, Saya ingin mengonfirmasi pendaftaran pasien baru:\n\n` +
         `*No. Antrian:* *${assignedQueue}*\n` +
@@ -269,8 +313,6 @@
         `Mohon bantuannya untuk diproses. Terima kasih.`;
 
       const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMessage)}`;
-      
-      // Membuka WhatsApp di tab/aplikasi baru
       window.open(waUrl, '_blank');
 
       formSection.style.display = "none";
@@ -286,6 +328,11 @@
       submitButton.disabled = false;
       submitButton.textContent = "Daftar Sekarang";
     }
+  });
+
+  // Tombol untuk Print / Simpan sebagai PDF
+  printBtn.addEventListener("click", function() {
+    window.print();
   });
 
   newRegistration.addEventListener("click", function() {
