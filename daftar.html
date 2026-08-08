@@ -4,78 +4,196 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Klinik Fisioterapi dan Pilates Jaya Selalu</title>
+  <title>Pendaftaran | Klinik Fisioterapi dan Pilates Jaya Selalu</title>
 
   <style>
+    :root {
+      --primary: #173f4f;
+      --primary-dark: #102f3b;
+      --accent: #b89b5e;
+      --text: #24323a;
+      --muted: #71808a;
+      --border: #e2e8eb;
+      --background: #f6f8f8;
+      --white: #ffffff;
+      --success: #2f7d62;
+      --danger: #b94a48;
+    }
+
     * {
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f4f7f9;
-      color: #1f2937;
+      background: var(--background);
+      color: var(--text);
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* =========================
+       PAGE
+    ========================= */
+
+    .page {
+      min-height: 100vh;
+      padding: 40px 20px 60px;
     }
 
     .container {
       width: 100%;
-      max-width: 850px;
-      margin: 40px auto;
-      padding: 20px;
+      max-width: 940px;
+      margin: 0 auto;
     }
 
-    .card {
-      background: #ffffff;
-      border-radius: 18px;
-      padding: 35px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    }
+    /* =========================
+       HEADER
+    ========================= */
 
-    .header {
+    .brand {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 28px;
+    }
+
+    .logo-wrap {
+      width: 82px;
+      height: 82px;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
     }
 
     .clinic-name {
-      margin: 0 0 8px;
-      font-size: 28px;
-      line-height: 1.25;
-      color: #123c69;
-      font-weight: 800;
+      margin: 0;
+      color: var(--primary);
+      font-size: 25px;
+      line-height: 1.3;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .brand-line {
+      width: 42px;
+      height: 2px;
+      margin: 13px auto;
+      background: var(--accent);
     }
 
     .page-title {
-      margin: 0 0 8px;
-      font-size: 22px;
-      color: #374151;
-      font-weight: 700;
-    }
-
-    .header p {
       margin: 0;
-      color: #6b7280;
-      font-size: 15px;
+      font-size: 19px;
+      font-weight: 600;
+      color: var(--text);
     }
 
-    .section-title {
-      margin: 30px 0 18px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #e5e7eb;
-      font-size: 18px;
-      font-weight: 700;
-      color: #123c69;
+    .page-description {
+      margin: 7px auto 0;
+      max-width: 550px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
     }
+
+    /* =========================
+       MAIN CARD
+    ========================= */
+
+    .main-card {
+      background: var(--white);
+      border: 1px solid rgba(20, 50, 60, 0.07);
+      border-radius: 20px;
+      box-shadow:
+        0 12px 35px rgba(20, 45, 55, 0.06),
+        0 2px 8px rgba(20, 45, 55, 0.03);
+      overflow: hidden;
+    }
+
+    .card-top {
+      height: 4px;
+      background: var(--primary);
+    }
+
+    .form-content {
+      padding: 38px 42px 42px;
+    }
+
+    /* =========================
+       SECTION
+    ========================= */
+
+    .section {
+      margin-bottom: 34px;
+    }
+
+    .section:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .section-number {
+      flex: 0 0 31px;
+      width: 31px;
+      height: 31px;
+      border-radius: 50%;
+      background: #edf3f4;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .section-heading {
+      margin: 0;
+      font-size: 16px;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .section-subheading {
+      margin: 3px 0 0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* =========================
+       FORM GRID
+    ========================= */
 
     .form-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px 20px;
     }
 
     .form-group {
-      display: flex;
-      flex-direction: column;
+      min-width: 0;
     }
 
     .full {
@@ -83,189 +201,298 @@
     }
 
     label {
+      display: block;
       margin-bottom: 7px;
-      font-size: 14px;
+      color: #34444c;
+      font-size: 13px;
       font-weight: 600;
-      color: #374151;
     }
 
     .required {
-      color: #dc2626;
+      color: var(--accent);
+      margin-left: 2px;
     }
 
     input,
     select,
     textarea {
       width: 100%;
-      padding: 12px 14px;
-      border: 1px solid #d1d5db;
-      border-radius: 9px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
       background: #fff;
-      color: #1f2937;
+      color: var(--text);
+      font-family: inherit;
       font-size: 14px;
       outline: none;
-      transition: 0.2s;
-      font-family: inherit;
+      transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+    }
+
+    input,
+    select {
+      height: 46px;
+      padding: 0 13px;
+    }
+
+    textarea {
+      min-height: 105px;
+      padding: 12px 13px;
+      resize: vertical;
+      line-height: 1.55;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #a6b0b5;
+    }
+
+    input:hover,
+    select:hover,
+    textarea:hover {
+      border-color: #c8d3d7;
     }
 
     input:focus,
     select:focus,
     textarea:focus {
-      border-color: #2563eb;
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      border-color: var(--primary);
+      background: #fcfefe;
+      box-shadow: 0 0 0 3px rgba(23, 63, 79, 0.08);
     }
 
-    textarea {
-      min-height: 100px;
-      resize: vertical;
+    /* =========================
+       INFO NOTE
+    ========================= */
+
+    .info-note {
+      margin-top: 22px;
+      padding: 13px 15px;
+      border-radius: 10px;
+      background: #f7f9f9;
+      border: 1px solid #e7eded;
+      color: #68777e;
+      font-size: 12px;
+      line-height: 1.6;
     }
 
-    .submit-wrapper {
+    /* =========================
+       ERROR
+    ========================= */
+
+    .message {
+      display: none;
+      margin-top: 20px;
+      padding: 13px 15px;
+      border-radius: 9px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .message.error {
+      display: block;
+      background: #fff5f4;
+      border: 1px solid #f1d5d2;
+      color: var(--danger);
+    }
+
+    /* =========================
+       SUBMIT
+    ========================= */
+
+    .submit-area {
       margin-top: 30px;
+      padding-top: 26px;
+      border-top: 1px solid #edf0f1;
     }
 
     .submit-btn {
       width: 100%;
-      border: none;
+      height: 52px;
+      border: 0;
       border-radius: 10px;
-      padding: 14px 20px;
-      background: #123c69;
-      color: #ffffff;
-      font-size: 16px;
+      background: var(--primary);
+      color: #fff;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.1px;
+      cursor: pointer;
+      transition:
+        background 0.2s ease,
+        transform 0.15s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .submit-btn:hover {
+      background: var(--primary-dark);
+      box-shadow: 0 7px 18px rgba(16, 47, 59, 0.15);
+    }
+
+    .submit-btn:active {
+      transform: translateY(1px);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      color: #98a4a9;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    /* =========================
+       RESULT
+    ========================= */
+
+    .result {
+      display: none;
+      padding: 55px 30px 60px;
+      text-align: center;
+    }
+
+    .success-icon {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #edf7f2;
+      color: var(--success);
+      font-size: 30px;
+      font-weight: 700;
+    }
+
+    .result h2 {
+      margin: 0;
+      color: var(--primary);
+      font-size: 24px;
+    }
+
+    .result-description {
+      max-width: 430px;
+      margin: 10px auto 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .queue-card {
+      max-width: 330px;
+      margin: 28px auto;
+      padding: 25px 20px;
+      border: 1px solid #e2e9ea;
+      border-radius: 15px;
+      background: #fbfcfc;
+    }
+
+    .queue-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .queue-number {
+      margin: 5px 0 14px;
+      color: var(--primary);
+      font-size: 52px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -2px;
+    }
+
+    .appointment-info {
+      padding-top: 14px;
+      border-top: 1px solid #e8edef;
+      color: #526169;
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .appointment-info strong {
+      color: var(--text);
+    }
+
+    .new-registration {
+      height: 45px;
+      padding: 0 22px;
+      border: 1px solid var(--primary);
+      border-radius: 9px;
+      background: #fff;
+      color: var(--primary);
+      font-family: inherit;
+      font-size: 13px;
       font-weight: 700;
       cursor: pointer;
       transition: 0.2s;
     }
 
-    .submit-btn:hover {
-      background: #0d2e50;
-    }
-
-    .submit-btn:disabled {
-      opacity: 0.65;
-      cursor: not-allowed;
-    }
-
-    .message {
-      display: none;
-      margin-top: 20px;
-      padding: 14px;
-      border-radius: 10px;
-      font-size: 14px;
-    }
-
-    .message.error {
-      display: block;
-      background: #fee2e2;
-      color: #991b1b;
-    }
-
-    .result {
-      display: none;
-      text-align: center;
-      padding: 10px;
-    }
-
-    .result-icon {
-      width: 65px;
-      height: 65px;
-      margin: 0 auto 15px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #e8f5e9;
-      color: #2e7d32;
-      font-size: 35px;
-      font-weight: bold;
-    }
-
-    .result h2 {
-      margin: 0 0 10px;
-      color: #123c69;
-      font-size: 25px;
-    }
-
-    .result p {
-      color: #6b7280;
-      line-height: 1.6;
-    }
-
-    .queue-box {
-      margin: 25px auto;
-      padding: 25px;
-      max-width: 350px;
-      border-radius: 14px;
-      background: #f1f5f9;
-    }
-
-    .queue-label {
-      font-size: 14px;
-      color: #6b7280;
-      margin-bottom: 8px;
-    }
-
-    .queue-number {
-      font-size: 48px;
-      font-weight: 800;
-      color: #123c69;
-    }
-
-    .appointment-info {
-      margin-top: 15px;
-      font-size: 15px;
-      line-height: 1.8;
-      color: #374151;
-    }
-
-    .new-registration {
-      margin-top: 10px;
-      border: none;
-      border-radius: 9px;
-      padding: 12px 20px;
-      background: #123c69;
-      color: #ffffff;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
     .new-registration:hover {
-      background: #0d2e50;
+      background: var(--primary);
+      color: #fff;
     }
 
-    .footer {
-      margin-top: 25px;
-      text-align: center;
-      color: #9ca3af;
-      font-size: 12px;
-    }
+    /* =========================
+       MOBILE
+    ========================= */
 
-    @media (max-width: 650px) {
+    @media (max-width: 680px) {
 
-      .container {
-        margin: 15px auto;
-        padding: 12px;
-      }
-
-      .card {
-        padding: 22px 18px;
-        border-radius: 14px;
+      .page {
+        padding: 22px 12px 35px;
       }
 
       .clinic-name {
-        font-size: 23px;
+        font-size: 21px;
       }
 
       .page-title {
-        font-size: 20px;
+        font-size: 18px;
+      }
+
+      .logo-wrap {
+        width: 70px;
+        height: 70px;
+      }
+
+      .form-content {
+        padding: 27px 20px 30px;
       }
 
       .form-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
       }
 
       .full {
         grid-column: auto;
+      }
+
+      .section {
+        margin-bottom: 29px;
+      }
+
+      .section-header {
+        margin-bottom: 17px;
+      }
+
+      .result {
+        padding: 45px 20px 50px;
       }
     }
   </style>
@@ -273,401 +500,506 @@
 
 <body>
 
+<div class="page">
+
   <div class="container">
 
-    <div class="card">
+    <!-- =========================
+         BRAND HEADER
+    ========================= -->
 
-      <!-- ========================= -->
-      <!-- FORM PENDAFTARAN -->
-      <!-- ========================= -->
+    <header class="brand">
+
+      <div class="logo-wrap">
+        <img
+          src="logo.png"
+          alt="Logo Klinik Fisioterapi dan Pilates Jaya Selalu"
+          class="logo"
+        >
+      </div>
+
+      <h1 class="clinic-name">
+        Klinik Fisioterapi dan Pilates Jaya Selalu
+      </h1>
+
+      <div class="brand-line"></div>
+
+      <h2 class="page-title">
+        Pendaftaran Pasien
+      </h2>
+
+      <p class="page-description">
+        Lengkapi data berikut untuk melakukan pendaftaran
+        dan memilih jadwal kunjungan Anda.
+      </p>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN CARD
+    ========================= -->
+
+    <main class="main-card">
+
+      <div class="card-top"></div>
+
+
+      <!-- =========================
+           FORM SECTION
+      ========================= -->
 
       <div id="formSection">
 
-        <div class="header">
+        <div class="form-content">
 
-          <h1 class="clinic-name">
-            Klinik Fisioterapi dan Pilates Jaya Selalu
-          </h1>
+          <form id="registrationForm">
 
-          <h2 class="page-title">
-            Pendaftaran Pasien
-          </h2>
 
-          <p>
-            Silakan lengkapi data berikut untuk melakukan pendaftaran.
-          </p>
+            <!-- =========================
+                 SECTION 1
+            ========================= -->
+
+            <section class="section">
+
+              <div class="section-header">
+
+                <div class="section-number">
+                  01
+                </div>
+
+                <div>
+                  <h3 class="section-heading">
+                    Data Pasien
+                  </h3>
+
+                  <p class="section-subheading">
+                    Informasi dasar pasien
+                  </p>
+                </div>
+
+              </div>
+
+
+              <div class="form-grid">
+
+                <div class="form-group">
+
+                  <label>
+                    Nama Lengkap
+                    <span class="required">*</span>
+                  </label>
+
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    autocomplete="name"
+                    placeholder="Masukkan nama lengkap"
+                  >
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label>
+                    NIK
+                    <span class="required">*</span>
+                  </label>
+
+                  <input
+                    type="text"
+                    name="nik"
+                    required
+                    inputmode="numeric"
+                    maxlength="16"
+                    placeholder="16 digit NIK"
+                  >
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label>
+                    Kelamin
+                    <span class="required">*</span>
+                  </label>
+
+                  <select
+                    name="gender"
+                    required
+                  >
+
+                    <option value="">
+                      Pilih kelamin
+                    </option>
+
+                    <option value="Laki-laki">
+                      Laki-laki
+                    </option>
+
+                    <option value="Perempuan">
+                      Perempuan
+                    </option>
+
+                  </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label>
+                    Tanggal Lahir
+                  </label>
+
+                  <input
+                    type="date"
+                    name="birthDate"
+                  >
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label>
+                    Nomor HP
+                    <span class="required">*</span>
+                  </label>
+
+                  <input
+                    type="tel"
+                    name="phone"
+                    required
+                    autocomplete="tel"
+                    placeholder="Contoh: 08123456789"
+                  >
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label>
+                    Email
+                  </label>
+
+                  <input
+                    type="email"
+                    name="email"
+                    autocomplete="email"
+                    placeholder="nama@email.com"
+                  >
+
+                </div>
+
+
+                <div class="form-group full">
+
+                  <label>
+                    Alamat
+                  </label>
+
+                  <textarea
+                    name="address"
+                    placeholder="Masukkan alamat lengkap"
+                  ></textarea>
+
+                </div>
+
+              </div>
+
+            </section>
+
+
+            <!-- =========================
+                 SECTION 2
+            ========================= -->
+
+            <section class="section">
+
+              <div class="section-header">
+
+                <div class="section-number">
+                  02
+                </div>
+
+                <div>
+                  <h3 class="section-heading">
+                    Informasi Keluhan
+                  </h3>
+
+                  <p class="section-subheading">
+                    Informasi mengenai kondisi dan keluhan pasien
+                  </p>
+                </div>
+
+              </div>
+
+
+              <div class="form-grid">
+
+                <div class="form-group full">
+
+                  <label>
+                    Keluhan Utama
+                    <span class="required">*</span>
+                  </label>
+
+                  <textarea
+                    name="complaint"
+                    required
+                    placeholder="Jelaskan keluhan atau kondisi yang dirasakan"
+                  ></textarea>
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label>
+                    Bagian Tubuh
+                    <span class="required">*</span>
+                  </label>
+
+                  <input
+                    type="text"
+                    name="bodyPart"
+                    required
+                    placeholder="Contoh: Pinggang"
+                  >
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label>
+                    Lama Keluhan
+                  </label>
+
+                  <input
+                    type="text"
+                    name="complaintDuration"
+                    placeholder="Contoh: 2 minggu"
+                  >
+
+                </div>
+
+
+                <div class="form-group full">
+
+                  <label>
+                    Riwayat Cedera
+                  </label>
+
+                  <textarea
+                    name="injuryHistory"
+                    placeholder="Jelaskan riwayat cedera jika ada"
+                  ></textarea>
+
+                </div>
+
+              </div>
+
+            </section>
+
+
+            <!-- =========================
+                 SECTION 3
+            ========================= -->
+
+            <section class="section">
+
+              <div class="section-header">
+
+                <div class="section-number">
+                  03
+                </div>
+
+                <div>
+                  <h3 class="section-heading">
+                    Jadwal Kunjungan
+                  </h3>
+
+                  <p class="section-subheading">
+                    Pilih layanan dan waktu kunjungan
+                  </p>
+                </div>
+
+              </div>
+
+
+              <div class="form-grid">
+
+                <div class="form-group">
+
+                  <label>
+                    Layanan
+                    <span class="required">*</span>
+                  </label>
+
+                  <select
+                    name="poli"
+                    required
+                  >
+
+                    <option value="">
+                      Pilih layanan
+                    </option>
+
+                    <option value="Fisioterapi">
+                      Fisioterapi
+                    </option>
+
+                    <option value="Pilates">
+                      Pilates
+                    </option>
+
+                  </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label>
+                    Terapis
+                  </label>
+
+                  <input
+                    type="text"
+                    name="therapist"
+                    placeholder="Nama terapis"
+                  >
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label>
+                    Tanggal Kunjungan
+                    <span class="required">*</span>
+                  </label>
+
+                  <input
+                    type="date"
+                    name="visitDate"
+                    required
+                  >
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label>
+                    Jam Kunjungan
+                    <span class="required">*</span>
+                  </label>
+
+                  <input
+                    type="time"
+                    name="visitTime"
+                    required
+                  >
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label>
+                    BPJS
+                  </label>
+
+                  <select name="bpjs">
+
+                    <option value="">
+                      Pilih
+                    </option>
+
+                    <option value="Ya">
+                      Ya
+                    </option>
+
+                    <option value="Tidak">
+                      Tidak
+                    </option>
+
+                  </select>
+
+                </div>
+
+
+                <div class="form-group full">
+
+                  <label>
+                    Catatan Tambahan
+                  </label>
+
+                  <textarea
+                    name="notes"
+                    placeholder="Informasi tambahan yang perlu disampaikan"
+                  ></textarea>
+
+                </div>
+
+              </div>
+
+
+              <div class="info-note">
+                <strong>Perhatian:</strong>
+                Pastikan data yang Anda masukkan sudah benar
+                sebelum mengirimkan pendaftaran.
+              </div>
+
+            </section>
+
+
+            <!-- ERROR -->
+
+            <div
+              id="errorMessage"
+              class="message"
+            ></div>
+
+
+            <!-- SUBMIT -->
+
+            <div class="submit-area">
+
+              <button
+                type="submit"
+                id="submitButton"
+                class="submit-btn"
+              >
+                Daftar Sekarang
+              </button>
+
+            </div>
+
+          </form>
 
         </div>
-
-
-        <form id="registrationForm">
-
-          <!-- ========================= -->
-          <!-- DATA PASIEN -->
-          <!-- ========================= -->
-
-          <div class="section-title">
-            Data Pasien
-          </div>
-
-          <div class="form-grid">
-
-            <!-- Nama -->
-            <div class="form-group">
-
-              <label>
-                Nama <span class="required">*</span>
-              </label>
-
-              <input
-                type="text"
-                name="name"
-                required
-                autocomplete="name"
-                placeholder="Masukkan nama lengkap">
-
-            </div>
-
-
-            <!-- NIK -->
-            <div class="form-group">
-
-              <label>
-                NIK <span class="required">*</span>
-              </label>
-
-              <input
-                type="text"
-                name="nik"
-                required
-                inputmode="numeric"
-                maxlength="16"
-                placeholder="Masukkan NIK">
-
-            </div>
-
-
-            <!-- Kelamin -->
-            <div class="form-group">
-
-              <label>
-                Kelamin <span class="required">*</span>
-              </label>
-
-              <select name="gender" required>
-
-                <option value="">
-                  Pilih kelamin
-                </option>
-
-                <option value="Laki-laki">
-                  Laki-laki
-                </option>
-
-                <option value="Perempuan">
-                  Perempuan
-                </option>
-
-              </select>
-
-            </div>
-
-
-            <!-- Tanggal Lahir -->
-            <div class="form-group">
-
-              <label>
-                Tgl Lahir
-              </label>
-
-              <input
-                type="date"
-                name="birthDate">
-
-            </div>
-
-
-            <!-- No HP -->
-            <div class="form-group">
-
-              <label>
-                No. HP <span class="required">*</span>
-              </label>
-
-              <input
-                type="tel"
-                name="phone"
-                required
-                autocomplete="tel"
-                placeholder="Contoh: 08123456789">
-
-            </div>
-
-
-            <!-- Email -->
-            <div class="form-group">
-
-              <label>
-                Email
-              </label>
-
-              <input
-                type="email"
-                name="email"
-                autocomplete="email"
-                placeholder="nama@email.com">
-
-            </div>
-
-
-            <!-- Alamat -->
-            <div class="form-group full">
-
-              <label>
-                Alamat
-              </label>
-
-              <textarea
-                name="address"
-                placeholder="Masukkan alamat lengkap"></textarea>
-
-            </div>
-
-          </div>
-
-
-          <!-- ========================= -->
-          <!-- INFORMASI KELUHAN -->
-          <!-- ========================= -->
-
-          <div class="section-title">
-            Informasi Keluhan
-          </div>
-
-          <div class="form-grid">
-
-            <!-- Keluhan -->
-            <div class="form-group full">
-
-              <label>
-                Keluhan <span class="required">*</span>
-              </label>
-
-              <textarea
-                name="complaint"
-                required
-                placeholder="Jelaskan keluhan yang dirasakan"></textarea>
-
-            </div>
-
-
-            <!-- Bagian Tubuh -->
-            <div class="form-group">
-
-              <label>
-                Bagian Tubuh <span class="required">*</span>
-              </label>
-
-              <input
-                type="text"
-                name="bodyPart"
-                required
-                placeholder="Contoh: Pinggang">
-
-            </div>
-
-
-            <!-- Lama Keluhan -->
-            <div class="form-group">
-
-              <label>
-                Lama Keluhan
-              </label>
-
-              <input
-                type="text"
-                name="complaintDuration"
-                placeholder="Contoh: 2 minggu">
-
-            </div>
-
-
-            <!-- Riwayat Cedera -->
-            <div class="form-group full">
-
-              <label>
-                Riwayat Cedera
-              </label>
-
-              <textarea
-                name="injuryHistory"
-                placeholder="Jelaskan jika ada riwayat cedera"></textarea>
-
-            </div>
-
-          </div>
-
-
-          <!-- ========================= -->
-          <!-- INFORMASI KUNJUNGAN -->
-          <!-- ========================= -->
-
-          <div class="section-title">
-            Informasi Kunjungan
-          </div>
-
-          <div class="form-grid">
-
-            <!-- Poli -->
-            <div class="form-group">
-
-              <label>
-                Poli <span class="required">*</span>
-              </label>
-
-              <select name="poli" required>
-
-                <option value="">
-                  Pilih layanan
-                </option>
-
-                <option value="Fisioterapi">
-                  Fisioterapi
-                </option>
-
-                <option value="Pilates">
-                  Pilates
-                </option>
-
-              </select>
-
-            </div>
-
-
-            <!-- Terapis -->
-            <div class="form-group">
-
-              <label>
-                Terapis
-              </label>
-
-              <input
-                type="text"
-                name="therapist"
-                placeholder="Nama terapis">
-
-            </div>
-
-
-            <!-- Tanggal Kunjungan -->
-            <div class="form-group">
-
-              <label>
-                Tgl Kunjungan <span class="required">*</span>
-              </label>
-
-              <input
-                type="date"
-                name="visitDate"
-                required>
-
-            </div>
-
-
-            <!-- Jam -->
-            <div class="form-group">
-
-              <label>
-                Jam <span class="required">*</span>
-              </label>
-
-              <input
-                type="time"
-                name="visitTime"
-                required>
-
-            </div>
-
-
-            <!-- BPJS -->
-            <div class="form-group">
-
-              <label>
-                BPJS
-              </label>
-
-              <select name="bpjs">
-
-                <option value="">
-                  Pilih
-                </option>
-
-                <option value="Ya">
-                  Ya
-                </option>
-
-                <option value="Tidak">
-                  Tidak
-                </option>
-
-              </select>
-
-            </div>
-
-
-            <!-- Catatan -->
-            <div class="form-group full">
-
-              <label>
-                Catatan
-              </label>
-
-              <textarea
-                name="notes"
-                placeholder="Catatan tambahan"></textarea>
-
-            </div>
-
-          </div>
-
-
-          <!-- PESAN ERROR -->
-
-          <div
-            id="errorMessage"
-            class="message">
-          </div>
-
-
-          <!-- TOMBOL -->
-
-          <div class="submit-wrapper">
-
-            <button
-              type="submit"
-              id="submitButton"
-              class="submit-btn">
-
-              Daftar Sekarang
-
-            </button>
-
-          </div>
-
-        </form>
 
       </div>
 
 
-      <!-- ========================= -->
-      <!-- HASIL PENDAFTARAN -->
-      <!-- ========================= -->
+      <!-- =========================
+           RESULT
+      ========================= -->
 
       <div
         id="resultSection"
-        class="result">
+        class="result"
+      >
 
-        <div class="result-icon">
+        <div class="success-icon">
           ✓
         </div>
 
@@ -675,45 +1007,37 @@
           Pendaftaran Berhasil
         </h2>
 
-        <p>
-          Data pendaftaran Anda telah berhasil disimpan.
+        <p class="result-description">
+          Data pendaftaran Anda telah berhasil diterima.
+          Silakan simpan nomor antrian berikut.
         </p>
 
 
-        <div class="queue-box">
+        <div class="queue-card">
 
           <div class="queue-label">
-            Nomor Antrian Anda
+            Nomor Antrian
           </div>
 
           <div
             id="queueNumber"
-            class="queue-number">
-
+            class="queue-number"
+          >
             ---
-
           </div>
 
 
           <div class="appointment-info">
 
-            <strong>
-              Tanggal Kunjungan:
-            </strong>
+            <div>
+              <strong>Tanggal:</strong>
+              <span id="resultDate">-</span>
+            </div>
 
-            <span id="resultDate">
-              -
-            </span>
-
-            <br>
-
-            <strong>
-              Jam:
-            </strong>
-
-            <span id="resultTime">
-              -
-            </span>
+            <div>
+              <strong>Jam:</strong>
+              <span id="resultTime">-</span>
+            </div>
 
           </div>
 
@@ -722,328 +1046,236 @@
 
         <button
           type="button"
+          id="newRegistration"
           class="new-registration"
-          id="newRegistration">
-
-          Daftar Lagi
-
+        >
+          Pendaftaran Baru
         </button>
 
       </div>
 
+    </main>
 
-      <div class="footer">
-        Klinik Fisioterapi dan Pilates Jaya Selalu
-      </div>
 
-    </div>
+    <footer class="footer">
+      Klinik Fisioterapi dan Pilates Jaya Selalu
+    </footer>
 
   </div>
 
+</div>
 
-  <script>
-
-    /*
-     * =====================================================
-     * GOOGLE APPS SCRIPT WEB APP URL
-     * =====================================================
-     *
-     * GANTI DENGAN URL WEB APP GOOGLE APPS SCRIPT ANDA.
-     *
-     * Contoh:
-     *
-     * const GOOGLE_SCRIPT_URL =
-     * "https://script.google.com/macros/s/AKfycbxxxx/exec";
-     *
-     */
 
-    const GOOGLE_SCRIPT_URL =
-      "MASUKKAN_URL_GOOGLE_APPS_SCRIPT_DI_SINI";
+<script>
 
+  /* =====================================================
+     GOOGLE APPS SCRIPT WEB APP
+  ===================================================== */
 
-    /*
-     * =====================================================
-     * ELEMENT
-     * =====================================================
-     */
+  const GOOGLE_SCRIPT_URL =
+    "MASUKKAN_URL_GOOGLE_APPS_SCRIPT_DI_SINI";
 
-    const form =
-      document.getElementById(
-        "registrationForm"
-      );
 
-    const submitButton =
-      document.getElementById(
-        "submitButton"
-      );
+  /* =====================================================
+     ELEMENT
+  ===================================================== */
 
-    const errorMessage =
-      document.getElementById(
-        "errorMessage"
-      );
+  const form =
+    document.getElementById("registrationForm");
 
-    const formSection =
-      document.getElementById(
-        "formSection"
-      );
+  const submitButton =
+    document.getElementById("submitButton");
 
-    const resultSection =
-      document.getElementById(
-        "resultSection"
-      );
+  const errorMessage =
+    document.getElementById("errorMessage");
 
-    const queueNumber =
-      document.getElementById(
-        "queueNumber"
-      );
+  const formSection =
+    document.getElementById("formSection");
 
-    const resultDate =
-      document.getElementById(
-        "resultDate"
-      );
+  const resultSection =
+    document.getElementById("resultSection");
 
-    const resultTime =
-      document.getElementById(
-        "resultTime"
-      );
+  const queueNumber =
+    document.getElementById("queueNumber");
 
-    const newRegistration =
-      document.getElementById(
-        "newRegistration"
-      );
+  const resultDate =
+    document.getElementById("resultDate");
 
+  const resultTime =
+    document.getElementById("resultTime");
 
-    /*
-     * =====================================================
-     * SUBMIT FORM
-     * =====================================================
-     */
+  const newRegistration =
+    document.getElementById("newRegistration");
 
-    form.addEventListener(
-      "submit",
-      async function(event) {
 
-        event.preventDefault();
+  /* =====================================================
+     SUBMIT
+  ===================================================== */
 
-        hideError();
+  form.addEventListener(
+    "submit",
+    async function(event) {
 
+      event.preventDefault();
 
-        /*
-         * Pastikan URL sudah diisi
-         */
+      hideError();
 
-        if (
-          !GOOGLE_SCRIPT_URL ||
-          GOOGLE_SCRIPT_URL.includes(
-            "MASUKKAN_URL"
-          )
-        ) {
 
-          showError(
-            "URL Google Apps Script belum dikonfigurasi."
-          );
+      if (
+        !GOOGLE_SCRIPT_URL ||
+        GOOGLE_SCRIPT_URL.includes(
+          "MASUKKAN_URL"
+        )
+      ) {
 
-          return;
+        showError(
+          "URL Google Apps Script belum dikonfigurasi."
+        );
 
-        }
-
-
-        /*
-         * Loading
-         */
-
-        submitButton.disabled = true;
-
-        submitButton.textContent =
-          "Mengirim...";
-
-
-        try {
-
-          /*
-           * Ambil data form
-           */
-
-          const formData =
-            new FormData(form);
-
-
-          /*
-           * Kirim data ke Apps Script
-           */
-
-          const response =
-            await fetch(
-              GOOGLE_SCRIPT_URL,
-              {
-                method: "POST",
-                body: formData
-              }
-            );
-
-
-          /*
-           * Baca response
-           */
-
-          const result =
-            await response.json();
-
-
-          /*
-           * Jika gagal
-           */
-
-          if (!result.success) {
-
-            throw new Error(
-              result.message ||
-              "Pendaftaran gagal."
-            );
-
-          }
-
-
-          /*
-           * Tampilkan nomor antrian
-           */
-
-          queueNumber.textContent =
-            result.queueNumber ||
-            "---";
-
-
-          /*
-           * Tampilkan tanggal
-           */
-
-          resultDate.textContent =
-            formData.get(
-              "visitDate"
-            ) || "-";
-
-
-          /*
-           * Tampilkan jam
-           */
-
-          resultTime.textContent =
-            formData.get(
-              "visitTime"
-            ) || "-";
-
-
-          /*
-           * Sembunyikan form
-           */
-
-          formSection.style.display =
-            "none";
-
-
-          /*
-           * Tampilkan hasil
-           */
-
-          resultSection.style.display =
-            "block";
-
-
-          /*
-           * Reset form
-           */
-
-          form.reset();
-
-
-          /*
-           * Scroll ke atas
-           */
-
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-          });
-
-
-        } catch (error) {
-
-          console.error(error);
-
-          showError(
-            error.message ||
-            "Terjadi kesalahan saat mengirim data."
-          );
-
-        } finally {
-
-          submitButton.disabled =
-            false;
-
-          submitButton.textContent =
-            "Daftar Sekarang";
-
-        }
+        return;
 
       }
-    );
 
 
-    /*
-     * =====================================================
-     * DAFTAR LAGI
-     * =====================================================
-     */
+      submitButton.disabled = true;
 
-    newRegistration.addEventListener(
-      "click",
-      function() {
+      submitButton.textContent =
+        "Memproses pendaftaran...";
 
-        resultSection.style.display =
-          "none";
+
+      try {
+
+        const formData =
+          new FormData(form);
+
+
+        const response =
+          await fetch(
+            GOOGLE_SCRIPT_URL,
+            {
+              method: "POST",
+              body: formData
+            }
+          );
+
+
+        const result =
+          await response.json();
+
+
+        if (!result.success) {
+
+          throw new Error(
+            result.message ||
+            "Pendaftaran gagal."
+          );
+
+        }
+
+
+        queueNumber.textContent =
+          result.queueNumber || "---";
+
+
+        resultDate.textContent =
+          formData.get("visitDate") || "-";
+
+
+        resultTime.textContent =
+          formData.get("visitTime") || "-";
+
 
         formSection.style.display =
+          "none";
+
+
+        resultSection.style.display =
           "block";
 
-        hideError();
+
+        form.reset();
+
 
         window.scrollTo({
           top: 0,
           behavior: "smooth"
         });
 
+
+      } catch (error) {
+
+        console.error(error);
+
+        showError(
+          error.message ||
+          "Terjadi kesalahan saat mengirim data."
+        );
+
+      } finally {
+
+        submitButton.disabled =
+          false;
+
+        submitButton.textContent =
+          "Daftar Sekarang";
+
       }
-    );
-
-
-    /*
-     * =====================================================
-     * ERROR
-     * =====================================================
-     */
-
-    function showError(message) {
-
-      errorMessage.textContent =
-        message;
-
-      errorMessage.className =
-        "message error";
 
     }
+  );
 
 
-    function hideError() {
+  /* =====================================================
+     PENDAFTARAN BARU
+  ===================================================== */
 
-      errorMessage.textContent =
-        "";
+  newRegistration.addEventListener(
+    "click",
+    function() {
 
-      errorMessage.className =
-        "message";
+      resultSection.style.display =
+        "none";
+
+      formSection.style.display =
+        "block";
+
+      hideError();
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
 
     }
+  );
 
-  </script>
+
+  /* =====================================================
+     ERROR
+  ===================================================== */
+
+  function showError(message) {
+
+    errorMessage.textContent =
+      message;
+
+    errorMessage.className =
+      "message error";
+
+  }
+
+
+  function hideError() {
+
+    errorMessage.textContent =
+      "";
+
+    errorMessage.className =
+      "message";
+
+  }
+
+</script>
 
 </body>
 </html>
