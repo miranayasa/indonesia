@@ -1,756 +1,1049 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pendaftaran Pasien - Klinik Fisioterapi Sehat Bergerak</title>
-    <!-- Google Fonts & FontAwesome Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        :root {
-            --primary: #0284c7; /* Biru Muda Modern */
-            --primary-dark: #0369a1;
-            --success: #10b981; /* Hijau */
-            --bg-color: #f8fafc;
-            --card-bg: #ffffff;
-            --text-color: #334155;
-            --border-color: #cbd5e1;
-            --radius: 12px;
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-        }
+  <title>Klinik Fisioterapi dan Pilates Jaya Selalu</title>
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            padding-bottom: 50px;
-        }
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-        /* Hero Header */
-        .hero-header {
-            background: linear-gradient(135deg, #0284c7 0%, #0d9488 100%);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-            border-bottom-left-radius: 30px;
-            border-bottom-right-radius: 30px;
-            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.2);
-            margin-bottom: 30px;
-        }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f7f9;
+      color: #1f2937;
+    }
 
-        .logo-placeholder {
-            width: 70px;
-            height: 70px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 15px auto;
-            font-size: 30px;
-            backdrop-filter: blur(5px);
-            border: 2px solid rgba(255, 255, 255, 0.4);
-        }
+    .container {
+      width: 100%;
+      max-width: 850px;
+      margin: 40px auto;
+      padding: 20px;
+    }
 
-        .hero-header h1 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
+    .card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 35px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
 
-        .hero-header p {
-            font-size: 14px;
-            opacity: 0.9;
-        }
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
 
-        /* Container & Card Form */
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
+    .clinic-name {
+      margin: 0 0 8px;
+      font-size: 28px;
+      line-height: 1.25;
+      color: #123c69;
+      font-weight: 800;
+    }
 
-        .card-form {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 30px;
-            border: 1px solid #e2e8f0;
-        }
+    .page-title {
+      margin: 0 0 8px;
+      font-size: 22px;
+      color: #374151;
+      font-weight: 700;
+    }
 
-        .form-section-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--primary-dark);
-            margin-bottom: 20px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #f1f5f9;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+    .header p {
+      margin: 0;
+      color: #6b7280;
+      font-size: 15px;
+    }
 
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
+    .section-title {
+      margin: 30px 0 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 18px;
+      font-weight: 700;
+      color: #123c69;
+    }
 
-        @media (max-width: 768px) {
-            .grid-2 {
-                grid-template-columns: 1fr;
-                gap: 0;
-            }
-        }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
 
-        .form-group {
-            margin-bottom: 20px;
-            position: relative;
-        }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
 
-        .form-group label {
-            display: block;
-            font-size: 13px;
-            font-weight: 500;
-            margin-bottom: 8px;
-            color: #475569;
-        }
+    .full {
+      grid-column: 1 / -1;
+    }
 
-        .input-with-icon {
-            position: relative;
-        }
+    label {
+      margin-bottom: 7px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #374151;
+    }
 
-        .input-with-icon i {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #94a3b8;
-            font-size: 15px;
-        }
+    .required {
+      color: #dc2626;
+    }
 
-        .input-with-icon textarea + i {
-            top: 20px;
-            transform: none;
-        }
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 9px;
+      background: #fff;
+      color: #1f2937;
+      font-size: 14px;
+      outline: none;
+      transition: 0.2s;
+      font-family: inherit;
+    }
 
-        .form-control {
-            width: 100%;
-            padding: 12px 14px 12px 42px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 14px;
-            color: var(--text-color);
-            background-color: #fff;
-            transition: all 0.3s ease;
-        }
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
 
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
-        }
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
 
-        textarea.form-control {
-            resize: vertical;
-            min-height: 90px;
-        }
+    .submit-wrapper {
+      margin-top: 30px;
+    }
 
-        .error-message {
-            color: #ef4444;
-            font-size: 11px;
-            margin-top: 5px;
-            display: none;
-        }
+    .submit-btn {
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 20px;
+      background: #123c69;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+    }
 
-        .form-group.error .form-control {
-            border-color: #ef4444;
-        }
+    .submit-btn:hover {
+      background: #0d2e50;
+    }
 
-        .form-group.error .error-message {
-            display: block;
-        }
+    .submit-btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
 
-        /* Checkbox Styling */
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 10px;
-        }
+    .message {
+      display: none;
+      margin-top: 20px;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 14px;
+    }
 
-        .checkbox-group input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: var(--primary);
-            cursor: pointer;
-        }
+    .message.error {
+      display: block;
+      background: #fee2e2;
+      color: #991b1b;
+    }
 
-        /* Submit Button */
-        .btn-submit {
-            width: 100%;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--success) 100%);
-            color: white;
-            border: none;
-            padding: 14px;
-            font-size: 15px;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
-            transition: opacity 0.3s ease, transform 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 10px;
-        }
+    .result {
+      display: none;
+      text-align: center;
+      padding: 10px;
+    }
 
-        .btn-submit:hover {
-            opacity: 0.95;
-            transform: translateY(-1px);
-        }
+    .result-icon {
+      width: 65px;
+      height: 65px;
+      margin: 0 auto 15px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #e8f5e9;
+      color: #2e7d32;
+      font-size: 35px;
+      font-weight: bold;
+    }
 
-        /* Loading Spinner Overlay */
-        #loading-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.8);
-            z-index: 999;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            gap: 15px;
-            backdrop-filter: blur(3px);
-        }
+    .result h2 {
+      margin: 0 0 10px;
+      color: #123c69;
+      font-size: 25px;
+    }
 
-        .spinner {
-            width: 45px;
-            height: 45px;
-            border: 4px solid #e2e8f0;
-            border-top: 4px solid var(--primary);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
+    .result p {
+      color: #6b7280;
+      line-height: 1.6;
+    }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+    .queue-box {
+      margin: 25px auto;
+      padding: 25px;
+      max-width: 350px;
+      border-radius: 14px;
+      background: #f1f5f9;
+    }
 
-        /* Custom Popup Modal */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
-        }
+    .queue-label {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 8px;
+    }
 
-        .modal-card {
-            background: white;
-            padding: 30px;
-            border-radius: var(--radius);
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            animation: modalPop 0.3s ease;
-        }
+    .queue-number {
+      font-size: 48px;
+      font-weight: 800;
+      color: #123c69;
+    }
 
-        @keyframes modalPop {
-            0% { transform: scale(0.9); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
+    .appointment-info {
+      margin-top: 15px;
+      font-size: 15px;
+      line-height: 1.8;
+      color: #374151;
+    }
 
-        .modal-icon {
-            font-size: 45px;
-            margin-bottom: 15px;
-        }
+    .new-registration {
+      margin-top: 10px;
+      border: none;
+      border-radius: 9px;
+      padding: 12px 20px;
+      background: #123c69;
+      color: #ffffff;
+      cursor: pointer;
+      font-weight: 600;
+    }
 
-        .modal-icon.success { color: var(--success); }
-        .modal-icon.error { color: #ef4444; }
+    .new-registration:hover {
+      background: #0d2e50;
+    }
 
-        .modal-card h3 {
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: #1e293b;
-        }
+    .footer {
+      margin-top: 25px;
+      text-align: center;
+      color: #9ca3af;
+      font-size: 12px;
+    }
 
-        .modal-card p {
-            font-size: 13px;
-            color: #64748b;
-            margin-bottom: 20px;
-        }
+    @media (max-width: 650px) {
 
-        .modal-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            font-size: 14px;
-            font-weight: 500;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-    </style>
+      .container {
+        margin: 15px auto;
+        padding: 12px;
+      }
+
+      .card {
+        padding: 22px 18px;
+        border-radius: 14px;
+      }
+
+      .clinic-name {
+        font-size: 23px;
+      }
+
+      .page-title {
+        font-size: 20px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .full {
+        grid-column: auto;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-    <!-- Hero Header -->
-    <div class="hero-header">
-        <div class="logo-placeholder">
-            <i class="fa-solid fa-heart-pulse"></i>
+  <div class="container">
+
+    <div class="card">
+
+      <!-- ========================= -->
+      <!-- FORM PENDAFTARAN -->
+      <!-- ========================= -->
+
+      <div id="formSection">
+
+        <div class="header">
+
+          <h1 class="clinic-name">
+            Klinik Fisioterapi dan Pilates Jaya Selalu
+          </h1>
+
+          <h2 class="page-title">
+            Pendaftaran Pasien
+          </h2>
+
+          <p>
+            Silakan lengkapi data berikut untuk melakukan pendaftaran.
+          </p>
+
         </div>
-        <h1>Klinik Fisioterapi Sehat Bergerak</h1>
-        <p>Formulir Pendaftaran Pasien Baru & Kunjungan Poli Fisioterapi</p>
-    </div>
 
-    <div class="container">
-        <div class="card-form">
-            <form id="registrationForm" novalidate>
-                
-                <!-- Informasi Pribadi -->
-                <div class="form-section-title">
-                    <i class="fa-solid fa-user"></i> Informasi Pribadi Pasien
-                </div>
 
-                <div class="form-group" id="group-nama">
-                    <label>Nama Lengkap *</label>
-                    <div class="input-with-icon">
-                        <i class="fa-solid fa-signature"></i>
-                        <input type="text" id="nama" class="form-control" placeholder="Masukkan nama lengkap minimal 3 karakter">
-                    </div>
-                    <div class="error-message">Nama lengkap minimal harus 3 karakter.</div>
-                </div>
+        <form id="registrationForm">
 
-                <div class="grid-2">
-                    <div class="form-group" id="group-nik">
-                        <label>NIK (Nomor Induk Kependudukan) *</label>
-                        <div class="input-with-icon">
-                            <i class="fa-solid fa-id-card"></i>
-                            <input type="text" id="nik" class="form-control" maxlength="16" placeholder="16 digit NIK KTP">
-                        </div>
-                        <div class="error-message">NIK harus tepat 16 digit angka.</div>
-                    </div>
+          <!-- ========================= -->
+          <!-- DATA PASIEN -->
+          <!-- ========================= -->
 
-                    <div class="form-group" id="group-jk">
-                        <label>Jenis Kelamin *</label>
-                        <div class="input-with-icon">
-                            <i class="fa-solid fa-venus-mars"></i>
-                            <select id="jk" class="form-control">
-                                <option value="">-- Pilih Jenis Kelamin --</option>
-                                <option value="Laki-laki">Laki-laki</option>
-                                <option value="Perempuan">Perempuan</option>
-                            </select>
-                        </div>
-                        <div class="error-message">Silakan pilih jenis kelamin.</div>
-                    </div>
-                </div>
+          <div class="section-title">
+            Data Pasien
+          </div>
 
-                <div class="grid-2">
-                    <div class="form-group" id="group-tglLahir">
-                        <label>Tanggal Lahir *</label>
-                        <div class="input-with-icon">
-                            <i class="fa-solid fa-calendar-days"></i>
-                            <input type="date" id="tglLahir" class="form-control">
-                        </div>
-                        <div class="error-message">Tanggal lahir wajib diisi.</div>
-                    </div>
+          <div class="form-grid">
 
-                    <div class="form-group" id="group-hp">
-                        <label>Nomor HP / WhatsApp *</label>
-                        <div class="input-with-icon">
-                            <i class="fa-solid fa-phone"></i>
-                            <input type="tel" id="hp" class="form-control" placeholder="Contoh: 08123456789">
-                        </div>
-                        <div class="error-message">Nomor HP harus diawali '08' (panjang 10-13 digit).</div>
-                    </div>
-                </div>
+            <!-- Nama -->
+            <div class="form-group">
 
-                <div class="form-group" id="group-email">
-                    <label>Email *</label>
-                    <div class="input-with-icon">
-                        <i class="fa-solid fa-envelope"></i>
-                        <input type="email" id="email" class="form-control" placeholder="contoh@domain.com">
-                    </div>
-                    <div class="error-message">Format email tidak valid.</div>
-                </div>
+              <label>
+                Nama <span class="required">*</span>
+              </label>
 
-                <div class="form-group" id="group-alamat">
-                    <label>Alamat Lengkap *</label>
-                    <div class="input-with-icon">
-                        <i class="fa-solid fa-location-dot"></i>
-                        <textarea id="alamat" class="form-control" placeholder="Masukkan alamat domisili saat ini"></textarea>
-                    </div>
-                    <div class="error-message">Alamat tidak boleh kosong.</div>
-                </div>
+              <input
+                type="text"
+                name="name"
+                required
+                autocomplete="name"
+                placeholder="Masukkan nama lengkap">
 
-                <!-- Informasi Medis & Kunjungan -->
-                <div class="form-section-title" style="margin-top: 30px;">
-                    <i class="fa-solid fa-stethoscope"></i> Detail Keluhan & Kunjungan
-                </div>
-
-                <div class="grid-2">
-                    <div class="form-group" id="group-keluhan">
-                        <label>Jenis Keluhan *</label>
-                        <div class="input-with-icon">
-                            <i class="fa-solid fa-notes-medical"></i>
-                            <input type="text" id="keluhan" class="form-control" placeholder="Contoh: Nyeri sendi lutut / Kaku leher">
-                        </div>
-                        <div class="error-message">Jenis keluhan wajib diisi.</div>
-                    </div>
-
-                    <div class="form-group" id="group-bagianTubuh">
-                        <label>Bagian Tubuh yang Sakit *</label>
-                        <div class="input-with-icon">
-                            <i class="fa-solid fa-child-reaching"></i>
-                            <input type="text" id="bagianTubuh" class="form-control" placeholder="Contoh: Pinggang / Bahu Kanan">
-                        </div>
-                        <div class="error-message">Bagian tubuh wajib diisi.</div>
-                    </div>
-                </div>
-
-                <div class="grid-2">
-                    <div class="form-group" id="group-lamaKeluhan">
-                        <label>Lama Keluhan *</label>
-                        <div class="input-with-icon">
-                            <i class="fa-solid fa-clock"></i>
-                            <input type="text" id="lamaKeluhan" class="form-control" placeholder="Contoh: 3 hari / 2 minggu">
-                        </div>
-                        <div class="error-message">Lama keluhan wajib diisi.</div>
-                    </div>
-
-                    <div class="form-group" id="group-riwayatCedera">
-                        <label>Riwayat Cedera / Operasi Sebelumnya</label>
-                        <div class="input-with-icon">
-                            <i class="fa-solid fa-file-medical"></i>
-                            <input type="text" id="riwayatCedera" class="form-control" placeholder="Opsional (Isi jika ada)">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid-2">
-                    <div class="form-group" id="group-poli">
-                        <label>Poli Fisioterapi *</label>
-                        <div class="input-with-icon">
-                            <i class="fa-solid fa-hospital-user"></i>
-                            <select id="poli" class="form-control">
-                                <option value="">-- Pilih Poli Fisioterapi --</option>
-                                <option value="Fisioterapi Muskuloskeletal">Fisioterapi Muskuloskeletal (Otot & Tulang)</option>
-                                <option value="Fisioterapi Neurologi">Fisioterapi Neurologi (Saraf)</option>
-                                <option value="Fisioterapi Olahraga">Fisioterapi Olahraga (Sports Injury)</option>
-                                <option value="Fisioterapi Pediatrik">Fisioterapi Pediatrik (Anak)</option>
-                                <option value="Fisioterapi Geriatri">Fisioterapi Geriatri (Lansia)</option>
-                            </select>
-                        </div>
-                        <div class="error-message">Silakan pilih poli fisioterapi.</div>
-                    </div>
-
-                    <div class="form-group" id="group-terapis">
-                        <label>Pilihan Terapis (Opsional)</label>
-                        <div class="input-with-icon">
-                            <i class="fa-solid fa-user-doctor"></i>
-                            <select id="terapis" class="form-control">
-                                <option value="">-- Bebas / Sesuai Jadwal Tersedia --</option>
-                                <option value="Dr. Feri, S.Ft">Dr. Feri, S.Ft</option>
-                                <option value="Siti Rahma, Ftr">Siti Rahma, Ftr</option>
-                                <option value="Budi Santoso, S.Ftr">Budi Santoso, S.Ftr</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group" id="group-tglKunjungan">
-                    <label>Tanggal & Jam Kunjungan *</label>
-                    <div class="input-with-icon">
-                        <i class="fa-solid fa-calendar-check"></i>
-                        <input type="datetime-local" id="tglKunjungan" class="form-control">
-                    </div>
-                    <div class="error-message" id="error-tglKunjungan">Tanggal kunjungan tidak boleh sebelum hari ini.</div>
-                </div>
-
-                <div class="form-group">
-                    <label>Informasi Jaminan (Opsional)</label>
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="bpjsCheck">
-                        <label for="bpjsCheck" style="margin-bottom:0; cursor:pointer;">Menggunakan BPJS Kesehatan / Asuransi Lainnya</label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Catatan Tambahan (Opsional)</label>
-                    <div class="input-with-icon">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                        <textarea id="catatan" class="form-control" placeholder="Informasi tambahan lain jika diperlukan"></textarea>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn-submit">
-                    <i class="fa-solid fa-paper-plane"></i> Daftar Sekarang
-                </button>
-
-            </form>
-        </div>
-    </div>
-
-    <!-- Loading Spinner -->
-    <div id="loading-overlay">
-        <div class="spinner"></div>
-        <p style="font-weight: 500; color: #0284c7;">Sedang memproses pendaftaran...</p>
-    </div>
-
-    <!-- Popup Modal -->
-    <div class="modal-overlay" id="modalPopup">
-        <div class="modal-card">
-            <div id="modalIconContainer" class="modal-icon success">
-                <i class="fa-solid fa-circle-check" id="modalIcon"></i>
             </div>
-            <h3 id="modalTitle">Pendaftaran Berhasil!</h3>
-            <p id="modalDesc">Data pasien telah tersimpan. Silakan datang sesuai jadwal kunjungan yang dipilih.</p>
-            <button class="modal-btn" onclick="closeModal()">Tutup</button>
+
+
+            <!-- NIK -->
+            <div class="form-group">
+
+              <label>
+                NIK <span class="required">*</span>
+              </label>
+
+              <input
+                type="text"
+                name="nik"
+                required
+                inputmode="numeric"
+                maxlength="16"
+                placeholder="Masukkan NIK">
+
+            </div>
+
+
+            <!-- Kelamin -->
+            <div class="form-group">
+
+              <label>
+                Kelamin <span class="required">*</span>
+              </label>
+
+              <select name="gender" required>
+
+                <option value="">
+                  Pilih kelamin
+                </option>
+
+                <option value="Laki-laki">
+                  Laki-laki
+                </option>
+
+                <option value="Perempuan">
+                  Perempuan
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <!-- Tanggal Lahir -->
+            <div class="form-group">
+
+              <label>
+                Tgl Lahir
+              </label>
+
+              <input
+                type="date"
+                name="birthDate">
+
+            </div>
+
+
+            <!-- No HP -->
+            <div class="form-group">
+
+              <label>
+                No. HP <span class="required">*</span>
+              </label>
+
+              <input
+                type="tel"
+                name="phone"
+                required
+                autocomplete="tel"
+                placeholder="Contoh: 08123456789">
+
+            </div>
+
+
+            <!-- Email -->
+            <div class="form-group">
+
+              <label>
+                Email
+              </label>
+
+              <input
+                type="email"
+                name="email"
+                autocomplete="email"
+                placeholder="nama@email.com">
+
+            </div>
+
+
+            <!-- Alamat -->
+            <div class="form-group full">
+
+              <label>
+                Alamat
+              </label>
+
+              <textarea
+                name="address"
+                placeholder="Masukkan alamat lengkap"></textarea>
+
+            </div>
+
+          </div>
+
+
+          <!-- ========================= -->
+          <!-- INFORMASI KELUHAN -->
+          <!-- ========================= -->
+
+          <div class="section-title">
+            Informasi Keluhan
+          </div>
+
+          <div class="form-grid">
+
+            <!-- Keluhan -->
+            <div class="form-group full">
+
+              <label>
+                Keluhan <span class="required">*</span>
+              </label>
+
+              <textarea
+                name="complaint"
+                required
+                placeholder="Jelaskan keluhan yang dirasakan"></textarea>
+
+            </div>
+
+
+            <!-- Bagian Tubuh -->
+            <div class="form-group">
+
+              <label>
+                Bagian Tubuh <span class="required">*</span>
+              </label>
+
+              <input
+                type="text"
+                name="bodyPart"
+                required
+                placeholder="Contoh: Pinggang">
+
+            </div>
+
+
+            <!-- Lama Keluhan -->
+            <div class="form-group">
+
+              <label>
+                Lama Keluhan
+              </label>
+
+              <input
+                type="text"
+                name="complaintDuration"
+                placeholder="Contoh: 2 minggu">
+
+            </div>
+
+
+            <!-- Riwayat Cedera -->
+            <div class="form-group full">
+
+              <label>
+                Riwayat Cedera
+              </label>
+
+              <textarea
+                name="injuryHistory"
+                placeholder="Jelaskan jika ada riwayat cedera"></textarea>
+
+            </div>
+
+          </div>
+
+
+          <!-- ========================= -->
+          <!-- INFORMASI KUNJUNGAN -->
+          <!-- ========================= -->
+
+          <div class="section-title">
+            Informasi Kunjungan
+          </div>
+
+          <div class="form-grid">
+
+            <!-- Poli -->
+            <div class="form-group">
+
+              <label>
+                Poli <span class="required">*</span>
+              </label>
+
+              <select name="poli" required>
+
+                <option value="">
+                  Pilih layanan
+                </option>
+
+                <option value="Fisioterapi">
+                  Fisioterapi
+                </option>
+
+                <option value="Pilates">
+                  Pilates
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <!-- Terapis -->
+            <div class="form-group">
+
+              <label>
+                Terapis
+              </label>
+
+              <input
+                type="text"
+                name="therapist"
+                placeholder="Nama terapis">
+
+            </div>
+
+
+            <!-- Tanggal Kunjungan -->
+            <div class="form-group">
+
+              <label>
+                Tgl Kunjungan <span class="required">*</span>
+              </label>
+
+              <input
+                type="date"
+                name="visitDate"
+                required>
+
+            </div>
+
+
+            <!-- Jam -->
+            <div class="form-group">
+
+              <label>
+                Jam <span class="required">*</span>
+              </label>
+
+              <input
+                type="time"
+                name="visitTime"
+                required>
+
+            </div>
+
+
+            <!-- BPJS -->
+            <div class="form-group">
+
+              <label>
+                BPJS
+              </label>
+
+              <select name="bpjs">
+
+                <option value="">
+                  Pilih
+                </option>
+
+                <option value="Ya">
+                  Ya
+                </option>
+
+                <option value="Tidak">
+                  Tidak
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <!-- Catatan -->
+            <div class="form-group full">
+
+              <label>
+                Catatan
+              </label>
+
+              <textarea
+                name="notes"
+                placeholder="Catatan tambahan"></textarea>
+
+            </div>
+
+          </div>
+
+
+          <!-- PESAN ERROR -->
+
+          <div
+            id="errorMessage"
+            class="message">
+          </div>
+
+
+          <!-- TOMBOL -->
+
+          <div class="submit-wrapper">
+
+            <button
+              type="submit"
+              id="submitButton"
+              class="submit-btn">
+
+              Daftar Sekarang
+
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+
+
+      <!-- ========================= -->
+      <!-- HASIL PENDAFTARAN -->
+      <!-- ========================= -->
+
+      <div
+        id="resultSection"
+        class="result">
+
+        <div class="result-icon">
+          ✓
         </div>
+
+        <h2>
+          Pendaftaran Berhasil
+        </h2>
+
+        <p>
+          Data pendaftaran Anda telah berhasil disimpan.
+        </p>
+
+
+        <div class="queue-box">
+
+          <div class="queue-label">
+            Nomor Antrian Anda
+          </div>
+
+          <div
+            id="queueNumber"
+            class="queue-number">
+
+            ---
+
+          </div>
+
+
+          <div class="appointment-info">
+
+            <strong>
+              Tanggal Kunjungan:
+            </strong>
+
+            <span id="resultDate">
+              -
+            </span>
+
+            <br>
+
+            <strong>
+              Jam:
+            </strong>
+
+            <span id="resultTime">
+              -
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="new-registration"
+          id="newRegistration">
+
+          Daftar Lagi
+
+        </button>
+
+      </div>
+
+
+      <div class="footer">
+        Klinik Fisioterapi dan Pilates Jaya Selalu
+      </div>
+
     </div>
 
-    <script>
-        // Set minimum datetime-local ke hari ini
-        const now = new Date();
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const day = String(now.getDate()).padStart(2, '0');
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        document.getElementById('tglKunjungan').min = `${year}-${month}-${day}T${hours}:${minutes}`;
+  </div>
 
-        const form = document.getElementById('registrationForm');
-        const loadingOverlay = document.getElementById('loading-overlay');
-        const modalPopup = document.getElementById('modalPopup');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalDesc = document.getElementById('modalDesc');
-        const modalIconContainer = document.getElementById('modalIconContainer');
-        const modalIcon = document.getElementById('modalIcon');
 
-        function setFieldError(groupId, isError) {
-            const group = document.getElementById(groupId);
-            if (isError) {
-                group.classList.add('error');
-            } else {
-                group.classList.remove('error');
-            }
+  <script>
+
+    /*
+     * =====================================================
+     * GOOGLE APPS SCRIPT WEB APP URL
+     * =====================================================
+     *
+     * GANTI DENGAN URL WEB APP GOOGLE APPS SCRIPT ANDA.
+     *
+     * Contoh:
+     *
+     * const GOOGLE_SCRIPT_URL =
+     * "https://script.google.com/macros/s/AKfycbxxxx/exec";
+     *
+     */
+
+    const GOOGLE_SCRIPT_URL =
+      "MASUKKAN_URL_GOOGLE_APPS_SCRIPT_DI_SINI";
+
+
+    /*
+     * =====================================================
+     * ELEMENT
+     * =====================================================
+     */
+
+    const form =
+      document.getElementById(
+        "registrationForm"
+      );
+
+    const submitButton =
+      document.getElementById(
+        "submitButton"
+      );
+
+    const errorMessage =
+      document.getElementById(
+        "errorMessage"
+      );
+
+    const formSection =
+      document.getElementById(
+        "formSection"
+      );
+
+    const resultSection =
+      document.getElementById(
+        "resultSection"
+      );
+
+    const queueNumber =
+      document.getElementById(
+        "queueNumber"
+      );
+
+    const resultDate =
+      document.getElementById(
+        "resultDate"
+      );
+
+    const resultTime =
+      document.getElementById(
+        "resultTime"
+      );
+
+    const newRegistration =
+      document.getElementById(
+        "newRegistration"
+      );
+
+
+    /*
+     * =====================================================
+     * SUBMIT FORM
+     * =====================================================
+     */
+
+    form.addEventListener(
+      "submit",
+      async function(event) {
+
+        event.preventDefault();
+
+        hideError();
+
+
+        /*
+         * Pastikan URL sudah diisi
+         */
+
+        if (
+          !GOOGLE_SCRIPT_URL ||
+          GOOGLE_SCRIPT_URL.includes(
+            "MASUKKAN_URL"
+          )
+        ) {
+
+          showError(
+            "URL Google Apps Script belum dikonfigurasi."
+          );
+
+          return;
+
         }
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
 
-            // Ambil nilai field
-            const nama = document.getElementById('nama').value.trim();
-            const nik = document.getElementById('nik').value.trim();
-            const jk = document.getElementById('jk').value;
-            const tglLahir = document.getElementById('tglLahir').value;
-            const hp = document.getElementById('hp').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const alamat = document.getElementById('alamat').value.trim();
-            const keluhan = document.getElementById('keluhan').value.trim();
-            const bagianTubuh = document.getElementById('bagianTubuh').value.trim();
-            const lamaKeluhan = document.getElementById('lamaKeluhan').value.trim();
-            const poli = document.getElementById('poli').value;
-            const tglKunjungan = document.getElementById('tglKunjungan').value;
+        /*
+         * Loading
+         */
 
-            // Validasi aturan
-            let isValid = true;
+        submitButton.disabled = true;
 
-            // 1. Nama minimal 3 karakter
-            if (nama.length < 3) {
-                setFieldError('group-nama', true);
-                isValid = false;
-            } else {
-                setFieldError('group-nama', false);
-            }
+        submitButton.textContent =
+          "Mengirim...";
 
-            // 2. NIK 16 digit angka
-            const nikRegex = /^\d{16}$/;
-            if (!nikRegex.test(nik)) {
-                setFieldError('group-nik', true);
-                isValid = false;
-            } else {
-                setFieldError('group-nik', false);
-            }
 
-            // Jenis kelamin wajib
-            if (!jk) {
-                setFieldError('group-jk', true);
-                isValid = false;
-            } else {
-                setFieldError('group-jk', false);
-            }
+        try {
 
-            // Tanggal lahir wajib
-            if (!tglLahir) {
-                setFieldError('group-tglLahir', true);
-                isValid = false;
-            } else {
-                setFieldError('group-tglLahir', false);
-            }
+          /*
+           * Ambil data form
+           */
 
-            // 3. HP diawali 08 (panjang 10-13 digit)
-            const hpRegex = /^08\d{8,11}$/;
-            if (!hpRegex.test(hp)) {
-                setFieldError('group-hp', true);
-                isValid = false;
-            } else {
-                setFieldError('group-hp', false);
-            }
+          const formData =
+            new FormData(form);
 
-            // 4. Email valid
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                setFieldError('group-email', true);
-                isValid = false;
-            } else {
-                setFieldError('group-email', false);
-            }
 
-            // Alamat wajib
-            if (!alamat) {
-                setFieldError('group-alamat', true);
-                isValid = false;
-            } else {
-                setFieldError('group-alamat', false);
-            }
+          /*
+           * Kirim data ke Apps Script
+           */
 
-            // Keluhan & Bagian Tubuh wajib
-            if (!keluhan) {
-                setFieldError('group-keluhan', true);
-                isValid = false;
-            } else {
-                setFieldError('group-keluhan', false);
-            }
+          const response =
+            await fetch(
+              GOOGLE_SCRIPT_URL,
+              {
+                method: "POST",
+                body: formData
+              }
+            );
 
-            if (!bagianTubuh) {
-                setFieldError('group-bagianTubuh', true);
-                isValid = false;
-            } else {
-                setFieldError('group-bagianTubuh', false);
-            }
 
-            if (!lamaKeluhan) {
-                setFieldError('group-lamaKeluhan', true);
-                isValid = false;
-            } else {
-                setFieldError('group-lamaKeluhan', false);
-            }
+          /*
+           * Baca response
+           */
 
-            if (!poli) {
-                setFieldError('group-poli', true);
-                isValid = false;
-            } else {
-                setFieldError('group-poli', false);
-            }
+          const result =
+            await response.json();
 
-            // 5. Tanggal kunjungan tidak boleh sebelum hari ini
-            if (!tglKunjungan) {
-                setFieldError('group-tglKunjungan', true);
-                isValid = false;
-            } else {
-                const selectedDate = new Date(tglKunjungan);
-                const currentDate = new Date();
-                currentDate.setHours(0,0,0,0);
-                if (selectedDate < currentDate) {
-                    setFieldError('group-tglKunjungan', true);
-                    document.getElementById('error-tglKunjungan').innerText = "Tanggal kunjungan tidak boleh sebelum hari ini.";
-                    isValid = false;
-                } else {
-                    setFieldError('group-tglKunjungan', false);
-                }
-            }
 
-            if (!isValid) {
-                // Scroll ke error pertama
-                const firstError = document.querySelector('.form-group.error');
-                if (firstError) {
-                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-                return;
-            }
+          /*
+           * Jika gagal
+           */
 
-            // Tampilkan loading spinner & simulasi fetch()
-            loadingOverlay.style.display = 'flex';
+          if (!result.success) {
 
-            // Payload data
-            const formData = {
-                nama, nik, jk, tglLahir, hp, email, alamat,
-                keluhan, bagianTubuh, lamaKeluhan,
-                riwayatCedera: document.getElementById('riwayatCedera').value,
-                poli,
-                terapis: document.getElementById('terapis').value,
-                tglKunjungan,
-                bpjs: document.getElementById('bpjsCheck').checked,
-                catatan: document.getElementById('catatan').value
-            };
+            throw new Error(
+              result.message ||
+              "Pendaftaran gagal."
+            );
 
-            // Simulasi fetch() menggunakan Mock API / Timeout (karena file tunggal statis)
-            setTimeout(() => {
-                // Simulasi pengiriman data dengan fetch (contoh endpoint dummy)
-                fetch('https://jsonplaceholder.typicode.com/posts', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(formData)
-                })
-                .then(response => {
-                    loadingOverlay.style.display = 'none';
-                    if (response.ok) {
-                        showModal(true);
-                        form.reset(); // Reset form otomatis setelah berhasil
-                    } else {
-                        showModal(false);
-                    }
-                })
-                .catch(error => {
-                    loadingOverlay.style.display = 'none';
-                    // Fallback jika simulasi fetch network error
-                    showModal(true);
-                    form.reset();
-                });
-            }, 1200);
+          }
+
+
+          /*
+           * Tampilkan nomor antrian
+           */
+
+          queueNumber.textContent =
+            result.queueNumber ||
+            "---";
+
+
+          /*
+           * Tampilkan tanggal
+           */
+
+          resultDate.textContent =
+            formData.get(
+              "visitDate"
+            ) || "-";
+
+
+          /*
+           * Tampilkan jam
+           */
+
+          resultTime.textContent =
+            formData.get(
+              "visitTime"
+            ) || "-";
+
+
+          /*
+           * Sembunyikan form
+           */
+
+          formSection.style.display =
+            "none";
+
+
+          /*
+           * Tampilkan hasil
+           */
+
+          resultSection.style.display =
+            "block";
+
+
+          /*
+           * Reset form
+           */
+
+          form.reset();
+
+
+          /*
+           * Scroll ke atas
+           */
+
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+          });
+
+
+        } catch (error) {
+
+          console.error(error);
+
+          showError(
+            error.message ||
+            "Terjadi kesalahan saat mengirim data."
+          );
+
+        } finally {
+
+          submitButton.disabled =
+            false;
+
+          submitButton.textContent =
+            "Daftar Sekarang";
+
+        }
+
+      }
+    );
+
+
+    /*
+     * =====================================================
+     * DAFTAR LAGI
+     * =====================================================
+     */
+
+    newRegistration.addEventListener(
+      "click",
+      function() {
+
+        resultSection.style.display =
+          "none";
+
+        formSection.style.display =
+          "block";
+
+        hideError();
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
         });
 
-        function showModal(isSuccess) {
-            modalPopup.style.display = 'flex';
-            if (isSuccess) {
-                modalIconContainer.className = "modal-icon success";
-                modalIcon.className = "fa-solid fa-circle-check";
-                modalTitle.innerText = "Pendaftaran Berhasil!";
-                modalDesc.innerText = "Data pasien berhasil dikirim. Harap datang tepat waktu sesuai jadwal kunjungan.";
-            } else {
-                modalIconContainer.className = "modal-icon error";
-                modalIcon.className = "fa-solid fa-circle-xmark";
-                modalTitle.innerText = "Pendaftaran Gagal!";
-                modalDesc.innerText = "Terjadi kesalahan pada sistem. Silakan coba beberapa saat lagi.";
-            }
-        }
+      }
+    );
 
-        function closeModal() {
-            modalPopup.style.display = 'none';
-        }
-    </script>
+
+    /*
+     * =====================================================
+     * ERROR
+     * =====================================================
+     */
+
+    function showError(message) {
+
+      errorMessage.textContent =
+        message;
+
+      errorMessage.className =
+        "message error";
+
+    }
+
+
+    function hideError() {
+
+      errorMessage.textContent =
+        "";
+
+      errorMessage.className =
+        "message";
+
+    }
+
+  </script>
+
 </body>
 </html>
